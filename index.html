@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bri May — Product Designer & Creative Director shaping AI-driven experiences, financial tools, and human-centered digital products." />
+  <title>Bri May — Product Designer & Creative Director</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --bg:          #F9F8F6;
+      --white:       #FFFFFF;
+      --ink:         #0F0F0E;
+      --ink-2:       #6B6B63;
+      --ink-3:       #B0AFA9;
+      --accent:      #1A56DB;
+      --accent-h:    #1648C0;
+      --subtle:      #F0EFE9;
+      --border:      #E4E2DB;
+      --dark:        #0F0F0E;
+      --dark-2:      rgba(255,255,255,.6);
+      --dark-3:      rgba(255,255,255,.28);
+
+      --font-serif:  'Fraunces', Georgia, serif;
+      --font-sans:   'DM Sans', 'Helvetica Neue', sans-serif;
+
+      --fs-hero:  clamp(40px, 5.8vw, 80px);
+      --fs-h1:    clamp(32px, 4.2vw, 58px);
+      --fs-h2:    clamp(24px, 3vw,   42px);
+      --fs-h3:    clamp(18px, 1.8vw, 26px);
+      --fs-lg:    20px;
+      --fs-body:  17px;
+      --fs-sm:    15px;
+      --fs-xs:    13px;
+      --fs-xxs:   11px;
+
+      --lh-tight:  1.08;
+      --lh-snug:   1.22;
+      --lh-body:   1.6;
+      --lh-loose:  1.75;
+
+      --s1: 8px;   --s2: 16px;  --s3: 24px;  --s4: 32px;
+      --s5: 48px;  --s6: 64px;  --s7: 96px;  --s8: 128px;
+
+      --max-w:   1200px;
+      --read-w:  660px;
+      --pad-x:   clamp(20px, 4vw, 48px);
+
+      --r-sm:  5px;
+      --r-md:  12px;
+      --r-lg:  20px;
+      --r-xl:  28px;
+
+      --nav-h: 68px;
+      --ease:  cubic-bezier(.16,1,.3,1);
+      --t-f:   .16s ease;
+      --t-b:   .26s ease;
+      --t-s:   .44s var(--ease);
+    }
+
+    /* ============================================================
+       RESET
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+      overflow-x: hidden;
+    }
+    img, video, svg { display: block; max-width: 100%; }
+    ul, ol { list-style: none; }
+    a { color: inherit; text-decoration: none; }
+    button { background: none; border: none; cursor: pointer; font-family: inherit; }
+    ::selection { background: rgba(26,86,219,.12); }
+
+    /* ============================================================
+       LAYOUT
+    ============================================================ */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad-x);
+    }
+
+    /* ============================================================
+       FOCUS
+    ============================================================ */
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--r-sm);
+    }
+
+    /* ============================================================
+       PAGE SYSTEM — show/hide pages via JS
+    ============================================================ */
+
+
+    /* ============================================================
+       ANIMATIONS
+    ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes floatA {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50%       { transform: translateY(-14px) rotate(1.5deg); }
+    }
+    @keyframes floatB {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50%       { transform: translateY(-10px) rotate(-1deg); }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity var(--t-s), transform var(--t-s);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up[data-d="1"] { transition-delay: .08s; }
+    .fade-up[data-d="2"] { transition-delay: .16s; }
+    .fade-up[data-d="3"] { transition-delay: .24s; }
+    .fade-up[data-d="4"] { transition-delay: .32s; }
+    .fade-up[data-d="5"] { transition-delay: .40s; }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      background: rgba(249,248,246,.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid transparent;
+      transition: border-color var(--t-b), background var(--t-b), box-shadow var(--t-b);
+    }
+    .nav.scrolled {
+      border-bottom-color: var(--border);
+      background: rgba(249,248,246,.97);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad-x);
+    }
+    .nav__brand {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 300;
+      letter-spacing: -.01em;
+      color: var(--ink);
+      cursor: pointer;
+      transition: opacity var(--t-f);
+    }
+    .nav__brand:hover { opacity: .55; }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav__link {
+      font-size: var(--fs-xs);
+      font-weight: 500;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+      cursor: pointer;
+      position: relative;
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      transition: color var(--t-f);
+      padding: 0;
+    }
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--accent);
+      transition: width var(--t-f);
+    }
+    .nav__link:hover { color: var(--ink); }
+    .nav__link:hover::after { width: 100%; }
+    .nav__link.active { color: var(--ink); }
+    .nav__link.active::after { width: 100%; background: var(--ink); }
+
+    .nav__cta {
+      font-size: var(--fs-xs);
+      font-weight: 500;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding: 9px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      background: none;
+      transition: border-color var(--t-f), color var(--t-f);
+    }
+    .nav__cta:hover { border-color: var(--ink); }
+
+    /* DROPDOWN */
+    .nav__item--has-dropdown { position: relative; }
+    .nav__dropdown { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(-6px); background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md); box-shadow: 0 8px 32px rgba(0,0,0,.10); padding: 6px; min-width: 220px; opacity: 0; pointer-events: none; transition: opacity var(--t-f), transform var(--t-f); z-index: 300; }
+    .nav__item--has-dropdown:hover .nav__dropdown { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .nav__dropdown-link { display: block; padding: 8px 12px; font-size: var(--fs-xs); font-weight: 500; letter-spacing: .03em; color: var(--ink-2); border-radius: var(--r-sm); transition: color var(--t-f), background var(--t-f); }
+    .nav__dropdown-link:hover { color: var(--ink); background: var(--subtle); }
+
+    /* Hamburger */
+    .nav__burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      width: 32px; height: 32px;
+      justify-content: center;
+      padding: 2px;
+    }
+    .nav__burger span {
+      display: block;
+      width: 100%; height: 1.5px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: transform var(--t-f), opacity var(--t-f);
+    }
+    .nav__burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav__burger.open span:nth-child(2) { opacity: 0; }
+    .nav__burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .nav__drawer {
+      position: fixed;
+      inset: var(--nav-h) 0 0 0;
+      background: var(--bg);
+      z-index: 199;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity var(--t-b);
+    }
+    .nav__drawer.open { opacity: 1; pointer-events: all; }
+    .nav__drawer .nav__link {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 300;
+      text-transform: none;
+      letter-spacing: -.01em;
+      color: var(--ink);
+    }
+    .nav__drawer .nav__link::after { height: 1px; bottom: -2px; }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: var(--r-sm);
+      font-family: var(--font-sans);
+      font-size: var(--fs-sm);
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 1.5px solid transparent;
+      transition: background var(--t-f), color var(--t-f), border-color var(--t-f), transform var(--t-f), box-shadow var(--t-f);
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--white);
+      border-color: var(--ink);
+    }
+    .btn-primary:hover { background: #222; border-color: #222; box-shadow: 0 6px 20px rgba(0,0,0,.18); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--ink); }
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn-accent:hover { background: var(--accent-h); border-color: var(--accent-h); box-shadow: 0 6px 20px rgba(26,86,219,.25); }
+
+    /* ============================================================
+       SECTION SHARED
+    ============================================================ */
+    .section { padding: var(--s8) 0; }
+    .section--subtle { background: var(--subtle); }
+    .section--white  { background: var(--white); }
+    .section--dark   { background: var(--dark); color: var(--white); }
+
+    .section-label {
+      font-size: var(--fs-xxs);
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--s2);
+    }
+    .section--dark .section-label { color: rgba(255,255,255,.38); }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: var(--fs-h2);
+      font-weight: 300;
+      line-height: var(--lh-snug);
+      letter-spacing: -.025em;
+      margin-bottom: var(--s3);
+    }
+    .section-desc {
+      font-size: var(--fs-lg);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+      max-width: 560px;
+    }
+    .section--dark .section-title { color: var(--white); }
+    .section--dark .section-desc  { color: var(--dark-2); }
+
+    .section-hdr { margin-bottom: var(--s6); }
+
+    /* ============================================================
+       PLACEHOLDER
+    ============================================================ */
+    .ph {
+      background: var(--subtle);
+      border: 1px dashed var(--border);
+      border-radius: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%; height: 100%;
+    }
+    .ph span {
+      font-size: var(--fs-xxs);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--ink-3);
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       CARDS
+    ============================================================ */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform var(--t-b), box-shadow var(--t-b), border-color var(--t-b);
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(0,0,0,.09);
+      border-color: transparent;
+    }
+    .card__img {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+    }
+    .card__img .ph { border: none; border-bottom: 1px dashed var(--border); border-radius: 0; }
+    .card__tag {
+      position: absolute;
+      top: 14px; left: 14px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: rgba(255,255,255,.92);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 100px;
+      backdrop-filter: blur(6px);
+    }
+    .card__body {
+      padding: var(--s4);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card__title {
+      font-family: var(--font-serif);
+      font-size: var(--fs-h3);
+      font-weight: 300;
+      line-height: var(--lh-snug);
+      letter-spacing: -.01em;
+      margin-bottom: var(--s2);
+    }
+    .card__desc {
+      font-size: var(--fs-sm);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+      flex: 1;
+      margin-bottom: var(--s3);
+    }
+    .card__meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: var(--s2);
+    }
+    .card__role, .card__co { font-size: var(--fs-xs); color: var(--ink-3); }
+    .card__dot { color: var(--border); font-size: 10px; }
+    .card__arrow {
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      color: var(--accent);
+      transition: letter-spacing var(--t-f);
+    }
+    .card:hover .card__arrow { letter-spacing: .04em; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--dark);
+      padding: var(--s7) 0 var(--s4);
+    }
+    .footer__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--s5);
+      padding-bottom: var(--s5);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      margin-bottom: var(--s4);
+    }
+    .footer__brand {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--white);
+      display: block;
+      margin-bottom: var(--s2);
+      cursor: pointer;
+    }
+    .footer__tagline {
+      font-size: var(--fs-xs);
+      color: var(--dark-3);
+      max-width: 260px;
+      line-height: var(--lh-loose);
+    }
+    .footer__nav { display: flex; gap: var(--s4); flex-wrap: wrap; align-items: center; }
+    .footer__link {
+      font-size: var(--fs-sm);
+      color: var(--dark-3);
+      cursor: pointer;
+      transition: color var(--t-f);
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+    }
+    .footer__link:hover { color: var(--white); }
+    .footer__copy {
+      font-size: var(--fs-xxs);
+      color: rgba(255,255,255,.2);
+      letter-spacing: .04em;
+    }
+
+    /* ============================================================
+       PAGE: HOME
+    ============================================================ */
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: stretch;
+    }
+    .hero__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: stretch;
+      width: 100%;
+    }
+    .hero__text {
+      padding: calc(var(--nav-h) + var(--s8)) var(--s6) var(--s7) max(var(--s5), calc((100vw - var(--max-w)) / 2 + var(--s5)));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .hero__eyebrow {
+      font-size: var(--fs-xxs);
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--s3);
+    }
+    .hero__headline {
+      font-family: var(--font-serif);
+      font-size: var(--fs-hero);
+      font-weight: 300;
+      line-height: var(--lh-tight);
+      letter-spacing: -.025em;
+      margin-bottom: var(--s4);
+    }
+    .hero__sub {
+      font-size: var(--fs-lg);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+      max-width: 500px;
+      margin-bottom: var(--s5);
+    }
+    .hero__actions {
+      display: flex;
+      gap: var(--s2);
+      flex-wrap: wrap;
+      margin-bottom: var(--s5);
+    }
+    .hero__note {
+      font-size: var(--fs-sm);
+      color: var(--ink-3);
+      padding-left: var(--s2);
+      border-left: 2px solid var(--border);
+      line-height: var(--lh-snug);
+    }
+    .hero__visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero__visual-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      aspect-ratio: 3/4;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      animation: floatA 6s ease-in-out infinite;
+    }
+    .hero__visual-wrap .ph { border: none; }
+    .hero__photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      border-radius: var(--r-xl);
+    }
+    .hero__glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 80%, rgba(26,86,219,.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* Marquee */
+    .marquee {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      overflow: hidden;
+      padding: 18px 0;
+    }
+    .marquee__track {
+      display: flex;
+      gap: 32px;
+      width: max-content;
+      animation: marqueeScroll 28s linear infinite;
+    }
+    .marquee__track span {
+      font-size: var(--fs-xs);
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      white-space: nowrap;
+    }
+    .marquee--dark {
+      background: var(--dark);
+      border-color: transparent;
+    }
+    .marquee--dark .marquee__track--disciplines span {
+      color: rgba(255,255,255,.32);
+    }
+
+    /* Homepage case study cards grid */
+    .cs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s4);
+    }
+    .cs-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      transition: transform .28s var(--ease), box-shadow .28s var(--ease), border-color .28s var(--ease);
+    }
+    .cs-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 32px 80px rgba(0,0,0,.10);
+      border-color: transparent;
+    }
+    .cs-card__thumb {
+      position: relative;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+    }
+    .cs-card__thumb--aimee    { background: linear-gradient(145deg, #0a1628 0%, #112044 55%, #1a3a6c 100%); }
+    .cs-card__thumb--hub      { background: linear-gradient(145deg, #0d1f14 0%, #163323 55%, #1e4a30 100%); }
+    .cs-card__thumb--benefits { background: linear-gradient(145deg, #17141f 0%, #251e35 55%, #2e2648 100%); }
+    .cs-card__thumb::before {
+      content: '';
+      position: absolute;
+      left: 28px; top: 28px;
+      width: 46%; height: 12px;
+      background: #fff; opacity: .18;
+      border-radius: 4px;
+    }
+    .cs-card__thumb::after {
+      content: '';
+      position: absolute;
+      left: 28px; top: 50px;
+      width: 30%; height: 8px;
+      background: #fff; opacity: .18;
+      border-radius: 4px;
+    }
+    .cs-card__eyebrow-tag {
+      position: absolute;
+      top: 14px; left: 14px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: rgba(255,255,255,.92);
+      border-radius: 100px;
+      padding: 4px 10px;
+      backdrop-filter: blur(8px);
+    }
+    .cs-card__body {
+      padding: var(--s4) var(--s4) var(--s5);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .cs-card__title {
+      font-family: var(--font-serif);
+      font-size: var(--fs-h3);
+      font-weight: 300;
+      margin-bottom: var(--s2);
+    }
+    .cs-card__desc {
+      font-size: var(--fs-sm);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+      flex: 1;
+      margin-bottom: var(--s3);
+    }
+    .cs-card__meta {
+      font-size: var(--fs-xs);
+      color: var(--ink-3);
+      margin-bottom: var(--s3);
+    }
+    .cs-card__cta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .cs-card__cta-arrow {
+      display: inline-block;
+      transition: transform var(--t-f);
+    }
+    .cs-card:hover .cs-card__cta-arrow { transform: translateX(5px); }
+
+    /* Impact */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s3);
+    }
+    .impact-item {
+      display: flex;
+      gap: var(--s3);
+      align-items: flex-start;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: var(--s4);
+      transition: transform var(--t-b), box-shadow var(--t-b);
+    }
+    .impact-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 32px rgba(0,0,0,.06);
+    }
+    .impact-num {
+      font-family: var(--font-serif);
+      font-size: 44px;
+      font-weight: 200;
+      color: var(--border);
+      line-height: 1;
+      min-width: 52px;
+      user-select: none;
+    }
+    .impact-text {
+      font-size: var(--fs-sm);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+      padding-top: 4px;
+    }
+
+    /* Capabilities */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--s3);
+    }
+    .cap-card {
+      padding: var(--s4);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      background: var(--bg);
+      transition: border-color var(--t-b), transform var(--t-b), box-shadow var(--t-b);
+    }
+    .cap-card:hover {
+      border-color: var(--ink);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.05);
+    }
+    .cap-icon {
+      font-size: 22px;
+      color: var(--accent);
+      margin-bottom: var(--s3);
+      display: block;
+    }
+    .cap-title {
+      font-size: var(--fs-sm);
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -.01em;
+      margin-bottom: var(--s1);
+    }
+    .cap-body {
+      font-size: var(--fs-xs);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+    }
+
+    /* Outside of Work */
+    .outside-grid {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: var(--s6);
+      align-items: start;
+    }
+    .outside-headline {
+      font-family: var(--font-serif);
+      font-size: var(--fs-h3);
+      font-weight: 300;
+      line-height: var(--lh-snug);
+      letter-spacing: -.02em;
+      margin-bottom: var(--s2);
+    }
+    .outside-subline {
+      font-size: var(--fs-sm);
+      color: var(--ink-3);
+      font-style: italic;
+      line-height: var(--lh-loose);
+    }
+
+    /* Philosophy */
+    .phil-inner { max-width: var(--read-w); }
+    .phil-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--s4);
+    }
+    .phil-list li {
+      font-size: var(--fs-lg);
+      line-height: var(--lh-loose);
+      color: rgba(255,255,255,.65);
+      padding-left: var(--s4);
+      border-left: 2px solid rgba(255,255,255,.18);
+    }
+
+    /* Visual Explorations */
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s3);
+    }
+    .exp-tile {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s2);
+      transition: transform var(--t-b);
+    }
+    .exp-tile:hover { transform: translateY(-4px); }
+    .exp-img {
+      aspect-ratio: 4 / 3;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .exp-img .ph { border: none; }
+    .exp-caption {
+      font-size: var(--fs-xs);
+      color: var(--ink-2);
+      font-weight: 400;
+    }
+
+    /* Contact CTA (home) */
+    .cta-inner { max-width: var(--read-w); }
+    .cta-headline {
+      font-family: var(--font-serif);
+      font-size: var(--fs-h1);
+      font-weight: 300;
+      line-height: var(--lh-tight);
+      letter-spacing: -.025em;
+      margin-bottom: var(--s4);
+    }
+    .cta-body {
+      font-size: var(--fs-lg);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+      margin-bottom: var(--s5);
+      max-width: 500px;
+    }
+    .cta-links { display: flex; gap: var(--s2); flex-wrap: wrap; }
+
+    /* ============================================================
+       PAGE: WORK
+    ============================================================ */
+    .page-hero {
+      padding-top: calc(var(--nav-h) + var(--s7));
+      padding-bottom: var(--s6);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero__eyebrow {
+      font-size: var(--fs-xxs);
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--s3);
+    }
+    .page-hero__title {
+      font-family: var(--font-serif);
+      font-size: var(--fs-h1);
+      font-weight: 300;
+      line-height: var(--lh-tight);
+      letter-spacing: -.025em;
+      max-width: var(--read-w);
+      margin-bottom: var(--s4);
+    }
+    .page-hero__desc {
+      font-size: var(--fs-lg);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+      max-width: 520px;
+    }
+
+    .work-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s3);
+    }
+    .work-grid-featured {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: var(--s3);
+      margin-bottom: var(--s3);
+    }
+    .work-grid-featured .card__img { aspect-ratio: 16/9; }
+
+    /* Process section on work page */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--s3);
+      counter-reset: step;
+    }
+    .process-step {
+      counter-increment: step;
+      padding: var(--s4);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      position: relative;
+    }
+    .process-step::before {
+      content: "0" counter(step);
+      font-family: var(--font-serif);
+      font-size: 36px;
+      font-weight: 200;
+      color: var(--border);
+      display: block;
+      margin-bottom: var(--s2);
+      line-height: 1;
+    }
+    .process-step h3 {
+      font-size: var(--fs-sm);
+      font-weight: 600;
+      margin-bottom: var(--s1);
+      letter-spacing: -.01em;
+    }
+    .process-step p {
+      font-size: var(--fs-xs);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+    }
+
+    /* ============================================================
+       PAGE: ABOUT
+    ============================================================ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s7);
+      align-items: start;
+    }
+    .about-visual {
+      position: sticky;
+      top: calc(var(--nav-h) + var(--s4));
+    }
+    .about-img {
+      aspect-ratio: 3/4;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: var(--s3);
+    }
+    .about-img .ph { border: none; }
+    .about-caption {
+      font-size: var(--fs-xs);
+      color: var(--ink-3);
+      line-height: var(--lh-snug);
+    }
+    .about-content {}
+    .about-lead {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 2.5vw, 32px);
+      font-weight: 300;
+      line-height: var(--lh-snug);
+      letter-spacing: -.02em;
+      margin-bottom: var(--s5);
+    }
+    .about-body {
+      font-size: var(--fs-body);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+      margin-bottom: var(--s4);
+    }
+    .about-divider {
+      width: 48px; height: 1px;
+      background: var(--border);
+      margin: var(--s5) 0;
+    }
+    .about-section-title {
+      font-size: var(--fs-xxs);
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--s3);
+    }
+    .skills-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s1) var(--s4);
+      margin-bottom: var(--s5);
+    }
+    .skills-list li {
+      font-size: var(--fs-sm);
+      color: var(--ink-2);
+      display: flex;
+      align-items: center;
+      gap: var(--s1);
+    }
+    .skills-list li::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .exp-timeline { display: flex; flex-direction: column; gap: var(--s3); }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: var(--s3);
+      padding-bottom: var(--s3);
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-date {
+      font-size: var(--fs-xs);
+      color: var(--ink-3);
+      padding-top: 2px;
+    }
+    .exp-role {
+      font-weight: 500;
+      font-size: var(--fs-sm);
+      margin-bottom: 2px;
+    }
+    .exp-co {
+      font-size: var(--fs-xs);
+      color: var(--ink-2);
+    }
+
+    /* Values */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s3);
+    }
+    .value-card {
+      padding: var(--s4) var(--s4) var(--s5);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      background: var(--bg);
+    }
+    .value-num {
+      font-family: var(--font-serif);
+      font-size: 48px;
+      font-weight: 200;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: var(--s3);
+    }
+    .value-title {
+      font-weight: 600;
+      font-size: var(--fs-sm);
+      margin-bottom: var(--s1);
+    }
+    .value-body {
+      font-size: var(--fs-sm);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+    }
+
+    /* ============================================================
+       PAGE: CONTACT
+    ============================================================ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s7);
+      align-items: start;
+    }
+    .contact-left {}
+    .contact-headline {
+      font-family: var(--font-serif);
+      font-size: var(--fs-h1);
+      font-weight: 300;
+      line-height: var(--lh-tight);
+      letter-spacing: -.025em;
+      margin-bottom: var(--s4);
+    }
+    .contact-body {
+      font-size: var(--fs-lg);
+      color: var(--ink-2);
+      line-height: var(--lh-loose);
+      margin-bottom: var(--s5);
+      max-width: 440px;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: var(--s3); }
+    .contact-link-item {
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+      padding: var(--s3) var(--s4);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      background: var(--white);
+      cursor: pointer;
+      transition: border-color var(--t-b), transform var(--t-b), box-shadow var(--t-b);
+    }
+    .contact-link-item:hover {
+      border-color: var(--ink);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0,0,0,.06);
+    }
+    .contact-link-icon {
+      width: 40px; height: 40px;
+      background: var(--subtle);
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .contact-link-label {
+      font-size: var(--fs-sm);
+      font-weight: 500;
+    }
+    .contact-link-sub {
+      font-size: var(--fs-xs);
+      color: var(--ink-3);
+    }
+    .contact-link-arrow {
+      margin-left: auto;
+      font-size: var(--fs-sm);
+      color: var(--ink-3);
+      transition: color var(--t-f), transform var(--t-f);
+    }
+    .contact-link-item:hover .contact-link-arrow {
+      color: var(--ink);
+      transform: translateX(3px);
+    }
+    .contact-right {
+      padding-top: var(--s2);
+    }
+    .contact-aside-title {
+      font-size: var(--fs-xxs);
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--s4);
+    }
+    .availability-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: var(--fs-xs);
+      font-weight: 500;
+      color: #166534;
+      background: #DCFCE7;
+      border: 1px solid #BBF7D0;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: var(--s5);
+    }
+    .availability-badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+    .ideal-roles {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s2);
+      margin-bottom: var(--s5);
+    }
+    .ideal-role {
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+      font-size: var(--fs-sm);
+      color: var(--ink-2);
+    }
+    .ideal-role::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--ink-3);
+      flex-shrink: 0;
+    }
+    .things-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s2);
+    }
+    .thing-chip {
+      padding: var(--s2) var(--s3);
+      background: var(--subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      font-size: var(--fs-xs);
+      color: var(--ink-2);
+      font-weight: 400;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 960px) {
+      .hero__grid         { grid-template-columns: 1fr; }
+      .hero__visual       { display: none; }
+      .hero__sub          { max-width: 100%; }
+      .cap-grid           { grid-template-columns: 1fr 1fr; }
+      .exp-grid           { grid-template-columns: 1fr 1fr; }
+      .work-grid-3        { grid-template-columns: 1fr 1fr; }
+      .work-grid-featured { grid-template-columns: 1fr; }
+      .process-steps      { grid-template-columns: 1fr 1fr; }
+      .about-grid         { grid-template-columns: 1fr; }
+      .about-visual       { position: static; }
+      .about-img          { max-width: 360px; }
+      .contact-grid       { grid-template-columns: 1fr; }
+      .values-grid        { grid-template-columns: 1fr 1fr; }
+      .impact-grid        { grid-template-columns: 1fr; }
+      .outside-grid       { grid-template-columns: 1fr; gap: var(--s4); }
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --s8: 72px;
+        --s7: 56px;
+        --s6: 48px;
+      }
+      .nav__links { display: none; }
+      .nav__burger { display: flex; }
+
+      .cap-grid       { grid-template-columns: 1fr; }
+      .cs-grid        { grid-template-columns: 1fr; }
+      .exp-grid       { grid-template-columns: 1fr; }
+      .work-grid-3    { grid-template-columns: 1fr; }
+      .process-steps  { grid-template-columns: 1fr; }
+      .values-grid    { grid-template-columns: 1fr; }
+      .skills-list    { grid-template-columns: 1fr; }
+      .things-grid    { grid-template-columns: 1fr; }
+      .exp-item       { grid-template-columns: 1fr; gap: var(--s1); }
+
+      .footer__inner  { flex-direction: column; gap: var(--s4); }
+      .footer__nav    { gap: var(--s3); }
+
+      .cta-links      { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════════════════════════ -->
+  <header role="banner">
+    <nav class="nav" id="nav" aria-label="Main navigation">
+      <div class="nav__inner">
+        <a class="nav__brand" href="/">Bri May</a>
+        <ul class="nav__links" role="list">
+          <li><a class="nav__link active" href="/">Home</a></li>
+          <li class="nav__item--has-dropdown">
+            <a class="nav__link" href="/work">Work</a>
+            <ul class="nav__dropdown" role="list">
+              <li><a href="/aimee-ai" class="nav__dropdown-link">Aimee AI</a></li>
+              <li><a href="/work/hub" class="nav__dropdown-link">Financial Finesse Hub</a></li>
+              <li><a href="/work/smart-benefits" class="nav__dropdown-link">Smart Benefits</a></li>
+            </ul>
+          </li>
+          <li><a class="nav__link" href="/about">About</a></li>
+          <li><a class="nav__link" href="/resume">Résumé</a></li>
+          <li><a class="nav__cta" href="/contact">Get in touch</a></li>
+        </ul>
+        <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile drawer -->
+    <div class="nav__drawer" id="drawer" aria-hidden="true">
+      <a class="nav__link" href="/">Home</a>
+      <a class="nav__link" href="/work">Work</a>
+      <a class="nav__link" href="/about">About</a>
+      <a class="nav__link" href="/resume">Résumé</a>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════════
+       PAGE: HOME
+  ══════════════════════════════════════════════════════════ -->
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-headline">
+        <div class="hero__grid">
+          <div class="hero__text">
+            <p class="hero__eyebrow fade-up">Creative Director &amp; Product Designer</p>
+            <h1 id="hero-headline" class="hero__headline fade-up" data-d="1">
+              Designing digital experiences that feel clear, beautiful, and genuinely&nbsp;human.
+            </h1>
+            <p class="hero__sub fade-up" data-d="2">
+              I work across product design, creative direction, brand systems, and AI-powered experiences — bringing clarity and craft to every layer of the digital product.
+            </p>
+            <div class="hero__actions fade-up" data-d="3">
+              <a class="btn btn-primary" href="/work">View Work</a>
+              <a class="btn btn-ghost" href="/contact">Get In Touch</a>
+            </div>
+            <p class="hero__note fade-up" data-d="4">
+              Currently leading design at the intersection of AI, product, and brand experience.
+            </p>
+          </div>
+
+          <div class="hero__visual fade-up" data-d="2" aria-hidden="true">
+            <div class="hero__visual-wrap">
+              <img src="images/bri-hero.jpg" alt="Bri May — Product Designer &amp; Creative Director" class="hero__photo" />
+              <div class="hero__glow"></div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Meta</span><span>·</span>
+        <span>NFL</span><span>·</span>
+        <span>Nestlé</span><span>·</span>
+        <span>Patagonia</span><span>·</span>
+        <span>JPMorgan Chase</span><span>·</span>
+        <span>McKinsey &amp; Co.</span><span>·</span>
+        <span>Comcast</span><span>·</span>
+        <span>General Mills</span><span>·</span>
+        <span>Financial Finesse</span><span>·</span>
+        <span>CKC Communications</span><span>·</span>
+        <span>Meta</span><span>·</span>
+        <span>NFL</span><span>·</span>
+        <span>Nestlé</span><span>·</span>
+        <span>Patagonia</span><span>·</span>
+        <span>JPMorgan Chase</span><span>·</span>
+        <span>McKinsey &amp; Co.</span><span>·</span>
+        <span>Comcast</span><span>·</span>
+        <span>General Mills</span><span>·</span>
+        <span>Financial Finesse</span><span>·</span>
+        <span>CKC Communications</span><span>·</span>
+      </div>
+    </div>
+
+    <!-- Selected Work -->
+    <section class="section section--white" aria-labelledby="home-work-heading">
+      <div class="container">
+        <div class="section-hdr fade-up">
+          <p class="section-label">Selected Work</p>
+          <h2 id="home-work-heading" class="section-title">Product, brand &amp; experience design.</h2>
+          <p class="section-desc">From AI platforms and product UX to brand systems and digital storytelling — a focused selection of the work I'm most proud of.</p>
+        </div>
+
+        <div class="cs-grid fade-up" data-d="1">
+
+          <a class="cs-card" href="/aimee-ai" aria-label="Case study: Aimee AI">
+            <div class="cs-card__thumb cs-card__thumb--aimee">
+              <div class="cs-card__thumb-overlay"></div>
+              <span class="cs-card__eyebrow-tag">AI Product Design</span>
+            </div>
+            <div class="cs-card__body">
+              <h3 class="cs-card__title">Aimee AI</h3>
+              <p class="cs-card__desc">Designing a conversational AI coach that turns static content into personalized, motivating guidance — end-to-end, from concept to shipped experience.</p>
+              <p class="cs-card__meta">Creative Direction · AI Experience · Conversation Design</p>
+              <div class="cs-card__cta">View Case Study <span class="cs-card__cta-arrow">→</span></div>
+            </div>
+          </a>
+
+          <a class="cs-card" href="/work/hub" aria-label="Case study: Financial Finesse Hub">
+            <div class="cs-card__thumb cs-card__thumb--hub">
+              <div class="cs-card__thumb-overlay"></div>
+              <span class="cs-card__eyebrow-tag">Platform & Experience Design</span>
+            </div>
+            <div class="cs-card__body">
+              <h3 class="cs-card__title">Financial Finesse Hub</h3>
+              <p class="cs-card__desc">Reimagining a digital platform — rethinking onboarding, information architecture, and the full user experience across a complex, multi-audience product.</p>
+              <p class="cs-card__meta">Creative Direction · Platform UX · Design Systems</p>
+              <div class="cs-card__cta">View Case Study <span class="cs-card__cta-arrow">→</span></div>
+            </div>
+          </a>
+
+          <a class="cs-card" href="/work/smart-benefits" aria-label="Case study: Smart Benefits">
+            <div class="cs-card__thumb cs-card__thumb--benefits">
+              <div class="cs-card__thumb-overlay"></div>
+              <span class="cs-card__eyebrow-tag">AI Benefits Platform</span>
+            </div>
+            <div class="cs-card__body">
+              <h3 class="cs-card__title">Smart Benefits</h3>
+              <p class="cs-card__desc">Designing an AI-powered experience that helps people navigate complex workplace benefits with clarity — bringing both product thinking and creative direction to a high-stakes decision space.</p>
+              <p class="cs-card__meta">Product Design · AI Experience · Creative Direction</p>
+              <div class="cs-card__cta">View Case Study <span class="cs-card__cta-arrow">→</span></div>
+            </div>
+          </a>
+
+        </div>
+
+        <div style="margin-top: var(--s5); text-align:center;" class="fade-up" data-d="2">
+          <a class="btn btn-ghost" href="/work">See All Work</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="section section--subtle" aria-labelledby="impact-heading">
+      <div class="container">
+        <div class="section-hdr fade-up">
+          <p class="section-label">Impact</p>
+          <h2 id="impact-heading" class="section-title">Work that moves things forward.</h2>
+          <p class="section-desc">Serving 2.5 million employees across 20,000 organizations.</p>
+        </div>
+        <div class="impact-grid">
+          <div class="impact-item fade-up">
+            <span class="impact-num" aria-hidden="true">01</span>
+            <p class="impact-text">Led creative direction and product design across AI platforms, digital products, and brand ecosystems reaching millions of users.</p>
+          </div>
+          <div class="impact-item fade-up" data-d="1">
+            <span class="impact-num" aria-hidden="true">02</span>
+            <p class="impact-text">Shaped visual systems, brand expression, and UX architecture across product, web, and marketing touchpoints.</p>
+          </div>
+          <div class="impact-item fade-up" data-d="2">
+            <span class="impact-num" aria-hidden="true">03</span>
+            <p class="impact-text">Bridged product thinking, brand strategy, and creative direction to build polished, high-performing digital experiences.</p>
+          </div>
+          <div class="impact-item fade-up" data-d="3">
+            <span class="impact-num" aria-hidden="true">04</span>
+            <p class="impact-text">Partnered with leadership, product, and engineering to own design end-to-end — from strategy through execution.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Capabilities -->
+    <section class="section section--white" aria-labelledby="cap-heading">
+      <div class="container">
+        <div class="section-hdr fade-up">
+          <p class="section-label">Selected Capabilities</p>
+          <h2 id="cap-heading" class="section-title">What I bring to the table.</h2>
+        </div>
+        <div class="cap-grid">
+          <div class="cap-card fade-up">
+            <span class="cap-icon" aria-hidden="true">◻</span>
+            <p class="cap-title">Creative Direction</p>
+            <p class="cap-body">Brand systems, marketing websites, visual storytelling, digital art direction, and polished interface design</p>
+          </div>
+          <div class="cap-card fade-up" data-d="1">
+            <span class="cap-icon" aria-hidden="true">⬡</span>
+            <p class="cap-title">Product Design</p>
+            <p class="cap-body">Complex platforms, onboarding, dashboards, UX architecture, and behavioral design</p>
+          </div>
+          <div class="cap-card fade-up" data-d="2">
+            <span class="cap-icon" aria-hidden="true">◈</span>
+            <p class="cap-title">AI Experience Design</p>
+            <p class="cap-body">Conversational UX, AI personality design, response frameworks, and trust-building interactions</p>
+          </div>
+          <div class="cap-card fade-up" data-d="3">
+            <span class="cap-icon" aria-hidden="true">◉</span>
+            <p class="cap-title">Design Strategy</p>
+            <p class="cap-body">Experience positioning, design systems, product thinking, user research, and cross-functional leadership</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Outside of Work -->
+    <section class="section section--subtle" aria-labelledby="outside-home-heading">
+      <div class="container">
+        <div class="outside-grid">
+
+          <div class="fade-up">
+            <h2 id="outside-home-heading" class="outside-headline">Outside of Work</h2>
+            <p class="outside-subline">A few things that keep me curious and grounded.</p>
+          </div>
+
+          <div class="fade-up" data-d="1">
+            <p class="section-desc" style="margin:0;">Before design, I was a Division I soccer player — and that competitive, team-first mindset has never left me. I still play every weekend. Outside the studio, I'm drawn to experiences that make the world feel bigger: scuba diving with whale sharks, cage diving with great whites, traveling to places that shift your perspective. But what grounds me most is closer to home — my son, my family, and the friendships that have lasted.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Design Philosophy -->
+    <section class="section section--dark" aria-labelledby="phil-heading">
+      <div class="container">
+        <div class="phil-inner">
+          <div class="section-hdr fade-up">
+            <p class="section-label">Design Philosophy</p>
+            <h2 id="phil-heading" class="section-title">Clarity. Momentum. Intention.</h2>
+          </div>
+          <ul class="phil-list fade-up" data-d="1">
+            <li>I take ownership of the full design arc — from early strategy and concept through launched product — making sure every decision serves both the person using it and the business behind it.</li>
+            <li>I build things people actually want to use. Not just functional, but thoughtful — experiences that feel considered, clear, and occasionally delightful, whether it's a product flow, a brand system, or a marketing website.</li>
+            <li>I stay genuinely curious. About AI, about brand, about how people interact with technology — and I bring those learnings directly into the work.</li>
+          </ul>
+          <div style="margin-top: var(--s5);" class="fade-up" data-d="2">
+            <a class="btn btn-ghost" style="border-color:rgba(255,255,255,.2); color:#fff;" href="/about">More About Bri →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Contact CTA -->
+    <section class="section section--subtle" aria-labelledby="cta-heading">
+      <div class="container">
+        <div class="cta-inner fade-up">
+          <h2 id="cta-heading" class="cta-headline">Let's build something meaningful.</h2>
+          <p class="cta-body">I'm always interested in thoughtful teams and ambitious work — opportunities to shape how products work, how brands show up, and how digital experiences feel end-to-end.</p>
+          <div class="cta-links">
+            <a class="btn btn-primary" href="/contact">Get In Touch</a>
+            <a href="https://linkedin.com/in/brimay" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+            <button class="btn btn-ghost">Resume</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <div>
+          <a class="footer__brand" href="/">Bri May</a>
+          <p class="footer__tagline">Designing thoughtful digital experiences with clarity, strategy, and heart.</p>
+        </div>
+        <nav class="footer__nav" aria-label="Footer navigation">
+          <a class="footer__link" href="/">Home</a>
+          <a class="footer__link" href="/work">Work</a>
+          <a class="footer__link" href="/about">About</a>
+          <a class="footer__link" href="/contact">Contact</a>
+          <a class="footer__link" href="/cdn-cgi/l/email-protection#b4d6c6ddf4d6c6ddd9d5cd9ad7dbd9">Email</a>
+          <a class="footer__link" href="https://linkedin.com/in/brimay" target="_blank" rel="noopener">LinkedIn</a>
+        </nav>
+      </div>
+      <p class="footer__copy">© <span id="year"></span> Bri May. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('drawer');
+    burger.addEventListener('click', () => {
+      const open = burger.classList.toggle('open');
+      drawer.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', open);
+      drawer.setAttribute('aria-hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    function closeMenu() {
+      burger.classList.remove('open');
+      drawer.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

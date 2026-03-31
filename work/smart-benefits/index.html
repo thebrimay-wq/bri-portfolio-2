@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smart Benefits Case Study — Bri May. Designing an AI-powered benefits experience for employees." />
+  <title>Smart Benefits — Case Study | Bri May</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:          #F9F8F6;
+      --white:       #FFFFFF;
+      --ink:         #0F0F0E;
+      --ink-2:       #6B6B63;
+      --ink-3:       #B0AFA9;
+      --accent:      #1A56DB;
+      --accent-h:    #1648C0;
+      --subtle:      #F0EFE9;
+      --border:      #E4E2DB;
+      --dark:        #0F0F0E;
+      --dark-2:      rgba(255,255,255,.6);
+      --dark-3:      rgba(255,255,255,.28);
+
+      --font-serif:  'Fraunces', Georgia, serif;
+      --font-sans:   'DM Sans', 'Helvetica Neue', sans-serif;
+
+      --fs-hero: clamp(40px, 5.8vw, 80px);
+      --fs-h1:   clamp(32px, 4.2vw, 58px);
+      --fs-h2:   clamp(24px, 3vw, 42px);
+      --fs-h3:   clamp(18px, 1.8vw, 26px);
+      --fs-lg:   20px;
+      --fs-body: 17px;
+      --fs-sm:   15px;
+      --fs-xs:   13px;
+      --fs-xxs:  11px;
+
+      --lh-tight: 1.08;
+      --lh-snug:  1.22;
+      --lh-body:  1.6;
+      --lh-loose: 1.75;
+
+      --s1: 8px;  --s2: 16px; --s3: 24px; --s4: 32px;
+      --s5: 48px; --s6: 64px; --s7: 96px; --s8: 128px;
+
+      --max-w:  1320px;
+      --read-w: 740px;
+      --pad-x:  clamp(20px, 5vw, 80px);
+
+      --r-sm: 5px; --r-md: 12px; --r-lg: 20px; --r-xl: 28px;
+      --nav-h: 68px;
+      --ease:  cubic-bezier(.16,1,.3,1);
+      --t-f:   .16s ease;
+      --t-b:   .26s ease;
+      --t-s:   .44s var(--ease);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); font-size: var(--fs-body); line-height: var(--lh-body); overflow-x: hidden; }
+    img, video, svg { display: block; max-width: 100%; }
+    ul, ol { list-style: none; }
+    a { color: inherit; text-decoration: none; }
+    button { background: none; border: none; cursor: pointer; font-family: inherit; }
+    ::selection { background: rgba(26,86,219,.12); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--r-sm); }
+    .container { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity var(--t-s), transform var(--t-s); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up[data-d="1"] { transition-delay: .08s; }
+    .fade-up[data-d="2"] { transition-delay: .16s; }
+    .fade-up[data-d="3"] { transition-delay: .24s; }
+    .fade-up[data-d="4"] { transition-delay: .32s; }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--nav-h); display: flex; align-items: center; background: rgba(249,248,246,.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-bottom: 1px solid transparent; transition: border-color var(--t-b), background var(--t-b), box-shadow var(--t-b); }
+    .nav.scrolled { border-bottom-color: var(--border); background: rgba(249,248,246,.97); box-shadow: 0 1px 0 var(--border); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+    .nav__brand { font-family: var(--font-serif); font-size: 20px; font-weight: 300; letter-spacing: -.01em; color: var(--ink); transition: opacity var(--t-f); }
+    .nav__brand:hover { opacity: .55; }
+    .nav__links { display: flex; align-items: center; gap: 32px; }
+    .nav__link { font-size: var(--fs-xs); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); position: relative; transition: color var(--t-f); }
+    .nav__link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px; background: var(--accent); transition: width var(--t-f); }
+    .nav__link:hover { color: var(--ink); }
+    .nav__link:hover::after { width: 100%; }
+    .nav__link.active { color: var(--ink); }
+    .nav__link.active::after { width: 100%; }
+    .nav__cta { font-size: var(--fs-xs); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); padding: 9px 18px; border: 1.5px solid var(--border); border-radius: var(--r-sm); transition: border-color var(--t-f); }
+    .nav__cta:hover { border-color: var(--ink); }
+
+    /* DROPDOWN */
+    .nav__item--has-dropdown { position: relative; }
+    .nav__dropdown { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(-6px); background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md); box-shadow: 0 8px 32px rgba(0,0,0,.10); padding: 6px; min-width: 220px; opacity: 0; pointer-events: none; transition: opacity var(--t-f), transform var(--t-f); z-index: 300; }
+    .nav__item--has-dropdown:hover .nav__dropdown { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .nav__dropdown-link { display: block; padding: 8px 12px; font-size: var(--fs-xs); font-weight: 500; letter-spacing: .03em; color: var(--ink-2); border-radius: var(--r-sm); transition: color var(--t-f), background var(--t-f); }
+    .nav__dropdown-link:hover { color: var(--ink); background: var(--subtle); }
+
+    .nav__burger { display: none; flex-direction: column; gap: 5px; width: 32px; height: 32px; justify-content: center; padding: 2px; }
+    .nav__burger span { display: block; width: 100%; height: 1.5px; background: var(--ink); border-radius: 2px; transition: transform var(--t-f), opacity var(--t-f); }
+    .nav__burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav__burger.open span:nth-child(2) { opacity: 0; }
+    .nav__burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav__drawer { position: fixed; inset: var(--nav-h) 0 0 0; background: var(--bg); z-index: 199; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; pointer-events: none; opacity: 0; transition: opacity var(--t-b); }
+    .nav__drawer.open { opacity: 1; pointer-events: all; }
+    .nav__drawer .nav__link { font-family: var(--font-sans); font-size: 32px; font-weight: 300; text-transform: none; letter-spacing: -.01em; color: var(--ink); }
+    .nav__drawer .nav__link::after { height: 1px; bottom: -2px; }
+
+    /* SECTIONS */
+    .section { padding: var(--s8) 0; }
+    .section--subtle { background: var(--subtle); }
+    .section--white  { background: var(--white); }
+    .section--dark   { background: var(--dark); color: var(--white); }
+    .section-label { font-size: var(--fs-xxs); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--s2); }
+    .section--dark .section-label { color: rgba(255,255,255,.38); }
+    .section-title { font-family: var(--font-serif); font-size: var(--fs-h2); font-weight: 300; line-height: var(--lh-snug); letter-spacing: -.025em; margin-bottom: var(--s3); }
+    .section--dark .section-title { color: var(--white); }
+    .section-desc { font-size: var(--fs-lg); color: var(--ink-2); line-height: var(--lh-loose); max-width: 600px; }
+    .section-hdr { margin-bottom: var(--s6); }
+    .read { max-width: var(--read-w); }
+    .cs-body { font-size: var(--fs-body); color: var(--ink-2); line-height: var(--lh-loose); }
+
+    /* PLACEHOLDER */
+    .ph { background: var(--subtle); border: 1px dashed var(--border); border-radius: inherit; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+    .ph span { font-size: var(--fs-xxs); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); font-weight: 500; text-align: center; padding: 8px; }
+
+    /* FOOTER */
+    .footer { background: var(--dark); padding: var(--s7) 0 var(--s4); }
+    .footer__inner { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s5); padding-bottom: var(--s5); border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: var(--s4); }
+    .footer__brand { font-family: var(--font-serif); font-size: 22px; font-weight: 300; color: var(--white); display: block; margin-bottom: var(--s2); }
+    .footer__tagline { font-size: var(--fs-xs); color: var(--dark-3); max-width: 260px; line-height: var(--lh-loose); }
+    .footer__nav { display: flex; gap: var(--s4); flex-wrap: wrap; align-items: center; }
+    .footer__link { font-size: var(--fs-sm); color: var(--dark-3); transition: color var(--t-f); }
+    .footer__link:hover { color: var(--white); }
+    .footer__copy { font-size: var(--fs-xxs); color: rgba(255,255,255,.2); letter-spacing: .04em; }
+
+    /* HERO */
+    .cs-hero { padding-top: calc(var(--nav-h) + var(--s7)); padding-bottom: var(--s7); border-bottom: 1px solid var(--border); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-xs); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); transition: color var(--t-f); margin-bottom: var(--s5); }
+    .back-link:hover { color: var(--ink); }
+    .cs-hero__eyebrow { font-size: var(--fs-xxs); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--s2); }
+    .cs-hero__title { font-family: var(--font-serif); font-size: var(--fs-hero); font-weight: 300; line-height: var(--lh-tight); letter-spacing: -.025em; margin-bottom: var(--s3); max-width: 760px; }
+    .cs-hero__outcome { display: block; font-family: var(--font-sans); font-size: clamp(18px, 2vw, 24px); font-weight: 300; font-style: italic; color: var(--ink-2); margin-bottom: var(--s4); padding-left: var(--s4); border-left: 2px solid var(--accent); line-height: var(--lh-snug); max-width: 620px; }
+    .cs-hero__sub { font-size: var(--fs-lg); color: var(--ink-2); line-height: var(--lh-loose); max-width: 580px; margin-bottom: var(--s6); }
+    .cs-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); align-items: start; }
+    .cs-meta__item { padding: var(--s3) var(--s2); border-right: 1px solid var(--border); text-align: center; }
+    .cs-meta__item:last-child { border-right: none; text-align: center; }
+    .cs-meta__label { font-size: var(--fs-xxs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+    .cs-meta__value { font-size: var(--fs-sm); font-weight: 500; color: var(--ink); line-height: var(--lh-snug); }
+
+    /* FLOATING IMAGES */
+    .float-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(var(--s5), 5vw, var(--s7)); margin-top: var(--s6); align-items: start; }
+    .float-item { display: flex; flex-direction: column; gap: var(--s3); }
+    .float-item--offset { margin-top: clamp(24px, 4vw, 56px); }
+    .float-label { display: inline-flex; width: fit-content; font-size: var(--fs-xxs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 5px 13px; border-radius: 100px; }
+    .float-label--before { background: var(--subtle); color: var(--ink-3); border: 1px solid var(--border); }
+    .float-label--after  { background: rgba(26,86,219,.08); color: var(--accent); border: 1px solid rgba(26,86,219,.2); }
+    .float-img { width: 100%; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 9/16; transition: transform var(--t-s); }
+    .float-img:hover { transform: translateY(-4px); }
+    .float-img .ph { border: none; border-radius: 0; background: var(--subtle); }
+    .float-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .float-caption { font-size: var(--fs-xs); color: var(--ink-3); line-height: var(--lh-loose); }
+    .float-caption strong { color: var(--ink-2); font-weight: 500; }
+
+    /* STAT ROW */
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3); margin-top: var(--s6); }
+    .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: var(--s4) var(--s4) var(--s5); transition: transform var(--t-b), box-shadow var(--t-b); }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,.06); }
+    .stat-card__num { font-family: var(--font-serif); font-size: clamp(36px, 5vw, 56px); font-weight: 200; color: var(--ink); line-height: 1; letter-spacing: -.03em; margin-bottom: var(--s1); }
+    .stat-card__label { font-size: var(--fs-xs); font-weight: 500; color: var(--ink-2); line-height: var(--lh-snug); }
+
+    /* WHAT / WHY GRID */
+    .what-why { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); margin-top: var(--s5); }
+    .what-why__block { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: var(--s4); }
+    .what-why__tag { font-size: var(--fs-xxs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: var(--s3); }
+    .what-why__title { font-family: var(--font-serif); font-size: var(--fs-h3); font-weight: 300; letter-spacing: -.015em; color: var(--ink); margin-bottom: var(--s3); line-height: var(--lh-snug); }
+    .what-why__list { display: flex; flex-direction: column; gap: var(--s2); }
+    .what-why__item { display: flex; align-items: flex-start; gap: var(--s2); font-size: var(--fs-sm); color: var(--ink-2); line-height: var(--lh-snug); }
+    .what-why__dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 6px; }
+
+    /* STRATEGY PILLARS */
+    .pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s3); margin-top: var(--s6); }
+    .pillar { padding: var(--s4); border: 1px solid var(--border); border-radius: var(--r-md); background: var(--white); transition: transform var(--t-b), box-shadow var(--t-b), border-color var(--t-b); }
+    .pillar:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,.07); border-color: transparent; }
+    .pillar__num { font-family: var(--font-serif); font-size: 36px; font-weight: 200; color: var(--border); line-height: 1; margin-bottom: var(--s3); user-select: none; }
+    .pillar__title { font-size: var(--fs-sm); font-weight: 600; color: var(--ink); margin-bottom: var(--s1); letter-spacing: -.01em; }
+    .pillar__body { font-size: var(--fs-xs); color: var(--ink-2); line-height: var(--lh-loose); }
+
+    /* ROLE GRID */
+    .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s7); align-items: start; }
+    .resp-label { font-size: var(--fs-xxs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: var(--s3); }
+    .resp-list { display: flex; flex-direction: column; }
+    .resp-item { font-size: var(--fs-sm); font-weight: 500; color: var(--ink); padding: var(--s2) 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: var(--s2); }
+    .resp-item:first-child { border-top: 1px solid var(--border); }
+    .resp-item::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+    /* ARTIFACT GRID */
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s3); margin-top: var(--s6); }
+    .artifact { display: flex; flex-direction: column; gap: var(--s2); transition: transform var(--t-b); }
+    .artifact:hover { transform: translateY(-5px); }
+    .artifact__img { aspect-ratio: 4/3; border-radius: var(--r-lg); overflow: hidden; transition: transform var(--t-b); }
+    .artifact__img .ph { border: none; border-radius: 0; }
+    .artifact__caption { font-size: var(--fs-xs); color: var(--ink-2); line-height: var(--lh-snug); }
+
+    /* FINAL GRID */
+    .final-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); margin-top: var(--s6); }
+    .final-item { display: flex; flex-direction: column; gap: var(--s2); }
+    .final-item__img { aspect-ratio: 4/3; border-radius: var(--r-xl); overflow: hidden; transition: transform var(--t-b); }
+    .final-item__img:hover { transform: translateY(-4px); }
+    .final-item__img .ph { border: none; border-radius: 0; }
+    .final-item__caption { font-size: var(--fs-sm); font-weight: 500; color: var(--ink); line-height: var(--lh-snug); }
+
+    /* LEARNINGS */
+    .learnings { display: flex; flex-direction: column; margin-top: var(--s5); }
+    .learning { display: flex; align-items: flex-start; gap: var(--s4); padding: var(--s4) 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .learning:first-child { border-top: 1px solid rgba(255,255,255,.1); }
+    .learning__num { font-family: var(--font-serif); font-size: var(--fs-h3); font-weight: 200; color: rgba(255,255,255,.15); line-height: 1; min-width: 36px; padding-top: 3px; user-select: none; }
+    .learning__content {}
+    .learning__title { font-size: var(--fs-sm); font-weight: 600; color: var(--white); margin-bottom: 6px; }
+    .learning__body { font-size: var(--fs-sm); color: var(--dark-2); line-height: var(--lh-loose); }
+
+    /* NEXT PROJECT */
+    .next-card { display: block; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-xl); padding: var(--s6) var(--s7); transition: transform var(--t-b), box-shadow var(--t-b), border-color var(--t-b); }
+    .next-card:hover { transform: translateY(-5px); box-shadow: 0 24px 64px rgba(0,0,0,.09); border-color: transparent; }
+    .next-card__eyebrow { font-size: var(--fs-xxs); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: var(--s3); }
+    .next-card__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--s5); }
+    .next-card__title { font-family: var(--font-serif); font-size: clamp(28px, 3.5vw, 48px); font-weight: 300; line-height: var(--lh-tight); letter-spacing: -.025em; color: var(--ink); margin-bottom: var(--s2); }
+    .next-card__desc { font-size: var(--fs-body); color: var(--ink-2); line-height: var(--lh-loose); max-width: 480px; }
+    .next-card__arrow { font-size: 36px; color: var(--accent); flex-shrink: 0; transition: transform var(--t-b); line-height: 1; }
+    .next-card:hover .next-card__arrow { transform: translateX(8px); }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .pillars          { grid-template-columns: 1fr 1fr; }
+      .grid-4           { grid-template-columns: 1fr 1fr; }
+      .final-grid       { grid-template-columns: 1fr; }
+      .role-grid        { grid-template-columns: 1fr; gap: var(--s5); }
+      .stat-row         { grid-template-columns: 1fr 1fr 1fr; }
+      .what-why         { grid-template-columns: 1fr; }
+      .next-card        { padding: var(--s5); }
+      .next-card__inner { flex-direction: column; align-items: flex-start; gap: var(--s3); }
+    }
+    @media (max-width: 640px) {
+      :root { --s8: 72px; --s7: 56px; --s6: 48px; }
+      .nav__links         { display: none; }
+      .nav__burger        { display: flex; }
+      .pillars            { grid-template-columns: 1fr; }
+      .grid-4             { grid-template-columns: 1fr; }
+      .final-grid         { grid-template-columns: 1fr; }
+      .float-grid         { grid-template-columns: 1fr 1fr; gap: var(--s3); }
+      .stat-row           { grid-template-columns: 1fr; }
+      .what-why           { grid-template-columns: 1fr; }
+      .cs-meta            { flex-direction: column; }
+      .cs-meta__item      { flex: 0 0 auto; border-right: none; border-bottom: 1px solid var(--border); padding: 6px 0; }
+      .cs-meta__item:last-child { border-bottom: none; }
+      .next-card          { padding: var(--s4); }
+      .footer__inner      { flex-direction: column; gap: var(--s4); }
+      .footer__nav        { gap: var(--s3); }
+      /* Impact at a glance responsive */
+      .cs-hero__impact { grid-template-columns: 1fr !important; }
+      .cs-hero__impact > div { border-left: none !important; border-right: none !important; padding: 0 !important; border-bottom: 1px solid var(--border); padding-bottom: var(--s3) !important; }
+      .cs-hero__impact > div:last-child { border-bottom: none; }
+      /* Key decisions responsive */
+      [data-decisions] > div [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+    }
+    /* Research 3-col grid responsive */
+    @media (max-width: 960px) {
+      .grid-4[style*="repeat(3"] { grid-template-columns: 1fr 1fr !important; }
+    }
+    @media (max-width: 640px) {
+      .grid-4[style*="repeat(3"] { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header role="banner">
+    <nav class="nav" id="nav" aria-label="Main navigation">
+      <div class="nav__inner">
+        <a href="/" class="nav__brand">Bri May</a>
+        <ul class="nav__links" role="list">
+          <li><a href="/" class="nav__link">Home</a></li>
+          <li class="nav__item--has-dropdown">
+            <a href="/work" class="nav__link active">Work</a>
+            <ul class="nav__dropdown" role="list">
+              <li><a href="/aimee-ai" class="nav__dropdown-link">Aimee AI</a></li>
+              <li><a href="/work/hub" class="nav__dropdown-link">Financial Finesse Hub</a></li>
+              <li><a href="/work/smart-benefits" class="nav__dropdown-link">Smart Benefits</a></li>
+            </ul>
+          </li>
+          <li><a href="/about" class="nav__link">About</a></li>
+          <li><a href="/resume" class="nav__link">Résumé</a></li>
+          <li><a href="/contact" class="nav__cta">Get in touch</a></li>
+        </ul>
+        <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <div class="nav__drawer" id="drawer" aria-hidden="true">
+      <a href="/" class="nav__link">Home</a>
+      <a href="/work" class="nav__link">Work</a>
+      <a href="/about" class="nav__link">About</a>
+      <a href="/resume" class="nav__link">Résumé</a>
+      <a href="/contact" class="nav__link">Contact</a>
+    </div>
+  </header>
+
+
+  <main role="main">
+
+    <!-- HERO -->
+    <section class="cs-hero" aria-labelledby="cs-title">
+      <div class="container">
+        <a href="/work" class="back-link fade-up">← All Work</a>
+        <p class="cs-hero__eyebrow fade-up" data-d="1">Case Study — Benefits Platform</p>
+        <h1 id="cs-title" class="cs-hero__title fade-up" data-d="2">Smart Benefits</h1>
+        <p class="cs-hero__outcome fade-up" data-d="3">Designed an AI-powered benefits experience that turns overwhelming open enrollment into a confident, guided decision — embedded directly on recordkeeper sites</p>
+        <p class="cs-hero__sub fade-up" data-d="4">Benefits enrollment is one of the most stressful financial moments employees face — and most platforms make it worse. Smart Benefits is a white-label AI assistant that meets employees where they are, helping them understand, compare, and choose benefits with clarity and confidence.</p>
+        <dl class="cs-meta fade-up" data-d="4">
+          <div class="cs-meta__item">
+            <dt class="cs-meta__label">Role</dt>
+            <dd class="cs-meta__value">Product Designer</dd>
+          </div>
+          <div class="cs-meta__item">
+            <dt class="cs-meta__label">Company</dt>
+            <dd class="cs-meta__value">Financial Finesse</dd>
+          </div>
+          <div class="cs-meta__item">
+            <dt class="cs-meta__label">Timeline</dt>
+            <dd class="cs-meta__value">2024</dd>
+          </div>
+          <div class="cs-meta__item">
+            <dt class="cs-meta__label">Scope</dt>
+            <dd class="cs-meta__value">Product Design · AI Systems · Employee Experience · Embeddable Widget</dd>
+          </div>
+        </dl>
+
+        <!-- ── IMPACT AT A GLANCE ── -->
+        <!-- TODO: Replace X values with real metrics (adoption, engagement during enrollment, employer count, etc.) -->
+        <div class="cs-hero__impact fade-up" data-d="4" style="margin-top:var(--s5);padding-top:var(--s5);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);">
+          <div style="text-align:center;">
+            <!-- TODO: Replace with real employer / deployment count -->
+            <p style="font-family:var(--font-serif);font-size:clamp(28px,3.5vw,44px);font-weight:200;line-height:1;letter-spacing:-.03em;color:var(--ink);margin-bottom:6px;">X+</p>
+            <p style="font-size:var(--fs-xs);font-weight:500;color:var(--ink-2);line-height:var(--lh-snug);">Employer clients with Smart Benefits embedded in their open enrollment flow — TODO: add real number</p>
+          </div>
+          <div style="text-align:center;border-left:1px solid var(--border);border-right:1px solid var(--border);padding:0 var(--s3);">
+            <!-- TODO: Replace with real engagement or completion stat during open enrollment -->
+            <p style="font-family:var(--font-serif);font-size:clamp(28px,3.5vw,44px);font-weight:200;line-height:1;letter-spacing:-.03em;color:var(--ink);margin-bottom:6px;">↑ X%</p>
+            <p style="font-size:var(--fs-xs);font-weight:500;color:var(--ink-2);line-height:var(--lh-snug);">Voluntary benefits enrollment completion rate improvement — TODO: add real number</p>
+          </div>
+          <div style="text-align:center;">
+            <p style="font-family:var(--font-serif);font-size:clamp(28px,3.5vw,44px);font-weight:200;line-height:1;letter-spacing:-.03em;color:var(--ink);margin-bottom:6px;">3</p>
+            <p style="font-size:var(--fs-xs);font-weight:500;color:var(--ink-2);line-height:var(--lh-snug);">Embed modes — side panel, modal, and inline — designed for any recordkeeper platform</p>
+          </div>
+        </div>
+
+        <!-- ── HERO PRODUCT IMAGE ── -->
+        <!-- TODO: Replace with an embedded widget screenshot or device mockup -->
+        <!-- Recommended: 1400×700px. Save as /images/smart-benefits-hero.jpg -->
+        <div class="fade-up" data-d="4" style="margin-top:var(--s6);border-radius:var(--r-xl);overflow:hidden;aspect-ratio:16/7;background:var(--subtle);border:1px solid var(--border);">
+          <div class="ph" style="height:100%;"><span>Smart Benefits — Hero Widget / Interface Screenshot<br/>TODO: Add product screenshot → save as images/smart-benefits-hero.jpg (recommended 1400×700px)</span></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- BEFORE / AFTER -->
+    <section class="section section--white" aria-labelledby="before-after-heading">
+      <div class="container">
+        <div class="section-hdr fade-up">
+          <p class="section-label">Before &amp; After</p>
+          <h2 id="before-after-heading" class="section-title">Overwhelming enrollment → guided decision.</h2>
+        </div>
+        <div class="float-grid fade-up" data-d="1">
+          <figure class="float-item">
+            <div class="float-label float-label--before">Before</div>
+            <!-- TODO: Add screenshot of a typical confusing enrollment page. Save as images/smart-benefits-before.jpg (9:16 ratio) -->
+            <div class="float-img">
+              <div class="ph"><span>Typical Benefits Enrollment — Dense &amp; Confusing<br/>TODO → images/smart-benefits-before.jpg (9:16 ratio)</span></div>
+            </div>
+            <figcaption class="float-caption"><strong>Walls of text and plan comparisons.</strong> Employees guessed, defaulted to last year's choices, or skipped enrollment entirely.</figcaption>
+          </figure>
+          <figure class="float-item float-item--offset">
+            <div class="float-label float-label--after">After</div>
+            <!-- TODO: Add screenshot of Smart Benefits widget in action. Save as images/smart-benefits-after.jpg (9:16 ratio) -->
+            <div class="float-img">
+              <div class="ph"><span>Smart Benefits — AI Guidance Widget<br/>TODO → images/smart-benefits-after.jpg (9:16 ratio)</span></div>
+            </div>
+            <figcaption class="float-caption"><strong>Conversational benefits guidance.</strong> Personalized recommendations based on life situation, usage patterns, and employer plan data — embedded on the enrollment page.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- THE PROBLEM -->
+    <section class="section section--subtle" aria-labelledby="problem-heading">
+      <div class="container">
+        <div class="section-hdr read fade-up">
+          <p class="section-label">The Problem</p>
+          <h2 id="problem-heading" class="section-title">The most important financial decision of the year — made in 20 minutes with no guidance.</h2>
+          <p class="section-desc">Open enrollment is the one moment when employees can make or break their financial wellness for the entire year. Yet most platforms treat it as a form-filling exercise, not a decision support moment.</p>
+        </div>
+
+        <div class="what-why fade-up" data-d="1">
+          <div class="what-why__block">
+            <p class="what-why__tag">User Problem</p>
+            <h3 class="what-why__title">Complexity without context</h3>
+            <ul class="what-why__list">
+              <li class="what-why__item"><span class="what-why__dot"></span>Employees don't understand the difference between plan tiers, deductibles, or HSA eligibility</li>
+              <li class="what-why__item"><span class="what-why__dot"></span>No way to model how different choices affect take-home pay or out-of-pocket costs</li>
+              <li class="what-why__item"><span class="what-why__dot"></span>Most employees re-enroll in last year's selections without reviewing changes</li>
+              <li class="what-why__item"><span class="what-why__dot"></span>Missed supplemental benefits — like FSA, disability, or life insurance — that could have real impact</li>
+            </ul>
+          </div>
+          <div class="what-why__block">
+            <p class="what-why__tag">Business Problem</p>
+            <h3 class="what-why__title">Employers couldn't prove benefits ROI</h3>
+            <ul class="what-why__list">
+              <li class="what-why__item"><span class="what-why__dot"></span>Low engagement with voluntary benefits meant employers were paying for programs employees didn't use</li>
+              <li class="what-why__item"><span class="what-why__dot"></span>Recordkeeper platforms had no guidance layer — they showed plans but didn't explain them</li>
+              <li class="what-why__item"><span class="what-why__dot"></span>A white-label AI widget could fill this gap at scale, without disrupting existing enrollment systems</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── RESEARCH & DISCOVERY ── -->
+    <section class="section section--white" aria-labelledby="research-heading">
+      <div class="container">
+        <div class="section-hdr read fade-up">
+          <p class="section-label">Research &amp; Discovery</p>
+          <h2 id="research-heading" class="section-title">What we learned about the enrollment moment before we designed for it.</h2>
+        </div>
+
+        <!-- Key Insight Callout -->
+        <!-- TODO: Replace with a real quote from an employee interview or usability session -->
+        <div class="fade-up" data-d="1" style="background:rgba(26,86,219,.05);border:1px solid rgba(26,86,219,.15);border-radius:var(--r-lg);padding:var(--s4) var(--s5);margin-bottom:var(--s6);max-width:var(--read-w);">
+          <p style="font-size:var(--fs-xxs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:var(--s2);">Key Insight</p>
+          <p style="font-family:var(--font-serif);font-size:var(--fs-h3);font-weight:300;line-height:var(--lh-snug);letter-spacing:-.015em;color:var(--ink);margin-bottom:var(--s2);">TODO: Add a real user quote — e.g., "I just picked what I had last year. I didn't really understand what anything meant."</p>
+          <p style="font-size:var(--fs-xs);color:var(--ink-3);">— TODO: Add participant identifier (e.g., "Employee, 34, Healthcare sector, first enrollment experience")</p>
+        </div>
+
+        <div class="grid-4" style="grid-template-columns:repeat(3,1fr);">
+          <div class="artifact fade-up" data-d="1">
+            <!-- TODO: Add research artifact — e.g., survey results, interview notes, or journey map. Save as images/sb-research-1.jpg (4:3 ratio) -->
+            <div class="artifact__img"><div class="ph"><span>Research Artifact 01<br/>TODO → images/sb-research-1.jpg (4:3 ratio)</span></div></div>
+            <p class="artifact__caption"><strong>Enrollment Journey Map</strong> — TODO: Describe mapping of the existing enrollment experience and where employees got stuck or gave up.</p>
+          </div>
+          <div class="artifact fade-up" data-d="2">
+            <!-- TODO: Add employee interview synthesis or affinity map. Save as images/sb-research-2.jpg (4:3 ratio) -->
+            <div class="artifact__img"><div class="ph"><span>Research Artifact 02<br/>TODO → images/sb-research-2.jpg (4:3 ratio)</span></div></div>
+            <p class="artifact__caption"><strong>Employee Interviews</strong> — TODO: Describe methodology and key themes (N=X, moderated, focused on enrollment decision-making).</p>
+          </div>
+          <div class="artifact fade-up" data-d="3">
+            <!-- TODO: Add recordkeeper audit or competitive analysis. Save as images/sb-research-3.jpg (4:3 ratio) -->
+            <div class="artifact__img"><div class="ph"><span>Research Artifact 03<br/>TODO → images/sb-research-3.jpg (4:3 ratio)</span></div></div>
+            <p class="artifact__caption"><strong>Platform Audit</strong> — TODO: Describe audit of existing recordkeeper platforms (e.g., Fidelity, Voya, Guideline). What guidance was missing?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- THE APPROACH -->
+    <section class="section" style="background:var(--subtle);" aria-labelledby="approach-heading">
+      <div class="container">
+        <div class="section-hdr read fade-up">
+          <p class="section-label">The Approach</p>
+          <h2 id="approach-heading" class="section-title">Build a guidance layer, not a replacement system.</h2>
+          <p class="section-desc">Smart Benefits was designed to sit on top of existing enrollment platforms — not replace them. The goal was a lightweight, embeddable experience that could surface the right guidance at the right moment in the enrollment flow.</p>
+        </div>
+
+        <div class="pillars">
+          <div class="pillar fade-up">
+            <div class="pillar__num" aria-hidden="true">01</div>
+            <p class="pillar__title">Situation-first personalization</p>
+            <p class="pillar__body">A short intake flow captures life situation, family size, and health usage — so recommendations are grounded in the employee's actual context, not generic plan rankings.</p>
+          </div>
+          <div class="pillar fade-up" data-d="1">
+            <div class="pillar__num" aria-hidden="true">02</div>
+            <p class="pillar__title">Plain-language explanations</p>
+            <p class="pillar__body">Every benefit type — HSA, FSA, HMO, PPO — is explained in plain, jargon-free language. Employees understand what they're choosing before they choose it.</p>
+          </div>
+          <div class="pillar fade-up" data-d="2">
+            <div class="pillar__num" aria-hidden="true">03</div>
+            <p class="pillar__title">Embeddable at any touchpoint</p>
+            <p class="pillar__body">Smart Benefits is a white-label widget that embeds directly into recordkeeper portals, HR platforms, or intranet pages — meeting employees in the enrollment interface they already use.</p>
+          </div>
+          <div class="pillar fade-up" data-d="3">
+            <div class="pillar__num" aria-hidden="true">04</div>
+            <p class="pillar__title">CFP-backed, no open internet</p>
+            <p class="pillar__body">Like all Financial Finesse products, Smart Benefits draws from expert CFP guidance only — no hallucinated recommendations, no generic financial advice from unverified sources.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- MY ROLE -->
+    <section class="section section--subtle" aria-labelledby="role-heading">
+      <div class="container">
+        <div class="role-grid">
+          <div>
+            <div class="section-hdr fade-up">
+              <p class="section-label">My Role</p>
+              <h2 id="role-heading" class="section-title">Designing for the hardest decision moment.</h2>
+            </div>
+            <p class="cs-body fade-up" data-d="1">I designed the end-to-end Smart Benefits experience — from the intake flow and recommendation logic through the embeddable widget UI and integration design. This required deep collaboration with CFPs to ensure guidance accuracy and with engineering to build an API-first embed model.</p>
+          </div>
+          <div class="fade-up" data-d="2">
+            <p class="resp-label">Responsibilities</p>
+            <ul class="resp-list">
+              <li class="resp-item">Intake &amp; personalization flow design</li>
+              <li class="resp-item">Benefits recommendation UX</li>
+              <li class="resp-item">Plain-language content strategy</li>
+              <li class="resp-item">Embeddable widget design &amp; API spec</li>
+              <li class="resp-item">White-label design system</li>
+              <li class="resp-item">CFP collaboration &amp; accuracy review</li>
+              <li class="resp-item">Recordkeeper integration patterns</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- DESIGN PROCESS -->
+    <section class="section section--white" aria-labelledby="process-heading">
+      <div class="container">
+        <div class="section-hdr read fade-up">
+          <p class="section-label">Design Process</p>
+          <h2 id="process-heading" class="section-title">How I designed the benefits guidance experience.</h2>
+        </div>
+        <div class="grid-4 fade-up" data-d="1">
+          <div class="artifact">
+            <!-- TODO: Add intake flow wireframe/design. Save as images/sb-process-intake.jpg (4:3 ratio) -->
+            <div class="artifact__img"><div class="ph"><span>Intake Flow<br/>TODO → images/sb-process-intake.jpg (4:3 ratio)</span></div></div>
+            <p class="artifact__caption"><strong>Intake Flow</strong> — Conversational situation capture: life stage, family size, health usage patterns. TODO: describe how you made it feel non-intimidating.</p>
+          </div>
+          <div class="artifact">
+            <!-- TODO: Add recommendation logic diagram or wireframe. Save as images/sb-process-logic.jpg (4:3 ratio) -->
+            <div class="artifact__img"><div class="ph"><span>Recommendation Logic<br/>TODO → images/sb-process-logic.jpg (4:3 ratio)</span></div></div>
+            <p class="artifact__caption"><strong>Recommendation Framework</strong> — How guidance maps to life situations and plan structures. TODO: describe key logic decisions and CFP collaboration.</p>
+          </div>
+          <div class="artifact">
+            <!-- TODO: Add widget embed patterns / integration modes. Save as images/sb-process-embed.jpg (4:3 ratio) -->
+            <div class="artifact__img"><div class="ph"><span>Widget Embed Patterns<br/>TODO → images/sb-process-embed.jpg (4:3 ratio)</span></div></div>
+            <p class="artifact__caption"><strong>Embed Design</strong> — Side panel, modal, and inline modes. TODO: describe the tradeoffs of each mode and which recordkeepers they map to.</p>
+          </div>
+          <div class="artifact">
+            <!-- TODO: Add white-label theming / design system screenshot. Save as images/sb-process-theming.jpg (4:3 ratio) -->
+            <div class="artifact__img"><div class="ph"><span>White-Label Theming<br/>TODO → images/sb-process-theming.jpg (4:3 ratio)</span></div></div>
+            <p class="artifact__caption"><strong>White-Label System</strong> — CSS token architecture that adapts brand color, type, and logo for any employer. TODO: describe token structure.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── KEY DESIGN DECISIONS ── -->
+    <section class="section section--subtle" aria-labelledby="decisions-heading">
+      <div class="container">
+        <div class="section-hdr read fade-up">
+          <p class="section-label">Key Design Decisions</p>
+          <h2 id="decisions-heading" class="section-title">The choices that made Smart Benefits feel like guidance, not software.</h2>
+          <p class="section-desc">Designing for high-stakes financial decisions requires careful tradeoffs between confidence-building, speed, and clarity. Here are three we navigated.</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:var(--s4);" data-decisions>
+
+          <!-- Decision 01 -->
+          <div class="fade-up" data-d="1" style="background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4) var(--s5);">
+            <p style="font-size:var(--fs-xxs);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--s2);">Decision 01</p>
+            <h3 style="font-family:var(--font-serif);font-size:var(--fs-h3);font-weight:300;letter-spacing:-.015em;color:var(--ink);margin-bottom:var(--s4);line-height:var(--lh-snug);">TODO: Name the decision — e.g., "Conversational intake vs. structured form for capturing life situation"</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-bottom:var(--s4);">
+              <div style="background:var(--subtle);border:1px solid var(--border);border-radius:var(--r-md);padding:var(--s3);">
+                <p style="font-size:var(--fs-xxs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--s2);">Option we didn't take</p>
+                <p style="font-size:var(--fs-sm);color:var(--ink-2);line-height:var(--lh-snug);">TODO: Describe the rejected direction — e.g., "A traditional multi-field form with dropdowns for family size, health status, and income bracket"</p>
+              </div>
+              <div style="background:rgba(26,86,219,.05);border:1px solid rgba(26,86,219,.15);border-radius:var(--r-md);padding:var(--s3);">
+                <p style="font-size:var(--fs-xxs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:var(--s2);">What we chose</p>
+                <p style="font-size:var(--fs-sm);color:var(--ink-2);line-height:var(--lh-snug);">TODO: Describe your chosen direction — e.g., "A 3-question conversational flow with visual cards, completed in under 90 seconds"</p>
+              </div>
+            </div>
+            <p style="font-size:var(--fs-xs);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;">Why:</p>
+            <p style="font-size:var(--fs-sm);color:var(--ink-2);line-height:var(--lh-loose);">TODO: Ground this in user research — e.g., "Usability testing showed that form-style intake felt like 'more work,' triggering the same avoidance behavior we were trying to solve. The card-based flow felt like answering a quick question, not filling out paperwork."</p>
+          </div>
+
+          <!-- Decision 02 -->
+          <div class="fade-up" data-d="2" style="background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4) var(--s5);">
+            <p style="font-size:var(--fs-xxs);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--s2);">Decision 02</p>
+            <h3 style="font-family:var(--font-serif);font-size:var(--fs-h3);font-weight:300;letter-spacing:-.015em;color:var(--ink);margin-bottom:var(--s4);line-height:var(--lh-snug);">TODO: Name the decision — e.g., "Ranked recommendations vs. explaining all options equally"</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-bottom:var(--s4);">
+              <div style="background:var(--subtle);border:1px solid var(--border);border-radius:var(--r-md);padding:var(--s3);">
+                <p style="font-size:var(--fs-xxs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--s2);">Option we didn't take</p>
+                <p style="font-size:var(--fs-sm);color:var(--ink-2);line-height:var(--lh-snug);">TODO: Describe the rejected option</p>
+              </div>
+              <div style="background:rgba(26,86,219,.05);border:1px solid rgba(26,86,219,.15);border-radius:var(--r-md);padding:var(--s3);">
+                <p style="font-size:var(--fs-xxs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:var(--s2);">What we chose</p>
+                <p style="font-size:var(--fs-sm);color:var(--ink-2);line-height:var(--lh-snug);">TODO: Describe your chosen direction</p>
+              </div>
+            </div>
+            <p style="font-size:var(--fs-xs);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;">Why:</p>
+            <p style="font-size:var(--fs-sm);color:var(--ink-2);line-height:var(--lh-loose);">TODO: Explain the reasoning — tie it to reducing decision paralysis, building employee confidence, or CFP expertise.</p>
+          </div>
+
+          <!-- Decision 03 -->
+          <div class="fade-up" data-d="3" style="background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4) var(--s5);">
+            <p style="font-size:var(--fs-xxs);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--s2);">Decision 03</p>
+            <h3 style="font-family:var(--font-serif);font-size:var(--fs-h3);font-weight:300;letter-spacing:-.015em;color:var(--ink);margin-bottom:var(--s4);line-height:var(--lh-snug);">TODO: Name the decision — e.g., "How opinionated should the widget be about a 'best' choice?"</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-bottom:var(--s4);">
+              <div style="background:var(--subtle);border:1px solid var(--border);border-radius:var(--r-md);padding:var(--s3);">
+                <p style="font-size:var(--fs-xxs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--s2);">Option we didn't take</p>
+                <p style="font-size:var(--fs-sm);color:var(--ink-2);line-height:var(--lh-snug);">TODO: Describe the rejected option</p>
+              </div>
+              <div style="background:rgba(26,86,219,.05);border:1px solid rgba(26,86,219,.15);border-radius:var(--r-md);padding:var(--s3);">
+                <p style="font-size:var(--fs-xxs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:var(--s2);">What we chose</p>
+                <p style="font-size:var(--fs-sm);color:var(--ink-2);line-height:var(--lh-snug);">TODO: Describe your chosen direction</p>
+              </div>
+            </div>
+            <p style="font-size:var(--fs-xs);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;">Why:</p>
+            <p style="font-size:var(--fs-sm);color:var(--ink-2);line-height:var(--lh-loose);">TODO: Explain the reasoning — consider employer liability, fiduciary concerns, and user trust dynamics.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- FINAL EXPERIENCE -->
+    <section class="section section--white" aria-labelledby="final-heading">
+      <div class="container">
+        <div class="section-hdr read fade-up">
+          <p class="section-label">Final Experience</p>
+          <h2 id="final-heading" class="section-title">The finished product.</h2>
+        </div>
+        <div class="final-grid">
+          <div class="final-item fade-up" data-d="1">
+            <!-- TODO: Add intake / personalization screen. Save as images/sb-final-intake.jpg (4:3 ratio) -->
+            <div class="final-item__img"><div class="ph"><span>Intake &amp; Personalization<br/>TODO → images/sb-final-intake.jpg (4:3 ratio)</span></div></div>
+            <p class="final-item__caption">Conversational intake — captures life situation, family structure, and health usage in under 90 seconds</p>
+          </div>
+          <div class="final-item fade-up" data-d="2">
+            <!-- TODO: Add benefits recommendations screen. Save as images/sb-final-recommendations.jpg (4:3 ratio) -->
+            <div class="final-item__img"><div class="ph"><span>Benefits Recommendations<br/>TODO → images/sb-final-recommendations.jpg (4:3 ratio)</span></div></div>
+            <p class="final-item__caption">Personalized recommendations — ranked by fit, explained in plain language with cost modeling</p>
+          </div>
+          <div class="final-item fade-up" data-d="1">
+            <!-- TODO: Add plan comparison view. Save as images/sb-final-compare.jpg (4:3 ratio) -->
+            <div class="final-item__img"><div class="ph"><span>Plan Comparison View<br/>TODO → images/sb-final-compare.jpg (4:3 ratio)</span></div></div>
+            <p class="final-item__caption">Side-by-side plan comparison — annual cost estimates based on each employee's estimated usage patterns</p>
+          </div>
+          <div class="final-item fade-up" data-d="2">
+            <!-- TODO: Add embedded widget screenshot showing it live on a recordkeeper platform. Save as images/sb-final-embedded.jpg (4:3 ratio) -->
+            <div class="final-item__img"><div class="ph"><span>Embedded on Recordkeeper<br/>TODO → images/sb-final-embedded.jpg (4:3 ratio)</span></div></div>
+            <p class="final-item__caption">Widget embedded live — side panel mode on a recordkeeper enrollment interface, no redirect required</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- IMPACT -->
+    <section class="section section--white" aria-labelledby="impact-heading">
+      <div class="container">
+        <div class="section-hdr read fade-up">
+          <p class="section-label">Impact</p>
+          <h2 id="impact-heading" class="section-title">What shipped. What changed.</h2>
+        </div>
+        <div class="stat-row">
+          <div class="stat-card fade-up" data-d="1">
+            <!-- TODO: Replace with a real enrollment completion or engagement metric from open enrollment data -->
+            <p class="stat-card__num">↑ X%</p>
+            <p class="stat-card__label">Voluntary benefits enrollment completion improvement vs. unaided enrollment flow — TODO: add real number from employer data</p>
+          </div>
+          <div class="stat-card fade-up" data-d="2">
+            <!-- TODO: Replace with real employer count or deployment stat -->
+            <p class="stat-card__num">X+</p>
+            <p class="stat-card__label">Employer clients with Smart Benefits embedded in their open enrollment portal — TODO: add real number</p>
+          </div>
+          <div class="stat-card fade-up" data-d="3">
+            <p class="stat-card__num">3</p>
+            <p class="stat-card__label">Embed modes — side panel, modal, and inline — designed to integrate with any recordkeeper platform without disrupting the existing flow</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- LEARNINGS -->
+    <section class="section section--dark" aria-labelledby="learn-heading">
+      <div class="container">
+        <div class="read">
+          <div class="section-hdr fade-up">
+            <p class="section-label">Learnings</p>
+            <h2 id="learn-heading" class="section-title">What I'd tell a designer starting this project.</h2>
+          </div>
+
+          <ul class="learnings fade-up" data-d="1">
+            <li class="learning">
+              <span class="learning__num" aria-hidden="true">01</span>
+              <div class="learning__content">
+                <p class="learning__title">The best guidance is invisible until you need it.</p>
+                <p class="learning__body">Smart Benefits works because it doesn't interrupt the enrollment flow — it enhances it. The most impactful design decision was making the widget feel like a natural part of the experience, not an add-on.</p>
+              </div>
+            </li>
+            <li class="learning">
+              <span class="learning__num" aria-hidden="true">02</span>
+              <div class="learning__content">
+                <p class="learning__title">Plain language is a product feature, not a content afterthought.</p>
+                <p class="learning__body">Employees don't fail at benefits enrollment because they're not trying — they fail because the language is inaccessible. Investing in plain-language design had more impact than any UI improvement.</p>
+              </div>
+            </li>
+            <li class="learning">
+              <span class="learning__num" aria-hidden="true">03</span>
+              <div class="learning__content">
+                <p class="learning__title">White-label products require designing for flexibility first.</p>
+                <p class="learning__body">Every employer has a different brand, platform, and plan structure. Building a design system that could adapt without breaking required a fundamentally different approach than designing a fixed product.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- NEXT PROJECT -->
+    <section class="section section--subtle" aria-labelledby="next-heading">
+      <div class="container">
+        <div class="section-hdr fade-up">
+          <p class="section-label">Next Project</p>
+        </div>
+        <a href="/aimee-ai" class="next-card fade-up" data-d="1" aria-label="Next case study: Aimee AI">
+          <p class="next-card__eyebrow">Up next</p>
+          <div class="next-card__inner">
+            <div>
+              <h2 id="next-heading" class="next-card__title">Aimee AI</h2>
+              <p class="next-card__desc">Redesigned a static Q&amp;A tool into a CFP-backed AI coach — now reaching over 1 million employees with personalized financial guidance.</p>
+            </div>
+            <span class="next-card__arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <div>
+          <a href="/" class="footer__brand">Bri May</a>
+          <p class="footer__tagline">Designing thoughtful digital experiences with clarity, strategy, and heart.</p>
+        </div>
+        <nav class="footer__nav" aria-label="Footer navigation">
+          <a href="/" class="footer__link">Home</a>
+          <a href="/work" class="footer__link">Work</a>
+          <a href="/about" class="footer__link">About</a>
+          <a href="/contact" class="footer__link">Contact</a>
+          <a href="https://linkedin.com/in/brimay" target="_blank" rel="noopener" class="footer__link">LinkedIn</a>
+        </nav>
+      </div>
+      <p class="footer__copy">© <span id="year"></span> Bri May. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('drawer');
+    burger.addEventListener('click', () => {
+      const open = burger.classList.toggle('open');
+      drawer.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', open);
+      drawer.setAttribute('aria-hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.fade-up').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) el.classList.add('visible');
+      });
+    });
+  </script>
+
+</body>
+</html>
