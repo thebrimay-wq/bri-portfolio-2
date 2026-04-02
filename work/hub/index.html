@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
+    /* ---- tokens ---- */
     :root {
       --bg: #ffffff;
       --ink: #111111;
@@ -18,24 +19,18 @@
       --px: clamp(24px, 4vw, 64px);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
       font-size: 16px;
       line-height: 1.6;
       color: var(--ink);
       background: var(--bg);
+      -webkit-font-smoothing: antialiased;
     }
 
+    /* ---- nav ---- */
     #site-nav {
       position: sticky;
       top: 0;
@@ -45,451 +40,489 @@
       border-bottom: 1px solid transparent;
       transition: border-color 0.2s ease;
     }
-
-    #site-nav.scrolled {
-      border-bottom-color: var(--border);
-    }
-
+    #site-nav.scrolled { border-bottom-color: var(--border); }
     .nav-inner {
-      width: 100%;
-      padding: 0 var(--px);
-      height: auto;
+      padding: 22px var(--px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 22px;
-      padding-bottom: 22px;
     }
+    .nav-logo { font-size: 16px; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 14px; color: var(--ink); text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--ink-2); }
 
-    .nav-logo {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 14px;
-      color: var(--ink);
-      text-decoration: none;
-      transition: color 0.15s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--ink-2);
-    }
-
-    main {
-      width: 100%;
-      padding: 0 var(--px);
-    }
-
-    .back-link {
-      display: inline-block;
-      padding-top: 32px;
-      font-size: 13px;
-      color: var(--ink-3);
-      text-decoration: none;
-      transition: color 0.15s ease;
-    }
-
-    .back-link:hover {
-      color: var(--ink);
-    }
-
-    .hero {
-      padding-top: 56px;
-      padding-bottom: 80px;
-    }
-
+    /* ---- shared utils ---- */
     .label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--ink-3);
     }
 
-    .hero h1 {
-      font-size: clamp(38px, 5vw, 64px);
+    .section-heading {
+      font-size: clamp(22px, 2.2vw, 32px);
       font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 1.06;
-      max-width: 760px;
-      margin-top: 16px;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
     }
 
+    /* two-column layout used across trigger / problem / role */
+    .two-col {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 64px;
+      padding: 80px var(--px);
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 800px) {
+      .two-col { grid-template-columns: 1fr; gap: 32px; padding: 64px var(--px); }
+    }
+
+    .col-left { display: flex; flex-direction: column; }
+    .col-left .section-heading { margin-top: 14px; }
+
+    /* placeholder images */
+    .img-slot {
+      width: 100%;
+      background: var(--surface);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .img-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .img-slot-label {
+      font-size: 11px;
+      color: var(--ink-3);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* scroll animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ---- back link ---- */
+    .back-link {
+      display: inline-block;
+      padding: 32px var(--px) 0;
+      font-size: 13px;
+      color: var(--ink-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--ink); }
+
+    /* ==== 1. HERO ==== */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      padding: 56px var(--px) 88px;
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 48px; padding-bottom: 64px; }
+    }
+
+    .hero-text { display: flex; flex-direction: column; }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 62px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-top: 14px;
+    }
     .hero-subtitle {
-      font-size: clamp(17px, 1.4vw, 20px);
+      font-size: clamp(16px, 1.3vw, 19px);
       color: var(--ink-2);
-      max-width: 620px;
       margin-top: 20px;
       line-height: 1.65;
+      max-width: 500px;
+    }
+    .hero-support {
+      font-size: 14px;
+      color: var(--ink-3);
+      margin-top: 16px;
+      line-height: 1.7;
+      max-width: 480px;
     }
 
     .meta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 32px;
-      margin-top: 48px;
+      gap: 0;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
     }
-
     .meta-item {
       display: flex;
       flex-direction: column;
-      padding-right: 32px;
-      margin-right: 32px;
+      padding-right: 24px;
+      margin-right: 24px;
       border-right: 1px solid var(--border);
     }
+    .meta-item:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+    .meta-item .label { font-size: 10px; }
+    .meta-item .value { font-size: 13px; font-weight: 500; color: var(--ink); margin-top: 4px; }
 
-    .meta-item:last-child {
-      border-right: none;
-      padding-right: 0;
-      margin-right: 0;
+    .hero-visual {
+      aspect-ratio: 4/3;
     }
 
-    .meta-item .label {
-      font-size: 11px;
-    }
+    /* ==== 2. TRIGGER ==== */
+    .trigger-body { display: flex; flex-direction: column; gap: 20px; max-width: 580px; }
 
-    .meta-item .value {
-      font-size: 14px;
+    .trigger-lead {
+      font-size: clamp(17px, 1.5vw, 21px);
       font-weight: 500;
       color: var(--ink);
-      margin-top: 4px;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+    }
+    .trigger-body > p {
+      font-size: 15px;
+      color: var(--ink-2);
+      line-height: 1.7;
+    }
+    .trigger-directive {
+      font-size: 15px;
+      color: var(--ink) !important;
+      font-style: italic;
+      border-left: 2px solid var(--border);
+      padding-left: 20px;
     }
 
-    .hero-image {
-      margin: 56px 0;
-      width: 100%;
-      aspect-ratio: 21 / 9;
-      background: var(--surface);
-      border-radius: 16px;
-    }
+    /* ==== 3. PROBLEM ==== */
+    .problem-body { display: flex; flex-direction: column; gap: 20px; max-width: 560px; }
+    .problem-body > p { font-size: 15px; color: var(--ink-2); line-height: 1.7; }
 
-    .stats-row {
+    .problem-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 40px;
+      gap: 8px;
+    }
+    .problem-tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-2);
+    }
+
+    /* ==== 4. KEY INSIGHT ==== */
+    .insight-section {
+      background: var(--surface);
+      padding: 96px var(--px);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 48px 0;
+    }
+    .insight-inner { max-width: 760px; }
+    .insight-inner .section-heading { margin-top: 14px; max-width: 580px; }
+
+    .insight-lead {
+      font-size: 15px;
+      color: var(--ink-2);
+      line-height: 1.7;
+      margin-top: 18px;
+      max-width: 520px;
     }
 
-    .stats-item {
+    .insight-transforms {
+      margin-top: 52px;
       display: flex;
       flex-direction: column;
-      padding-right: 40px;
-      margin-right: 40px;
-      border-right: 1px solid var(--border);
     }
-
-    .stats-item:last-child {
-      border-right: none;
-      padding-right: 0;
-      margin-right: 0;
+    .transform-row {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
     }
+    .transform-row:first-child { border-top: 1px solid var(--border); }
 
-    .stats-item .value {
-      font-size: clamp(32px, 3vw, 44px);
+    .from {
+      font-size: clamp(18px, 1.8vw, 28px);
+      font-weight: 400;
+      color: var(--ink-3);
+      min-width: 210px;
+      flex-shrink: 0;
+    }
+    .arrow {
+      font-size: clamp(16px, 1.5vw, 22px);
+      color: var(--ink-3);
+      font-weight: 300;
+      flex-shrink: 0;
+    }
+    .to {
+      font-size: clamp(18px, 1.8vw, 28px);
       font-weight: 600;
       color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    @media (max-width: 640px) {
+      .from { min-width: 130px; }
     }
 
-    .stats-item .label {
-      font-size: 13px;
-      margin-top: 8px;
-    }
+    /* ==== 5. MY ROLE ==== */
+    .role-right { max-width: 560px; }
+    .role-right > p { font-size: 15px; color: var(--ink-2); line-height: 1.7; }
 
-    .before-after {
-      border-top: 1px solid var(--border);
-      padding: 80px 0;
+    .role-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 28px;
     }
-
-    .before-after h2 {
-      font-size: clamp(26px, 2.5vw, 36px);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      margin-bottom: 48px;
-      margin-top: 16px;
-    }
-
-    .before-after-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    @media (max-width: 768px) {
-      .before-after-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      border-radius: 12px;
-      overflow: hidden;
-      background: var(--surface);
-    }
-
-    .card-image {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      background: #ebebeb;
-    }
-
-    .card.after .card-image {
-      background: #e8ede8;
-    }
-
-    .card-body {
-      padding: 24px;
-    }
-
-    .card-body .label {
-      font-size: 12px;
-    }
-
-    .card-body p {
+    .role-list li {
       font-size: 14px;
       color: var(--ink-2);
-      margin-top: 8px;
-      line-height: 1.6;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.55;
+    }
+    .role-list li::before { content: '—'; position: absolute; left: 0; color: var(--ink-3); }
+
+    .role-note {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--ink-3);
+      font-style: italic;
+      line-height: 1.65;
     }
 
-    .problem {
-      border-top: 1px solid var(--border);
-      padding: 80px 0;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 64px;
-    }
-
-    @media (max-width: 768px) {
-      .problem {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .problem-left h2 {
-      font-size: clamp(24px, 2.5vw, 34px);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      margin-top: 12px;
-      max-width: 280px;
-    }
-
-    .problem-right {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-    }
-
-    .problem h3 {
-      font-size: 16px;
+    /* ---- jump link ---- */
+    .jump-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--ink);
-      margin-bottom: 10px;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .jump-link .jump-arrow {
+      display: inline-block;
+      transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .jump-link:hover { color: var(--ink-2); }
+    .jump-link:hover .jump-arrow { transform: translateX(4px); }
+    .jump-link:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+      border-radius: 2px;
     }
 
-    .problem ul {
+    /* ==== 6. SOLUTION ==== */
+    .solution-section {
+      padding: 80px var(--px) 96px;
+      border-top: 1px solid var(--border);
+    }
+
+    .solution-header { margin-bottom: 80px; }
+    .solution-header .section-heading { margin-top: 12px; }
+
+    .pillars { display: flex; flex-direction: column; gap: 96px; }
+
+    .pillar-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .pillar-row.reversed .pillar-image { order: -1; }
+
+    @media (max-width: 800px) {
+      .pillar-row { grid-template-columns: 1fr; gap: 32px; }
+      .pillar-row.reversed .pillar-image { order: 0; }
+    }
+
+    .pillar-image {
+      aspect-ratio: 16/10;
+    }
+
+    .pillar-text { display: flex; flex-direction: column; }
+
+    .pillar-number {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink-3);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .pillar-title {
+      font-size: clamp(19px, 1.7vw, 25px);
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-top: 12px;
+    }
+    .pillar-body {
       font-size: 14px;
       color: var(--ink-2);
       line-height: 1.7;
-      list-style: disc inside;
-    }
-
-    .solution {
-      border-top: 1px solid var(--border);
-      padding: 80px 0;
-    }
-
-    .solution h2 {
-      font-size: clamp(26px, 2.5vw, 36px);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      margin-bottom: 48px;
       margin-top: 16px;
     }
-
-    .solution-image {
-      width: 100%;
-      aspect-ratio: 16 / 6;
-      background: var(--surface);
-      border-radius: 12px;
-      margin-bottom: 48px;
-    }
-
-    .key-decisions {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-    }
-
-    @media (max-width: 768px) {
-      .key-decisions {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .decision {
+    .pillar-list {
+      list-style: none;
       display: flex;
       flex-direction: column;
-    }
-
-    .decision-number {
-      font-size: 40px;
-      font-weight: 300;
-      color: var(--ink-3);
-    }
-
-    .decision-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--ink);
+      gap: 8px;
       margin-top: 16px;
     }
-
-    .decision-desc {
+    .pillar-list li {
       font-size: 14px;
       color: var(--ink-2);
-      line-height: 1.6;
-      margin-top: 12px;
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.5;
     }
+    .pillar-list li::before { content: '—'; position: absolute; left: 0; color: var(--ink-3); }
 
-    .impact {
+    /* ==== 7. IMPACT ==== */
+    .impact-section {
       border-top: 1px solid var(--border);
-      padding: 80px 0;
+      padding: 80px var(--px);
     }
 
-    .impact h2 {
-      font-size: clamp(26px, 2.5vw, 36px);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      margin-bottom: 48px;
-      margin-top: 16px;
-    }
+    .impact-header { margin-bottom: 48px; }
+    .impact-header .section-heading { margin-top: 12px; }
 
-    .learnings {
-      border-top: 1px solid var(--border);
-      padding: 80px 0;
-    }
-
-    .learnings h2 {
-      font-size: clamp(26px, 2.5vw, 36px);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      margin-bottom: 48px;
-      margin-top: 16px;
-    }
-
-    .learnings-grid {
+    .impact-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .impact-grid { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 768px) {
-      .learnings-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .learning-card {
+    .impact-card {
       background: var(--surface);
       border-radius: 12px;
       padding: 32px;
     }
-
-    .learning-card .number {
-      font-size: 13px;
-      color: var(--ink-3);
-      font-weight: 500;
+    .impact-card.highlight {
+      background: var(--ink);
     }
-
-    .learning-card .title {
+    .impact-card-body {
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 500;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
       color: var(--ink);
-      margin-top: 8px;
+    }
+    .impact-card.highlight .impact-card-body { color: #ffffff; }
+
+    .impact-card:nth-child(2) { transition-delay: 80ms; }
+    .impact-card:nth-child(3) { transition-delay: 160ms; }
+    .impact-card:nth-child(4) { transition-delay: 240ms; }
+
+    .impact-closing {
+      margin-top: 40px;
+      font-size: 15px;
+      color: var(--ink-2);
+      line-height: 1.7;
+      max-width: 560px;
     }
 
-    .learning-card .text {
+    /* ==== 8+9. CONSTRAINTS + WHAT'S NEXT ==== */
+    .closing-section {
+      border-top: 1px solid var(--border);
+      padding: 80px var(--px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+    @media (max-width: 800px) {
+      .closing-section { grid-template-columns: 1fr; gap: 56px; }
+    }
+
+    .closing-col .section-heading {
+      font-size: clamp(19px, 1.6vw, 24px);
+      margin-top: 12px;
+    }
+    .closing-col > p {
       font-size: 14px;
       color: var(--ink-2);
-      line-height: 1.6;
-      margin-top: 12px;
+      line-height: 1.7;
+      margin-top: 16px;
     }
 
-    .next-project {
+    .closing-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .closing-list li {
+      font-size: 14px;
+      color: var(--ink-2);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.55;
+    }
+    .closing-list li::before { content: '—'; position: absolute; left: 0; color: var(--ink-3); }
+
+    /* ==== 10. BOTTOM CTA ==== */
+    .bottom-cta {
       border-top: 1px solid var(--border);
-      padding: 64px 0;
+      padding: 64px var(--px);
     }
 
-    .next-project a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
+    .cta-links {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .cta-link {
+      font-size: 14px;
+      color: var(--ink-2);
       text-decoration: none;
-      color: var(--ink);
-      transition: opacity 0.15s ease;
+      transition: color 0.15s;
     }
+    .cta-link:hover { color: var(--ink); }
 
-    .next-project a:hover {
-      opacity: 0.5;
-    }
-
-    .next-project a h3 {
-      font-size: clamp(24px, 2.5vw, 36px);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      margin-top: 12px;
-    }
-
-    .next-project svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-    }
-
+    /* ==== footer ==== */
     footer {
       border-top: 1px solid var(--border);
-      padding: 48px var(--px);
-      margin-top: 80px;
+      padding: 40px var(--px);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 32px;
+      gap: 24px;
       font-size: 13px;
       color: var(--ink-3);
     }
-
-    @media (max-width: 768px) {
-      footer {
-        flex-direction: column;
-        text-align: center;
-      }
+    @media (max-width: 640px) {
+      footer { flex-direction: column; text-align: center; }
     }
-
-    footer a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.15s ease;
-    }
-
-    footer a:hover {
-      color: var(--ink);
-    }
+    footer a { color: inherit; text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: var(--ink); }
   </style>
 </head>
 <body>
+
   <nav id="site-nav">
     <div class="nav-inner">
       <a href="../../" class="nav-logo">Bri May</a>
@@ -505,201 +538,276 @@
   <main>
     <a href="../../work/" class="back-link">← All Work</a>
 
+    <!-- ===== 1. HERO ===== -->
     <section class="hero">
-      <p class="label">Platform Design</p>
-      <h1>Financial Finesse Hub</h1>
-      <p class="hero-subtitle">Redesigned a fragmented financial wellness platform into a cohesive, engaging experience — shipped in two months.</p>
+      <div class="hero-text fade-up">
+        <p class="label">Platform Redesign · Financial Finesse</p>
+        <h1>Financial Finesse Hub</h1>
+        <p class="hero-subtitle">Redesigning a financial wellness platform to drive engagement, personalization, and sales impact.</p>
+        <p class="hero-support">Designed and launched a full platform redesign under tight timelines, helping reposition the product and support new business wins.</p>
+        <div class="meta-row">
+          <div class="meta-item">
+            <div class="label">Role</div>
+            <div class="value">Lead Product Designer</div>
+          </div>
+          <div class="meta-item">
+            <div class="label">Timeline</div>
+            <div class="value">~4–8 weeks</div>
+          </div>
+          <div class="meta-item">
+            <div class="label">Company</div>
+            <div class="value">Financial Finesse</div>
+          </div>
+        </div>
+      </div>
 
-      <div class="meta-row">
-        <div class="meta-item">
-          <div class="label">Role</div>
-          <div class="value">Lead Product Designer</div>
+      <div class="img-slot hero-visual fade-up" style="transition-delay: 100ms;" role="img" aria-label="Financial Finesse Hub dashboard interface">
+        <!-- Replace with: <img src="../../images/hub-hero.jpg" alt="Financial Finesse Hub dashboard" /> -->
+        <span class="img-slot-label">Hero Visual</span>
+      </div>
+    </section>
+
+    <!-- ===== 2. THE TRIGGER ===== -->
+    <section class="two-col fade-up">
+      <div class="col-left">
+        <p class="label">The Trigger</p>
+      </div>
+      <div class="trigger-body">
+        <p class="trigger-lead">We lost two major deals to competitors — both citing that our platform felt outdated and the experience lacked modern engagement.</p>
+        <p>This became a high-priority, company-wide initiative.</p>
+        <p class="trigger-directive">The directive was clear: redesign the entire platform — fast — and create something that could compete in live sales conversations immediately.</p>
+      </div>
+    </section>
+
+    <!-- ===== 3. THE PROBLEM ===== -->
+    <section class="two-col fade-up">
+      <div class="col-left">
+        <p class="label">The Problem</p>
+        <h2 class="section-heading">A platform users weren't coming back to.</h2>
+      </div>
+      <div class="problem-body">
+        <p>The existing Hub had evolved into a "kitchen sink" product over several years. The experience felt cluttered, overwhelming, and difficult to navigate.</p>
+        <div class="problem-tags">
+          <span class="problem-tag">Outdated</span>
+          <span class="problem-tag">Overwhelming</span>
+          <span class="problem-tag">Hard to navigate</span>
         </div>
-        <div class="meta-item">
-          <div class="label">Company</div>
-          <div class="value">Financial Finesse</div>
-        </div>
-        <div class="meta-item">
-          <div class="label">Timeline</div>
-          <div class="value">2023–2024</div>
-        </div>
-        <div class="meta-item">
-          <div class="label">Scope</div>
-          <div class="value">UX Strategy · Platform Design · Behavioral Design</div>
+        <p>Users were not returning, and the product wasn't creating momentum toward action.</p>
+        <a href="#solution" class="jump-link" aria-label="Jump to solution section">
+          View solution <span class="jump-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== 4. KEY INSIGHT ===== -->
+    <section class="insight-section">
+      <div class="insight-inner fade-up">
+        <p class="label">Key Insight</p>
+        <h2 class="section-heading">The problem wasn't just visual — it was behavioral.</h2>
+        <p class="insight-lead">Users didn't need more financial content. They needed clarity, personalization, and motivation to take the next step.</p>
+        <p class="insight-lead">The experience needed to shift.</p>
+
+        <div class="insight-transforms">
+          <div class="transform-row fade-up">
+            <span class="from">Static</span>
+            <span class="arrow">→</span>
+            <span class="to">Personalized</span>
+          </div>
+          <div class="transform-row fade-up" style="transition-delay: 80ms;">
+            <span class="from">Overwhelming</span>
+            <span class="arrow">→</span>
+            <span class="to">Simple</span>
+          </div>
+          <div class="transform-row fade-up" style="transition-delay: 160ms;">
+            <span class="from">Everything</span>
+            <span class="arrow">→</span>
+            <span class="to">What matters most right now</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="hero-image">
-      <!-- Replace with: <img src='images/hub-hero.jpg' alt='Financial Finesse Hub Interface' /> -->
+    <!-- ===== 5. MY ROLE ===== -->
+    <section class="two-col fade-up">
+      <div class="col-left">
+        <p class="label">My Role</p>
+        <h2 class="section-heading">End-to-end ownership.</h2>
+      </div>
+      <div class="role-right">
+        <p>I led the end-to-end redesign as the sole product designer, partnering closely with the Chief Product Officer and engineering.</p>
+        <ul class="role-list">
+          <li>Product direction &amp; UX strategy</li>
+          <li>Full UI design — every screen and interaction</li>
+          <li>Design system</li>
+          <li>AI experience integration (Aimee)</li>
+          <li>Cross-functional alignment with execs and engineering</li>
+        </ul>
+        <p class="role-note">This was a highly visible, fast-moving project used directly in sales demos and reviewed by leadership daily.</p>
+      </div>
+    </section>
+
+    <!-- ===== 6. SOLUTION ===== -->
+    <section id="solution" class="solution-section">
+      <div class="solution-header fade-up">
+        <p class="label">The Solution</p>
+        <h2 class="section-heading">Four pillars of the redesign.</h2>
+      </div>
+
+      <div class="pillars">
+
+        <!-- Pillar 1 -->
+        <div class="pillar-row fade-up">
+          <div class="pillar-text">
+            <span class="pillar-number">01</span>
+            <h3 class="pillar-title">Modern, focused experience</h3>
+            <p class="pillar-body">Modernized and simplified the entire interface to create clarity and reduce cognitive load. The homepage was redesigned to focus users on what matters most — their next step — instead of presenting everything at once.</p>
+          </div>
+          <div class="img-slot pillar-image" role="img" aria-label="Redesigned Hub homepage">
+            <!-- Replace with: <img src="../../images/hub-homepage.jpg" alt="Redesigned Hub homepage" /> -->
+            <span class="img-slot-label">Hub Homepage</span>
+          </div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="pillar-row reversed fade-up">
+          <div class="pillar-text">
+            <span class="pillar-number">02</span>
+            <h3 class="pillar-title">Personalized experience</h3>
+            <p class="pillar-body">Shifted the experience from static content to personalized guidance. Introduced tailored recommendations, curated content, and dynamic pathways based on user inputs — making the platform feel relevant and actionable.</p>
+          </div>
+          <div class="img-slot pillar-image" role="img" aria-label="Personalized action plan and recommendations">
+            <!-- Replace with: <img src="../../images/hub-personalization.jpg" alt="Personalized experience" /> -->
+            <span class="img-slot-label">Personalization</span>
+          </div>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="pillar-row fade-up">
+          <div class="pillar-text">
+            <span class="pillar-number">03</span>
+            <h3 class="pillar-title">Content designed for engagement</h3>
+            <p class="pillar-body">Redesigned the content experience to feel familiar and engaging, inspired by platforms like Netflix. Content is now visually driven, easy to scan, and organized into personalized sections — making exploration intuitive and increasing the likelihood of continued engagement.</p>
+            <ul class="pillar-list">
+              <li>Visually driven</li>
+              <li>Easy to scan</li>
+              <li>Organized into personalized sections</li>
+            </ul>
+          </div>
+          <div class="img-slot pillar-image" role="img" aria-label="Content browsing experience">
+            <!-- Replace with: <img src="../../images/hub-content.jpg" alt="Content experience" /> -->
+            <span class="img-slot-label">Content Experience</span>
+          </div>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="pillar-row reversed fade-up">
+          <div class="pillar-text">
+            <span class="pillar-number">04</span>
+            <h3 class="pillar-title">AI-powered guidance</h3>
+            <p class="pillar-body">Integrated Aimee AI across the platform to provide real-time, contextual guidance. Built on a closed knowledge system, Aimee delivers safe, personalized, and actionable responses.</p>
+            <ul class="pillar-list">
+              <li>Understand financial concepts</li>
+              <li>Navigate decisions</li>
+              <li>Take action on next steps</li>
+            </ul>
+          </div>
+          <div class="img-slot pillar-image" role="img" aria-label="Aimee AI chat interface">
+            <!-- Replace with: <img src="../../images/hub-aimee.jpg" alt="Aimee AI experience" /> -->
+            <span class="img-slot-label">Aimee AI</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== 7. IMPACT ===== -->
+    <section class="impact-section">
+      <div class="impact-header fade-up">
+        <p class="label">Impact</p>
+        <h2 class="section-heading">Moved the needle where it mattered.</h2>
+      </div>
+
+      <div class="impact-grid">
+        <div class="impact-card highlight fade-up">
+          <p class="impact-card-body">Helped win new business, including the Federal Reserve</p>
+        </div>
+        <div class="impact-card fade-up">
+          <p class="impact-card-body">Strengthened product positioning in sales conversations</p>
+        </div>
+        <div class="impact-card fade-up">
+          <p class="impact-card-body">Improved perceived usability and modernity across clients and prospects</p>
+        </div>
+        <div class="impact-card fade-up">
+          <p class="impact-card-body">Positive feedback from user testing and client demos</p>
+        </div>
+      </div>
+
+      <p class="impact-closing fade-up">The redesign transformed the Hub from an outdated experience into a modern, competitive product.</p>
+    </section>
+
+    <!-- ===== 8 + 9. CONSTRAINTS + WHAT'S NEXT ===== -->
+    <section class="closing-section fade-up">
+      <div class="closing-col">
+        <p class="label">Constraints</p>
+        <h2 class="section-heading">Shipped under extreme pressure.</h2>
+        <p>This project was executed under extreme time pressure with a lean team and continuously expanding scope.</p>
+        <ul class="closing-list">
+          <li>~1 month to design the full platform</li>
+          <li>Continuous scope expansion during development</li>
+          <li>Lean team with high expectations</li>
+        </ul>
+        <p>I worked closely with engineering throughout to ensure fast, high-quality execution.</p>
+      </div>
+      <div class="closing-col">
+        <p class="label">What's Next</p>
+        <h2 class="section-heading">Still evolving.</h2>
+        <p>We're continuing to evolve the experience:</p>
+        <ul class="closing-list">
+          <li>Redesigning onboarding for a stronger first-time user experience</li>
+          <li>Making Aimee AI more agentic and proactive</li>
+          <li>Expanding personalization through deeper data integration</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== 10. BOTTOM CTA ===== -->
+    <div class="bottom-cta fade-up">
+      <nav class="cta-links" aria-label="Case study navigation">
+        <a href="../../work/" class="cta-link">← Back to Work</a>
+        <a href="../../resume/" class="cta-link">View Résumé</a>
+        <a href="../../contact/" class="cta-link">Contact ↗</a>
+      </nav>
     </div>
 
-    <section class="stats-row">
-      <div class="stats-item">
-        <div class="value">2 mo.</div>
-        <div class="label">From blank canvas to demo-ready</div>
-      </div>
-      <div class="stats-item">
-        <div class="value">↑ 200%</div>
-        <div class="label">Engagement improvement</div>
-      </div>
-      <div class="stats-item">
-        <div class="value">X+</div>
-        <div class="label">Enterprise sales opportunities <!-- TODO --></div>
-      </div>
-    </section>
-
-    <section class="before-after">
-      <p class="label">Before & After</p>
-      <h2>The transformation</h2>
-
-      <div class="before-after-grid">
-        <div class="card">
-          <div class="card-image">
-            <!-- Replace with: <img src='images/hub-before.jpg' alt='Before: Disconnected Experience' /> -->
-          </div>
-          <div class="card-body">
-            <div class="label">Before</div>
-            <p>Disconnected experience. Siloed content sections, no clear user journey, low engagement and poor mobile performance.</p>
-          </div>
-        </div>
-
-        <div class="card after">
-          <div class="card-image">
-            <!-- Replace with: <img src='images/hub-after.jpg' alt='After: Cohesive Wellness Platform' /> -->
-          </div>
-          <div class="card-body">
-            <div class="label">After</div>
-            <p>Cohesive wellness platform. Personalized dashboard, guided journeys, and clear pathways to action.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="problem">
-      <div class="problem-left">
-        <p class="label">The Problem</p>
-        <h2>A platform with great content that nobody used.</h2>
-      </div>
-      <div class="problem-right">
-        <div>
-          <h3>No clear path forward</h3>
-          <ul>
-            <li>No personalization — users landed on a generic dashboard.</li>
-            <li>Content buried in category menus, not surfaced contextually.</li>
-            <li>No connection between learning, action steps, and real outcomes.</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Engagement metrics told the real story</h3>
-          <ul>
-            <li>High bounce rates on the main dashboard.</li>
-            <li>Employers couldn't prove ROI on the wellness program.</li>
-            <li>The platform felt like a content library, not a coaching product.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="solution">
-      <p class="label">The Solution</p>
-      <h2>Personalization as the foundation.</h2>
-
-      <div class="solution-image">
-        <!-- Replace with: <img src='images/hub-solution.jpg' alt='Hub Solution Architecture' /> -->
-      </div>
-
-      <div class="key-decisions">
-        <div class="decision">
-          <div class="decision-number">1</div>
-          <div class="decision-title">Personalized dashboard</div>
-          <div class="decision-desc">Each user sees content built around their financial situation, not a generic home screen.</div>
-        </div>
-        <div class="decision">
-          <div class="decision-number">2</div>
-          <div class="decision-title">Guided learning journeys</div>
-          <div class="decision-desc">Content organized into actionable paths, not category buckets.</div>
-        </div>
-        <div class="decision">
-          <div class="decision-number">3</div>
-          <div class="decision-title">Progress & momentum</div>
-          <div class="decision-desc">Built-in milestones so sessions never ended without direction.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="impact">
-      <p class="label">Impact</p>
-      <h2>Shipped fast. Performed.</h2>
-
-      <div class="stats-row" style="border: none;">
-        <div class="stats-item">
-          <div class="value">2 mo.</div>
-          <div class="label">From blank canvas to demo-ready</div>
-        </div>
-        <div class="stats-item">
-          <div class="value">↑ 200%</div>
-          <div class="label">Engagement improvement</div>
-        </div>
-        <div class="stats-item">
-          <div class="value">X+</div>
-          <div class="label">Enterprise sales opportunities <!-- TODO --></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="learnings">
-      <p class="label">Learnings</p>
-      <h2>What I took away.</h2>
-
-      <div class="learnings-grid">
-        <div class="learning-card">
-          <div class="number">01</div>
-          <div class="title">Speed builds trust</div>
-          <div class="text">Shipping a working demo in two months changed how the product team thought about what was possible.</div>
-        </div>
-        <div class="learning-card">
-          <div class="number">02</div>
-          <div class="title">Personalization isn't optional</div>
-          <div class="text">Generic content experiences don't change behavior. Context does.</div>
-        </div>
-        <div class="learning-card">
-          <div class="number">03</div>
-          <div class="title">Design systems accelerate everything</div>
-          <div class="text">Building the component library first paid off in every subsequent sprint.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="next-project">
-      <p class="label">Next Project</p>
-      <a href="../../work/smart-benefits/">
-        <h3>Smart Benefits Platform</h3>
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </section>
   </main>
 
   <footer>
     <div>Bri May</div>
     <div>
       <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a> •
-      <a href="https://linkedin.com/in/brimay" target="_blank">LinkedIn ↗</a>
+      <a href="https://linkedin.com/in/brimay" target="_blank" rel="noopener">LinkedIn ↗</a>
     </div>
     <div>© 2025 Bri May</div>
   </footer>
 
   <script>
+    // Nav scroll border
     const nav = document.getElementById('site-nav');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 8) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
+      nav.classList.toggle('scrolled', window.scrollY > 8);
     });
+
+    // Fade-up on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
+
 </body>
 </html>
