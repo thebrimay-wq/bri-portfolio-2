@@ -3,46 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Aimee AI Coach & Financial Finesse Hub</title>
+    <title>Homepage - Bri Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="logo">Portfolio</div>
-        <ul class="nav-links">
-            <li><a href="#work">Work</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-
-    <!-- Hero Section -->
     <header class="hero">
-        <h1 class="tagline">Transforming Ideas into Reality</h1>
-        <a href="#work" class="cta-button">View My Work</a>
-        <a href="#contact" class="cta-button">Contact Me</a>
+        <div class="container">
+            <h1>Welcome to My Portfolio</h1>
+            <p>Discover my projects and experiences.</p>
+            <a href="#featured-projects" class="btn">View Projects</a>
+        </div>
     </header>
 
-    <!-- Featured Work Section -->
-    <section id="work" class="featured-work">
-        <h2>Featured Projects</h2>
-        <div class="work-cards">
-            <div class="work-card fade-up-animation">
-                <h3>Aimee AI Coach</h3>
-                <p>AI-driven coaching to help you achieve your goals.</p>
-                <a href="https://aimeeai.com" class="button">View Project</a>
-            </div>
-            <div class="work-card fade-up-animation">
-                <h3>Financial Finesse Hub</h3>
-                <p>Your guide to financial independence and literacy.</p>
-                <a href="https://financialfinessehub.com" class="button">View Project</a>
+    <section id="featured-projects" class="projects">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <article class="project">
+                    <img src="project1.jpg" alt="Project 1">
+                    <h3>Project One</h3>
+                    <p>Short description of project one.</p>
+                </article>
+                <article class="project">
+                    <img src="project2.jpg" alt="Project 2">
+                    <h3>Project Two</h3>
+                    <p>Short description of project two.</p>
+                </article>
+                <article class="project">
+                    <img src="project3.jpg" alt="Project 3">
+                    <h3>Project Three</h3>
+                    <p>Short description of project three.</p>
+                </article>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 thebrimay-wq. Contact: <a href="mailto:info@thebrimay.com">info@thebrimay.com</a></p>
+        <div class="container">
+            <p>&copy; 2026 Bri. All rights reserved.</p>
+        </div>
     </footer>
+    <script src="scripts.js"></script>
 </body>
 </html>
