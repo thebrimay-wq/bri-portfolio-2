@@ -96,9 +96,18 @@
 
     /* Container */
     .container {
+      max-width: 1300px;
+      margin-left: auto;
+      margin-right: auto;
       width: 100%;
       padding: 0 var(--px);
     }
+    /* Hero is always full width */
+    .hero .container,
+    .hero-section .container,
+    .intro-section .container,
+    .case-hero .container,
+    .page-hero .container { max-width: none; margin-left: 0; margin-right: 0; }
 
     /* Label */
     .label {
