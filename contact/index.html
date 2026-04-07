@@ -6,16 +6,17 @@
   <title>Contact — Bri May</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #ffffff;
       --ink: #111111;
-      --ink-2: #666666;
+      --ink-2: #555555;
       --ink-3: #999999;
       --border: #e8e8e8;
       --surface: #f5f5f5;
-      --px: clamp(24px, 4vw, 64px);
+      --px: clamp(24px, 5vw, 80px);
+      --max: 1160px;
     }
 
     * {
@@ -34,9 +35,9 @@
       font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--ink);
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 400;
-      line-height: 1.5;
+      line-height: 1.65;
     }
 
     /* Navigation */
@@ -44,8 +45,9 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid transparent;
       transition: border-bottom-color 0.3s ease;
     }
@@ -79,13 +81,13 @@
 
     .nav-links a {
       font-size: 14px;
-      color: var(--ink-2);
+      color: var(--ink);
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: opacity 0.15s;
     }
 
     .nav-links a:hover {
-      color: var(--ink);
+      opacity: 0.5;
     }
 
     @media (max-width: 600px) {
@@ -98,6 +100,8 @@
     .container {
       width: 100%;
       padding: 0 var(--px);
+      max-width: calc(var(--max) + var(--px) * 2);
+      margin: 0 auto;
     }
 
     /* Label */
@@ -117,8 +121,8 @@
 
     .hero h1 {
       font-size: clamp(40px, 5.5vw, 68px);
-      font-weight: 600;
-      letter-spacing: -0.03em;
+      font-weight: 700;
+      letter-spacing: -0.035em;
       line-height: 1.06;
       margin-top: 16px;
       color: var(--ink);
@@ -305,6 +309,9 @@
         gap: 12px;
       }
     }
+
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
@@ -324,9 +331,9 @@
   <main class="container">
     <!-- Hero -->
     <section class="hero">
-      <div class="label">Contact</div>
-      <h1>Let's build something meaningful.</h1>
-      <p>I'm always interested in thoughtful teams, ambitious products, and opportunities to shape experiences that help people make better decisions.</p>
+      <div class="label fade-up">Contact</div>
+      <h1 class="fade-up">Let's build something meaningful.</h1>
+      <p class="fade-up">I'm always interested in thoughtful teams, ambitious products, and opportunities to shape experiences that help people make better decisions.</p>
     </section>
 
     <!-- Contact Rows -->
@@ -397,13 +404,11 @@
 
   <script>
     const nav = document.getElementById('site-nav');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 8) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-    });
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 8); }, { passive: true });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>

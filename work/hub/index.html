@@ -6,23 +6,25 @@
   <title>Financial Finesse Hub — Case Study | Bri May</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* ---- tokens ---- */
+    /* ── tokens ── */
     :root {
       --bg: #ffffff;
       --ink: #111111;
-      --ink-2: #666666;
+      --ink-2: #555555;
       --ink-3: #999999;
       --border: #e8e8e8;
       --surface: #f5f5f5;
-      --px: clamp(24px, 4vw, 64px);
+      --surface-2: #efefef;
+      --px: clamp(24px, 5vw, 80px);
+      --max: 1160px;
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       font-size: 16px;
       line-height: 1.6;
       color: var(--ink);
@@ -30,71 +32,110 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ---- nav ---- */
+    /* ── nav ── */
     #site-nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease;
+      transition: border-color 0.2s;
     }
     #site-nav.scrolled { border-bottom-color: var(--border); }
     .nav-inner {
-      padding: 22px var(--px);
+      max-width: calc(var(--max) + var(--px) * 2);
+      margin: 0 auto;
+      padding: 20px var(--px);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .nav-logo { font-size: 16px; font-weight: 600; color: var(--ink); text-decoration: none; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a { font-size: 14px; color: var(--ink); text-decoration: none; transition: color 0.15s; }
-    .nav-links a:hover { color: var(--ink-2); }
+    .nav-logo { font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 14px; color: var(--ink); text-decoration: none; transition: opacity 0.15s; }
+    .nav-links a:hover { opacity: 0.5; }
 
-    /* ---- shared utils ---- */
-    .label {
+    /* ── wrapper ── */
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--px);
+    }
+
+    /* ── back link ── */
+    .back-link {
+      display: inline-block;
+      padding: 36px var(--px) 0;
+      max-width: calc(var(--max) + var(--px) * 2);
+      margin: 0 auto;
+      font-size: 13px;
+      color: var(--ink-3);
+      text-decoration: none;
+      transition: color 0.15s;
+      width: 100%;
+    }
+    .back-link:hover { color: var(--ink); }
+
+    /* ── section base ── */
+    .cs-section {
+      padding: 96px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-section:last-child { border-bottom: none; }
+
+    .eyebrow {
       font-size: 11px;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
       color: var(--ink-3);
+      margin-bottom: 20px;
+      display: block;
     }
 
-    .section-heading {
-      font-size: clamp(22px, 2.2vw, 32px);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
+    /* ── scroll animation ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.25,0.46,0.45,0.94),
+                  transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
     }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-    /* two-column layout used across trigger / problem / role */
-    .two-col {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 64px;
-      padding: 80px var(--px);
-      border-top: 1px solid var(--border);
+    /* ════════════════════════════
+       1. HERO
+    ════════════════════════════ */
+    .hero {
+      padding: 72px 0 80px;
+      border-bottom: 1px solid var(--border);
     }
-    @media (max-width: 800px) {
-      .two-col { grid-template-columns: 1fr; gap: 32px; padding: 64px var(--px); }
+    .hero-eyebrow {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 32px;
     }
-
-    .col-left { display: flex; flex-direction: column; }
-    .col-left .section-heading { margin-top: 14px; }
-
-    /* placeholder images */
-    .img-slot {
+    .hero h1 {
+      font-size: clamp(32px, 4.2vw, 58px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+      max-width: 920px;
+      color: var(--ink);
+    }
+    .hero-image {
+      margin-top: 64px;
+    }
+    .hero-image img {
       width: 100%;
-      background: var(--surface);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      height: auto;
+      display: block;
     }
-    .img-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .img-slot-label {
+    .img-label {
       font-size: 11px;
       color: var(--ink-3);
       font-weight: 500;
@@ -102,427 +143,345 @@
       text-transform: uppercase;
     }
 
-    /* scroll animation */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-    /* ---- back link ---- */
-    .back-link {
-      display: inline-block;
-      padding: 32px var(--px) 0;
-      font-size: 13px;
-      color: var(--ink-3);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .back-link:hover { color: var(--ink); }
-
-    /* ==== 1. HERO ==== */
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 72px;
-      align-items: center;
-      padding: 56px var(--px) 88px;
-    }
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; gap: 48px; padding-bottom: 64px; }
-    }
-
-    .hero-text { display: flex; flex-direction: column; }
-
-    .hero h1 {
-      font-size: clamp(36px, 5vw, 62px);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin-top: 14px;
-    }
-    .hero-subtitle {
-      font-size: clamp(16px, 1.3vw, 19px);
+    /* ════════════════════════════
+       2. CONTEXT
+    ════════════════════════════ */
+    .context-body {
+      font-size: 18px;
       color: var(--ink-2);
-      margin-top: 20px;
-      line-height: 1.65;
-      max-width: 500px;
+      line-height: 1.75;
+      max-width: 820px;
+      margin-top: 8px;
     }
-    .hero-support {
-      font-size: 14px;
-      color: var(--ink-3);
-      margin-top: 16px;
-      line-height: 1.7;
-      max-width: 480px;
-    }
-
-    .meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      margin-top: 40px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-    }
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-      padding-right: 24px;
-      margin-right: 24px;
-      border-right: 1px solid var(--border);
-    }
-    .meta-item:last-child { border-right: none; padding-right: 0; margin-right: 0; }
-    .meta-item .label { font-size: 10px; }
-    .meta-item .value { font-size: 13px; font-weight: 500; color: var(--ink); margin-top: 4px; }
-
-    .hero-visual {
-      aspect-ratio: 4/3;
-    }
-
-    /* ==== 2. TRIGGER ==== */
-    .trigger-body { display: flex; flex-direction: column; gap: 20px; max-width: 580px; }
-
-    .trigger-lead {
-      font-size: clamp(17px, 1.5vw, 21px);
+    blockquote.callout {
+      margin-top: 48px;
+      padding: 28px 36px;
+      border-left: 3px solid var(--ink);
+      background: var(--surface);
+      border-radius: 0 10px 10px 0;
+      max-width: 680px;
+      font-size: 18px;
+      font-style: italic;
       font-weight: 500;
       color: var(--ink);
-      line-height: 1.5;
-      letter-spacing: -0.01em;
-    }
-    .trigger-body > p {
-      font-size: 15px;
-      color: var(--ink-2);
-      line-height: 1.7;
-    }
-    .trigger-directive {
-      font-size: 15px;
-      color: var(--ink) !important;
-      font-style: italic;
-      border-left: 2px solid var(--border);
-      padding-left: 20px;
+      line-height: 1.55;
     }
 
-    /* ==== 3. PROBLEM ==== */
-    .problem-body { display: flex; flex-direction: column; gap: 20px; max-width: 560px; }
-    .problem-body > p { font-size: 15px; color: var(--ink-2); line-height: 1.7; }
-
-    .problem-tags {
+    /* ── client strip ── */
+    .client-strip {
+      margin-top: 48px;
+    }
+    .client-strip-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      display: block;
+      margin-bottom: 16px;
+    }
+    .client-pills {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
-    .problem-tag {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 6px 14px;
+    .client-pill {
       font-size: 13px;
       font-weight: 500;
       color: var(--ink-2);
-    }
-
-    /* ==== 4. KEY INSIGHT ==== */
-    .insight-section {
       background: var(--surface);
-      padding: 96px var(--px);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .insight-inner { max-width: 760px; }
-    .insight-inner .section-heading { margin-top: 14px; max-width: 580px; }
-
-    .insight-lead {
-      font-size: 15px;
-      color: var(--ink-2);
-      line-height: 1.7;
-      margin-top: 18px;
-      max-width: 520px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 16px;
     }
 
-    .insight-transforms {
-      margin-top: 52px;
-      display: flex;
-      flex-direction: column;
-    }
-    .transform-row {
-      display: flex;
-      align-items: baseline;
-      gap: 24px;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .transform-row:first-child { border-top: 1px solid var(--border); }
-
-    .from {
-      font-size: clamp(18px, 1.8vw, 28px);
-      font-weight: 400;
-      color: var(--ink-3);
-      min-width: 210px;
-      flex-shrink: 0;
-    }
-    .arrow {
-      font-size: clamp(16px, 1.5vw, 22px);
-      color: var(--ink-3);
-      font-weight: 300;
-      flex-shrink: 0;
-    }
-    .to {
-      font-size: clamp(18px, 1.8vw, 28px);
-      font-weight: 600;
-      color: var(--ink);
-      letter-spacing: -0.02em;
-    }
-    @media (max-width: 640px) {
-      .from { min-width: 130px; }
-    }
-
-    /* ==== 5. MY ROLE ==== */
-    .role-right { max-width: 560px; }
-    .role-right > p { font-size: 15px; color: var(--ink-2); line-height: 1.7; }
-
-    .role-list {
+    /* ════════════════════════════
+       3. PROBLEM
+    ════════════════════════════ */
+    .problem-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-top: 28px;
+      gap: 18px;
+      max-width: 780px;
+      margin: 8px 0 48px;
     }
-    .role-list li {
-      font-size: 14px;
+    .problem-list li {
+      font-size: 17px;
       color: var(--ink-2);
-      padding-left: 20px;
+      padding-left: 24px;
       position: relative;
       line-height: 1.55;
     }
-    .role-list li::before { content: '—'; position: absolute; left: 0; color: var(--ink-3); }
-
-    .role-note {
-      margin-top: 28px;
-      font-size: 13px;
+    .problem-list li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
       color: var(--ink-3);
-      font-style: italic;
-      line-height: 1.65;
     }
-
-    /* ---- jump link ---- */
-    .jump-link {
+    .btn-jump {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      margin-top: 24px;
+      gap: 8px;
+      background: var(--ink);
+      color: #fff;
+      font-family: inherit;
       font-size: 14px;
-      font-weight: 600;
-      color: var(--ink);
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
       text-decoration: none;
-      transition: color 0.15s;
+      letter-spacing: 0.01em;
+      transition: opacity 0.18s;
     }
-    .jump-link .jump-arrow {
-      display: inline-block;
-      transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .jump-link:hover { color: var(--ink-2); }
-    .jump-link:hover .jump-arrow { transform: translateX(4px); }
-    .jump-link:focus-visible {
+    .btn-jump:hover { opacity: 0.7; }
+    .btn-jump:focus-visible {
       outline: 2px solid var(--ink);
       outline-offset: 3px;
-      border-radius: 2px;
     }
 
-    /* ==== 6. SOLUTION ==== */
-    .solution-section {
-      padding: 80px var(--px) 96px;
-      border-top: 1px solid var(--border);
-    }
-
-    .solution-header { margin-bottom: 80px; }
-    .solution-header .section-heading { margin-top: 12px; }
-
-    .pillars { display: flex; flex-direction: column; gap: 96px; }
-
-    .pillar-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
-    }
-    .pillar-row.reversed .pillar-image { order: -1; }
-
-    @media (max-width: 800px) {
-      .pillar-row { grid-template-columns: 1fr; gap: 32px; }
-      .pillar-row.reversed .pillar-image { order: 0; }
-    }
-
-    .pillar-image {
-      aspect-ratio: 16/10;
-    }
-
-    .pillar-text { display: flex; flex-direction: column; }
-
-    .pillar-number {
-      font-size: 11px;
-      font-weight: 500;
+    /* ════════════════════════════
+       BEFORE
+    ════════════════════════════ */
+    .before-caption {
+      font-size: 15px;
       color: var(--ink-3);
+      margin-bottom: 32px;
+      margin-top: 4px;
+    }
+    .before-img { width: 100%; }
+    .before-img img { width: 100%; height: auto; display: block; }
+
+    /* ════════════════════════════
+       4. ROLE
+    ════════════════════════════ */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px 64px;
+      max-width: 780px;
+      margin-top: 8px;
+    }
+    @media (max-width: 640px) {
+      .role-grid { grid-template-columns: 1fr; gap: 28px; }
+    }
+    .role-item-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .role-item-desc {
+      font-size: 15px;
+      color: var(--ink-2);
+      line-height: 1.6;
+    }
+
+    /* ════════════════════════════
+       5. KEY DECISIONS
+    ════════════════════════════ */
+    .decisions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3px;
+      margin-top: 8px;
+    }
+    @media (max-width: 680px) {
+      .decisions-grid { grid-template-columns: 1fr; }
+    }
+    .d-card {
+      background: var(--surface);
+      padding: 44px 40px;
+    }
+    .d-card:nth-child(1) { border-radius: 16px 0 0 0; }
+    .d-card:nth-child(2) { border-radius: 0 16px 0 0; }
+    .d-card:nth-child(3) { border-radius: 0 0 0 16px; }
+    .d-card:nth-child(4) { border-radius: 0 0 16px 0; }
+    @media (max-width: 680px) {
+      .d-card:nth-child(1) { border-radius: 16px 16px 0 0; }
+      .d-card:nth-child(2) { border-radius: 0; }
+      .d-card:nth-child(3) { border-radius: 0; }
+      .d-card:nth-child(4) { border-radius: 0 0 16px 16px; }
+    }
+    .d-num {
+      font-size: 11px;
+      font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 18px;
     }
-    .pillar-title {
-      font-size: clamp(19px, 1.7vw, 25px);
+    .d-title {
+      font-size: 20px;
       font-weight: 600;
       color: var(--ink);
       letter-spacing: -0.02em;
       line-height: 1.2;
-      margin-top: 12px;
+      margin-bottom: 14px;
     }
-    .pillar-body {
-      font-size: 14px;
-      color: var(--ink-2);
-      line-height: 1.7;
-      margin-top: 16px;
-    }
-    .pillar-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .pillar-list li {
-      font-size: 14px;
-      color: var(--ink-2);
-      padding-left: 18px;
-      position: relative;
-      line-height: 1.5;
-    }
-    .pillar-list li::before { content: '—'; position: absolute; left: 0; color: var(--ink-3); }
-
-    /* ==== 7. IMPACT ==== */
-    .impact-section {
-      border-top: 1px solid var(--border);
-      padding: 80px var(--px);
-    }
-
-    .impact-header { margin-bottom: 48px; }
-    .impact-header .section-heading { margin-top: 12px; }
-
-    .impact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    @media (max-width: 640px) {
-      .impact-grid { grid-template-columns: 1fr; }
-    }
-
-    .impact-card {
-      background: var(--surface);
-      border-radius: 12px;
-      padding: 32px;
-    }
-    .impact-card.highlight {
-      background: var(--ink);
-    }
-    .impact-card-body {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 1.5;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-    }
-    .impact-card.highlight .impact-card-body { color: #ffffff; }
-
-    .impact-card:nth-child(2) { transition-delay: 80ms; }
-    .impact-card:nth-child(3) { transition-delay: 160ms; }
-    .impact-card:nth-child(4) { transition-delay: 240ms; }
-
-    .impact-closing {
-      margin-top: 40px;
+    .d-desc {
       font-size: 15px;
       color: var(--ink-2);
-      line-height: 1.7;
-      max-width: 560px;
+      line-height: 1.65;
     }
 
-    /* ==== 8+9. CONSTRAINTS + WHAT'S NEXT ==== */
-    .closing-section {
-      border-top: 1px solid var(--border);
-      padding: 80px var(--px);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
+    /* ════════════════════════════
+       6. SOLUTION
+    ════════════════════════════ */
+    .solution-block {
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
     }
-    @media (max-width: 800px) {
-      .closing-section { grid-template-columns: 1fr; gap: 56px; }
+    .solution-block:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+      margin-bottom: 0;
     }
-
-    .closing-col .section-heading {
-      font-size: clamp(19px, 1.6vw, 24px);
-      margin-top: 12px;
+    .solution-block-title {
+      font-size: clamp(22px, 2.2vw, 30px);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 14px;
     }
-    .closing-col > p {
-      font-size: 14px;
+    .solution-block-desc {
+      font-size: 17px;
       color: var(--ink-2);
       line-height: 1.7;
-      margin-top: 16px;
+      max-width: 760px;
+      margin-bottom: 40px;
+    }
+    .solution-img { width: 100%; }
+    .solution-img img { width: 100%; height: auto; display: block; }
+
+    /* ════════════════════════════
+       7. IMPACT
+    ════════════════════════════ */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 8px;
+    }
+    @media (max-width: 840px) {
+      .impact-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .impact-grid { grid-template-columns: 1fr; }
+    }
+    .impact-item {
+      padding: 40px 32px;
+      border-right: 1px solid var(--border);
+    }
+    .impact-item:first-child { padding-left: 0; }
+    .impact-item:last-child { border-right: none; padding-right: 0; }
+    @media (max-width: 840px) {
+      .impact-item:nth-child(2) { border-right: none; }
+      .impact-item:nth-child(3) { border-top: 1px solid var(--border); }
+      .impact-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+      .impact-item:nth-child(3),
+      .impact-item:nth-child(4) { padding-top: 40px; }
+    }
+    @media (max-width: 840px) {
+      .impact-item { padding-right: 24px; }
+    }
+    .impact-value {
+      font-size: clamp(40px, 5vw, 60px);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+    .impact-label {
+      font-size: 14px;
+      color: var(--ink-2);
+      line-height: 1.55;
     }
 
-    .closing-list {
+    /* ════════════════════════════
+       8. WHAT'S NEXT
+    ════════════════════════════ */
+    .next-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 22px;
+      max-width: 780px;
+      margin-top: 8px;
     }
-    .closing-list li {
-      font-size: 14px;
+    .next-list li {
+      font-size: 17px;
       color: var(--ink-2);
-      padding-left: 20px;
+      padding-left: 28px;
       position: relative;
       line-height: 1.55;
     }
-    .closing-list li::before { content: '—'; position: absolute; left: 0; color: var(--ink-3); }
-
-    /* ==== 10. BOTTOM CTA ==== */
-    .bottom-cta {
-      border-top: 1px solid var(--border);
-      padding: 64px var(--px);
+    .next-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--ink-3);
     }
 
+    /* ════════════════════════════
+       BOTTOM CTA
+    ════════════════════════════ */
+    .bottom-cta {
+      padding: 64px 0;
+    }
     .cta-links {
       display: flex;
       gap: 40px;
       flex-wrap: wrap;
     }
     .cta-link {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--ink-2);
       text-decoration: none;
       transition: color 0.15s;
     }
     .cta-link:hover { color: var(--ink); }
 
-    /* ==== footer ==== */
+    /* ════════════════════════════
+       FOOTER
+    ════════════════════════════ */
     footer {
       border-top: 1px solid var(--border);
       padding: 40px var(--px);
+    }
+    .footer-inner {
+      max-width: calc(var(--max) + var(--px) * 2);
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 24px;
+      gap: 20px;
       font-size: 13px;
       color: var(--ink-3);
     }
-    @media (max-width: 640px) {
-      footer { flex-direction: column; text-align: center; }
+    @media (max-width: 600px) {
+      .footer-inner { flex-direction: column; text-align: center; }
     }
     footer a { color: inherit; text-decoration: none; transition: color 0.15s; }
     footer a:hover { color: var(--ink); }
+
+    /* ════════════════════════════
+       RESPONSIVE
+    ════════════════════════════ */
+    @media (max-width: 768px) {
+      .cs-section { padding: 72px 0; }
+      .hero { padding: 56px 0 64px; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
   <nav id="site-nav">
     <div class="nav-inner">
       <a href="../../" class="nav-logo">Bri May</a>
@@ -535,259 +494,231 @@
     </div>
   </nav>
 
+  <a href="../../work/" class="back-link">← All Work</a>
+
   <main>
-    <a href="../../work/" class="back-link">← All Work</a>
 
-    <!-- ===== 1. HERO ===== -->
+    <!-- ════ 1. HERO ════ -->
     <section class="hero">
-      <div class="hero-text fade-up">
-        <p class="label">Platform Redesign · Financial Finesse</p>
-        <h1>Financial Finesse Hub</h1>
-        <p class="hero-subtitle">Redesigning a financial wellness platform to drive engagement, personalization, and sales impact.</p>
-        <p class="hero-support">Designed and launched a full platform redesign under tight timelines, helping reposition the product and support new business wins.</p>
-        <div class="meta-row">
-          <div class="meta-item">
-            <div class="label">Role</div>
-            <div class="value">Lead Product Designer</div>
-          </div>
-          <div class="meta-item">
-            <div class="label">Timeline</div>
-            <div class="value">~4–8 weeks</div>
-          </div>
-          <div class="meta-item">
-            <div class="label">Company</div>
-            <div class="value">Financial Finesse</div>
-          </div>
+      <div class="wrap">
+        <p class="hero-eyebrow fade-up">Creative Director &amp; Lead Product Designer · Financial Finesse</p>
+        <h1 class="fade-up" style="transition-delay:60ms;">Redesigned a financial wellness platform trusted by Fortune 500 companies — increasing engagement 200% and winning enterprise clients including Meta, the Federal Reserve, and the NFLPA</h1>
+        <div class="hero-image fade-up" style="transition-delay:140ms;">
+          <img src="../../images/hub-home-hero.png" alt="Financial Finesse Hub home screen" />
         </div>
       </div>
-
-      <div class="img-slot hero-visual fade-up" style="transition-delay: 100ms;" role="img" aria-label="Financial Finesse Hub dashboard interface">
-        <!-- Replace with: <img src="../../images/hub-hero.jpg" alt="Financial Finesse Hub dashboard" /> -->
-        <span class="img-slot-label">Hero Visual</span>
-      </div>
     </section>
 
-    <!-- ===== 2. THE TRIGGER ===== -->
-    <section class="two-col fade-up">
-      <div class="col-left">
-        <p class="label">The Trigger</p>
-      </div>
-      <div class="trigger-body">
-        <p class="trigger-lead">We lost two major deals to competitors — both citing that our platform felt outdated and the experience lacked modern engagement.</p>
-        <p>This became a high-priority, company-wide initiative.</p>
-        <p class="trigger-directive">The directive was clear: redesign the entire platform — fast — and create something that could compete in live sales conversations immediately.</p>
-      </div>
-    </section>
-
-    <!-- ===== 3. THE PROBLEM ===== -->
-    <section class="two-col fade-up">
-      <div class="col-left">
-        <p class="label">The Problem</p>
-        <h2 class="section-heading">A platform users weren't coming back to.</h2>
-      </div>
-      <div class="problem-body">
-        <p>The existing Hub had evolved into a "kitchen sink" product over several years. The experience felt cluttered, overwhelming, and difficult to navigate.</p>
-        <div class="problem-tags">
-          <span class="problem-tag">Outdated</span>
-          <span class="problem-tag">Overwhelming</span>
-          <span class="problem-tag">Hard to navigate</span>
-        </div>
-        <p>Users were not returning, and the product wasn't creating momentum toward action.</p>
-        <a href="#solution" class="jump-link" aria-label="Jump to solution section">
-          View solution <span class="jump-arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ===== 4. KEY INSIGHT ===== -->
-    <section class="insight-section">
-      <div class="insight-inner fade-up">
-        <p class="label">Key Insight</p>
-        <h2 class="section-heading">The problem wasn't just visual — it was behavioral.</h2>
-        <p class="insight-lead">Users didn't need more financial content. They needed clarity, personalization, and motivation to take the next step.</p>
-        <p class="insight-lead">The experience needed to shift.</p>
-
-        <div class="insight-transforms">
-          <div class="transform-row fade-up">
-            <span class="from">Static</span>
-            <span class="arrow">→</span>
-            <span class="to">Personalized</span>
-          </div>
-          <div class="transform-row fade-up" style="transition-delay: 80ms;">
-            <span class="from">Overwhelming</span>
-            <span class="arrow">→</span>
-            <span class="to">Simple</span>
-          </div>
-          <div class="transform-row fade-up" style="transition-delay: 160ms;">
-            <span class="from">Everything</span>
-            <span class="arrow">→</span>
-            <span class="to">What matters most right now</span>
+    <!-- ════ 2. CONTEXT ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">Context</span>
+        <p class="context-body">Financial Finesse serves Fortune 500 companies, government institutions, and major enterprise clients — delivering financial wellness to their employees at scale. The content library was strong, but the product hadn't kept pace. Competitors were winning deals by showing more modern, engaging experiences. The platform felt dated, hard to navigate, and couldn't compete in a live sales demo. Leadership needed a response, fast.</p>
+        <blockquote class="callout">
+          "The product feels outdated and hard to navigate."
+        </blockquote>
+        <div class="client-strip">
+          <span class="client-strip-label">Trusted by</span>
+          <div class="client-pills">
+            <span class="client-pill">Meta</span>
+            <span class="client-pill">NFLPA</span>
+            <span class="client-pill">CVS Health</span>
+            <span class="client-pill">Federal Reserve</span>
+            <span class="client-pill">Patagonia</span>
+            <span class="client-pill">JPMorgan Chase</span>
+            <span class="client-pill">McKinsey &amp; Co.</span>
+            <span class="client-pill">Nestlé</span>
+            <span class="client-pill">Comcast</span>
+            <span class="client-pill">General Mills</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== 5. MY ROLE ===== -->
-    <section class="two-col fade-up">
-      <div class="col-left">
-        <p class="label">My Role</p>
-        <h2 class="section-heading">End-to-end ownership.</h2>
-      </div>
-      <div class="role-right">
-        <p>I led the end-to-end redesign as the sole product designer, partnering closely with the Chief Product Officer and engineering.</p>
-        <ul class="role-list">
-          <li>Product direction &amp; UX strategy</li>
-          <li>Full UI design — every screen and interaction</li>
-          <li>Design system</li>
-          <li>AI experience integration (Aimee)</li>
-          <li>Cross-functional alignment with execs and engineering</li>
+    <!-- ════ 3. PROBLEM ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">Problem</span>
+        <ul class="problem-list">
+          <li><strong>Low engagement</strong> — users weren't returning after their first session</li>
+          <li><strong>Unclear value</strong> — the product didn't communicate what to do next</li>
+          <li><strong>Static experience</strong> — no personalization, no dynamic content, no momentum</li>
+          <li><strong>Weak sales demos</strong> — the UI couldn't compete visually in live pitches</li>
         </ul>
-        <p class="role-note">This was a highly visible, fast-moving project used directly in sales demos and reviewed by leadership daily.</p>
+        <button
+          class="btn-jump"
+          onclick="document.getElementById('solution').scrollIntoView({behavior:'smooth'})"
+          aria-label="Jump to the solution section"
+        >
+          Jump to Solution ↓
+        </button>
       </div>
     </section>
 
-    <!-- ===== 6. SOLUTION ===== -->
-    <section id="solution" class="solution-section">
-      <div class="solution-header fade-up">
-        <p class="label">The Solution</p>
-        <h2 class="section-heading">Four pillars of the redesign.</h2>
+    <!-- ════ BEFORE ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">Before</span>
+        <p class="before-caption">The existing experience — cluttered, static, and difficult to navigate.</p>
+        <div class="before-img">
+          <img src="../../images/before-screenshot.png" alt="Before: old Financial Finesse Hub interface" />
+        </div>
       </div>
+    </section>
 
-      <div class="pillars">
-
-        <!-- Pillar 1 -->
-        <div class="pillar-row fade-up">
-          <div class="pillar-text">
-            <span class="pillar-number">01</span>
-            <h3 class="pillar-title">Modern, focused experience</h3>
-            <p class="pillar-body">Modernized and simplified the entire interface to create clarity and reduce cognitive load. The homepage was redesigned to focus users on what matters most — their next step — instead of presenting everything at once.</p>
+    <!-- ════ 4. ROLE ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">My Role</span>
+        <div class="role-grid">
+          <div class="role-item">
+            <div class="role-item-title">Creative Director &amp; Lead Product Designer</div>
+            <div class="role-item-desc">Set the visual and product direction end to end across the full platform redesign.</div>
           </div>
-          <div class="img-slot pillar-image" role="img" aria-label="Redesigned Hub homepage">
-            <!-- Replace with: <img src="../../images/hub-homepage.jpg" alt="Redesigned Hub homepage" /> -->
-            <span class="img-slot-label">Hub Homepage</span>
+          <div class="role-item">
+            <div class="role-item-title">UX &amp; Visual System</div>
+            <div class="role-item-desc">Designed every screen, interaction, and component from blank canvas to shipped.</div>
+          </div>
+          <div class="role-item">
+            <div class="role-item-title">Cross-functional Leadership</div>
+            <div class="role-item-desc">Partnered directly with the CPO, engineering, and sales throughout the project.</div>
+          </div>
+          <div class="role-item">
+            <div class="role-item-title">Aimee AI Integration</div>
+            <div class="role-item-desc">Drove the design and integration of Aimee — the platform's AI-powered guidance layer.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ 5. KEY DECISIONS ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <span class="eyebrow fade-up">Key Decisions</span>
+        <div class="decisions-grid">
+          <div class="d-card fade-up">
+            <div class="d-num">01</div>
+            <div class="d-title">Focus on immediate value</div>
+            <div class="d-desc">Redesigned the homepage around a single focused action — the user's most important next step — rather than surfacing everything at once. Reduced cognitive load, increased forward momentum.</div>
+          </div>
+          <div class="d-card fade-up" style="transition-delay:80ms;">
+            <div class="d-num">02</div>
+            <div class="d-title">Introduce AI personalization</div>
+            <div class="d-desc">Integrated Aimee AI to deliver real-time contextual guidance throughout the platform. Shifted the experience from a static content library to a dynamic, responsive coaching product.</div>
+          </div>
+          <div class="d-card fade-up" style="transition-delay:40ms;">
+            <div class="d-num">03</div>
+            <div class="d-title">Design for sales demos</div>
+            <div class="d-desc">Built with live sales conversations in mind from day one. Every screen had to communicate value instantly — even to a prospect seeing it for the first time in a meeting room.</div>
+          </div>
+          <div class="d-card fade-up" style="transition-delay:120ms;">
+            <div class="d-num">04</div>
+            <div class="d-title">Modernize the UI system</div>
+            <div class="d-desc">Created a new design system from scratch — clean components, consistent spacing, and a visual language that felt current, trustworthy, and scalable beyond this launch.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ 6. SOLUTION ════ -->
+    <section id="solution" class="cs-section">
+      <div class="wrap">
+        <span class="eyebrow fade-up">Solution</span>
+
+        <div class="solution-block fade-up">
+          <div class="solution-block-title">Focused homepage</div>
+          <div class="solution-block-desc">Replaced the cluttered dashboard with a clean, action-oriented home screen. Users land on their most relevant next step — not a wall of content.</div>
+          <div class="solution-img">
+            <img src="../../images/homepage-features.png" alt="Redesigned Financial Finesse Hub homepage" />
           </div>
         </div>
 
-        <!-- Pillar 2 -->
-        <div class="pillar-row reversed fade-up">
-          <div class="pillar-text">
-            <span class="pillar-number">02</span>
-            <h3 class="pillar-title">Personalized experience</h3>
-            <p class="pillar-body">Shifted the experience from static content to personalized guidance. Introduced tailored recommendations, curated content, and dynamic pathways based on user inputs — making the platform feel relevant and actionable.</p>
-          </div>
-          <div class="img-slot pillar-image" role="img" aria-label="Personalized action plan and recommendations">
-            <!-- Replace with: <img src="../../images/hub-personalization.jpg" alt="Personalized experience" /> -->
-            <span class="img-slot-label">Personalization</span>
+        <div class="solution-block fade-up">
+          <div class="solution-block-title">AI-powered guidance</div>
+          <div class="solution-block-desc">Aimee AI provides real-time, contextual coaching throughout the platform. Built on a closed knowledge system for safe, accurate, and actionable financial guidance.</div>
+          <div class="solution-img">
+            <img src="../../images/aimee-ai.png" alt="Aimee AI coaching interface" />
           </div>
         </div>
 
-        <!-- Pillar 3 -->
-        <div class="pillar-row fade-up">
-          <div class="pillar-text">
-            <span class="pillar-number">03</span>
-            <h3 class="pillar-title">Content designed for engagement</h3>
-            <p class="pillar-body">Redesigned the content experience to feel familiar and engaging, inspired by platforms like Netflix. Content is now visually driven, easy to scan, and organized into personalized sections — making exploration intuitive and increasing the likelihood of continued engagement.</p>
-            <ul class="pillar-list">
-              <li>Visually driven</li>
-              <li>Easy to scan</li>
-              <li>Organized into personalized sections</li>
-            </ul>
-          </div>
-          <div class="img-slot pillar-image" role="img" aria-label="Content browsing experience">
-            <!-- Replace with: <img src="../../images/hub-content.jpg" alt="Content experience" /> -->
-            <span class="img-slot-label">Content Experience</span>
+        <div class="solution-block fade-up">
+          <div class="solution-block-title">Personalized content system</div>
+          <div class="solution-block-desc">Content is now dynamically surfaced based on the user's financial situation, goals, and history — not a generic category browse. More Netflix, less textbook.</div>
+          <div class="solution-img">
+            <img src="../../images/explore-content.png" alt="Personalized content system" />
           </div>
         </div>
 
-        <!-- Pillar 4 -->
-        <div class="pillar-row reversed fade-up">
-          <div class="pillar-text">
-            <span class="pillar-number">04</span>
-            <h3 class="pillar-title">AI-powered guidance</h3>
-            <p class="pillar-body">Integrated Aimee AI across the platform to provide real-time, contextual guidance. Built on a closed knowledge system, Aimee delivers safe, personalized, and actionable responses.</p>
-            <ul class="pillar-list">
-              <li>Understand financial concepts</li>
-              <li>Navigate decisions</li>
-              <li>Take action on next steps</li>
-            </ul>
-          </div>
-          <div class="img-slot pillar-image" role="img" aria-label="Aimee AI chat interface">
-            <!-- Replace with: <img src="../../images/hub-aimee.jpg" alt="Aimee AI experience" /> -->
-            <span class="img-slot-label">Aimee AI</span>
+        <div class="solution-block fade-up">
+          <div class="solution-block-title">Cohesive design system</div>
+          <div class="solution-block-desc">A full component library built for speed and consistency — enabling fast iteration without sacrificing visual quality or breaking the product's coherence.</div>
+          <div class="solution-img">
+            <img src="../../images/component-library.png" alt="Component library and design system" />
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- ===== 7. IMPACT ===== -->
-    <section class="impact-section">
-      <div class="impact-header fade-up">
-        <p class="label">Impact</p>
-        <h2 class="section-heading">Moved the needle where it mattered.</h2>
+    <!-- ════ 7. IMPACT ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">Impact</span>
+        <div class="impact-grid">
+          <div class="impact-item">
+            <div class="impact-value">200%</div>
+            <div class="impact-label">Increase in platform engagement after launch</div>
+          </div>
+          <div class="impact-item">
+            <div class="impact-value" style="font-size: clamp(18px, 2vw, 28px); letter-spacing: -0.02em; line-height: 1.2; padding-top: 4px;">Fortune 500</div>
+            <div class="impact-label">Trusted by Fortune 500 companies, government institutions, and major enterprises worldwide</div>
+          </div>
+          <div class="impact-item">
+            <div class="impact-value">#1</div>
+            <div class="impact-label">Demo asset used to win clients including Meta, NFLPA, CVS Health, and the Federal Reserve</div>
+          </div>
+          <div class="impact-item">
+            <div class="impact-value" style="font-size: clamp(22px, 2.8vw, 34px); letter-spacing:-0.025em; line-height: 1.15; padding-top: 6px;">Market<br>Leader</div>
+            <div class="impact-label" style="margin-top: 14px;">Shifted perception from dated to best-in-class — closing deals competitors couldn't</div>
+          </div>
+        </div>
       </div>
-
-      <div class="impact-grid">
-        <div class="impact-card highlight fade-up">
-          <p class="impact-card-body">Helped win new business, including the Federal Reserve</p>
-        </div>
-        <div class="impact-card fade-up">
-          <p class="impact-card-body">Strengthened product positioning in sales conversations</p>
-        </div>
-        <div class="impact-card fade-up">
-          <p class="impact-card-body">Improved perceived usability and modernity across clients and prospects</p>
-        </div>
-        <div class="impact-card fade-up">
-          <p class="impact-card-body">Positive feedback from user testing and client demos</p>
-        </div>
-      </div>
-
-      <p class="impact-closing fade-up">The redesign transformed the Hub from an outdated experience into a modern, competitive product.</p>
     </section>
 
-    <!-- ===== 8 + 9. CONSTRAINTS + WHAT'S NEXT ===== -->
-    <section class="closing-section fade-up">
-      <div class="closing-col">
-        <p class="label">Constraints</p>
-        <h2 class="section-heading">Shipped under extreme pressure.</h2>
-        <p>This project was executed under extreme time pressure with a lean team and continuously expanding scope.</p>
-        <ul class="closing-list">
-          <li>~1 month to design the full platform</li>
-          <li>Continuous scope expansion during development</li>
-          <li>Lean team with high expectations</li>
-        </ul>
-        <p>I worked closely with engineering throughout to ensure fast, high-quality execution.</p>
-      </div>
-      <div class="closing-col">
-        <p class="label">What's Next</p>
-        <h2 class="section-heading">Still evolving.</h2>
-        <p>We're continuing to evolve the experience:</p>
-        <ul class="closing-list">
-          <li>Redesigning onboarding for a stronger first-time user experience</li>
-          <li>Making Aimee AI more agentic and proactive</li>
-          <li>Expanding personalization through deeper data integration</li>
+    <!-- ════ 8. WHAT'S NEXT ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">What I'd do next</span>
+        <ul class="next-list">
+          <li>Improve onboarding speed and first-session value to reduce early drop-off</li>
+          <li>Expand AI personalization with deeper behavioral and financial data signals</li>
+          <li>Add feedback loops to surface what's working and create faster iteration cycles</li>
         </ul>
       </div>
     </section>
 
-    <!-- ===== 10. BOTTOM CTA ===== -->
-    <div class="bottom-cta fade-up">
-      <nav class="cta-links" aria-label="Case study navigation">
-        <a href="../../work/" class="cta-link">← Back to Work</a>
-        <a href="../../resume/" class="cta-link">View Résumé</a>
-        <a href="../../contact/" class="cta-link">Contact ↗</a>
-      </nav>
+    <!-- ════ BOTTOM CTA ════ -->
+    <div class="bottom-cta">
+      <div class="wrap fade-up">
+        <nav class="cta-links" aria-label="Case study navigation">
+          <a href="../../work/" class="cta-link">← Back to Work</a>
+          <a href="../../resume/" class="cta-link">View Résumé</a>
+          <a href="../../contact/" class="cta-link">Contact ↗</a>
+        </nav>
+      </div>
     </div>
 
   </main>
 
   <footer>
-    <div>Bri May</div>
-    <div>
-      <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a> •
-      <a href="https://linkedin.com/in/brimay" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <div class="footer-inner">
+      <div>Bri May</div>
+      <div>
+        <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a> &nbsp;·&nbsp;
+        <a href="https://linkedin.com/in/brimay" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+      <div>© 2025 Bri May</div>
     </div>
-    <div>© 2025 Bri May</div>
   </footer>
 
   <script>
@@ -795,17 +726,12 @@
     const nav = document.getElementById('site-nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 8);
-    });
+    }, { passive: true });
 
     // Fade-up on scroll
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.07, rootMargin: '0px 0px -48px 0px' });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 

@@ -3,122 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="About Bri May — designer, director, and systems thinker specializing in digital product design and brand systems." />
+  <meta name="description" content="About Bri May — designer, soccer player, photographer, traveler, and sourdough baker." />
   <title>About — Bri May</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ============================================================
-       DESIGN SYSTEM
-    ============================================================ */
     :root {
       --bg: #ffffff;
       --ink: #111111;
-      --ink-2: #666666;
+      --ink-2: #555555;
       --ink-3: #999999;
       --border: #e8e8e8;
       --surface: #f5f5f5;
-      --px: clamp(24px, 4vw, 64px);
+      --px: clamp(24px, 5vw, 80px);
+      --max: 1160px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 16px;
-      line-height: 1.5;
+      font-size: 17px;
+      line-height: 1.65;
       color: var(--ink);
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ============================================================
-       NAVIGATION
-    ============================================================ */
+    /* NAV */
     #site-nav {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid transparent;
       transition: border-color 0.3s ease;
     }
-
-    #site-nav.scrolled {
-      border-bottom-color: var(--border);
-    }
-
+    #site-nav.scrolled { border-bottom-color: var(--border); }
     .nav-inner {
       width: 100%;
-      padding: 0 var(--px);
+      padding: 22px var(--px);
       display: flex;
-      flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      padding-top: 22px;
-      padding-bottom: 22px;
-      max-width: none;
     }
+    .nav-logo { font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 14px; color: var(--ink); text-decoration: none; transition: opacity 0.15s; }
+    .nav-links a:hover { opacity: 0.5; }
+    @media (max-width: 600px) { .nav-links { display: none; } }
 
-    .nav-logo {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--ink);
-      text-decoration: none;
-    }
+    /* CONTAINER */
+    .container { width: 100%; padding: 0 var(--px); max-width: calc(var(--max) + var(--px) * 2); margin: 0 auto; }
 
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 14px;
-      color: var(--ink-2);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--ink);
-    }
-
-    @media (max-width: 600px) {
-      .nav-links {
-        display: none;
-      }
-    }
-
-    /* ============================================================
-       TYPOGRAPHY
-    ============================================================ */
-    h1 {
-      font-size: clamp(40px, 5vw, 64px);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 1.06;
-      color: var(--ink);
-    }
-
-    p {
-      color: var(--ink-2);
-      line-height: 1.6;
-    }
-
+    /* LABEL */
     .label {
       font-size: 12px;
       font-weight: 500;
@@ -129,134 +71,134 @@
       margin-bottom: 12px;
     }
 
-    /* ============================================================
-       LAYOUT
-    ============================================================ */
-    .container {
-      width: 100%;
-      padding: 0 var(--px);
-      max-width: none;
-    }
-
-    /* ============================================================
-       PAGE INTRO SECTION
-    ============================================================ */
+    /* INTRO */
     .intro-section {
       padding-top: clamp(96px, 12vw, 160px);
       padding-bottom: 80px;
     }
-
     .intro-section h1 {
+      font-size: clamp(38px, 5vw, 64px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.06;
+      color: var(--ink);
       margin-top: 16px;
-      margin-bottom: 20px;
+      margin-bottom: 32px;
     }
-
-    /* ============================================================
-       BIO SECTION
-    ============================================================ */
-    .bio-section {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: clamp(40px, 6vw, 96px);
-      margin-top: 40px;
-    }
-
-    .bio-left {
-      /* Reserved for label or future use */
-    }
-
-    .bio-right {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .bio-right p {
+    .intro-section h1 span { color: var(--ink-3); font-weight: 300; }
+    .intro-lead {
       font-size: clamp(18px, 1.6vw, 22px);
       color: var(--ink-2);
       line-height: 1.7;
+      max-width: 820px;
     }
+    .intro-lead p + p { margin-top: 20px; }
 
-    @media (max-width: 800px) {
-      .bio-section {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-    }
-
-    /* ============================================================
-       SKILLS SECTION
-    ============================================================ */
-    .skills-section {
+    /* PHOTO SECTION */
+    .photo-section {
       border-top: 1px solid var(--border);
       padding: clamp(64px, 8vw, 96px) 0;
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: clamp(40px, 6vw, 96px);
     }
-
-    .skills-label {
-      /* For label styling if needed */
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 48px;
-    }
-
-    .skill-group {
+    .photo-placeholder {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      aspect-ratio: 16/7;
+      background: var(--surface);
+      border-radius: 20px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .photo-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-placeholder-label {
+      font-size: 13px;
+      color: var(--ink-3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .photo-caption {
+      max-width: 1160px;
+      margin: 16px auto 0;
+      font-size: 14px;
+      color: var(--ink-3);
+      text-align: center;
     }
 
-    .skill-group-title {
-      font-size: 13px;
+    /* OUTSIDE THE STUDIO */
+    .outside-section {
+      border-top: 1px solid var(--border);
+      padding: clamp(64px, 8vw, 96px) 0;
+    }
+    .outside-section h2 {
+      font-size: clamp(26px, 2.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-top: 12px;
+      margin-bottom: 56px;
+    }
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+    }
+    .interest-card {
+      background: var(--surface);
+      padding: 36px 32px;
+    }
+    .interest-card:nth-child(1) { border-radius: 16px 0 0 0; }
+    .interest-card:nth-child(4) { border-radius: 0 16px 0 0; }
+    .interest-card:nth-child(5) { border-radius: 0 0 0 16px; }
+    .interest-card:nth-child(8) { border-radius: 0 0 16px 0; }
+    .interest-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .interest-title {
+      font-size: 16px;
       font-weight: 600;
       color: var(--ink);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
     }
-
-    .skill-group-items {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .skill-item {
+    .interest-desc {
       font-size: 14px;
       color: var(--ink-2);
-      line-height: 2;
+      line-height: 1.55;
+    }
+    @media (max-width: 900px) {
+      .interests-grid { grid-template-columns: repeat(2, 1fr); }
+      .interest-card:nth-child(1) { border-radius: 16px 0 0 0; }
+      .interest-card:nth-child(2) { border-radius: 0 16px 0 0; }
+      .interest-card:nth-child(3), .interest-card:nth-child(4) { border-radius: 0; }
+      .interest-card:nth-child(5), .interest-card:nth-child(6) { border-radius: 0; }
+      .interest-card:nth-child(7) { border-radius: 0 0 0 16px; }
+      .interest-card:nth-child(8) { border-radius: 0 0 16px 0; }
+    }
+    @media (max-width: 540px) {
+      .interests-grid { grid-template-columns: 1fr; }
+      .interest-card { border-radius: 0 !important; }
+      .interest-card:first-child { border-radius: 16px 16px 0 0 !important; }
+      .interest-card:last-child { border-radius: 0 0 16px 16px !important; }
     }
 
-    @media (max-width: 800px) {
-      .skills-section {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-
-      .skills-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-    }
-
-    /* ============================================================
-       EXPERIENCE SECTION
-    ============================================================ */
+    /* EXPERIENCE */
     .experience-section {
       border-top: 1px solid var(--border);
       padding: clamp(64px, 8vw, 96px) 0;
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: clamp(40px, 6vw, 96px);
     }
-
-    .experience-timeline {
-      display: flex;
-      flex-direction: column;
+    .experience-section h2 {
+      font-size: clamp(26px, 2.5vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-top: 12px;
+      margin-bottom: 56px;
     }
-
+    .experience-timeline { display: flex; flex-direction: column; }
     .experience-entry {
       padding: 32px 0;
       border-bottom: 1px solid var(--border);
@@ -264,71 +206,24 @@
       flex-direction: row;
       gap: 32px;
     }
-
-    .experience-entry:last-child {
-      border-bottom: none;
-    }
-
-    .experience-entry-date {
-      flex-shrink: 0;
-      width: 160px;
-    }
-
-    .experience-entry-year {
-      font-size: 13px;
-      color: var(--ink-3);
-      line-height: 1.6;
-    }
-
-    .experience-entry-company {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--ink);
-      margin-top: 4px;
-    }
-
-    .experience-entry-content {
-      flex: 1;
-    }
-
-    .experience-entry-role {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--ink);
-      margin-bottom: 8px;
-    }
-
-    .experience-entry-desc {
-      font-size: 14px;
-      color: var(--ink-2);
-      line-height: 1.65;
-    }
-
+    .experience-entry:last-child { border-bottom: none; }
+    .experience-entry-date { flex-shrink: 0; width: 200px; }
+    .experience-entry-year { font-size: 13px; color: var(--ink-3); line-height: 1.6; }
+    .experience-entry-company { font-size: 15px; font-weight: 600; color: var(--ink); margin-top: 4px; }
+    .experience-entry-content { flex: 1; }
+    .experience-entry-role { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
+    .experience-entry-desc { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
     @media (max-width: 800px) {
-      .experience-section {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-
-      .experience-entry {
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .experience-entry-date {
-        width: 100%;
-      }
+      .experience-entry { flex-direction: column; gap: 8px; }
+      .experience-entry-date { width: 100%; }
     }
 
-    /* ============================================================
-       FOOTER
-    ============================================================ */
+    /* FOOTER */
     footer {
       border-top: 1px solid var(--border);
       padding: clamp(36px, 4vw, 56px) 0;
       margin-top: clamp(36px, 4vw, 56px);
     }
-
     .footer-inner {
       width: 100%;
       padding: 0 var(--px);
@@ -338,13 +233,7 @@
       align-items: center;
       gap: 32px;
     }
-
-    .footer-left {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--ink);
-    }
-
+    .footer-left { font-size: 14px; font-weight: 600; color: var(--ink); }
     .footer-middle {
       display: flex;
       gap: 24px;
@@ -352,43 +241,26 @@
       font-size: 14px;
       color: var(--ink-2);
     }
-
     .footer-middle a {
       color: var(--ink-2);
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
       transition: color 0.2s ease;
     }
-
-    .footer-middle a:hover {
-      color: var(--ink);
-    }
-
-    .footer-right {
-      font-size: 14px;
-      color: var(--ink-3);
-    }
-
+    .footer-middle a:hover { color: var(--ink); }
+    .footer-right { font-size: 14px; color: var(--ink-3); }
     @media (max-width: 768px) {
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .footer-middle {
-        flex-direction: column;
-        gap: 8px;
-        align-items: flex-start;
-      }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .footer-middle { flex-direction: column; gap: 8px; align-items: flex-start; }
     }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
   <nav id="site-nav">
-    <div class="nav-inner container">
+    <div class="nav-inner">
       <a href="../" class="nav-logo">Bri May</a>
       <ul class="nav-links">
         <li><a href="../work/">Work</a></li>
@@ -399,89 +271,80 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
   <main>
-    <!-- Page Intro -->
+    <!-- Intro -->
     <section class="intro-section container">
-      <span class="label">About</span>
-      <h1>Designer, director,<br>and systems thinker.</h1>
+      <span class="label fade-up">About</span>
+      <h1 class="fade-up">Creative by trade.<br><span>Competitive by nature.</span></h1>
+      <div class="intro-lead fade-up">
+        <p>I grew up on a soccer field — played D1 on scholarship in college, and still lace up every weekend. Some habits are just too good to quit.</p>
+        <p>These days, the most important part of my life is my family. I have a son who makes everything better, and I spend as much time as possible with the people who matter most. I'm pretty sure that's where all the good ideas come from, too.</p>
+        <p>When I'm not designing or chasing a ball, I'm shooting photography — mostly families and newborns — traveling somewhere I've never been, or deep in some hobby that has absolutely nothing to do with a screen. Dirtbikes, wakeboards, a perfectly scored sourdough, and warm-water scuba dives are my version of balance.</p>
+      </div>
     </section>
 
-    <!-- Bio Section -->
-    <section class="container">
-      <div class="bio-section">
-        <div class="bio-left"></div>
-        <div class="bio-right">
-          <p>I design digital experiences that feel honest, considered, and genuinely useful — across product design, brand systems, marketing websites, and AI-powered platforms. My work lives at the intersection of clarity and craft.</p>
-          <p>At Financial Finesse, I've led design across product, brand, and digital storytelling — shaping everything from AI-driven platform experiences to the marketing site, visual systems, and how the brand shows up across the full digital ecosystem.</p>
-          <p>I care about the details most people never notice — the micro-interaction that reduces anxiety, the copy that actually answers the question, the flow that makes someone feel capable instead of confused.</p>
+    <!-- Family Photo -->
+    <section class="photo-section container fade-up">
+      <div class="photo-placeholder">
+        <span class="photo-placeholder-label">Family photo coming soon</span>
+      </div>
+      <p class="photo-caption">My people — the whole reason any of this matters.</p>
+    </section>
+
+    <!-- Outside the Studio -->
+    <section class="outside-section container">
+      <span class="label fade-up">Outside the studio</span>
+      <h2 class="fade-up">What I'm actually into.</h2>
+      <div class="interests-grid">
+        <div class="interest-card fade-up">
+          <span class="interest-icon">⚽</span>
+          <div class="interest-title">Soccer</div>
+          <div class="interest-desc">D1 scholarship, lifelong player. Still competing in weekend leagues — the field is my reset button.</div>
+        </div>
+        <div class="interest-card fade-up">
+          <span class="interest-icon">📷</span>
+          <div class="interest-title">Photography</div>
+          <div class="interest-desc">I photograph families and newborns. There's nothing better than capturing a moment that'll matter forever.</div>
+        </div>
+        <div class="interest-card fade-up">
+          <span class="interest-icon">✈️</span>
+          <div class="interest-title">Travel & Food</div>
+          <div class="interest-desc">Chasing great cuisine and even better cocktails. Always looking for the next place I've never been and the dish I've never tried.</div>
+        </div>
+        <div class="interest-card fade-up">
+          <span class="interest-icon">🌊</span>
+          <div class="interest-title">Scuba Diving</div>
+          <div class="interest-desc">Warm ocean, great visibility, zero deadlines. Some of my favorite places in the world are underwater.</div>
+        </div>
+        <div class="interest-card fade-up">
+          <span class="interest-icon">🏍️</span>
+          <div class="interest-title">Dirtbiking</div>
+          <div class="interest-desc">Nothing clears your head like being in the dirt with no signal. It's the most analog thing I do.</div>
+        </div>
+        <div class="interest-card fade-up">
+          <span class="interest-icon">🏄</span>
+          <div class="interest-title">Wakeboarding</div>
+          <div class="interest-desc">On the water every chance I get. There's a flow state to it that feels a lot like good design, honestly.</div>
+        </div>
+        <div class="interest-card fade-up">
+          <span class="interest-icon">🍞</span>
+          <div class="interest-title">Sourdough Baking</div>
+          <div class="interest-desc">The kind of hobby that starts at 11pm and takes three days. My starter has a name. I'm not embarrassed.</div>
+        </div>
+        <div class="interest-card fade-up">
+          <span class="interest-icon">👨‍👩‍👦</span>
+          <div class="interest-title">Family</div>
+          <div class="interest-desc">My son and the people I love are what everything else is in service of. Biggest influence on how I think about what matters.</div>
         </div>
       </div>
     </section>
 
-    <!-- Skills Section -->
-    <section class="skills-section container">
-      <div class="skills-label">
-        <span class="label">Core Skills</span>
-      </div>
-      <div class="skills-grid">
-        <div class="skill-group">
-          <div class="skill-group-title">Product & UX Design</div>
-          <div class="skill-group-items">
-            <div class="skill-item">Figma</div>
-            <div class="skill-item">Rapid Prototyping</div>
-            <div class="skill-item">UX Research</div>
-            <div class="skill-item">Design Systems</div>
-            <div class="skill-item">User Testing</div>
-            <div class="skill-item">Interaction Design</div>
-            <div class="skill-item">Responsive Design</div>
-          </div>
-        </div>
-
-        <div class="skill-group">
-          <div class="skill-group-title">Creative Direction</div>
-          <div class="skill-group-items">
-            <div class="skill-item">Brand Strategy</div>
-            <div class="skill-item">Visual Storytelling</div>
-            <div class="skill-item">Art Direction</div>
-            <div class="skill-item">Campaign Development</div>
-            <div class="skill-item">Photography Direction</div>
-            <div class="skill-item">Multi-channel Marketing</div>
-          </div>
-        </div>
-
-        <div class="skill-group">
-          <div class="skill-group-title">Leadership</div>
-          <div class="skill-group-items">
-            <div class="skill-item">Team Leadership</div>
-            <div class="skill-item">Cross-functional Collaboration</div>
-            <div class="skill-item">Stakeholder Presentations</div>
-            <div class="skill-item">Design Ops</div>
-            <div class="skill-item">Strategic Planning</div>
-          </div>
-        </div>
-
-        <div class="skill-group">
-          <div class="skill-group-title">Tools</div>
-          <div class="skill-group-items">
-            <div class="skill-item">Adobe CC</div>
-            <div class="skill-item">Generative AI Tools</div>
-            <div class="skill-item">Figma Plugins</div>
-            <div class="skill-item">GitHub</div>
-            <div class="skill-item">Claude Code</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Experience Section -->
+    <!-- Experience (brief) -->
     <section class="experience-section container">
-      <div class="skills-label">
-        <span class="label">Experience</span>
-      </div>
+      <span class="label fade-up">Experience</span>
+      <h2 class="fade-up">The professional short version.</h2>
       <div class="experience-timeline">
-        <!-- Entry 1 -->
-        <div class="experience-entry">
+        <div class="experience-entry fade-up">
           <div class="experience-entry-date">
             <div class="experience-entry-year">2019–Present</div>
             <div class="experience-entry-company">Financial Finesse</div>
@@ -491,61 +354,48 @@
             <div class="experience-entry-desc">Led end-to-end design of the Financial Wellness Dashboard, mobile app, website, and full brand refresh — driving 200% engagement growth. Directed cross-functional work across UX research, brand systems, and AI-driven platform experiences.</div>
           </div>
         </div>
-
-        <!-- Entry 2 -->
-        <div class="experience-entry">
+        <div class="experience-entry fade-up">
           <div class="experience-entry-date">
             <div class="experience-entry-year">2015–Present</div>
             <div class="experience-entry-company">mayd: by bri</div>
           </div>
           <div class="experience-entry-content">
             <div class="experience-entry-role">Founder & Freelance Creative Designer</div>
-            <div class="experience-entry-desc">Independent design studio building brands, websites, and marketing systems. Strategic design partner to companies across fintech, lifestyle, and consumer goods.</div>
+            <div class="experience-entry-desc">Independent design studio. Strategic partner to founders and teams across fintech, lifestyle, and consumer goods — building brands and digital experiences from scratch.</div>
           </div>
         </div>
-
-        <!-- Entry 3 -->
-        <div class="experience-entry">
+        <div class="experience-entry fade-up">
           <div class="experience-entry-date">
             <div class="experience-entry-year">2012–2016</div>
             <div class="experience-entry-company">CKC Communications</div>
           </div>
           <div class="experience-entry-content">
-            <div class="experience-entry-role">Creative Director & Lead Product Designer</div>
-            <div class="experience-entry-desc">Led design for 50+ companies, creating branding, design systems, websites, and marketing materials across industries.</div>
+            <div class="experience-entry-role">Creative Director</div>
+            <div class="experience-entry-desc">Led design for 50+ companies — branding, design systems, websites, and marketing campaigns across industries. Where I learned to go fast without losing craft.</div>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <div class="footer-inner container">
+    <div class="footer-inner">
       <div class="footer-left">Bri May</div>
       <div class="footer-middle">
-        <span>thebrimay@gmail.com</span>
-        <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">
-          LinkedIn
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </a>
+        <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
+        <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
       <div class="footer-right">© 2025 Bri May</div>
     </div>
   </footer>
 
   <script>
-    // Nav scroll behavior
     const siteNav = document.getElementById('site-nav');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 8) {
-        siteNav.classList.add('scrolled');
-      } else {
-        siteNav.classList.remove('scrolled');
-      }
-    });
+    window.addEventListener('scroll', () => { siteNav.classList.toggle('scrolled', window.scrollY > 8); }, { passive: true });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
