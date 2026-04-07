@@ -27,63 +27,73 @@ export default function About() {
       <Nav />
       <main>
 
-        {/* ── INTRO ─────────────────────────────────────── */}
-        <section style={{ padding: 'clamp(72px, 9vw, 120px) 0 clamp(48px, 6vw, 80px)' }}>
+        {/* ── INTRO + FAMILY PHOTO ──────────────────────── */}
+        <section style={{ padding: 'clamp(72px, 9vw, 120px) 0 clamp(64px, 8vw, 100px)' }}>
           <div className="container">
-            <FadeUp>
-              <p className="eyebrow" style={{ marginBottom: 20 }}>About</p>
-              <h1 style={{
-                fontSize: 'clamp(36px, 4.8vw, 62px)',
-                fontWeight: 700,
-                letterSpacing: '-0.035em',
-                lineHeight: 1.08,
-                marginBottom: 32,
-                maxWidth: 820,
-              }}>
-                Creative by trade.<br />Competitive by nature.
-              </h1>
-              <p style={{
-                fontSize: 'clamp(17px, 1.4vw, 20px)',
-                color: 'var(--ink-2)',
-                maxWidth: 620,
-                lineHeight: 1.7,
-                marginBottom: 20,
-              }}>
-                Before I was a designer, I was a D1 soccer player. That background — the
-                discipline, the team dynamics, the pressure of high-stakes performance — shaped
-                how I approach every product challenge I take on.
-              </p>
-              <p style={{
-                fontSize: 'clamp(16px, 1.2vw, 18px)',
-                color: 'var(--ink-2)',
-                maxWidth: 600,
-                lineHeight: 1.7,
-              }}>
-                Today I'm a Senior Product Designer and Creative Director — 10 years in product design, doing design since 2011 —
-                products used by some of the world's most recognized companies. I live for the
-                intersection of strategy and craft — where a strong point of view meets pixel-level
-                execution.
-              </p>
-            </FadeUp>
-          </div>
-        </section>
+            <div className="about-hero-grid">
 
-        {/* ── PHOTO ─────────────────────────────────────── */}
-        <section style={{ padding: '0 0 clamp(56px, 7vw, 96px)' }}>
-          <div className="container">
-            <FadeUp>
-              <ParallaxImage
-                src="/images/bri-hero-crop.jpg"
-                alt="Bri May"
-                style={{
-                  width: '100%',
-                  maxWidth: '100%',
-                  borderRadius: 'var(--radius-lg)',
-                  aspectRatio: '16/7',
-                }}
-              />
-            </FadeUp>
+              {/* Left: text */}
+              <FadeUp style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <p className="eyebrow" style={{ marginBottom: 20 }}>About</p>
+                <h1 style={{
+                  fontSize: 'clamp(36px, 4vw, 56px)',
+                  fontWeight: 700,
+                  letterSpacing: '-0.035em',
+                  lineHeight: 1.08,
+                  marginBottom: 28,
+                }}>
+                  Creative by trade.<br />Competitive by nature.
+                </h1>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.2vw, 18px)',
+                  color: 'var(--ink-2)',
+                  lineHeight: 1.7,
+                  marginBottom: 18,
+                }}>
+                  Before I was a designer, I was a D1 soccer player. That background — the
+                  discipline, the team dynamics, the pressure of high-stakes performance — shaped
+                  how I approach every product challenge I take on.
+                </p>
+                <p style={{
+                  fontSize: 'clamp(15px, 1.1vw, 17px)',
+                  color: 'var(--ink-2)',
+                  lineHeight: 1.7,
+                }}>
+                  Today I'm a Senior Product Designer and Creative Director — 10 years in product
+                  design, doing design since 2011. I live for the intersection of strategy and craft,
+                  where a strong point of view meets pixel-level execution.
+                </p>
+              </FadeUp>
+
+              {/* Right: family photo */}
+              <FadeUp delay={0.1}>
+                <ParallaxImage
+                  src="/images/family-photo.jpg"
+                  alt="Bri May with family"
+                  style={{
+                    width: '100%',
+                    borderRadius: 'var(--radius-lg)',
+                    aspectRatio: '3/4',
+                  }}
+                />
+              </FadeUp>
+
+            </div>
           </div>
+
+          <style>{`
+            .about-hero-grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: clamp(48px, 8vw, 96px);
+              align-items: center;
+            }
+            @media (max-width: 768px) {
+              .about-hero-grid {
+                grid-template-columns: 1fr;
+              }
+            }
+          `}</style>
         </section>
 
         {/* ── OUTSIDE WORK ──────────────────────────────── */}
