@@ -6,7 +6,7 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 5173,
-      "cwd": "/Users/brimay/Documents/Bri May/Github/bri-portfolio-2"
+      "cwd": "."
     }
   ]
 }

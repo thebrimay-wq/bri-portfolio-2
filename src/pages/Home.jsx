@@ -82,7 +82,7 @@ function Hero() {
           <div className="hero__copy">
             <FadeUp>
               <p className="eyebrow" style={{ marginBottom: 28 }}>
-                Staff Product Designer &amp; Creative Director
+                Senior Product Designer &amp; Creative Director
               </p>
             </FadeUp>
 
@@ -112,8 +112,8 @@ function Hero() {
 
             <FadeUp delay={0.18}>
               <div className="button-row">
-                <Link to="/work" className="button button--primary">View Work</Link>
-                <Link to="/about" className="button button--secondary">About Me →</Link>
+                <Link to="/work" className="btn-primary">View Work</Link>
+                <Link to="/about" className="btn-secondary">About Me →</Link>
               </div>
             </FadeUp>
           </div>
@@ -121,66 +121,48 @@ function Hero() {
           {/* ── RIGHT: PORTRAIT ────────────────────────── */}
           {/* Anchor portrait to the bottom of the hero, breaking the border line */}
           <div className="hero__media">
-          <div className="hero__media-card image-frame" data-parallax>
-          <FadeUp delay={0.1} style={{ position: 'relative' }}>
-            {/* Atmospheric glow */}
-            <div aria-hidden="true" style={{
+          <FadeUp delay={0.1} style={{ position: 'relative', height: '100%' }}>
+          <motion.div
+            className="hero__media-card image-frame"
+            data-parallax
+            style={{ position: 'relative', y: imageY, height: '100%', cursor: 'default' }}
+            whileHover={reduce ? {} : { scale: 1.025 }}
+            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <img
+              src="/images/bri-hero-crop.jpg"
+              alt="Bri May — Senior Product Designer"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'top center',
+                display: 'block',
+              }}
+            />
+
+            {/* Floating microcopy */}
+            <div className="hero__tooltip" style={{
               position: 'absolute',
-              inset: '-30% -20%',
-              background: 'radial-gradient(ellipse at 55% 45%, rgba(120,100,200,0.10) 0%, rgba(80,140,220,0.07) 45%, transparent 70%)',
-              filter: 'blur(48px)',
-              pointerEvents: 'none',
-              zIndex: 0,
-            }} />
-
-            {/* Image wrapper with parallax */}
-            <motion.div style={{ position: 'relative', zIndex: 1, y: imageY }}>
-              <motion.div
-                style={{
-                  borderRadius: 20,
-                  overflow: 'hidden',
-                  aspectRatio: '4/5',
-                  maxHeight: 580,
-                  cursor: 'default',
-                }}
-                whileHover={reduce ? {} : { scale: 1.02 }}
-                transition={{ duration: 0.38, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                <img
-                  src="/images/bri-hero-crop.jpg"
-                  alt="Bri May — Senior Product Designer"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block',
-                  }}
-                />
-              </motion.div>
-
-              {/* Floating microcopy */}
-              <div style={{
-                position: 'absolute',
-                bottom: -14,
-                left: -10,
-                background: 'rgba(255,255,255,0.92)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                border: '1px solid var(--border)',
-                borderRadius: 100,
-                padding: '9px 18px',
-                fontSize: 12,
-                fontWeight: 500,
-                color: 'var(--ink-2)',
-                letterSpacing: '0.01em',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.07)',
-                whiteSpace: 'nowrap',
-              }}>
-                This is where strategy meets taste.
-              </div>
-            </motion.div>
+              bottom: '28%',
+              left: 20,
+              background: 'rgba(255,255,255,0.92)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid var(--border)',
+              borderRadius: 100,
+              padding: '9px 18px',
+              fontSize: 12,
+              fontWeight: 500,
+              color: 'var(--ink-2)',
+              letterSpacing: '0.01em',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.07)',
+              whiteSpace: 'nowrap',
+            }}>
+              This is where strategy meets taste.
+            </div>
+          </motion.div>
           </FadeUp>
-          </div>{/* /hero__media-card */}
           </div>{/* /hero__media */}
 
         </div>
@@ -192,31 +174,33 @@ function Hero() {
         .hero__grid {
           display: grid;
           grid-template-columns: 1.1fr 0.9fr;
-          gap: clamp(48px, 8vw, 96px);
-          align-items: end;
+          gap: clamp(40px, 6vw, 80px);
+          align-items: stretch;
         }
         .hero__copy {
           display: flex;
           flex-direction: column;
           justify-content: center;
+          align-self: center;
         }
-        /* Portrait anchor: sits at the bottom of the hero and breaks the border line */
+        /* Portrait sits on the divider with a subtle overlap */
         .hero__media {
           position: relative;
           z-index: 2;
-          transform: translateY(clamp(36px, 5vw, 56px));
+          align-self: end;
+          transform: translateY(clamp(32px, 3vw, 44px));
         }
         .hero__divider {
           border-top: 1px solid var(--border);
-          margin-top: clamp(80px, 10vw, 120px);
+          margin-top: clamp(48px, 5vw, 72px);
         }
         @media (max-width: 800px) {
           .hero__grid {
             grid-template-columns: 1fr;
           }
           .hero__media {
-            transform: translateY(clamp(44px, 8vw, 64px));
-            max-width: 440px;
+            transform: translateY(clamp(24px, 3vw, 36px));
+            max-width: 100%;
           }
         }
       `}</style>
@@ -229,15 +213,15 @@ function TrustStrip() {
   return (
     <FadeUp>
       <div style={{
+        borderTop: '1px solid var(--border)',
         borderBottom: '1px solid var(--border)',
-        paddingTop: 'clamp(56px, 8vw, 80px)',
+        paddingBlock: 'clamp(28px, 4vw, 44px)',
       }}>
         <div className="container">
           <div style={{
             display: 'flex',
             alignItems: 'center',
             gap: 'clamp(16px, 4vw, 52px)',
-            padding: '20px 0',
             flexWrap: 'wrap',
           }}>
             <span className="eyebrow" style={{ whiteSpace: 'nowrap' }}>
@@ -442,11 +426,22 @@ function AboutPreview() {
               fontSize: 'clamp(16px, 1.2vw, 18px)',
               color: 'var(--ink-2)',
               lineHeight: 1.7,
-              marginBottom: 36,
+              marginBottom: 24,
             }}>
               I've spent the last decade leading design across product, marketing, and
               AI-powered experiences — partnering closely with product and engineering
               to bring ideas to life.
+            </p>
+            <p style={{
+              fontSize: 'clamp(16px, 1.2vw, 18px)',
+              color: 'var(--ink-2)',
+              lineHeight: 1.7,
+              marginBottom: 36,
+            }}>
+              I move fast from idea to reality. I use AI-assisted tools to prototype real,
+              interactive product experiences — not just static screens. This allows me to
+              test ideas earlier, align teams faster, and ship better solutions. Design isn't
+              just how it looks — it's how quickly we can learn and improve.
             </p>
             <Link to="/about" className="btn-secondary">More about me →</Link>
           </FadeUp>
