@@ -72,7 +72,13 @@ function Hero() {
   return (
     <section
       ref={sectionRef}
-      style={{ padding: 'clamp(88px, 10vw, 140px) 0 clamp(72px, 8vw, 112px)', overflow: 'hidden' }}
+      style={{
+        padding: 'clamp(88px, 10vw, 140px) 0 clamp(80px, 10vw, 120px)',
+        overflow: 'visible',
+        position: 'relative',
+        borderBottom: '1px solid var(--border)',
+        zIndex: 1,
+      }}
     >
       <div className="container">
         <div className="hero-grid">
@@ -135,6 +141,8 @@ function Hero() {
           </div>
 
           {/* ── RIGHT: PORTRAIT ────────────────────────── */}
+          {/* Anchor portrait to the bottom of the hero, breaking the border line */}
+          <div className="hero-portrait-anchor">
           <FadeUp delay={0.1} style={{ position: 'relative' }}>
             {/* Atmospheric glow */}
             <div aria-hidden="true" style={{
@@ -193,6 +201,7 @@ function Hero() {
               </div>
             </motion.div>
           </FadeUp>
+          </div>{/* /hero-portrait-anchor */}
 
         </div>
       </div>
@@ -202,13 +211,20 @@ function Hero() {
           display: grid;
           grid-template-columns: 1.1fr 0.9fr;
           gap: clamp(48px, 8vw, 96px);
-          align-items: center;
+          align-items: end;
+        }
+        /* Portrait anchor: sits at the bottom of the hero and breaks the border line */
+        .hero-portrait-anchor {
+          position: relative;
+          z-index: 2;
+          transform: translateY(clamp(36px, 5vw, 56px));
         }
         @media (max-width: 800px) {
           .hero-grid {
             grid-template-columns: 1fr;
           }
-          .hero-grid > *:last-child {
+          .hero-portrait-anchor {
+            transform: translateY(clamp(44px, 8vw, 64px));
             max-width: 440px;
           }
         }
@@ -222,8 +238,8 @@ function TrustStrip() {
   return (
     <FadeUp>
       <div style={{
-        borderTop: '1px solid var(--border)',
         borderBottom: '1px solid var(--border)',
+        paddingTop: 'clamp(56px, 8vw, 80px)',
       }}>
         <div className="container">
           <div style={{
