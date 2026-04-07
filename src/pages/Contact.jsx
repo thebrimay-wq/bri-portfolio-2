@@ -125,7 +125,7 @@ export default function Contact() {
                 </span>
                 <span style={{ fontSize: 14, color: 'var(--ink-3)' }}>·</span>
                 <span style={{ fontSize: 14, color: 'var(--ink-3)' }}>
-                  Based in Los Angeles, CA · Open to remote
+                  Based in Pleasanton, CA · Open to remote
                 </span>
               </div>
             </FadeUp>

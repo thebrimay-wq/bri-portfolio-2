@@ -59,7 +59,7 @@ export default function About() {
                 maxWidth: 600,
                 lineHeight: 1.7,
               }}>
-                Today I'm a Senior Product Designer and Creative Director with 10+ years designing
+                Today I'm a Senior Product Designer and Creative Director — 10 years in product design, doing design since 2011 —
                 products used by some of the world's most recognized companies. I live for the
                 intersection of strategy and craft — where a strong point of view meets pixel-level
                 execution.

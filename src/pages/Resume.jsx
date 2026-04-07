@@ -68,7 +68,7 @@ export default function Resume() {
                     Bri May
                   </h1>
                   <p style={{ fontSize: 'clamp(16px, 1.2vw, 18px)', color: 'var(--ink-2)' }}>
-                    Staff Product Designer &amp; Creative Director · 10+ years
+                    Staff Product Designer &amp; Creative Director · 10 years product design · designing since 2011
                   </p>
                 </div>
                 <a

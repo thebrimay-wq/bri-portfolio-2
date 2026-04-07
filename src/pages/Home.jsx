@@ -121,8 +121,8 @@ function Hero() {
                 maxWidth: 460,
                 lineHeight: 1.65,
               }}>
-                10+ years designing products used by companies like Meta —
-                driving engagement, clarity, and measurable business outcomes.
+                10 years in product design, designing since 2011 — working with
+                companies like Meta to drive engagement, clarity, and measurable outcomes.
               </p>
             </FadeUp>
 
