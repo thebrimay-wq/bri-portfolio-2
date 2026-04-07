@@ -7,7 +7,7 @@
   <title>Work — Bri May</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     /* ============================================================
@@ -16,11 +16,12 @@
     :root {
       --bg: #ffffff;
       --ink: #111111;
-      --ink-2: #666666;
+      --ink-2: #555555;
       --ink-3: #999999;
       --border: #e8e8e8;
       --surface: #f5f5f5;
-      --px: clamp(24px, 4vw, 64px);
+      --px: clamp(24px, 5vw, 80px);
+      --max: 1160px;
     }
 
     * {
@@ -35,8 +36,8 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 16px;
-      line-height: 1.5;
+      font-size: 17px;
+      line-height: 1.65;
       color: var(--ink);
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
@@ -50,8 +51,9 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid transparent;
       transition: border-color 0.3s ease;
     }
@@ -88,13 +90,13 @@
 
     .nav-links a {
       font-size: 14px;
-      color: var(--ink-2);
+      color: var(--ink);
       text-decoration: none;
-      transition: color 0.2s ease;
+      transition: opacity 0.15s;
     }
 
     .nav-links a:hover {
-      color: var(--ink);
+      opacity: 0.5;
     }
 
     @media (max-width: 600px) {
@@ -108,15 +110,16 @@
     ============================================================ */
     h1 {
       font-size: clamp(40px, 5vw, 64px);
-      font-weight: 600;
-      letter-spacing: -0.03em;
+      font-weight: 700;
+      letter-spacing: -0.035em;
       line-height: 1.06;
       color: var(--ink);
     }
 
     h2 {
       font-size: clamp(20px, 2vw, 26px);
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       color: var(--ink);
     }
 
@@ -141,7 +144,8 @@
     .container {
       width: 100%;
       padding: 0 var(--px);
-      max-width: none;
+      max-width: calc(var(--max) + var(--px) * 2);
+      margin: 0 auto;
     }
     /* Hero is always full width */
     .hero .container,
@@ -173,7 +177,7 @@
     ============================================================ */
     .work-grid-section {
       border-top: 1px solid var(--border);
-      padding: clamp(64px, 8vw, 96px) 0;
+      padding: clamp(64px, 8vw, 96px) var(--px);
     }
 
     .work-grid {
@@ -196,12 +200,15 @@
     }
 
     .work-card {
-      display: block;
+      display: flex;
+      flex-direction: column;
       border-radius: 16px;
       overflow: hidden;
       background: var(--surface);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
+      text-decoration: none;
+      color: inherit;
     }
 
     .work-card:hover {
@@ -229,6 +236,9 @@
 
     .work-card-body {
       padding: 28px 32px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .work-card-tags {
@@ -290,7 +300,7 @@
     ============================================================ */
     .cta-row-section {
       border-top: 1px solid var(--border);
-      padding: 64px 0;
+      padding: 64px var(--px);
     }
 
     .cta-row {
@@ -402,6 +412,9 @@
         align-items: flex-start;
       }
     }
+
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
@@ -422,9 +435,9 @@
   <main>
     <!-- Page Intro -->
     <section class="intro-section container">
-      <span class="label">Selected Work</span>
-      <h1>Product, AI &amp; behavioral design.</h1>
-      <p>A selection of product design work across AI, financial wellness, and behavior-driven digital experiences.</p>
+      <span class="label fade-up">Selected Work</span>
+      <h1 class="fade-up">Product, AI &amp; behavioral design.</h1>
+      <p class="fade-up">A selection of product design work across AI, financial wellness, and behavior-driven digital experiences.</p>
     </section>
 
     <!-- Work Grid -->
@@ -443,12 +456,12 @@
             </div>
             <h2 class="work-card-title">Aimee AI Coach</h2>
             <p class="work-card-desc">Designing a conversational AI coach that turns static financial education into personalized, motivating guidance.</p>
-            <a href="../aimee-ai/" class="work-card-cta">
+            <span class="work-card-cta">
               View Project
               <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-            </a>
+            </span>
           </div>
         </a>
 
@@ -465,12 +478,12 @@
             </div>
             <h2 class="work-card-title">Financial Finesse Hub</h2>
             <p class="work-card-desc">Reimagining a financial wellness platform to improve onboarding, engagement, and clarity across complex user journeys.</p>
-            <a href="../work/hub/" class="work-card-cta">
+            <span class="work-card-cta">
               View Project
               <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-            </a>
+            </span>
           </div>
         </a>
 
@@ -487,12 +500,12 @@
             </div>
             <h2 class="work-card-title">Smart Benefits Platform</h2>
             <p class="work-card-desc">Designing an AI-powered benefits experience that helps employees understand and use complex workplace benefits.</p>
-            <a href="../work/smart-benefits/" class="work-card-cta">
+            <span class="work-card-cta">
               View Project
               <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-            </a>
+            </span>
           </div>
         </a>
       </div>
@@ -525,7 +538,7 @@
     <div class="footer-inner container">
       <div class="footer-left">Bri May</div>
       <div class="footer-middle">
-        <span>thebrimay@gmail.com</span>
+        <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
         <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">
           LinkedIn
           <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -538,15 +551,12 @@
   </footer>
 
   <script>
-    // Nav scroll behavior
     const siteNav = document.getElementById('site-nav');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 8) {
-        siteNav.classList.add('scrolled');
-      } else {
-        siteNav.classList.remove('scrolled');
-      }
-    });
+    window.addEventListener('scroll', () => { siteNav.classList.toggle('scrolled', window.scrollY > 8); }, { passive: true });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
