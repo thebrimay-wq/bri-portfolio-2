@@ -17,7 +17,7 @@ const IMPACT = [
   { value: '200%', label: 'Increase in platform engagement after launch' },
   { value: 'Fortune 500', label: 'Trusted by Fortune 500 companies, government institutions, and major enterprises worldwide', small: true },
   { value: '#1', label: 'Demo asset used to win clients including Meta, NFLPA, CVS Health, and the Federal Reserve' },
-  { value: 'Market Leader', label: 'Shifted perception from dated to best-in-class — closing deals competitors couldn\'t', small: true },
+  { value: 'Market Leader', label: "Shifted perception from dated to best-in-class — closing deals competitors couldn't", small: true },
 ];
 
 export default function Hub() {
@@ -118,10 +118,10 @@ export default function Hub() {
             </h2>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               {[
-                ['Low engagement', 'users weren't returning after their first session'],
-                ['Unclear value', 'the product didn't communicate what to do next'],
+                ['Low engagement', "users weren't returning after their first session"],
+                ['Unclear value', "the product didn't communicate what to do next"],
                 ['Static experience', 'no personalization, no dynamic content, no momentum'],
-                ['Weak sales demos', 'the UI couldn't compete visually in live pitches'],
+                ['Weak sales demos', "the UI couldn't compete visually in live pitches"],
               ].map(([bold, rest]) => (
                 <li key={bold} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', fontSize: 'clamp(15px, 1.1vw, 17px)', color: 'var(--ink-2)', lineHeight: 1.6 }}>
                   <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--ink-3)', flexShrink: 0, marginTop: 10 }} />
