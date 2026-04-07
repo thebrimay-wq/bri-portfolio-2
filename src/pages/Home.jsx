@@ -72,19 +72,14 @@ function Hero() {
   return (
     <section
       ref={sectionRef}
-      style={{
-        padding: 'clamp(88px, 10vw, 140px) 0 clamp(80px, 10vw, 120px)',
-        overflow: 'visible',
-        position: 'relative',
-        borderBottom: '1px solid var(--border)',
-        zIndex: 1,
-      }}
+      className="hero section section--lg"
+      style={{ overflow: 'visible', position: 'relative', zIndex: 1 }}
     >
       <div className="container">
-        <div className="hero-grid">
+        <div className="hero__grid">
 
           {/* ── LEFT: TEXT ─────────────────────────────── */}
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div className="hero__copy">
             <FadeUp>
               <p className="eyebrow" style={{ marginBottom: 28 }}>
                 Staff Product Designer &amp; Creative Director
@@ -105,44 +100,28 @@ function Hero() {
             </FadeUp>
 
             <FadeUp delay={0.12}>
-              <p style={{
-                fontSize: 'clamp(16px, 1.3vw, 19px)',
-                color: 'var(--ink-2)',
-                maxWidth: 480,
-                lineHeight: 1.7,
-                marginBottom: 14,
-              }}>
+              <p className="text-muted" style={{ maxWidth: 480, marginBottom: 14 }}>
                 I'm Bri May, a Senior Product Designer focused on turning
                 complex systems into simple, high-impact experiences.
               </p>
-              <p style={{
-                fontSize: 14,
-                color: 'var(--ink-3)',
-                maxWidth: 460,
-                lineHeight: 1.65,
-              }}>
+              <p className="text-muted" style={{ maxWidth: 460 }}>
                 10 years in product design, designing since 2011 — working with
                 companies like Meta to drive engagement, clarity, and measurable outcomes.
               </p>
             </FadeUp>
 
             <FadeUp delay={0.18}>
-              <div style={{
-                marginTop: 44,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 24,
-                flexWrap: 'wrap',
-              }}>
-                <Link to="/work" className="btn-primary">View Work</Link>
-                <Link to="/about" className="btn-secondary">About Me →</Link>
+              <div className="button-row">
+                <Link to="/work" className="button button--primary">View Work</Link>
+                <Link to="/about" className="button button--secondary">About Me →</Link>
               </div>
             </FadeUp>
           </div>
 
           {/* ── RIGHT: PORTRAIT ────────────────────────── */}
           {/* Anchor portrait to the bottom of the hero, breaking the border line */}
-          <div className="hero-portrait-anchor">
+          <div className="hero__media">
+          <div className="hero__media-card image-frame" data-parallax>
           <FadeUp delay={0.1} style={{ position: 'relative' }}>
             {/* Atmospheric glow */}
             <div aria-hidden="true" style={{
@@ -201,29 +180,41 @@ function Hero() {
               </div>
             </motion.div>
           </FadeUp>
-          </div>{/* /hero-portrait-anchor */}
+          </div>{/* /hero__media-card */}
+          </div>{/* /hero__media */}
 
         </div>
       </div>
 
+      <div className="hero__divider"></div>
+
       <style>{`
-        .hero-grid {
+        .hero__grid {
           display: grid;
           grid-template-columns: 1.1fr 0.9fr;
           gap: clamp(48px, 8vw, 96px);
           align-items: end;
         }
+        .hero__copy {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
         /* Portrait anchor: sits at the bottom of the hero and breaks the border line */
-        .hero-portrait-anchor {
+        .hero__media {
           position: relative;
           z-index: 2;
           transform: translateY(clamp(36px, 5vw, 56px));
         }
+        .hero__divider {
+          border-top: 1px solid var(--border);
+          margin-top: clamp(80px, 10vw, 120px);
+        }
         @media (max-width: 800px) {
-          .hero-grid {
+          .hero__grid {
             grid-template-columns: 1fr;
           }
-          .hero-portrait-anchor {
+          .hero__media {
             transform: translateY(clamp(44px, 8vw, 64px));
             max-width: 440px;
           }
