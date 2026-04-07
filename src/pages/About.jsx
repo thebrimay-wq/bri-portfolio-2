@@ -68,7 +68,7 @@ export default function About() {
               {/* Right: family photo */}
               <FadeUp delay={0.1}>
                 <ParallaxImage
-                  src="/images/family.jpg"
+                  src="/images/family.JPG"
                   alt="Bri May with family"
                   style={{
                     width: '100%',
