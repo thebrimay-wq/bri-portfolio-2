@@ -58,10 +58,19 @@ export default function About() {
                   fontSize: 'clamp(15px, 1.1vw, 17px)',
                   color: 'var(--ink-2)',
                   lineHeight: 1.7,
+                  marginBottom: 18,
                 }}>
-                  Today I'm a Senior Product Designer and Creative Director — 10 years in product
-                  design, doing design since 2011. I live for the intersection of strategy and craft,
+                  Today I'm a Senior Product Designer and Creative Director — 10+ years in product
+                  design, designing since 2011. I live at the intersection of strategy and craft,
                   where a strong point of view meets pixel-level execution.
+                </p>
+                <p style={{
+                  fontSize: 'clamp(15px, 1.1vw, 17px)',
+                  color: 'var(--ink-2)',
+                  lineHeight: 1.7,
+                }}>
+                  Outside of work, I'm most grounded in my role as a partner and mom. My family
+                  is my number one priority — and it's what keeps everything else in perspective.
                 </p>
               </FadeUp>
 
