@@ -72,29 +72,28 @@ Error generating stack: `+s.message+`
         @media (max-width: 640px) {
           .footer-inner { flex-direction: column; align-items: flex-start; }
         }
-      `})]})}const k2=["Meta","NFL","JPMorgan Chase","CVS Health","Nestlé","Federal Reserve","Patagonia","MLS"],T2=[{to:"/work/hub",title:"Financial Wellness Hub",impact:"Increased engagement 200% and supported $12M in revenue growth",tags:["Platform Design","UX Strategy"],bg:"#EBE8F4",image:"/images/hub-thumbnail.png"},{to:"/work/aimee",title:"Aimee AI Coach",impact:"Designed core AI conversation flows used by 500K+ active users",tags:["AI Experience","Product Design"],bg:"#E2E7F0",image:"/images/aimee-thumbnail.png"},{to:"/work/smart-benefits",title:"Smart Benefits Platform",impact:"Reduced benefits confusion 40%, improving employee retention scores",tags:["Enterprise UX","Systems Design"],bg:"#E2EDE8",image:"/images/smart-benefits-thumbnail.png"}];function C2(){return a.jsxs("div",{style:{background:"var(--bg)",minHeight:"100vh"},children:[a.jsx(Jt,{}),a.jsxs("main",{children:[a.jsx(P2,{}),a.jsx(E2,{}),a.jsx(b2,{}),a.jsx(N2,{}),a.jsx(R2,{})]}),a.jsx(en,{})]})}function P2(){const e=Zt(),t=k.useRef(null),{scrollYProgress:n}=Pi({target:t,offset:["start start","end start"]}),r=Ei(n,[0,1],e?[0,0]:[0,-32]);return a.jsxs("section",{ref:t,className:"hero section section--lg",style:{overflow:"hidden",position:"relative",zIndex:1,paddingRight:0},children:[a.jsxs("div",{className:"hero__outer",children:[a.jsxs("div",{className:"hero__copy",children:[a.jsx(w,{children:a.jsx("p",{className:"eyebrow",style:{marginBottom:28},children:"Senior Product Designer & Creative Director"})}),a.jsx(w,{delay:.06,children:a.jsxs("h1",{style:{fontSize:"clamp(36px, 4.4vw, 56px)",fontWeight:700,letterSpacing:"-0.035em",lineHeight:1.08,maxWidth:560,marginBottom:28},children:["Designing products",a.jsx("br",{}),"that drive behavior,",a.jsx("br",{}),a.jsx("span",{style:{color:"var(--ink-3)",display:"block"},children:"not just engagement"})]})}),a.jsxs(w,{delay:.12,children:[a.jsx("p",{className:"text-muted",style:{maxWidth:480,marginBottom:14},children:"I'm Bri May, a Senior Product Designer focused on turning complex systems into simple, high-impact experiences."}),a.jsx("p",{className:"text-muted",style:{maxWidth:460},children:"10 years in product design, designing since 2011 — working with companies like Meta to drive engagement, clarity, and measurable outcomes."})]}),a.jsx(w,{delay:.18,children:a.jsxs("div",{className:"button-row",children:[a.jsx(F,{to:"/work",className:"btn-primary",children:"View Work"}),a.jsx(F,{to:"/about",className:"btn-secondary",children:"About Me →"})]})})]}),a.jsx("div",{className:"hero__media",children:a.jsx(qt.img,{src:"/images/bri-half-circle.png",alt:"Bri May — Senior Product Designer",className:"hero__portrait",style:{y:r},initial:{opacity:0},animate:{opacity:1},transition:{duration:.8,delay:.1}})})]}),a.jsx("div",{className:"hero__divider"}),a.jsx("style",{children:`
+      `})]})}const k2=["Meta","NFL","JPMorgan Chase","CVS Health","Nestlé","Federal Reserve","Patagonia","MLS"],T2=[{to:"/work/hub",title:"Financial Wellness Hub",impact:"Increased engagement 200% and supported $12M in revenue growth",tags:["Platform Design","UX Strategy"],bg:"#EBE8F4",image:"/images/hub-thumbnail.png"},{to:"/work/aimee",title:"Aimee AI Coach",impact:"Designed core AI conversation flows used by 500K+ active users",tags:["AI Experience","Product Design"],bg:"#E2E7F0",image:"/images/aimee-thumbnail.png"},{to:"/work/smart-benefits",title:"Smart Benefits Platform",impact:"Reduced benefits confusion 40%, improving employee retention scores",tags:["Enterprise UX","Systems Design"],bg:"#E2EDE8",image:"/images/smart-benefits-thumbnail.png"}];function C2(){return a.jsxs("div",{style:{background:"var(--bg)",minHeight:"100vh"},children:[a.jsx(Jt,{}),a.jsxs("main",{children:[a.jsx(P2,{}),a.jsx(E2,{}),a.jsx(b2,{}),a.jsx(N2,{}),a.jsx(R2,{})]}),a.jsx(en,{})]})}function P2(){const e=Zt(),t=k.useRef(null),{scrollYProgress:n}=Pi({target:t,offset:["start start","end start"]}),r=Ei(n,[0,1],e?[0,0]:[0,-32]);return a.jsxs("section",{ref:t,className:"hero section section--lg",style:{overflow:"hidden",position:"relative",zIndex:1,paddingLeft:0,paddingRight:0},children:[a.jsxs("div",{className:"hero__outer",children:[a.jsxs("div",{className:"hero__copy",children:[a.jsx(w,{children:a.jsx("p",{className:"eyebrow",style:{marginBottom:28},children:"Senior Product Designer & Creative Director"})}),a.jsx(w,{delay:.06,children:a.jsxs("h1",{style:{fontSize:"clamp(36px, 4.4vw, 56px)",fontWeight:700,letterSpacing:"-0.035em",lineHeight:1.08,maxWidth:560,marginBottom:28},children:["Designing products",a.jsx("br",{}),"that drive behavior,",a.jsx("br",{}),a.jsx("span",{style:{color:"var(--ink-3)",display:"block"},children:"not just engagement"})]})}),a.jsxs(w,{delay:.12,children:[a.jsx("p",{className:"text-muted",style:{maxWidth:480,marginBottom:14},children:"I'm Bri May, a Senior Product Designer focused on turning complex systems into simple, high-impact experiences."}),a.jsx("p",{className:"text-muted",style:{maxWidth:460},children:"10 years in product design, designing since 2011 — working with companies like Meta to drive engagement, clarity, and measurable outcomes."})]}),a.jsx(w,{delay:.18,children:a.jsxs("div",{className:"button-row",children:[a.jsx(F,{to:"/work",className:"btn-primary",children:"View Work"}),a.jsx(F,{to:"/about",className:"btn-secondary",children:"About Me →"})]})})]}),a.jsx("div",{className:"hero__media",children:a.jsx(qt.img,{src:"/images/bri-half-circle.png",alt:"Bri May — Senior Product Designer",className:"hero__portrait",style:{y:r},initial:{opacity:0},animate:{opacity:1},transition:{duration:.8,delay:.1}})})]}),a.jsx("div",{className:"hero__divider"}),a.jsx("style",{children:`
         .hero__outer {
           display: grid;
           grid-template-columns: 1fr 1fr;
           align-items: center;
-          max-width: var(--max);
-          /* left padding mirrors the container, right padding is zero so image touches edge */
-          padding-left: var(--px);
-          margin: 0 auto;
+          /* full viewport width — no max-width, no centering */
+          width: 100%;
         }
         .hero__copy {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding-right: clamp(24px, 4vw, 56px);
+          /* left inset matches site container; right gap gives breathing room before image */
+          padding-left: var(--px);
+          padding-right: clamp(32px, 4vw, 64px);
         }
         .hero__media {
-          position: relative;
           display: flex;
           align-items: center;
           justify-content: flex-end;
-          overflow: hidden;
           align-self: stretch;
+          overflow: hidden;
         }
         .hero__portrait {
           display: block;
@@ -102,12 +101,13 @@ Error generating stack: `+s.message+`
           height: 100%;
           object-fit: contain;
           object-position: right center;
-          max-height: 680px;
+          max-height: 720px;
         }
         .hero__divider {
           border-top: 1px solid var(--border);
           margin-top: clamp(48px, 5vw, 72px);
           margin-left: var(--px);
+          margin-right: var(--px);
         }
         @media (max-width: 860px) {
           .hero__outer {
@@ -119,16 +119,14 @@ Error generating stack: `+s.message+`
           }
           .hero__media {
             justify-content: center;
+            align-self: auto;
             margin-top: 40px;
           }
           .hero__portrait {
-            width: 80%;
+            width: 75%;
             height: auto;
             max-height: none;
             object-position: center center;
-          }
-          .hero__divider {
-            margin-left: var(--px);
           }
         }
         @media (max-width: 560px) {
