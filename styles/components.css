@@ -2,6 +2,72 @@
    COMPONENTS.CSS — Buttons, Cards, Hero
    ============================================ */
 
+/* --- Case Study Image System --- */
+
+/* Shared base for all case study images */
+.cs-image {
+  width: 100%;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.cs-image:hover {
+  transform: scale(1.01);
+}
+
+/* Primary, Secondary, Mobile — no tile treatment, no shadows */
+.image-primary,
+.image-secondary,
+.image-mobile {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Scroll zoom variant (very subtle) */
+.cs-image--zoom {
+  transition: transform 0.6s ease, box-shadow 0.4s ease;
+}
+.cs-image--zoom:hover {
+  transform: scale(1.015);
+}
+
+/* Float animation for mobile image */
+@keyframes cs-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+.cs-image--float {
+  animation: cs-float 5s ease-in-out infinite;
+}
+
+.cs-image--float:hover {
+  animation-play-state: paused;
+  transform: scale(1.01);
+}
+
+/* Case study section spacing */
+.cs-section {
+  padding: clamp(80px, 10vw, 140px) 0;
+  border-top: 1px solid var(--border);
+}
+
+/* Case study shared typography */
+.cs-h2 {
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.13;
+  margin: 0;
+}
+
+.cs-body {
+  font-size: clamp(16px, 1.2vw, 18px);
+  color: var(--ink-2);
+  line-height: 1.75;
+  max-width: 520px;
+}
+
 /* --- Buttons --- */
 .btn {
   display: inline-flex;
@@ -380,6 +446,23 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+/* --- Hub Case Study Two-Column Layout --- */
+.hub-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px, 8vw, 96px);
+  align-items: center;
+}
+
+@media (max-width: 800px) {
+  .hub-two-col {
+    grid-template-columns: 1fr;
+  }
+  .hub-two-col--reverse > *:first-child {
+    order: 1;
   }
 }
 
