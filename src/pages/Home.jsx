@@ -11,7 +11,7 @@ import Footer from '../components/Footer.jsx';
 import FadeUp from '../components/FadeUp.jsx';
 
 /* ─── DATA ──────────────────────────────────────────────── */
-const CLIENTS = ['Meta', 'NFL', 'JPMorgan Chase', 'CVS Health', 'Nestlé', 'Federal Reserve', 'Patagonia', 'MLS'];
+const CLIENTS = ['Meta', 'NFL', 'JPMorgan Chase', 'CVS Health', 'Nestlé', 'Federal Reserve', 'Patagonia', 'MLS', 'McKinsey & Associates', 'Sephora', 'LVMH', 'EPIC'];
 
 const WORK = [
   {
@@ -207,43 +207,47 @@ function Hero() {
 /* ─── TRUST STRIP ────────────────────────────────────────── */
 function TrustStrip() {
   return (
-    <FadeUp>
-      <div style={{
-        borderTop: '1px solid var(--border)',
-        borderBottom: '1px solid var(--border)',
-        paddingBlock: 'clamp(28px, 4vw, 44px)',
-      }}>
-        <div className="container">
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 'clamp(16px, 4vw, 52px)',
-            flexWrap: 'wrap',
-          }}>
-            <span className="eyebrow" style={{ whiteSpace: 'nowrap' }}>
-              Trusted by teams at
-            </span>
-            <div style={{
-              display: 'flex',
-              gap: 'clamp(16px, 3vw, 40px)',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-            }}>
-              {CLIENTS.map(c => (
-                <span key={c} style={{
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: 'var(--ink-3)',
-                  letterSpacing: '-0.01em',
-                }}>
-                  {c}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+    <div style={{
+      borderTop: '1px solid var(--border)',
+      borderBottom: '1px solid var(--border)',
+      paddingBlock: 'clamp(14px, 2vw, 22px)',
+      overflow: 'hidden',
+    }}>
+      <div className="marquee-track">
+        {[...CLIENTS, ...CLIENTS].map((c, i) => (
+          <span key={i} className="marquee-item">
+            {c}
+          </span>
+        ))}
       </div>
-    </FadeUp>
+
+      <style>{`
+        .marquee-track {
+          display: flex;
+          align-items: center;
+          width: max-content;
+          animation: marquee 28s linear infinite;
+        }
+        .marquee-track:hover {
+          animation-play-state: paused;
+        }
+        .marquee-item {
+          flex-shrink: 0;
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--ink-3);
+          letter-spacing: -0.01em;
+          padding: 0 clamp(28px, 4vw, 56px);
+        }
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .marquee-track { animation: none; }
+        }
+      `}</style>
+    </div>
   );
 }
 
@@ -290,7 +294,9 @@ function FeaturedWork() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 20px;
+          align-items: stretch;
         }
+        .work-grid > div { height: 100%; }
         @media (max-width: 900px) {
           .work-grid { grid-template-columns: 1fr 1fr; }
         }
@@ -322,8 +328,8 @@ function WorkCard({ card, index }) {
         </div>
 
         {/* Body */}
-        <div style={{ padding: '24px 28px 28px' }}>
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>
+        <div style={{ padding: '24px 28px 28px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+          <div style={{ display: 'flex', gap: 5, flexWrap: 'nowrap', marginBottom: 12, overflow: 'hidden' }}>
             {card.tags.map(t => <span key={t} className="tag">{t}</span>)}
           </div>
           <h3 style={{
@@ -352,6 +358,7 @@ function WorkCard({ card, index }) {
             alignItems: 'center',
             gap: 5,
             transition: 'color 0.2s',
+            marginTop: 'auto',
           }} className="wcard-cta">
             View Case Study
             <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -365,6 +372,7 @@ function WorkCard({ card, index }) {
         .wcard {
           display: flex;
           flex-direction: column;
+          height: 100%;
           border-radius: var(--radius-lg);
           overflow: hidden;
           background: var(--surface);
