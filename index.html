@@ -1,16 +1,634 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Bri May — Creative Director & Product Designer. I design products people actually use — and brands that make them feel something." />
-    <title>Bri May — Product Designer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bri May — Senior Product Designer & Creative Director. I design products people actually use — and brands that make them feel something." />
+  <title>Bri May — Product Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/system.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #0A0A0A;
+      --ink-2: #6B7280;
+      --ink-3: #9CA3AF;
+      --border: #E5E7EB;
+      --surface: #F8FAFC;
+      --accent: #9B6B57;
+      --px: clamp(24px, 5vw, 80px);
+      --max: 1160px;
+    }
+
+    /* ── NAV ── */
+    #site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    #site-nav.scrolled { border-bottom-color: var(--border); }
+    .nav-inner {
+      width: 100%;
+      padding: 22px var(--px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-link { font-size: 14px; font-weight: 500; color: var(--ink); text-decoration: none; transition: opacity 0.15s; }
+    .nav-link:hover { opacity: 0.5; }
+    .nav-link.active { color: var(--accent); }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* ── HERO ── */
+    .hero-section {
+      overflow: hidden;
+      position: relative;
+      padding: clamp(72px, 9vw, 120px) 0 0;
+    }
+    .hero-outer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: var(--px);
+      padding-right: clamp(32px, 4vw, 64px);
+    }
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 28px;
+    }
+    .hero-h1 {
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+      max-width: 620px;
+      margin-bottom: 28px;
+      color: var(--ink);
+    }
+    .hero-h1 .muted { color: var(--ink-3); display: block; }
+    .hero-sub {
+      font-size: clamp(15px, 1.1vw, 17px);
+      color: var(--ink-2);
+      line-height: 1.65;
+      max-width: 480px;
+      margin-bottom: 10px;
+    }
+    .hero-sub + .hero-sub { max-width: 460px; margin-bottom: 0; }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: clamp(36px, 4vw, 52px);
+    }
+    .hero-media {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      align-self: stretch;
+      overflow: hidden;
+    }
+    .hero-portrait {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: right center;
+      max-height: 680px;
+    }
+    .hero-divider {
+      border-top: 1px solid var(--border);
+      margin: clamp(48px, 5vw, 72px) var(--px) 0;
+    }
+    @media (max-width: 860px) {
+      .hero-outer { grid-template-columns: 1fr; padding-right: var(--px); }
+      .hero-copy { padding-right: 0; }
+      .hero-media { justify-content: center; align-self: auto; margin-top: 40px; }
+      .hero-portrait { width: 75%; height: auto; max-height: none; object-position: center; }
+    }
+    @media (max-width: 560px) { .hero-portrait { width: 100%; } }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 13px 24px;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      border-radius: 10px;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { background: #222; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 13px 24px;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      text-decoration: none;
+      background: transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { background: var(--ink); color: #fff; border-color: var(--ink); transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 13px 18px;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      border-radius: 10px;
+      color: var(--ink-2);
+      text-decoration: none;
+      background: transparent;
+      transition: color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { color: var(--ink); background: var(--surface); }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding-block: clamp(14px, 2vw, 22px);
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      flex-shrink: 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-3);
+      letter-spacing: -0.01em;
+      padding: 0 clamp(28px, 4vw, 56px);
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
+    /* ── SECTION COMMON ── */
+    .page-section {
+      padding: clamp(72px, 9vw, 120px) 0;
+    }
+    .page-section + .page-section { border-top: 1px solid var(--border); }
+    .section-container {
+      width: 100%;
+      max-width: var(--max);
+      margin-inline: auto;
+      padding-inline: var(--px);
+    }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 14px;
+    }
+
+    /* ── WORK SECTION ── */
+    .work-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: clamp(40px, 5vw, 64px);
+    }
+    .work-header h2 {
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .work-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 580px) { .work-grid { grid-template-columns: 1fr; } }
+
+    .wcard {
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--surface);
+      color: inherit;
+      text-decoration: none;
+      transition: box-shadow 0.4s cubic-bezier(0.25,0.46,0.45,0.94),
+                  transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .wcard:hover { transform: translateY(-4px); box-shadow: 0 24px 56px rgba(0,0,0,0.09); }
+    .wcard-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+    .wcard-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .wcard:hover .wcard-img img { transform: scale(1.04); }
+    .wcard-body {
+      padding: 24px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .wcard-tags { display: flex; gap: 5px; flex-wrap: nowrap; margin-bottom: 12px; overflow: hidden; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      background: #f0f0f0;
+      color: var(--ink-3);
+      border: 1px solid var(--border);
+    }
+    .wcard-title {
+      font-size: clamp(18px, 1.6vw, 22px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+    .wcard-impact {
+      font-size: 14px;
+      color: var(--ink-2);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      flex: 1;
+    }
+    .wcard-cta {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-3);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.2s;
+      margin-top: auto;
+    }
+    .wcard:hover .wcard-cta { color: var(--ink); }
+
+    /* ── ABOUT PREVIEW ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 8vw, 112px);
+      align-items: start;
+    }
+    .about-grid h2 {
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+    .about-body {
+      font-size: clamp(16px, 1.2vw, 18px);
+      color: var(--ink-2);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+
+    /* ── CTA ── */
+    .cta-inner { max-width: 640px; }
+    .cta-inner h2 {
+      font-size: clamp(30px, 3.5vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      margin-bottom: 18px;
+      color: var(--ink);
+    }
+    .cta-inner p {
+      font-size: clamp(16px, 1.2vw, 18px);
+      color: var(--ink-2);
+      line-height: 1.65;
+      margin-bottom: 40px;
+    }
+    .cta-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+
+    /* ── FOOTER ── */
+    #site-footer {
+      border-top: 1px solid var(--border);
+      padding: clamp(36px, 4vw, 56px) var(--px);
+      margin-top: clamp(36px, 4vw, 56px);
+    }
+    .footer-inner {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .footer-brand { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-link { font-size: 14px; color: var(--ink-2); text-decoration: none; transition: color 0.15s; }
+    .footer-link:hover { color: var(--ink); }
+    .footer-copy { font-size: 13px; color: var(--ink-3); }
+    @media (max-width: 640px) {
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Bri May</a>
+      <ul class="nav-links">
+        <li><a href="/work/" class="nav-link">Work</a></li>
+        <li><a href="/about/" class="nav-link">About</a></li>
+        <li><a href="/resume/" class="nav-link">Résumé</a></li>
+        <li><a href="/contact/" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero-section">
+      <div class="hero-outer">
+
+        <div class="hero-copy reveal">
+          <p class="hero-eyebrow">Senior Product Designer &amp; Creative Director</p>
+          <h1 class="hero-h1">
+            Designing products<br>
+            that drive behavior,<br>
+            <span class="muted">not just engagement</span>
+          </h1>
+          <p class="hero-sub">
+            I'm Bri May, a Senior Product Designer focused on turning
+            complex systems into simple, high-impact experiences.
+          </p>
+          <p class="hero-sub">
+            10 years in product design, designing since 2011 — working with
+            companies like Meta to drive engagement, clarity, and measurable outcomes.
+          </p>
+          <div class="hero-actions">
+            <a href="/work/" class="btn-primary">View Work</a>
+            <a href="/about/" class="btn-secondary">About Me →</a>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <img
+            src="/images/bri-half-circle.png"
+            alt="Bri May — Senior Product Designer"
+            class="hero-portrait"
+          />
+        </div>
+
+      </div>
+      <div class="hero-divider"></div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span class="marquee-item">Meta</span>
+        <span class="marquee-item">NFL</span>
+        <span class="marquee-item">JPMorgan Chase</span>
+        <span class="marquee-item">CVS Health</span>
+        <span class="marquee-item">Nestlé</span>
+        <span class="marquee-item">Federal Reserve</span>
+        <span class="marquee-item">Patagonia</span>
+        <span class="marquee-item">MLS</span>
+        <span class="marquee-item">McKinsey &amp; Associates</span>
+        <span class="marquee-item">Sephora</span>
+        <span class="marquee-item">LVMH</span>
+        <span class="marquee-item">EPIC</span>
+        <!-- duplicate for seamless loop -->
+        <span class="marquee-item">Meta</span>
+        <span class="marquee-item">NFL</span>
+        <span class="marquee-item">JPMorgan Chase</span>
+        <span class="marquee-item">CVS Health</span>
+        <span class="marquee-item">Nestlé</span>
+        <span class="marquee-item">Federal Reserve</span>
+        <span class="marquee-item">Patagonia</span>
+        <span class="marquee-item">MLS</span>
+        <span class="marquee-item">McKinsey &amp; Associates</span>
+        <span class="marquee-item">Sephora</span>
+        <span class="marquee-item">LVMH</span>
+        <span class="marquee-item">EPIC</span>
+      </div>
+    </div>
+
+    <!-- FEATURED WORK -->
+    <section class="page-section">
+      <div class="section-container">
+
+        <div class="reveal" style="margin-bottom: clamp(40px, 5vw, 64px);">
+          <p class="eyebrow">Selected Work</p>
+          <div class="work-header">
+            <h2>A few examples of products I've designed<br class="hide-mobile"> that drove measurable impact.</h2>
+            <a href="/work/" class="btn-secondary">View all work →</a>
+          </div>
+        </div>
+
+        <div class="work-grid reveal-group">
+
+          <a href="/work/" class="wcard">
+            <div class="wcard-img" style="background: #EBE8F4;">
+              <img src="/images/hub-thumbnail.png" alt="Financial Wellness Hub" />
+            </div>
+            <div class="wcard-body">
+              <div class="wcard-tags">
+                <span class="tag">Platform Design</span>
+                <span class="tag">UX Strategy</span>
+              </div>
+              <h3 class="wcard-title">Financial Wellness Hub</h3>
+              <p class="wcard-impact">Increased engagement 200% and supported $12M in revenue growth</p>
+              <span class="wcard-cta">
+                View Case Study
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+
+          <a href="/aimee-ai/" class="wcard">
+            <div class="wcard-img" style="background: #E2E7F0;">
+              <img src="/images/aimee-thumbnail.png" alt="Aimee AI Coach" />
+            </div>
+            <div class="wcard-body">
+              <div class="wcard-tags">
+                <span class="tag">AI Experience</span>
+                <span class="tag">Product Design</span>
+              </div>
+              <h3 class="wcard-title">Aimee AI Coach</h3>
+              <p class="wcard-impact">Designed core AI conversation flows used by 500K+ active users</p>
+              <span class="wcard-cta">
+                View Case Study
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+
+          <a href="/work/" class="wcard">
+            <div class="wcard-img" style="background: #E2EDE8;">
+              <img src="/images/smart-benefits-thumbnail.png" alt="Smart Benefits Platform" />
+            </div>
+            <div class="wcard-body">
+              <div class="wcard-tags">
+                <span class="tag">Enterprise UX</span>
+                <span class="tag">Systems Design</span>
+              </div>
+              <h3 class="wcard-title">Smart Benefits Platform</h3>
+              <p class="wcard-impact">Reduced benefits confusion 40%, improving employee retention scores</p>
+              <span class="wcard-cta">
+                View Case Study
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT PREVIEW -->
+    <section class="page-section">
+      <div class="section-container">
+        <div class="about-grid">
+
+          <div class="reveal">
+            <p class="eyebrow">About</p>
+            <h2>Senior, strategic,<br>and obsessed with craft.</h2>
+          </div>
+
+          <div class="reveal">
+            <p class="about-body">
+              I'm a Senior Product Designer with a background in both product and brand,
+              focused on designing experiences that simplify complexity and drive real user behavior.
+            </p>
+            <p class="about-body">
+              I've spent the last decade leading design across product, marketing, and
+              AI-powered experiences — partnering closely with product and engineering
+              to bring ideas to life.
+            </p>
+            <p class="about-body" style="margin-bottom: 36px;">
+              I move fast from idea to reality. I use AI-assisted tools to prototype real,
+              interactive product experiences — not just static screens. This allows me to
+              test ideas earlier, align teams faster, and ship better solutions.
+            </p>
+            <a href="/about/" class="btn-secondary">More about me →</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="page-section">
+      <div class="section-container">
+        <div class="cta-inner reveal">
+          <p class="eyebrow">Let's talk</p>
+          <h2>Let's build something impactful</h2>
+          <p>I'm currently exploring senior product design opportunities.</p>
+          <div class="cta-actions">
+            <a href="/contact/" class="btn-primary">Contact Me</a>
+            <a href="/resume/" class="btn-ghost">View Résumé</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="site-footer">
+    <div class="footer-inner">
+      <span class="footer-brand">Bri May</span>
+      <div class="footer-links">
+        <a href="mailto:thebrimay@gmail.com" class="footer-link">thebrimay@gmail.com</a>
+        <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn ↗</a>
+      </div>
+      <span class="footer-copy">© 2025 Bri May</span>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll state
+    const nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 8);
+    }, { passive: true });
+
+    // Scroll reveal
+    (function () {
+      const SEL = '.reveal, .reveal-group';
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll(SEL).forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll(SEL).forEach(el => obs.observe(el));
+    })();
+  </script>
+
+</body>
 </html>

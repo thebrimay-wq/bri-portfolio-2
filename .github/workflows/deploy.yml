@@ -25,11 +25,13 @@ jobs:
 
       - name: Build static site
         run: |
-          mkdir -p _site
+          mkdir -p _site/images
           # Copy static site files
           cp index.html _site/
           cp CNAME _site/
-          cp -r images _site/ 2>/dev/null || true
+          # Copy root images first, then public/images on top (clean filenames win)
+          cp -r images/. _site/images/ 2>/dev/null || true
+          cp -r public/images/. _site/images/ 2>/dev/null || true
           cp -r styles _site/ 2>/dev/null || true
           cp -r scripts _site/ 2>/dev/null || true
           cp -r about _site/ 2>/dev/null || true
