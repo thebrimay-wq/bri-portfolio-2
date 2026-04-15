@@ -6,15 +6,16 @@
   <title>Contact — Bri May</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #ffffff;
-      --ink: #111111;
-      --ink-2: #555555;
-      --ink-3: #999999;
-      --border: #e8e8e8;
-      --surface: #f5f5f5;
+      --ink: #0A0A0A;
+      --ink-2: #6B7280;
+      --ink-3: #9CA3AF;
+      --border: #E5E7EB;
+      --surface: #F8FAFC;
+      --accent: #9B6B57;
       --px: clamp(24px, 5vw, 80px);
       --max: 1160px;
     }
@@ -27,8 +28,6 @@
 
     html {
       scroll-behavior: smooth;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     body {
@@ -38,6 +37,11 @@
       font-size: 17px;
       font-weight: 400;
       line-height: 1.65;
+      font-optical-sizing: auto;
+      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
 
     /* Navigation */
@@ -131,8 +135,8 @@
     .hero h1 {
       font-size: clamp(40px, 5.5vw, 68px);
       font-weight: 700;
-      letter-spacing: -0.035em;
-      line-height: 1.06;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
       margin-top: 16px;
       color: var(--ink);
     }
@@ -142,13 +146,13 @@
       color: var(--ink-2);
       max-width: 500px;
       margin-top: 24px;
-      line-height: 1.65;
+      line-height: 1.7;
     }
 
     /* Contact Rows */
     .contact-rows {
       border-top: 1px solid var(--border);
-      padding: 80px 0;
+      padding: 96px 0;
       display: grid;
       grid-template-columns: 200px 1fr;
       gap: 80px;
@@ -176,7 +180,7 @@
     }
 
     .contact-row-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -187,19 +191,20 @@
     .contact-row-link {
       font-size: clamp(20px, 2vw, 28px);
       font-weight: 500;
+      letter-spacing: -0.015em;
       color: var(--ink);
       text-decoration: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.25s ease;
     }
 
     .contact-row-link:hover {
-      opacity: 0.5;
+      opacity: 0.45;
     }
 
     /* Availability */
     .availability {
       border-top: 1px solid var(--border);
-      padding: 80px 0;
+      padding: 96px 0;
       display: grid;
       grid-template-columns: 200px 1fr;
       gap: 80px;

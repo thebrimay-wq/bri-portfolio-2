@@ -1,32 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 /* ─── TOKENS ─────────────────────────────────────────────── */
 :root {
   --bg:        #ffffff;
-  --ink:       #222222;
-  --ink-2:     #717171;
-  --ink-3:     #717171;
-  --border:    #dddddd;
-  --surface:   #f7f7f7;
-  --accent:    #a47864;
+  --ink:       #0A0A0A;
+  --ink-2:     #6B7280;
+  --ink-3:     #9CA3AF;
+  --border:    #E5E7EB;
+  --surface:   #F8FAFC;
+  --accent:    #9B6B57;
   --px:        clamp(24px, 5vw, 80px);
-  --max:       1120px;
+  --max:       1160px;
   --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
 }
 
 /* ─── RESET ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg);
   color: var(--ink);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 17px;
+  line-height: 1.65;
+  font-optical-sizing: auto;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
@@ -46,7 +49,13 @@ ul, ol { list-style: none; }
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.text-muted {
+  font-size: clamp(16px, 1.2vw, 18px);
   color: var(--ink-2);
+  line-height: 1.7;
 }
 
 /* ─── BUTTONS ────────────────────────────────────────────── */
@@ -54,49 +63,65 @@ ul, ol { list-style: none; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 24px;
+  padding: 13px 24px;
   background: var(--accent);
   color: #ffffff !important;
-  border-radius: 9999px;
+  border-radius: 10px;
   font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   text-transform: none;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   white-space: nowrap;
 }
-.btn-primary:hover { background: #8f6855; }
+.btn-primary:hover {
+  background: #8a5d4a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(155, 107, 87, 0.28);
+}
 
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--ink);
-  border: 1px solid var(--ink);
-  border-radius: 9999px;
-  padding: 14px 24px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 20px;
+  letter-spacing: -0.01em;
   text-transform: none;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   white-space: nowrap;
 }
-.btn-secondary:hover { background: var(--ink); color: #ffffff; }
+.btn-secondary:hover {
+  background: var(--ink);
+  color: #ffffff;
+  border-color: var(--ink);
+  transform: translateY(-1px);
+}
 
 .btn-ghost {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 14px 24px;
+  padding: 12px 20px;
   border: 1px solid var(--border);
-  border-radius: 9999px;
+  border-radius: 10px;
   font-size: 15px;
-  font-weight: 600;
-  color: var(--ink);
+  font-weight: 500;
+  color: var(--ink-2);
+  letter-spacing: -0.01em;
   text-transform: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
-.btn-ghost:hover { border-color: var(--ink); background: var(--surface); }
+.btn-ghost:hover {
+  border-color: var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
 
 /* ─── TAGS ───────────────────────────────────────────────── */
 .tag {
@@ -105,12 +130,12 @@ ul, ol { list-style: none; }
   flex-shrink: 0;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--ink-2);
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 3px 10px;
+  border-radius: 6px;
+  padding: 4px 10px;
   white-space: nowrap;
 }
 
