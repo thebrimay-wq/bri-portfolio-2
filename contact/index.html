@@ -102,9 +102,6 @@
 
     /* Container */
     .container {
-      max-width: 1300px;
-      margin-left: auto;
-      margin-right: auto;
       width: 100%;
       padding: 0 var(--px);
       max-width: calc(var(--max) + var(--px) * 2);
@@ -128,12 +125,12 @@
 
     /* Hero Section */
     .hero {
-      padding-top: clamp(100px, 14vw, 176px);
+      padding-top: clamp(96px, 12vw, 160px);
       padding-bottom: 80px;
     }
 
     .hero h1 {
-      font-size: clamp(40px, 5.5vw, 68px);
+      font-size: clamp(40px, 5.5vw, 64px);
       font-weight: 700;
       letter-spacing: -0.025em;
       line-height: 1.05;
@@ -215,8 +212,9 @@
     }
 
     .status-pill {
-      background: #f0f7f0;
-      color: #2a6b2a;
+      background: var(--surface);
+      color: var(--ink-2);
+      border: 1px solid var(--border);
       border-radius: 100px;
       padding: 6px 18px;
       font-size: 13px;
@@ -276,6 +274,7 @@
     }
 
     .footer-logo {
+      font-size: 14px;
       font-weight: 600;
       color: var(--ink);
       white-space: nowrap;
@@ -284,7 +283,7 @@
     .footer-center {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 32px;
     }
 
     .footer-center a {
@@ -421,7 +420,7 @@
     window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 8); }, { passive: true });
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 </body>

@@ -16,7 +16,7 @@
       --border: #E5E7EB;
       --surface: #F8FAFC;
       --accent: #9B6B57;
-      --px: clamp(24px, 4vw, 64px);
+      --px: clamp(24px, 5vw, 80px);
       --max: 1160px;
     }
 
@@ -46,11 +46,12 @@
     #site-nav {
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(16px);
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease;
+      transition: border-color 0.3s ease;
     }
 
     #site-nav.scrolled {
@@ -69,7 +70,7 @@
     }
 
     .nav-logo {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--ink);
       text-decoration: none;
@@ -471,8 +472,13 @@
 
     footer {
       border-top: 1px solid var(--border);
-      padding: 48px var(--px);
+      padding: clamp(36px, 4vw, 56px) 0;
       margin-top: 80px;
+    }
+    .footer-inner {
+      max-width: calc(var(--max) + var(--px) * 2);
+      margin: 0 auto;
+      padding: 0 var(--px);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -693,12 +699,14 @@
   </main>
 
   <footer>
-    <div>Bri May</div>
-    <div>
-      <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a> •
-      <a href="https://linkedin.com/in/brimay" target="_blank">LinkedIn ↗</a>
+    <div class="footer-inner">
+      <div>Bri May</div>
+      <div>
+        <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a> •
+        <a href="https://linkedin.com/in/brimay" target="_blank">LinkedIn ↗</a>
+      </div>
+      <div>© 2025 Bri May</div>
     </div>
-    <div>© 2025 Bri May</div>
   </footer>
 
   <script>
