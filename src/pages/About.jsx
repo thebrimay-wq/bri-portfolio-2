@@ -38,8 +38,8 @@ export default function About() {
                 <h1 style={{
                   fontSize: 'clamp(36px, 4vw, 56px)',
                   fontWeight: 700,
-                  letterSpacing: '-0.035em',
-                  lineHeight: 1.08,
+                  letterSpacing: '-0.025em',
+                  lineHeight: 1.05,
                   marginBottom: 28,
                 }}>
                   Creative by trade.<br />Competitive by nature.
@@ -115,8 +115,8 @@ export default function About() {
               <p className="eyebrow" style={{ marginBottom: 14 }}>Outside Work</p>
               <h2 style={{
                 fontSize: 'clamp(24px, 2.8vw, 36px)',
-                fontWeight: 700,
-                letterSpacing: '-0.025em',
+                fontWeight: 600,
+                letterSpacing: '-0.02em',
                 lineHeight: 1.2,
               }}>
                 The things that keep me honest
@@ -166,8 +166,8 @@ export default function About() {
               <p className="eyebrow" style={{ marginBottom: 14 }}>Experience</p>
               <h2 style={{
                 fontSize: 'clamp(22px, 2.5vw, 32px)',
-                fontWeight: 700,
-                letterSpacing: '-0.025em',
+                fontWeight: 600,
+                letterSpacing: '-0.02em',
                 lineHeight: 1.2,
               }}>
                 Where I've been
@@ -209,7 +209,7 @@ export default function About() {
             <FadeUp>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
                 <div>
-                  <h2 style={{ fontSize: 'clamp(20px, 2.2vw, 28px)', fontWeight: 700, letterSpacing: '-0.025em', marginBottom: 8 }}>
+                  <h2 style={{ fontSize: 'clamp(20px, 2.2vw, 28px)', fontWeight: 600, letterSpacing: '-0.02em', marginBottom: 8 }}>
                     Want to work together?
                   </h2>
                   <p style={{ fontSize: 15, color: 'var(--ink-2)' }}>

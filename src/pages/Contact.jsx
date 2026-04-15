@@ -17,8 +17,8 @@ export default function Contact() {
                 <h1 style={{
                   fontSize: 'clamp(36px, 5vw, 64px)',
                   fontWeight: 700,
-                  letterSpacing: '-0.035em',
-                  lineHeight: 1.08,
+                  letterSpacing: '-0.025em',
+                  lineHeight: 1.05,
                   marginBottom: 24,
                 }}>
                   Let's build something impactful

@@ -47,8 +47,8 @@ export default function Work() {
               <h1 style={{
                 fontSize: 'clamp(36px, 4.5vw, 58px)',
                 fontWeight: 700,
-                letterSpacing: '-0.035em',
-                lineHeight: 1.08,
+                letterSpacing: '-0.025em',
+                lineHeight: 1.05,
                 maxWidth: 680,
                 marginBottom: 20,
               }}>
@@ -89,8 +89,8 @@ export default function Work() {
                 <div>
                   <h2 style={{
                     fontSize: 'clamp(22px, 2.5vw, 32px)',
-                    fontWeight: 700,
-                    letterSpacing: '-0.025em',
+                    fontWeight: 600,
+                    letterSpacing: '-0.02em',
                     marginBottom: 8,
                   }}>
                     Interested in working together?
@@ -144,8 +144,8 @@ function CaseCard({ card, index }) {
             </div>
             <h2 style={{
               fontSize: 'clamp(22px, 2.2vw, 30px)',
-              fontWeight: 700,
-              letterSpacing: '-0.025em',
+              fontWeight: 600,
+              letterSpacing: '-0.02em',
               lineHeight: 1.2,
               marginBottom: 12,
             }}>
@@ -198,7 +198,7 @@ function CaseCard({ card, index }) {
         }
         .case-card-inner:hover {
           transform: translateY(-3px);
-          box-shadow: 0 20px 52px rgba(0,0,0,0.09);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 8px 28px rgba(0,0,0,0.07);
         }
         .case-card-inner:hover .case-cta { color: var(--ink) !important; }
         .case-card-img {

@@ -419,8 +419,8 @@ function ExperienceSection() {
                 <div>
                   <h3 style={{
                     fontSize: 'clamp(18px, 1.5vw, 21px)',
-                    fontWeight: 700,
-                    letterSpacing: '-0.025em',
+                    fontWeight: 600,
+                    letterSpacing: '-0.02em',
                     lineHeight: 1.2,
                     color: 'var(--ink)',
                     marginBottom: 14,
@@ -695,8 +695,8 @@ function CtaSection() {
           <p className="eyebrow" style={{ marginBottom: 28 }}>Let's work together</p>
           <h2 style={{
             fontSize: 'clamp(26px, 3.5vw, 48px)',
-            fontWeight: 700,
-            letterSpacing: '-0.035em',
+            fontWeight: 600,
+            letterSpacing: '-0.025em',
             lineHeight: 1.1,
             maxWidth: 720,
             marginBottom: 20,
@@ -776,8 +776,8 @@ function SectionLabel({ children }) {
   return (
     <h2 style={{
       fontSize: 'clamp(22px, 2vw, 30px)',
-      fontWeight: 700,
-      letterSpacing: '-0.025em',
+      fontWeight: 600,
+      letterSpacing: '-0.02em',
       color: 'var(--ink)',
       margin: 0,
     }}>

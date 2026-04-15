@@ -49,8 +49,8 @@ function HeroSection() {
           <h1 style={{
             fontSize: 'clamp(32px, 4.5vw, 62px)',
             fontWeight: 700,
-            letterSpacing: '-0.038em',
-            lineHeight: 1.06,
+            letterSpacing: '-0.025em',
+            lineHeight: 1.05,
             maxWidth: 860,
             marginBottom: 32,
           }}>
