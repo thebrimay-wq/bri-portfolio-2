@@ -86,10 +86,10 @@ function Hero() {
 
           <FadeUp delay={0.06}>
             <h1 style={{
-              fontSize: 'clamp(30px, 4vw, 52px)',
+              fontSize: 'clamp(36px, 5vw, 60px)',
               fontWeight: 700,
-              letterSpacing: '-0.035em',
-              lineHeight: 1.08,
+              letterSpacing: '-0.025em',
+              lineHeight: 1.05,
               maxWidth: 620,
               marginBottom: 28,
             }}>
@@ -269,8 +269,8 @@ function FeaturedWork() {
           }}>
             <h2 style={{
               fontSize: 'clamp(26px, 3vw, 38px)',
-              fontWeight: 700,
-              letterSpacing: '-0.025em',
+              fontWeight: 600,
+              letterSpacing: '-0.02em',
               lineHeight: 1.15,
             }}>
               A few examples of products I've designed<br className="hide-mobile" /> that drove measurable impact.
@@ -381,8 +381,8 @@ function WorkCard({ card, index }) {
                       transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
         }
         .wcard:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 24px 56px rgba(0,0,0,0.09);
+          transform: translateY(-3px);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 8px 28px rgba(0,0,0,0.07);
         }
         .wcard:hover .wcard-cta { color: var(--ink) !important; }
         .wcard-img {
@@ -408,8 +408,8 @@ function AboutPreview() {
             <p className="eyebrow" style={{ marginBottom: 16 }}>About</p>
             <h2 style={{
               fontSize: 'clamp(26px, 3vw, 38px)',
-              fontWeight: 700,
-              letterSpacing: '-0.025em',
+              fontWeight: 600,
+              letterSpacing: '-0.02em',
               lineHeight: 1.2,
             }}>
               Senior, strategic,<br />and obsessed with craft.
@@ -481,8 +481,8 @@ function ContactCTA() {
             <p className="eyebrow" style={{ marginBottom: 20 }}>Let's talk</p>
             <h2 style={{
               fontSize: 'clamp(30px, 3.5vw, 48px)',
-              fontWeight: 700,
-              letterSpacing: '-0.03em',
+              fontWeight: 600,
+              letterSpacing: '-0.02em',
               lineHeight: 1.12,
               marginBottom: 18,
             }}>
