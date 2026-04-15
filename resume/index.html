@@ -29,7 +29,7 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--ink);
       font-size: 17px;
@@ -58,8 +58,7 @@
     #site-nav.scrolled { border-color: var(--border); }
 
     .nav-inner {
-      max-width: calc(var(--max) + var(--px) * 2);
-      margin: 0 auto;
+      width: 100%;
       padding: 22px var(--px);
       display: flex;
       justify-content: space-between;
@@ -81,11 +80,12 @@
 
     .nav-links a {
       font-size: 14px;
-      color: var(--ink-2);
-      transition: color 0.15s;
+      color: var(--ink);
+      text-decoration: none;
+      transition: opacity 0.15s;
     }
-    .nav-links a:hover { color: var(--ink); }
-    .nav-links a.active { color: var(--ink); font-weight: 500; }
+    .nav-links a:hover { opacity: 0.5; }
+    .nav-links a.active { color: var(--accent); }
 
     @media (max-width: 600px) { .nav-links { display: none; } }
 
@@ -166,7 +166,7 @@
     }
 
     .hero-summary {
-      font-size: clamp(15px, 1.4vw, 17px);
+      font-size: clamp(17px, 1.4vw, 20px);
       color: var(--ink-2);
       line-height: 1.75;
       max-width: 640px;
@@ -190,11 +190,12 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 500;
-      padding: 10px 22px;
-      border-radius: 8px;
-      transition: background 0.2s, color 0.2s, opacity 0.2s;
+      letter-spacing: -0.01em;
+      padding: 13px 24px;
+      border-radius: 10px;
+      transition: background 0.2s, color 0.2s, opacity 0.2s, transform 0.2s;
       cursor: pointer;
     }
 
