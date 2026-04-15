@@ -102,17 +102,17 @@
   transform: translateY(0);
 }
 
-/* Primary */
+/* Primary — dark ink, NOT terracotta. Source of truth is site.css .btn-primary */
 .btn--primary {
-  background-color: #9B6B57;
+  background-color: #0A0A0A;
   color: #ffffff;
-  border-color: #9B6B57;
+  border-color: #0A0A0A;
 }
 
 .btn--primary:hover {
-  background-color: #8a5d4a;
-  border-color: #8a5d4a;
-  box-shadow: 0 4px 14px rgba(155, 107, 87, 0.28);
+  background-color: #222;
+  border-color: #222;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 /* Secondary / Outline */

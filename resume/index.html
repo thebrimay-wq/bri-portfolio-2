@@ -7,87 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/site.css" />
   <style>
-    /* ─── Tokens ─────────────────────────────────── */
-    :root {
-      --bg:        #ffffff;
-      --ink:       #0A0A0A;
-      --ink-2:     #6B7280;
-      --ink-3:     #9CA3AF;
-      --border:    #E5E7EB;
-      --surface:   #F8FAFC;
-      --accent:    #9B6B57;
-      --max:       1160px;
-      --px:        clamp(24px, 5vw, 80px);
-    }
-
-    /* ─── Base ───────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      font-size: 17px;
-      font-weight: 400;
-      line-height: 1.65;
-      font-optical-sizing: auto;
-      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* ─── Navigation ─────────────────────────────── */
-    #site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s ease;
-    }
-    #site-nav.scrolled { border-color: var(--border); }
-
-    .nav-inner {
-      width: 100%;
-      padding: 22px var(--px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .nav-logo {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 14px;
-      color: var(--ink);
-      text-decoration: none;
-      transition: opacity 0.15s;
-    }
-    .nav-links a:hover { opacity: 0.5; }
-    .nav-links a.active { color: var(--accent); }
-
-    @media (max-width: 600px) { .nav-links { display: none; } }
 
     /* ─── Page wrapper ───────────────────────────── */
     .page {
@@ -186,31 +107,6 @@
       flex-wrap: wrap;
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      padding: 13px 24px;
-      border-radius: 10px;
-      transition: background 0.2s, color 0.2s, opacity 0.2s, transform 0.2s;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--ink);
-      color: #fff;
-    }
-    .btn-primary:hover { opacity: 0.82; }
-
-    .btn-outline {
-      border: 1.5px solid var(--border);
-      color: var(--ink-2);
-      background: transparent;
-    }
-    .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
 
     /* ─── Stats row ──────────────────────────────── */
     .stats-row {
@@ -504,70 +400,6 @@
       margin-top: 4px;
     }
 
-    /* ─── Footer ─────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: clamp(36px, 4vw, 56px) 0;
-      margin-top: 16px;
-    }
-
-    .footer-inner {
-      max-width: calc(var(--max) + var(--px) * 2);
-      margin: 0 auto;
-      padding: 0 var(--px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-
-    .footer-logo {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .footer-links a {
-      font-size: 14px;
-      color: var(--ink-3);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--ink); }
-
-    .footer-copy {
-      font-size: 13px;
-      color: var(--ink-3);
-    }
-
-    /* ─── Scroll reveal ──────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* Stagger children */
-    .reveal-children > * {
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.45s ease, transform 0.45s ease;
-    }
-    .reveal-children.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
-    .reveal-children.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.07s; }
-    .reveal-children.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.14s; }
-    .reveal-children.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.21s; }
-    .reveal-children.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.28s; }
   </style>
 </head>
 <body>
@@ -821,12 +653,12 @@
   <!-- Footer -->
   <footer>
     <div class="footer-inner">
-      <span class="footer-logo">Bri May</span>
+      <span class="footer-left">Bri May</span>
       <div class="footer-links">
         <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
         <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener">LinkedIn ↗</a>
       </div>
-      <span class="footer-copy">© 2025 Bri May</span>
+      <span class="footer-right">© 2025 Bri May</span>
     </div>
   </footer>
 

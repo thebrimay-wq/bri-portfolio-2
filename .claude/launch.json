@@ -8,6 +8,18 @@
       "port": 8080,
       "autoPort": true,
       "cwd": "."
+    },
+    {
+      "name": "Vite dev server (React app)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 5173
+    },
+    {
+      "name": "Vite preview (built dist)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "preview"],
+      "port": 4173
     }
   ]
 }

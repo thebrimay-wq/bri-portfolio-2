@@ -8,65 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles/system.css" />
-  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/site.css" />
 
   <style>
-    :root {
-      --bg: #ffffff;
-      --ink: #0A0A0A;
-      --ink-2: #6B7280;
-      --ink-3: #9CA3AF;
-      --border: #E5E7EB;
-      --surface: #F8FAFC;
-      --accent: #9B6B57;
-      --px: clamp(24px, 5vw, 80px);
-      --max: 1160px;
-    }
-
-    /* ── BASE ── */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 17px;
-      line-height: 1.65;
-      color: var(--ink);
-      background: var(--bg);
-      font-optical-sizing: auto;
-      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-    }
-    a { color: inherit; text-decoration: none; }
-
-    /* ── NAV ── */
-    #site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s ease;
-    }
-    #site-nav.scrolled { border-bottom-color: var(--border); }
-    .nav-inner {
-      width: 100%;
-      padding: 22px var(--px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-link { font-size: 14px; font-weight: 500; color: var(--ink); text-decoration: none; transition: opacity 0.15s; }
-    .nav-link:hover { opacity: 0.5; }
-    .nav-link.active { color: var(--accent); }
-    @media (max-width: 640px) { .nav-links { display: none; } }
-
     /* ── HERO ── */
     .hero-section {
       overflow: hidden;
@@ -145,54 +89,6 @@
       .hero-portrait { width: 75%; height: auto; max-height: none; object-position: center; }
     }
     @media (max-width: 560px) { .hero-portrait { width: 100%; } }
-
-    /* ── BUTTONS ── */
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 13px 24px;
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      border-radius: 10px;
-      background: var(--ink);
-      color: #fff;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-    }
-    .btn-primary:hover { background: #222; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 13px 24px;
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      color: var(--ink);
-      text-decoration: none;
-      background: transparent;
-      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
-    }
-    .btn-secondary:hover { background: var(--ink); color: #fff; border-color: var(--ink); transform: translateY(-1px); }
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 13px 18px;
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      border-radius: 10px;
-      color: var(--ink-2);
-      text-decoration: none;
-      background: transparent;
-      transition: color 0.2s, background 0.2s;
-    }
-    .btn-ghost:hover { color: var(--ink); background: var(--surface); }
 
     /* ── MARQUEE ── */
     .marquee-wrap {
@@ -375,29 +271,6 @@
     }
     .cta-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
 
-    /* ── FOOTER ── */
-    #site-footer {
-      border-top: 1px solid var(--border);
-      padding: clamp(36px, 4vw, 56px) 0;
-      margin-top: clamp(36px, 4vw, 56px);
-    }
-    .footer-inner {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      gap: 32px;
-      flex-wrap: wrap;
-      padding: 0 var(--px);
-    }
-    .footer-brand { font-size: 14px; font-weight: 600; color: var(--ink); }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-link { font-size: 14px; color: var(--ink-2); text-decoration: none; transition: color 0.15s; }
-    .footer-link:hover { color: var(--ink); }
-    .footer-copy { font-size: 13px; color: var(--ink-3); }
-    @media (max-width: 640px) {
-      .footer-inner { flex-direction: column; align-items: flex-start; }
-    }
   </style>
 </head>
 <body>
@@ -613,14 +486,14 @@
   </main>
 
   <!-- FOOTER -->
-  <footer id="site-footer">
+  <footer>
     <div class="footer-inner">
-      <span class="footer-brand">Bri May</span>
+      <span class="footer-left">Bri May</span>
       <div class="footer-links">
-        <a href="mailto:thebrimay@gmail.com" class="footer-link">thebrimay@gmail.com</a>
-        <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn ↗</a>
+        <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
+        <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
-      <span class="footer-copy">© 2025 Bri May</span>
+      <span class="footer-right">© 2025 Bri May</span>
     </div>
   </footer>
 

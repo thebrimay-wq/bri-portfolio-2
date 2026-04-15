@@ -8,110 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/site.css" />
 
   <style>
     /* ============================================================
-       DESIGN SYSTEM
-    ============================================================ */
-    :root {
-      --bg: #ffffff;
-      --ink: #0A0A0A;
-      --ink-2: #6B7280;
-      --ink-3: #9CA3AF;
-      --border: #E5E7EB;
-      --surface: #F8FAFC;
-      --accent: #9B6B57;
-      --px: clamp(24px, 5vw, 80px);
-      --max: 1160px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 17px;
-      line-height: 1.65;
-      color: var(--ink);
-      background: var(--bg);
-      font-optical-sizing: auto;
-      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-    }
-
-    /* ============================================================
-       NAVIGATION
-    ============================================================ */
-    #site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s ease;
-    }
-
-    #site-nav.scrolled {
-      border-bottom-color: var(--border);
-    }
-
-    .nav-inner {
-      width: 100%;
-      padding: 0 var(--px);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 22px;
-      padding-bottom: 22px;
-      max-width: none;
-    }
-
-    .nav-logo {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 14px;
-      color: var(--ink);
-      text-decoration: none;
-      transition: opacity 0.15s;
-    }
-
-    .nav-links a:hover {
-      opacity: 0.5;
-    }
-
-    @media (max-width: 600px) {
-      .nav-links {
-        display: none;
-      }
-    }
-
-    /* ============================================================
-       TYPOGRAPHY
+       PAGE TYPOGRAPHY
     ============================================================ */
     h1 {
       font-size: clamp(40px, 5.5vw, 64px);
@@ -133,26 +34,9 @@
       line-height: 1.65;
     }
 
-    .label {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      display: block;
-      margin-bottom: 12px;
-    }
+    .label { margin-bottom: 12px; }
 
-    /* ============================================================
-       LAYOUT
-    ============================================================ */
-    .container {
-      width: 100%;
-      padding: 0 var(--px);
-      max-width: calc(var(--max) + var(--px) * 2);
-      margin: 0 auto;
-    }
-    /* Hero is always full width */
+    /* Hero sections bypass container max-width */
     .hero .container,
     .hero-section .container,
     .intro-section .container,
@@ -361,72 +245,6 @@
       }
     }
 
-    /* ============================================================
-       FOOTER
-    ============================================================ */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: clamp(36px, 4vw, 56px) 0;
-      margin-top: clamp(36px, 4vw, 56px);
-    }
-
-    .footer-inner {
-      width: 100%;
-      padding: 0 var(--px);
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .footer-left {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    .footer-middle {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-      font-size: 14px;
-      color: var(--ink-2);
-    }
-
-    .footer-middle a {
-      color: var(--ink-2);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: color 0.2s ease;
-    }
-
-    .footer-middle a:hover {
-      color: var(--ink);
-    }
-
-    .footer-right {
-      font-size: 14px;
-      color: var(--ink-3);
-    }
-
-    @media (max-width: 768px) {
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .footer-middle {
-        flex-direction: column;
-        gap: 8px;
-        align-items: flex-start;
-      }
-    }
-
-    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .fade-up.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
@@ -547,18 +365,13 @@
 
   <!-- Footer -->
   <footer>
-    <div class="footer-inner container">
-      <div class="footer-left">Bri May</div>
-      <div class="footer-middle">
+    <div class="footer-inner">
+      <span class="footer-left">Bri May</span>
+      <div class="footer-links">
         <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
-        <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">
-          LinkedIn
-          <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </a>
+        <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
-      <div class="footer-right">© 2025 Bri May</div>
+      <span class="footer-right">© 2025 Bri May</span>
     </div>
   </footer>
 
