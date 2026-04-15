@@ -15,27 +15,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - uses: actions/configure-pages@v5
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Build static site
+        run: |
+          mkdir -p _site
+          # Copy static site files
+          cp index.html _site/
+          cp CNAME _site/
+          cp -r images _site/ 2>/dev/null || true
+          cp -r styles _site/ 2>/dev/null || true
+          cp -r scripts _site/ 2>/dev/null || true
+          cp -r about _site/ 2>/dev/null || true
+          cp -r resume _site/ 2>/dev/null || true
+          cp -r work _site/ 2>/dev/null || true
+          cp -r contact _site/ 2>/dev/null || true
+          cp -r aimee-ai _site/ 2>/dev/null || true
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
       - id: deployment
         uses: actions/deploy-pages@v4
