@@ -40,7 +40,7 @@ export default function Work() {
       <Nav />
       <main>
         {/* Page header */}
-        <section style={{ padding: 'clamp(72px, 9vw, 120px) 0 clamp(40px, 5vw, 64px)' }}>
+        <section style={{ padding: 'clamp(72px, 9vw, 120px) 0 clamp(20px, 2.5vw, 32px)' }}>
           <div className="container">
             <FadeUp>
               <p className="eyebrow" style={{ marginBottom: 20 }}>Work</p>
