@@ -7,13 +7,15 @@
 // and adds .is-visible when they enter the viewport.
 
 (function initScrollReveal() {
-  const REVEAL_SELECTOR = '.reveal, .reveal-group';
+  // .fade-up transitions in on `.visible`; .reveal / .reveal-group on `.is-visible`.
+  // Add both classes so every reveal pattern used across the site is covered.
+  const REVEAL_SELECTOR = '.reveal, .reveal-group, .fade-up';
   const THRESHOLD = 0.15; // 15% of element must be visible to trigger
 
   // Skip if IntersectionObserver isn't supported
   if (!('IntersectionObserver' in window)) {
     document.querySelectorAll(REVEAL_SELECTOR).forEach((el) => {
-      el.classList.add('is-visible');
+      el.classList.add('is-visible', 'visible');
     });
     return;
   }
@@ -22,7 +24,7 @@
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
+          entry.target.classList.add('is-visible', 'visible');
           // Unobserve after revealing — no re-hiding on scroll back
           observer.unobserve(entry.target);
         }
