@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Bri May — Senior Product Designer & Creative Director. I design products people actually use — and brands that make them feel something." />
+  <meta name="description" content="Bri May — Senior Product Designer & Creative Director. Ask the portfolio agent to show you case studies, Bri's background, résumé, or contact info." />
   <title>Bri May — Product Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,266 +11,266 @@
   <link rel="stylesheet" href="/styles/site.css" />
 
   <style>
-    /* ── HERO ── */
-    .hero-section {
-      overflow: hidden;
-      position: relative;
-      padding: clamp(72px, 9vw, 120px) 0 0;
-    }
-    .hero-outer {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
+    /* ============================================================
+       AGENT HOMEPAGE
+       A scripted portfolio concierge — suggested prompts + free
+       text route to intents, responses render inline as a thread.
+    ============================================================ */
+
+    .agent-stage {
       width: 100%;
-    }
-    .hero-copy {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: clamp(40px, 7vw, 88px) var(--px) clamp(48px, 8vw, 96px);
+      min-height: calc(100vh - 68px);
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding-left: var(--px);
-      padding-right: clamp(32px, 4vw, 64px);
     }
-    .hero-eyebrow {
+
+    /* ── intro headline (above the thread) ── */
+    .agent-intro {
+      margin-bottom: clamp(28px, 4vw, 44px);
+    }
+    .agent-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-size: 12px;
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--ink-3);
-      margin-bottom: 28px;
+      margin-bottom: 20px;
     }
-    .hero-h1 {
-      font-size: clamp(40px, 5.5vw, 64px);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.05;
-      max-width: 620px;
-      margin-bottom: 28px;
-      color: var(--ink);
+    .agent-kicker .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #34C759;
+      box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.15);
     }
-    .hero-h1 .muted { color: var(--ink-3); display: block; }
-    .hero-sub {
-      font-size: clamp(17px, 1.4vw, 20px);
-      color: var(--ink-2);
-      line-height: 1.65;
-      max-width: 480px;
-      margin-bottom: 10px;
-    }
-    .hero-sub + .hero-sub { max-width: 460px; margin-bottom: 0; }
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: clamp(36px, 4vw, 52px);
-    }
-    .hero-media {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      align-self: stretch;
-      overflow: hidden;
-    }
-    .hero-portrait {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: right center;
-      max-height: 680px;
-    }
-    .hero-divider {
-      border-top: 1px solid var(--border);
-      margin: clamp(48px, 5vw, 72px) var(--px) 0;
-    }
-    @media (max-width: 860px) {
-      .hero-outer { grid-template-columns: 1fr; padding-right: var(--px); }
-      .hero-copy { padding-right: 0; }
-      .hero-media { justify-content: center; align-self: auto; margin-top: 40px; }
-      .hero-portrait { width: 75%; height: auto; max-height: none; object-position: center; }
-    }
-    @media (max-width: 560px) { .hero-portrait { width: 100%; } }
-
-    /* ── MARQUEE ── */
-    .marquee-wrap {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding-block: clamp(14px, 2vw, 22px);
-      overflow: hidden;
-    }
-    .marquee-track {
-      display: flex;
-      align-items: center;
-      width: max-content;
-      animation: marquee 28s linear infinite;
-    }
-    .marquee-track:hover { animation-play-state: paused; }
-    .marquee-item {
-      flex-shrink: 0;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--ink-3);
-      letter-spacing: -0.01em;
-      padding: 0 clamp(28px, 4vw, 56px);
-    }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
-
-    /* ── SECTION COMMON ── */
-    .page-section {
-      padding: clamp(72px, 9vw, 120px) 0;
-    }
-    .page-section + .page-section { border-top: 1px solid var(--border); }
-    .section-container {
-      width: 100%;
-      max-width: var(--max);
-      margin-inline: auto;
-      padding-inline: var(--px);
-    }
-    .eyebrow {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      margin-bottom: 14px;
-    }
-
-    /* ── WORK SECTION ── */
-    .work-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: clamp(40px, 5vw, 64px);
-    }
-    .work-header h2 {
-      font-size: clamp(26px, 3vw, 38px);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.15;
-      color: var(--ink);
-    }
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    @media (max-width: 900px) { .work-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 580px) { .work-grid { grid-template-columns: 1fr; } }
-
-    .wcard {
-      display: flex;
-      flex-direction: column;
-      border-radius: 14px;
-      overflow: hidden;
-      background: var(--surface);
-      color: inherit;
-      text-decoration: none;
-      transition: box-shadow 0.35s ease, transform 0.35s ease;
-    }
-    .wcard:hover { transform: translateY(-4px); box-shadow: 0 24px 56px rgba(0,0,0,0.09); }
-    .wcard-img {
-      aspect-ratio: 4/3;
-      overflow: hidden;
-    }
-    .wcard-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.35s ease;
-    }
-    .wcard:hover .wcard-img img { transform: scale(1.04); }
-    .wcard-body {
-      padding: 24px 28px 28px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    .wcard-tags { display: flex; gap: 5px; flex-wrap: nowrap; margin-bottom: 12px; overflow: hidden; }
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      background: #f0f0f0;
-      color: var(--ink-3);
-      border: 1px solid var(--border);
-    }
-    .wcard-title {
-      font-size: clamp(18px, 1.6vw, 22px);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.25;
-      margin-bottom: 8px;
-      color: var(--ink);
-    }
-    .wcard-impact {
-      font-size: 14px;
-      color: var(--ink-2);
-      line-height: 1.55;
-      margin-bottom: 18px;
-      flex: 1;
-    }
-    .wcard-cta {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--ink-3);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: color 0.2s;
-      margin-top: auto;
-    }
-    .wcard:hover .wcard-cta { color: var(--ink); }
-
-    /* ── ABOUT PREVIEW ── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(40px, 8vw, 112px);
-      align-items: start;
-    }
-    .about-grid h2 {
-      font-size: clamp(26px, 3vw, 38px);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-      color: var(--ink);
-    }
-    .about-body {
-      font-size: clamp(16px, 1.2vw, 18px);
-      color: var(--ink-2);
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
-
-    /* ── CTA ── */
-    .cta-inner { max-width: 640px; }
-    .cta-inner h2 {
-      font-size: clamp(30px, 3.5vw, 48px);
+    .agent-intro h1 {
+      font-size: clamp(28px, 4vw, 44px);
       font-weight: 700;
       letter-spacing: -0.03em;
-      line-height: 1.12;
-      margin-bottom: 18px;
+      line-height: 1.1;
       color: var(--ink);
+      max-width: 620px;
     }
-    .cta-inner p {
-      font-size: clamp(16px, 1.2vw, 18px);
-      color: var(--ink-2);
-      line-height: 1.65;
-      margin-bottom: 40px;
-    }
-    .cta-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .agent-intro h1 .muted { color: var(--ink-3); }
 
+    /* ── thread ── */
+    .thread {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(20px, 3vw, 28px);
+      flex: 1;
+    }
+
+    .msg { display: flex; gap: 12px; max-width: 100%; }
+    .msg--agent { align-items: flex-start; }
+    .msg--user { justify-content: flex-end; }
+
+    /* animate new messages in */
+    .msg {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: msgIn 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+    @keyframes msgIn { to { opacity: 1; transform: none; } }
+
+    .avatar {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0A0A0A 0%, #9B6B57 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      margin-top: 2px;
+    }
+
+    .msg-content { display: flex; flex-direction: column; gap: 14px; min-width: 0; max-width: 100%; }
+    .msg-name {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--ink-3);
+      margin-bottom: -4px;
+    }
+
+    .bubble {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px 16px 16px 16px;
+      padding: 14px 18px;
+      font-size: clamp(15px, 1.15vw, 16px);
+      line-height: 1.6;
+      color: var(--ink);
+      max-width: 560px;
+    }
+    .bubble--user {
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      border-radius: 16px 16px 4px 16px;
+      max-width: 420px;
+    }
+
+    /* ── suggestion chips ── */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 9px 16px;
+      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chip:hover { background: var(--surface); border-color: var(--ink-3); transform: translateY(-1px); }
+    .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .chip .plus { color: var(--ink-3); font-size: 15px; line-height: 1; }
+
+    /* ── typing indicator ── */
+    .typing { display: inline-flex; gap: 5px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; }
+    .typing span {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3);
+      animation: blink 1.3s infinite ease-in-out both;
+    }
+    .typing span:nth-child(2) { animation-delay: 0.18s; }
+    .typing span:nth-child(3) { animation-delay: 0.36s; }
+    @keyframes blink { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+
+    /* ── case study cards ── */
+    .cs-cards { display: flex; flex-direction: column; gap: 12px; max-width: 560px; }
+    .cs-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .cs-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+    .cs-card--featured {
+      border-color: rgba(155, 107, 87, 0.45);
+      box-shadow: 0 4px 20px rgba(155, 107, 87, 0.10);
+    }
+    .cs-card--featured:hover { box-shadow: 0 14px 36px rgba(155, 107, 87, 0.16); }
+
+    .cs-card-swatch {
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+    }
+    .cs-card-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1; }
+    .cs-card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .mini-tag {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--ink-3); background: var(--surface); border: 1px solid var(--border);
+      border-radius: 5px; padding: 2px 7px;
+    }
+    .cs-card-title { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); line-height: 1.25; }
+    .cs-card-impact { font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+    .cs-card-arrow { flex-shrink: 0; color: var(--ink-3); transition: transform 0.25s ease, color 0.25s ease; }
+    .cs-card:hover .cs-card-arrow { color: var(--ink); transform: translateX(3px); }
+
+    .featured-pill {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--accent);
+      border-radius: 100px;
+      padding: 3px 10px;
+    }
+
+    /* ── inline link buttons (about / resume / contact blocks) ── */
+    .link-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .link-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 14px; font-weight: 500;
+      padding: 11px 18px; border-radius: 10px;
+      text-decoration: none; cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .link-btn--primary { background: var(--ink); color: #fff; border: 1px solid var(--ink); }
+    .link-btn--primary:hover { background: #222; transform: translateY(-1px); }
+    .link-btn--secondary { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+    .link-btn--secondary:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+    /* ── composer ── */
+    .composer { margin-top: clamp(28px, 4vw, 40px); }
+    .composer-form {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 7px 7px 20px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .composer-form:focus-within { border-color: var(--ink); box-shadow: 0 6px 24px rgba(0,0,0,0.06); }
+    .composer-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--ink);
+      padding: 8px 0;
+    }
+    .composer-input::placeholder { color: var(--ink-3); }
+    .send-btn {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: var(--ink);
+      color: #fff;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .send-btn:hover { background: #222; transform: translateY(-1px); }
+    .send-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
+    .composer-hint {
+      font-size: 12px;
+      color: var(--ink-3);
+      margin-top: 12px;
+      padding-left: 4px;
+    }
+
+    @media (max-width: 560px) {
+      .bubble, .bubble--user, .cs-cards { max-width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .msg { animation: none; opacity: 1; transform: none; }
+      .typing span { animation: none; opacity: 0.5; }
+      .cs-card:hover, .link-btn:hover, .chip:hover, .send-btn:hover { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -289,220 +289,37 @@
   </nav>
 
   <main>
+    <div class="agent-stage">
 
-    <!-- HERO -->
-    <section class="hero-section">
-      <div class="hero-outer">
+      <div class="agent-intro">
+        <span class="agent-kicker"><span class="status-dot"></span>Portfolio Agent</span>
+        <h1>What would you like to see?<br><span class="muted">Ask me about Bri's work.</span></h1>
+      </div>
 
-        <div class="hero-copy reveal">
-          <p class="hero-eyebrow">Senior Product Designer &amp; Creative Director</p>
-          <h1 class="hero-h1">
-            Designing products<br>
-            that drive behavior,<br>
-            <span class="muted">not just engagement</span>
-          </h1>
-          <p class="hero-sub">
-            I'm Bri May, a Senior Product Designer focused on turning
-            complex systems into simple, high-impact experiences.
-          </p>
-          <p class="hero-sub">
-            10 years in product design, designing since 2011 — working with
-            companies like Meta to drive engagement, clarity, and measurable outcomes.
-          </p>
-          <div class="hero-actions">
-            <a href="/work/" class="btn-primary">View Work</a>
-            <a href="/about/" class="btn-secondary">About Me →</a>
-          </div>
-        </div>
+      <!-- Conversation thread — messages are injected here -->
+      <div class="thread" id="thread" role="log" aria-live="polite" aria-label="Conversation with the portfolio agent"></div>
 
-        <div class="hero-media">
-          <img
-            src="/images/bri-half-circle.png"
-            alt="Bri May — Senior Product Designer"
-            class="hero-portrait"
+      <!-- Composer -->
+      <div class="composer">
+        <form class="composer-form" id="composer-form" autocomplete="off">
+          <label for="composer-input" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Ask the portfolio agent</label>
+          <input
+            type="text"
+            id="composer-input"
+            class="composer-input"
+            placeholder="Try &ldquo;case studies&rdquo;, &ldquo;about Bri&rdquo;, or &ldquo;résumé&rdquo;&hellip;"
+            aria-label="Ask the portfolio agent"
           />
-        </div>
-
+          <button type="submit" class="send-btn" id="send-btn" aria-label="Send">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+        <p class="composer-hint">This is a guided agent — pick a suggestion or type what you're looking for.</p>
       </div>
-      <div class="hero-divider"></div>
-    </section>
 
-    <!-- MARQUEE -->
-    <div class="marquee-wrap">
-      <div class="marquee-track">
-        <span class="marquee-item">Meta</span>
-        <span class="marquee-item">NFL</span>
-        <span class="marquee-item">JPMorgan Chase</span>
-        <span class="marquee-item">CVS Health</span>
-        <span class="marquee-item">Nestlé</span>
-        <span class="marquee-item">Federal Reserve</span>
-        <span class="marquee-item">Patagonia</span>
-        <span class="marquee-item">MLS</span>
-        <span class="marquee-item">McKinsey &amp; Associates</span>
-        <span class="marquee-item">Sephora</span>
-        <span class="marquee-item">LVMH</span>
-        <span class="marquee-item">EPIC</span>
-        <!-- duplicate for seamless loop -->
-        <span class="marquee-item">Meta</span>
-        <span class="marquee-item">NFL</span>
-        <span class="marquee-item">JPMorgan Chase</span>
-        <span class="marquee-item">CVS Health</span>
-        <span class="marquee-item">Nestlé</span>
-        <span class="marquee-item">Federal Reserve</span>
-        <span class="marquee-item">Patagonia</span>
-        <span class="marquee-item">MLS</span>
-        <span class="marquee-item">McKinsey &amp; Associates</span>
-        <span class="marquee-item">Sephora</span>
-        <span class="marquee-item">LVMH</span>
-        <span class="marquee-item">EPIC</span>
-      </div>
     </div>
-
-    <!-- FEATURED WORK -->
-    <section class="page-section">
-      <div class="section-container">
-
-        <div class="reveal" style="margin-bottom: clamp(40px, 5vw, 64px);">
-          <p class="eyebrow">Selected Work</p>
-          <div class="work-header">
-            <h2>A few examples of products I've designed<br class="hide-mobile"> that drove measurable impact.</h2>
-            <a href="/work/" class="btn-secondary">View all work →</a>
-          </div>
-        </div>
-
-        <div class="work-grid reveal-group">
-
-          <a href="/work/global-content-studio/" class="wcard">
-            <div class="wcard-img" style="background: #EDE6DC;">
-            </div>
-            <div class="wcard-body">
-              <div class="wcard-tags">
-                <span class="tag">AI Product</span>
-                <span class="tag">Solo Build</span>
-                <span class="tag">Workflow Design</span>
-              </div>
-              <h3 class="wcard-title">Global Content Studio</h3>
-              <p class="wcard-impact">Brand-trained AI content studio built solo, end to end — powering content for 1M+ employees across Fortune 500 clients</p>
-              <span class="wcard-cta">
-                View Case Study
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </div>
-          </a>
-
-          <a href="/work/hub/" class="wcard">
-            <div class="wcard-img" style="background: #EBE8F4;">
-              <img src="/images/hub-thumbnail.png" alt="Financial Wellness Hub" />
-            </div>
-            <div class="wcard-body">
-              <div class="wcard-tags">
-                <span class="tag">Platform Design</span>
-                <span class="tag">UX Strategy</span>
-              </div>
-              <h3 class="wcard-title">Financial Wellness Hub</h3>
-              <p class="wcard-impact">Increased engagement 200% and supported $12M in revenue growth</p>
-              <span class="wcard-cta">
-                View Case Study
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </div>
-          </a>
-
-          <a href="/aimee-ai/" class="wcard">
-            <div class="wcard-img" style="background: #E2E7F0;">
-              <img src="/images/aimee-thumbnail.png" alt="Aimee AI Coach" />
-            </div>
-            <div class="wcard-body">
-              <div class="wcard-tags">
-                <span class="tag">AI Experience</span>
-                <span class="tag">Product Design</span>
-              </div>
-              <h3 class="wcard-title">Aimee AI Coach</h3>
-              <p class="wcard-impact">Designed core AI conversation flows used by 500K+ active users</p>
-              <span class="wcard-cta">
-                View Case Study
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </div>
-          </a>
-
-          <a href="/work/smart-benefits/" class="wcard">
-            <div class="wcard-img" style="background: #E2EDE8;">
-              <img src="/images/smart-benefits-thumbnail.png" alt="Smart Benefits Platform" />
-            </div>
-            <div class="wcard-body">
-              <div class="wcard-tags">
-                <span class="tag">Enterprise UX</span>
-                <span class="tag">Systems Design</span>
-              </div>
-              <h3 class="wcard-title">Smart Benefits Platform</h3>
-              <p class="wcard-impact">Reduced benefits confusion 40%, improving employee retention scores</p>
-              <span class="wcard-cta">
-                View Case Study
-                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </div>
-          </a>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT PREVIEW -->
-    <section class="page-section">
-      <div class="section-container">
-        <div class="about-grid">
-
-          <div class="reveal">
-            <p class="eyebrow">About</p>
-            <h2>Senior, strategic,<br>and obsessed with craft.</h2>
-          </div>
-
-          <div class="reveal">
-            <p class="about-body">
-              I'm a Senior Product Designer with a background in both product and brand,
-              focused on designing experiences that simplify complexity and drive real user behavior.
-            </p>
-            <p class="about-body">
-              I've spent the last decade leading design across product, marketing, and
-              AI-powered experiences — partnering closely with product and engineering
-              to bring ideas to life.
-            </p>
-            <p class="about-body" style="margin-bottom: 36px;">
-              I move fast from idea to reality. I use AI-assisted tools to prototype real,
-              interactive product experiences — not just static screens. This allows me to
-              test ideas earlier, align teams faster, and ship better solutions.
-            </p>
-            <a href="/about/" class="btn-secondary">More about me →</a>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="page-section">
-      <div class="section-container">
-        <div class="cta-inner reveal">
-          <p class="eyebrow">Let's talk</p>
-          <h2>Let's build something impactful</h2>
-          <p>I'm currently exploring senior product design opportunities.</p>
-          <div class="cta-actions">
-            <a href="/contact/" class="btn-primary">Contact Me</a>
-            <a href="/resume/" class="btn-ghost">View Résumé</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <!-- FOOTER -->
@@ -518,25 +335,235 @@
   </footer>
 
   <script>
-    // Nav scroll state
+    // ── Nav scroll state ──
     const nav = document.getElementById('site-nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 8);
     }, { passive: true });
 
-    // Scroll reveal
+    // ── Portfolio Agent ──────────────────────────────────────
     (function () {
-      const SEL = '.reveal, .reveal-group';
-      if (!('IntersectionObserver' in window)) {
-        document.querySelectorAll(SEL).forEach(el => el.classList.add('is-visible'));
-        return;
+      const thread = document.getElementById('thread');
+      const form = document.getElementById('composer-form');
+      const input = document.getElementById('composer-input');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const TYPING_MS = reduceMotion ? 120 : 620;
+
+      const CASE_STUDIES = [
+        {
+          featured: true,
+          title: 'Global Content Studio',
+          href: '/work/global-content-studio/',
+          swatch: '#EDE6DC',
+          tags: ['AI Product', 'Solo Build'],
+          impact: 'Brand-trained AI content studio, designed and built solo — 1M+ employees, 5 locales.'
+        },
+        {
+          title: 'Financial Wellness Hub',
+          href: '/work/hub/',
+          swatch: '#EBE8F4',
+          tags: ['Platform Design', 'UX Strategy'],
+          impact: 'A redesign that drove +200% engagement and $12M in revenue.'
+        },
+        {
+          title: 'Aimee AI Coach',
+          href: '/aimee-ai/',
+          swatch: '#E2E7F0',
+          tags: ['AI Experience', 'Product Design'],
+          impact: 'A conversational AI coach reaching 1M+ employees.'
+        },
+        {
+          title: 'Smart Benefits Platform',
+          href: '/work/smart-benefits/',
+          swatch: '#E2EDE8',
+          tags: ['Enterprise UX', 'Systems Design'],
+          impact: 'Guided open enrollment with three white-label embed modes.'
+        }
+      ];
+
+      const CHIP_LABELS = {
+        casestudies: 'Case studies',
+        about: 'About Bri',
+        resume: 'Résumé',
+        contact: 'Contact'
+      };
+
+      const arrowSvg =
+        '<svg class="cs-card-arrow" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+      function esc(s) {
+        return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
       }
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+
+      function caseCardsHtml() {
+        return '<div class="cs-cards">' + CASE_STUDIES.map(cs => `
+          <a class="cs-card${cs.featured ? ' cs-card--featured' : ''}" href="${cs.href}">
+            ${cs.featured ? '<span class="featured-pill">Featured</span>' : ''}
+            <span class="cs-card-swatch" style="background:${cs.swatch}"></span>
+            <span class="cs-card-body">
+              <span class="cs-card-tags">${cs.tags.map(t => `<span class="mini-tag">${t}</span>`).join('')}</span>
+              <span class="cs-card-title">${cs.title}</span>
+              <span class="cs-card-impact">${cs.impact}</span>
+            </span>
+            ${arrowSvg}
+          </a>`).join('') + '</div>';
+      }
+
+      // Intent responses: { text, block (html|null), chips: [intentIds] }
+      const RESPONSES = {
+        casestudies: () => ({
+          text: "Here's Bri's selected work. I'd start with the featured one — Global Content Studio, an AI content studio she designed and built solo, end to end.",
+          block: caseCardsHtml(),
+          chips: ['about', 'resume', 'contact']
+        }),
+        about: () => ({
+          text: "Bri May is a senior product designer and creative director — a decade in product, designing since 2011. She turns complex systems into simple, high-impact experiences, and has worked with companies like Meta, the NFL, and JPMorgan. Lately she designs and builds AI products end to end.",
+          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="/about/">Read the full story →</a></div>',
+          chips: ['casestudies', 'resume', 'contact']
+        }),
+        resume: () => ({
+          text: "The short version: senior product designer & creative director, ten years across product, brand, and AI-powered experiences. Want the full detail?",
+          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="/resume/">View résumé →</a><a class="link-btn link-btn--secondary" href="/about/">More about Bri</a></div>',
+          chips: ['casestudies', 'about', 'contact']
+        }),
+        contact: () => ({
+          text: "Bri's currently exploring senior product design roles. Here are the best ways to reach her:",
+          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="mailto:thebrimay@gmail.com">Email Bri</a><a class="link-btn link-btn--secondary" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="link-btn link-btn--secondary" href="/contact/">Contact page →</a></div>',
+          chips: ['casestudies', 'about', 'resume']
+        }),
+        greet: () => ({
+          text: "Hey! Here's what I can help you explore:",
+          block: null,
+          chips: ['casestudies', 'about', 'resume', 'contact']
+        }),
+        fallback: () => ({
+          text: "I'm not sure I caught that — but I can show you Bri's case studies, her background, her résumé, or how to get in touch. Pick one:",
+          block: null,
+          chips: ['casestudies', 'about', 'resume', 'contact']
+        })
+      };
+
+      function matchIntent(q) {
+        const s = q.toLowerCase();
+        const has = arr => arr.some(k => s.includes(k));
+        if (has(['resume', 'résumé', 'resumé', 'cv', 'curriculum'])) return 'resume';
+        if (has(['contact', 'email', 'hire', 'reach', 'linkedin', 'touch', 'available', 'connect', 'message', 'get in'])) return 'contact';
+        if (has(['case', 'work', 'project', 'portfolio', 'studies', 'study', 'global content', 'content studio', 'aimee', 'hub', 'benefits', 'featured'])) return 'casestudies';
+        if (has(['about', 'who', 'bri', 'background', 'bio', 'story', 'experience', 'career'])) return 'about';
+        if (has(['hi', 'hello', 'hey', 'yo', 'sup', 'howdy'])) return 'greet';
+        return 'fallback';
+      }
+
+      // ── DOM builders ──
+      function elFromHtml(html) {
+        const t = document.createElement('template');
+        t.innerHTML = html.trim();
+        return t.content.firstElementChild;
+      }
+
+      function scrollToComposer() {
+        input.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+      }
+
+      function addUserMessage(text) {
+        const msg = document.createElement('div');
+        msg.className = 'msg msg--user';
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble bubble--user';
+        bubble.textContent = text; // textContent — safe against injection
+        msg.appendChild(bubble);
+        thread.appendChild(msg);
+      }
+
+      function buildChips(ids) {
+        const wrap = document.createElement('div');
+        wrap.className = 'chips';
+        ids.forEach(id => {
+          const btn = document.createElement('button');
+          btn.className = 'chip';
+          btn.type = 'button';
+          btn.dataset.intent = id;
+          btn.innerHTML = '<span class="plus">+</span>' + esc(CHIP_LABELS[id] || id);
+          btn.addEventListener('click', () => handleIntent(id, CHIP_LABELS[id] || id));
+          wrap.appendChild(btn);
         });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-      document.querySelectorAll(SEL).forEach(el => obs.observe(el));
+        return wrap;
+      }
+
+      function addAgentMessage(res) {
+        const msg = elFromHtml(`
+          <div class="msg msg--agent">
+            <div class="avatar">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2l1.7 6.1L20 10l-6.3 1.9L12 18l-1.7-6.1L4 10l6.3-1.9z"/></svg>
+            </div>
+            <div class="msg-content">
+              <div class="msg-name">Portfolio Agent</div>
+            </div>
+          </div>`);
+        const content = msg.querySelector('.msg-content');
+
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.textContent = res.text;
+        content.appendChild(bubble);
+
+        if (res.block) content.appendChild(elFromHtml(res.block));
+        if (res.chips && res.chips.length) content.appendChild(buildChips(res.chips));
+
+        thread.appendChild(msg);
+      }
+
+      function showTyping() {
+        const msg = elFromHtml(`
+          <div class="msg msg--agent" data-typing="1">
+            <div class="avatar">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2l1.7 6.1L20 10l-6.3 1.9L12 18l-1.7-6.1L4 10l6.3-1.9z"/></svg>
+            </div>
+            <div class="msg-content">
+              <div class="typing" aria-label="Agent is typing"><span></span><span></span><span></span></div>
+            </div>
+          </div>`);
+        thread.appendChild(msg);
+        scrollToComposer();
+        return msg;
+      }
+
+      let busy = false;
+      function respond(intentId) {
+        const res = (RESPONSES[intentId] || RESPONSES.fallback)();
+        const typing = showTyping();
+        busy = true;
+        setTimeout(() => {
+          typing.remove();
+          addAgentMessage(res);
+          busy = false;
+          scrollToComposer();
+          input.focus();
+        }, TYPING_MS);
+      }
+
+      function handleIntent(intentId, userLabel) {
+        if (busy) return;
+        if (userLabel) addUserMessage(userLabel);
+        respond(intentId);
+      }
+
+      // ── Free-text submit ──
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const q = input.value.trim();
+        if (!q || busy) return;
+        input.value = '';
+        addUserMessage(q);
+        respond(matchIntent(q));
+      });
+
+      // ── Initial greeting (rendered without a typing delay) ──
+      addAgentMessage({
+        text: "Hi — I'm Bri's portfolio agent. I can walk you through her case studies, give you the quick version of her background, or pull up her résumé and contact info. Where would you like to start?",
+        block: null,
+        chips: ['casestudies', 'about', 'resume', 'contact']
+      });
     })();
   </script>
 

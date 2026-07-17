@@ -380,6 +380,7 @@ Keep case studies scannable — avoid long text blocks.
 
 ## Current Decisions
 
+- **Homepage is the "Portfolio Agent":** `index.html` is a scripted conversational concierge, not a real LLM. It shows suggested-prompt chips (Case studies · About Bri · Résumé · Contact) and a free-text input; typed queries are keyword-matched to intents (`matchIntent`) and responses render inline in a message thread. All logic is self-contained vanilla JS in `index.html` (no backend, no API key — works on static Pages). Case studies render as `.cs-card`s; **Global Content Studio is always first and carries a `.featured-pill`** (accent color). The `.composer-hint` line intentionally signals it's a guided agent so it doesn't imply an open-ended live AI. Nav + footer are kept for direct navigation and a no-JS fallback. React mirror (`/src/`) is NOT updated to match — the agent lives only on the deployed static homepage.
 - **Shared CSS source of truth:** `styles/site.css` is the single shared stylesheet for all static pages. It defines tokens, reset, nav, footer, buttons, `.container`, and scroll reveal. Do not re-declare these in page `<style>` blocks.
 - **Page `<style>` blocks:** Contain only page-specific styles. Acceptable overrides: `.label { margin-bottom: Xpx }`, `.eyebrow { margin-bottom: Xpx }`, `.back-link { padding-top: 32px }`. Everything else should be unique to that page.
 - **React app CSS:** `system.css` and `components.css` are for the React dev app in `/src/` only. Static pages do not link them.
@@ -400,3 +401,5 @@ Keep case studies scannable — avoid long text blocks.
 |---|---|
 | 2026-04-15 | Created `CLAUDE.md` — full playbook documenting static + React dual architecture, design tokens, component patterns, and editing rules |
 | 2026-04-15 | CSS refactor — created `styles/site.css` as shared base for all static pages; stripped duplicate `:root`, reset, nav, footer, and scroll-reveal CSS from all 7 non-homepage pages; standardized footer to `.footer-left` / `.footer-links` / `.footer-right`; fixed `.btn--primary` in `components.css` from terracotta to dark ink |
+| 2026-07-17 | Added **Global Content Studio** case study (`work/global-content-studio/`, renamed from `work/ff-content-writer/`) and made it the featured/first case study on the Work page. Fixed the `.fade-up` reveal bug in `scripts/main.js` (now observes `.fade-up` and adds `.visible`). |
+| 2026-07-17 | **Homepage rebuilt as the "Portfolio Agent"** — a scripted conversational concierge (see Current Decisions). Replaced the old hero/marquee/featured-work/about/CTA layout. |
