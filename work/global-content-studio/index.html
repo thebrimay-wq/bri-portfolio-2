@@ -167,6 +167,39 @@
     }
 
     /* ════════════════════════════
+       AT A GLANCE (fast-scan summary)
+    ════════════════════════════ */
+    .glance {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: clamp(32px, 5vw, 72px);
+      align-items: start;
+      margin-top: 8px;
+    }
+    @media (max-width: 768px) { .glance { grid-template-columns: 1fr; gap: 32px; } }
+    .glance-summary {
+      font-size: clamp(18px, 1.6vw, 23px);
+      line-height: 1.6;
+      color: var(--ink);
+      font-weight: 500;
+      max-width: 640px;
+    }
+    .glance-facts { display: flex; flex-direction: column; }
+    .glance-facts > div {
+      display: flex; justify-content: space-between; gap: 20px;
+      padding: 14px 0; border-top: 1px solid var(--border);
+    }
+    .glance-facts > div:last-child { border-bottom: 1px solid var(--border); }
+    .glance-facts dt {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--ink-3); flex-shrink: 0;
+    }
+    .glance-facts dd {
+      font-size: 14px; color: var(--ink); font-weight: 500;
+      text-align: right; margin: 0; line-height: 1.45;
+    }
+
+    /* ════════════════════════════
        1. HERO
     ════════════════════════════ */
     .hero {
@@ -707,6 +740,22 @@
         <div class="hero-image fade-up" style="transition-delay:170ms;">
           <!-- Replace with: <img src="../../images/Global Content Studio Case Study/Hero.png" alt="Global Content Studio interface" /> -->
           <div class="img-placeholder"><span class="img-placeholder-label">Hero.png</span>Full app screenshot — sidebar · editor · details panel</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ AT A GLANCE ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">At a glance</span>
+        <div class="glance">
+          <p class="glance-summary">Financial Finesse's content team was scaling for 1M+ employees at the speed of one writer. I designed and built Global Content Studio — a brand-trained AI content studio with a five-region localization pipeline — solo, end to end, in weeks. It's live in production today.</p>
+          <dl class="glance-facts">
+            <div><dt>Role</dt><dd>Lead Product Designer &amp; builder</dd></div>
+            <div><dt>Timeline</dt><dd>2026 · shipped in weeks</dd></div>
+            <div><dt>Team</dt><dd>Solo — designed + built end-to-end</dd></div>
+            <div><dt>Scope</dt><dd>Strategy · UX/UI · AI training · Front-end build</dd></div>
+          </dl>
         </div>
       </div>
     </section>

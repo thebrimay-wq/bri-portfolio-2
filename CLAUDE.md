@@ -329,20 +329,22 @@ Padding: `13px 24px` (primary/secondary), `13px 18px` (ghost).
 - Two-column layout (`.hub-two-col`): `1fr 1fr`, gap `clamp(48px, 8vw, 96px)`
 - Typography: `.cs-h2` (heading), `.cs-body` (body up to 560px wide)
 
-### Case Study Default Section Order
-1. Hero
-2. Overview
-3. Problem
-4. Opportunity
-5. Constraints
-6. Approach
-7. Key Decisions
-8. Experience
-9. Outcomes
-10. What's Next
-11. Final Takeaway
+### Case Study Section Order (current template — Global Content Studio is the reference)
+1. **Hero** — eyebrow (role · company · year), headline w/ `<span>` clause, hero-lead, 3 hero-stats, hero image
+2. **At a glance** — fast-scan block: `.glance-summary` TL;DR + `.glance-facts` (Role · Timeline · Team · Scope). Lets a recruiter get the whole story in ~10s.
+3. **What I Owned** (`.owned-section`, surface bg) — 5 role items (label + text)
+4. **The Problem**
+5. **The Opportunity** (surface bg, pullquote + transform-table)
+6. **The Solution** (numbered-list + solution-quote)
+7. **The Pipeline** (optional — GCS only; horizontal `.pipeline-flow`)
+8–13. **Experience · 01–06** (eyebrow + exp-h2 + exp-body + image), optional **07**
+14. **Process** (surface bg, transform-table + process-pullquote) — framing varies per study (solo AI-native build / leadership / systems)
+15. **Impact** (impact-grid + client-pills)
+16. **What's Next** (4 next-items)
+17. **Final Takeaway** (surface bg, one bold closing sentence)
++ Bottom nav (`.bottom-cta`) — Back to Work / Next case / Contact. Loop: GCS → Aimee → Hub → GCS.
 
-Keep case studies scannable — avoid long text blocks.
+**Scannability rule:** every case study must read fast AND deep — the At-a-glance block + declarative section headlines carry the scan; the section bodies carry the depth. Keep bodies tight, avoid long text blocks.
 
 ---
 
@@ -407,3 +409,5 @@ Keep case studies scannable — avoid long text blocks.
 | 2026-07-17 | **Side-panel navigation** — homepage internal links now open pages in an artifact-style right-side `<iframe>` panel. Added `scripts/embed.js` + `html.embedded` rules in `site.css` to hide the embedded page's nav/footer. |
 | 2026-07-17 | **Résumé refresh** — synced `resume/index.html` to the 2026 PDF (title → "AI-Native Product Designer · Product Creative Director", repositioned summary, restructured roles, 3 skill tracks incl. Engineering/React, added Global Content Studio + Arizona State). Added `resume/BriMay_Resume_2026.pdf` and wired the Download PDF button. |
 | 2026-07-17 | **Global Content Studio** — labeled every image placeholder with its target filename chip + picture icon; added a horizontal 9-step **pipeline** overview (`.pipeline-flow`, placeholder thumbs). |
+| 2026-07-17 | Named the homepage agent **Brix** (B-mark avatar). Removed the **Smart Benefits** case study (kept in résumé). Added an **About** portrait slot (`/images/bri-about.jpg`). |
+| 2026-07-17 | **Fast-scan pattern** — added an **At a glance** block (`.glance`, TL;DR + Role/Timeline/Team/Scope) to Global Content Studio + Hub so case studies scan in ~10s and still go deep. **Restructured the Hub** to the full template (added What I Owned + Process). |

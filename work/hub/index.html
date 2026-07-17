@@ -252,6 +252,89 @@
     }
 
     /* ════════════════════════════
+       WHAT I OWNED
+    ════════════════════════════ */
+    .owned-section { background: var(--surface); }
+    .owned-h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.14;
+      margin-bottom: clamp(40px, 5vw, 56px);
+      max-width: 720px;
+    }
+    .owned-list { display: flex; flex-direction: column; max-width: 820px; }
+    .owned-item {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: clamp(16px, 3vw, 40px);
+      padding: clamp(24px, 3vw, 32px) 0;
+      border-top: 1px solid var(--border);
+      align-items: start;
+    }
+    .owned-item:last-child { border-bottom: 1px solid var(--border); }
+    @media (max-width: 700px) {
+      .owned-item { grid-template-columns: 1fr; gap: 8px; }
+    }
+    .owned-label { font-size: clamp(15px, 1.2vw, 17px); font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+    .owned-text { font-size: clamp(15px, 1.15vw, 17px); color: var(--ink-2); line-height: 1.7; margin: 0; }
+
+    /* ════════════════════════════
+       PROCESS
+    ════════════════════════════ */
+    .process-body {
+      font-size: clamp(17px, 1.4vw, 20px);
+      color: var(--ink-2);
+      line-height: 1.78;
+      max-width: 720px;
+      margin-bottom: clamp(48px, 6vw, 72px);
+    }
+    .process-pullquote {
+      font-size: clamp(17px, 1.4vw, 20px);
+      color: var(--ink);
+      line-height: 1.65;
+      font-weight: 500;
+      font-style: italic;
+      border-left: 2px solid var(--border);
+      padding-left: 24px;
+      margin: clamp(48px, 6vw, 72px) 0 0;
+      max-width: 720px;
+    }
+
+    /* ════════════════════════════
+       AT A GLANCE (fast-scan summary)
+    ════════════════════════════ */
+    .glance {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: clamp(32px, 5vw, 72px);
+      align-items: start;
+      margin-top: 8px;
+    }
+    @media (max-width: 768px) { .glance { grid-template-columns: 1fr; gap: 32px; } }
+    .glance-summary {
+      font-size: clamp(18px, 1.6vw, 23px);
+      line-height: 1.6;
+      color: var(--ink);
+      font-weight: 500;
+      max-width: 640px;
+    }
+    .glance-facts { display: flex; flex-direction: column; }
+    .glance-facts > div {
+      display: flex; justify-content: space-between; gap: 20px;
+      padding: 14px 0; border-top: 1px solid var(--border);
+    }
+    .glance-facts > div:last-child { border-bottom: 1px solid var(--border); }
+    .glance-facts dt {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--ink-3); flex-shrink: 0;
+    }
+    .glance-facts dd {
+      font-size: 14px; color: var(--ink); font-weight: 500;
+      text-align: right; margin: 0; line-height: 1.45;
+    }
+
+    /* ════════════════════════════
        5–10. EXPERIENCE SECTIONS
     ════════════════════════════ */
     .exp-h2 {
@@ -535,6 +618,52 @@
       </div>
     </section>
 
+    <!-- ════ AT A GLANCE ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">At a glance</span>
+        <div class="glance">
+          <p class="glance-summary">The Financial Finesse Hub was a static content library that made users do the work. As Creative Director and lead designer, I led a ground-up redesign into a personalized, guided system — turning passive browsing into real behavior change, and driving 200%+ engagement, $12M in revenue, and Fortune 500 clients.</p>
+          <dl class="glance-facts">
+            <div><dt>Role</dt><dd>Creative Director &amp; Lead Product Designer</dd></div>
+            <div><dt>Timeline</dt><dd>2024</dd></div>
+            <div><dt>Team</dt><dd>Led the design team, cross-functional</dd></div>
+            <div><dt>Scope</dt><dd>Strategy · Design system · UX/UI · Web + mobile</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ WHAT I OWNED ════ -->
+    <section class="cs-section owned-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">My Role</span>
+        <h2 class="owned-h2">Leading the redesign, end to end</h2>
+        <div class="owned-list">
+          <div class="owned-item">
+            <div class="owned-label">Strategy</div>
+            <p class="owned-text">Reframed a static content library as an adaptive, guided system — and set the product vision and roadmap that got us there.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Team Leadership</div>
+            <p class="owned-text">Led the design team through the entire redesign — direction, critique, and craft standards across every surface.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Design System</div>
+            <p class="owned-text">Built the cross-surface design system for web and mobile that kept the redesign consistent and fast to ship.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Behavior Design</div>
+            <p class="owned-text">Designed for real behavior change, not vanity metrics — onboarding, personalized action plans, and momentum loops.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Client Launch</div>
+            <p class="owned-text">Partnered with product, engineering, and enterprise stakeholders to launch to Fortune 500 clients — Meta, the Federal Reserve, the NFLPA.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ════ 2. THE PROBLEM ════ -->
     <section class="cs-section">
       <div class="wrap fade-up">
@@ -785,6 +914,48 @@
       </div>
     </section>
 
+    <!-- ════ PROCESS ════ -->
+    <section class="cs-section opportunity-section">
+      <div class="wrap">
+        <span class="eyebrow fade-up">Process</span>
+        <h2 class="solution-h2 fade-up" style="transition-delay:60ms;">Leading a redesign that moved the business</h2>
+        <p class="process-body fade-up" style="transition-delay:100ms;">
+          This wasn't a visual refresh — it was a rethink of what the product was for.
+          I led the design team through the whole arc: research and strategy, a new
+          cross-surface design system, and high-fidelity design across web and mobile —
+          partnering with product and engineering the entire way, and staying close to
+          enterprise clients through launch.
+        </p>
+
+        <div class="transform-table fade-up" style="transition-delay:130ms;">
+          <div class="transform-row">
+            <span class="transform-from">Redesign as a visual refresh</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Redesign as a business driver</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">Content-first information architecture</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Behavior-first product strategy</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">Design hands off static specs</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Design leads from research to launch</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">Siloed design, product, engineering</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">One cross-functional team, one direction</span>
+          </div>
+        </div>
+
+        <p class="process-pullquote fade-up" style="transition-delay:170ms;">
+          The redesign didn't just look better — it moved the business. That's the bar I lead design to.
+        </p>
+      </div>
+    </section>
+
     <!-- ════ 11. IMPACT ════ -->
     <section class="cs-section impact-section">
       <div class="wrap">
@@ -869,6 +1040,7 @@
           The Financial Finesse Hub transformed financial wellness from a static
           content experience into a personalized, action-oriented system — helping
           users move from intention to meaningful progress.
+          <strong>A redesign led from strategy to launch — proof that design, done right, moves the business.</strong>
         </p>
       </div>
     </section>
@@ -878,7 +1050,7 @@
       <div class="wrap fade-up">
         <nav class="cta-links" aria-label="Case study navigation">
           <a href="../../work/" class="btn-secondary">← Back to Work</a>
-          <a href="../../aimee-ai/" class="btn-secondary">Next: Aimee AI →</a>
+          <a href="../../work/global-content-studio/" class="btn-secondary">Next: Global Content Studio →</a>
           <a href="../../contact/" class="btn-secondary">Contact ↗</a>
         </nav>
       </div>
