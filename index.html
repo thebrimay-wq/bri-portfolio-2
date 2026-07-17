@@ -299,7 +299,7 @@
               </svg>
             </button>
           </form>
-          <p class="composer-hint">Guided agent — pick a suggestion or type what you're looking for. Pages open on the right. ↗</p>
+          <p class="composer-hint">Ask Brix about Bri's work &amp; background — or pick a suggestion. Pages open on the right. ↗</p>
         </div>
       </div>
     </section>
@@ -426,14 +426,7 @@
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const TYPING_MS = reduceMotion ? 120 : 620;
 
-      // ── Real-LLM endpoint ──────────────────────────────────
-      // Paste your deployed Cloudflare Worker URL here to enable the real LLM.
-      // Leave empty '' and Brix stays a scripted concierge (chips + funny fallbacks).
-      // See /worker/README.md for deploy steps.
-      const BRIX_ENDPOINT = '';
-
-      // Funny fallbacks — used when the LLM is off/unreachable, or a typed query
-      // doesn't match a known intent. (The Worker's system prompt has the same list.)
+      // Funny redirects — used when a question isn't about Bri, or isn't in the wiki.
       const FUNNY = [
         "That's above my pay grade — and I work purely for exposure. Ask me about Bri's work instead?",
         "Not in my training data, which is 100% Bri May. Want the case studies or the résumé?",
@@ -441,13 +434,57 @@
         "You've wandered off the map. Safe ground: Bri's case studies, her background, or how to reach her.",
         "I know exactly one subject, and it rhymes with “Bri May.” What can I tell you about her?",
         "Great question for a search engine. For anything about Bri, though, I'm your agent.",
-        "I could make something up, but Bri built me as honest AI — so I'll just admit I don't know that one.",
+        "I only cover one topic, and it's 100% Bri — so I'll pass on that one. Ask me about her work?",
         "Error 404: opinion not found. Bri facts, however, are fully in stock.",
         "My knowledge starts and ends with Bri's portfolio — luckily that's a lot. Ask away.",
         "Hard pass on that one, but I can talk Global Content Studio, the Hub, or Aimee all day.",
       ];
       const funny = () => FUNNY[Math.floor(Math.random() * FUNNY.length)];
-      const llmHistory = [];
+
+      // ── The "wiki about Bri" ───────────────────────────────
+      // Keyless knowledge base — no backend, no API, no cost. Each entry has
+      // `keys` (lowercase trigger substrings) + `text` (the answer); optional
+      // href/label add an "open the case study" link. Edit here to change what
+      // Brix knows. Anything not covered gets a funny redirect back to Bri.
+      const KB = [
+        { keys: ['who is', "who's bri", 'about bri', 'what does she do', 'what does bri do', 'what do you do', 'overview', 'summary', 'elevator', 'introduce'],
+          text: "Bri May is an AI-native product designer, creative director, and design engineer with about 10 years in product. She works in the seam between design and engineering — she designs AND builds, turning Figma systems into production React and shipping AI-native products end to end. Her work has driven 200%+ engagement growth, $12M+ in revenue, and reached 1M+ employees across Fortune 500 clients." },
+        { keys: ['design engineer', 'do you code', 'does she code', 'can she code', 'she code', 'build it', 'builds', 'engineering', 'react', 'front-end', 'front end', 'frontend', 'developer', 'technical', 'hands on', 'hands-on'],
+          text: "Yes — Bri is a design engineer. She doesn't just hand off mockups; she ships production front-ends in React (with Tailwind, Vite, design tokens, Framer Motion). She built the Global Content Studio app solo, end to end, and coded the Aimee front end herself. Designing and building in one loop is her edge." },
+        { keys: ['global content studio', 'content studio', 'margin', 'federal reserve', 'content team', 'localization', 'localiz'],
+          text: "Global Content Studio is a brand-trained AI content studio Bri designed AND built solo, end to end, in about a month (~5,800 lines). It covers 9 content types with a 6-pass localization pipeline across 5 locales, scaled global launches from months to about a country a week, and won the Federal Reserve as a client. It's in production for 1M+ employees.",
+          href: '/work/global-content-studio/', title: 'Global Content Studio', label: 'Open the case study →' },
+        { keys: ['aimee', 'coach', 'conversational', 'design system', 'component library', 'three surfaces', '3 surfaces', 'teams', 'widget', 'sdk'],
+          text: "Aimee is Financial Finesse's AI financial coach. Bri designed and built the front end end-to-end — a documented design system, a locked component library, and coded interactive prototypes — and made one system ship to three surfaces: the Hub, an embeddable client-site widget, and Microsoft Teams. Signature calls: honest AI over “virtual assistant,” and the user's words never shrink.",
+          href: '/aimee-ai/', title: 'Aimee AI Coach', label: 'Open the case study →' },
+        { keys: ['hub', 'financial finesse hub', 'wellness platform', 'redesign', 'onboarding'],
+          text: "The Financial Finesse Hub is a ground-up redesign Bri led as creative director and lead designer — turning a static content library into a personalized, guided system. It drove +200% engagement and $12M in revenue and won Fortune 500 clients. She led the design team from research to launch.",
+          href: '/work/hub/', title: 'Financial Finesse Hub', label: 'Open the case study →' },
+        { keys: ['smart benefits', 'open enrollment', 'enrollment', 'recordkeeper', 'embed mode'],
+          text: "Smart Benefits is an AI-powered open-enrollment experience Bri designed with three white-label embed modes, adopted by one of the largest U.S. retirement recordkeepers. It's part of her work history — there's no dedicated case study for it on the site." },
+        { keys: ['impact', 'results', 'metrics', 'numbers', 'revenue', 'engagement', 'outcomes', 'how much', 'roi'],
+          text: "The headline numbers: 200%+ engagement growth, $12M+ in revenue contributed, and products reaching 1M+ employees across Fortune 500 clients. She also built Global Content Studio solo in about a month and won the Federal Reserve." },
+        { keys: ['clients', 'companies', 'worked with', 'brands', 'customers', 'fortune 500', 'fortune500'],
+          text: "Bri's work reaches Fortune 500 clients including the Federal Reserve, Meta, the NFL, JPMorgan Chase, CVS Health, Patagonia, McKinsey, Nestlé, Comcast, and General Mills." },
+        { keys: ['skills', 'tech', 'stack', 'tools', 'figma', 'capabilities', 'expertise', 'proficient', 'good at'],
+          text: "Design & product: 0→1 product design, UX/UI, design systems, interaction & motion, prototyping, research, Figma. Engineering: React, JavaScript, HTML/CSS, Framer Motion, Vite, design tokens, accessible UI, Git. AI-native: AI product design, rapid prototyping, LLM-powered features, conversational/agent UX, prompt engineering." },
+        { keys: ['ai ', 'ai-native', 'ai native', 'artificial intelligence', 'llm', 'machine learning', 'generative'],
+          text: "AI is the through-line of Bri's recent work: she built Global Content Studio (a brand-trained AI content studio) solo, designed and built the Aimee AI coach across three surfaces, and prototypes AI-native products end to end — with AI as her engineering partner." },
+        { keys: ['experience', 'years', 'how long', 'tenure', 'senior'],
+          text: "About 10 years in product design (designing since 2011), most of it at Financial Finesse — where she's grown from graphic design to product design to AI-native product designer and product creative director." },
+        { keys: ['work history', 'financial finesse', 'current role', 'where does she work', 'employer', 'career', 'ckc', 'history'],
+          text: "Bri has been at Financial Finesse since 2015 — now AI-Native Product Designer & Product Creative Director, previously Product Designer and Sr. Graphic Designer. Before that she was a graphic designer at CKC Communications (2012–2015), doing branding and websites for 50+ companies." },
+        { keys: ['education', 'school', 'college', 'university', 'degree', 'study', 'studied', 'major', 'asu', 'chico', 'arizona state'],
+          text: "Bri earned a B.S. in Business (Marketing) from Cal State Chico on a full-ride soccer scholarship, after two years playing Division I soccer at Arizona State — also on a full-ride athletic scholarship." },
+        { keys: ['soccer', 'sports', 'athlete', 'division 1', 'division i'],
+          text: "Bri grew up on the soccer field — she played D1 on a full-ride scholarship and still laces up on weekends. That competitive streak carries into how she works." },
+        { keys: ['hobbies', 'hobby', 'personal', 'outside', 'free time', 'interests', 'family', 'photograph', 'scuba', 'dirtbike', 'wakeboard', 'sourdough', 'travel'],
+          text: "Outside work, Bri is family-first (she has a son), plays soccer, and shoots photography — mostly families and newborns. She's also into travel and food, warm-water scuba, dirtbikes, wakeboarding, and three-day sourdough." },
+        { keys: ['location', 'where does she live', 'based', 'remote', 'pleasanton', 'bay area'],
+          text: "Bri is based in Pleasanton, CA — in the Bay Area." },
+        { keys: ['why hire', 'what makes', 'different', 'stand out', 'unique', 'strength', 'pitch', 'special', 'value'],
+          text: "The short pitch: most designers hand off mockups — Bri ships them. She's a senior product designer who also builds in React and AI-natively, so she moves from idea to production without a translation layer. That's how she built an AI studio solo in a month and helped drive $12M in revenue." },
+      ];
 
       const CASE_STUDIES = [
         { featured: true, title: 'Global Content Studio', href: '/work/global-content-studio/', swatch: '#EDE6DC', tags: ['AI Product', 'Solo Build'], impact: 'Brand-trained AI content studio, designed and built solo — 1M+ employees, 5 locales.' },
@@ -585,48 +622,38 @@
       }
       window.__handleIntent = handleIntent;
 
-      // Render a plain agent text message (no cards/chips) — used for LLM replies.
-      function addAgentText(text) {
-        const msg = elFromHtml(`
-          <div class="msg msg--agent">
-            <div class="avatar"><svg class="avatar-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="12.5" stroke="#fff" stroke-width="1.5"/><path d="M11.6 26.6 29 12.8" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><text x="20" y="25.4" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="700" fill="#fff">B</text></svg></div>
-            <div class="msg-content"><div class="msg-name">Brix</div></div>
-          </div>`);
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble';
-        bubble.textContent = text;
-        msg.querySelector('.msg-content').appendChild(bubble);
-        thread.appendChild(msg);
-      }
-
-      // Ask the real LLM (via the Cloudflare Worker). Falls back to a funny line on any error.
-      async function askBrix(q) {
-        llmHistory.push({ role: 'user', content: q });
+      function respondWith(res) {
         const typing = showTyping();
         busy = true;
-        const ctrl = new AbortController();
-        const timer = setTimeout(() => ctrl.abort(), 20000);
-        try {
-          const res = await fetch(BRIX_ENDPOINT, {
-            method: 'POST',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({ messages: llmHistory.slice(-12) }),
-            signal: ctrl.signal,
-          });
-          const data = await res.json().catch(() => ({}));
+        setTimeout(() => {
           typing.remove();
-          const text = (res.ok && data && data.text) ? data.text : funny();
-          llmHistory.push({ role: 'assistant', content: text });
-          addAgentText(text);
-        } catch (e) {
-          typing.remove();
-          addAgentText(funny());
-        } finally {
-          clearTimeout(timer);
+          addAgentMessage(res);
           busy = false;
           scrollToEnd();
           input.focus({ preventScroll: true });
+        }, TYPING_MS);
+      }
+
+      // Keyless "wiki about Bri": score the question against the KB, answer from
+      // it; else fall back to a nav intent; else a funny redirect to Bri.
+      function answerLocally(q) {
+        const s = q.toLowerCase();
+        let best = null, score = 0;
+        for (const e of KB) {
+          let sc = 0;
+          for (const k of e.keys) if (s.includes(k)) sc += k.length >= 3 ? 2 : 1;
+          if (sc > score) { score = sc; best = e; }
         }
+        if (best && score >= 2) {
+          const block = best.href
+            ? `<div class="link-row"><a class="link-btn link-btn--secondary" href="${best.href}" data-panel-title="${esc(best.title || '')}">${esc(best.label || 'Open →')}</a></div>`
+            : null;
+          respondWith({ text: best.text, block, chips: best.chips || [] });
+          return;
+        }
+        const intent = matchIntent(q);
+        if (intent !== 'fallback') { respond(intent); return; }
+        respondWith({ text: funny(), block: null, chips: ['casestudies', 'about', 'resume', 'contact'] });
       }
 
       form.addEventListener('submit', (e) => {
@@ -635,20 +662,11 @@
         if (!q || busy) return;
         input.value = '';
         addUserMessage(q);
-        if (BRIX_ENDPOINT) askBrix(q);
-        else respond(matchIntent(q));
+        answerLocally(q);
       });
 
-      // When the real LLM is enabled, tell visitors they can ask anything.
-      if (BRIX_ENDPOINT) {
-        const hint = document.querySelector('.composer-hint');
-        if (hint) hint.textContent = "Ask Brix anything about Bri's work — or pick a suggestion. Pages open on the right. ↗";
-      }
-
       addAgentMessage({
-        text: BRIX_ENDPOINT
-          ? "Hi — I'm Brix, Bri's portfolio agent. Ask me anything about her work, or start with one of these."
-          : "Hi — I'm Brix, Bri's portfolio agent. I can walk you through her case studies, give you the quick version of her background, or pull up her résumé and contact info. Where would you like to start?",
+        text: "Hi — I'm Brix, Bri's portfolio agent. Ask me anything about her work and background, or start with one of these.",
         block: null,
         chips: ['casestudies', 'about', 'resume', 'contact']
       });
