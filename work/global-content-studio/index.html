@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/site.css" />
+  <script src="/scripts/embed.js"></script>
   <style>
 
     /* ── wrapper ── */
@@ -57,8 +58,10 @@
       border: 1px dashed var(--border);
       border-radius: 16px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 12px;
       color: var(--ink-3);
       font-size: 13px;
       font-weight: 500;
@@ -66,8 +69,102 @@
       text-align: center;
       padding: 24px;
     }
+    /* Picture icon + IMAGE label so every slot clearly reads as a drop-in image */
+    .img-placeholder::before {
+      content: "";
+      width: 30px;
+      height: 30px;
+      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E");
+    }
+    .img-placeholder-label {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--ink-2);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 9px;
+    }
     .img-placeholder--tall { aspect-ratio: 4 / 3; }
     .img-placeholder--wide { aspect-ratio: 21 / 9; }
+
+    /* ════════════════════════════
+       PIPELINE — quick horizontal look at the 9-step flow
+    ════════════════════════════ */
+    .pipeline-flow {
+      display: flex;
+      gap: 22px;
+      overflow-x: auto;
+      padding: 4px 2px 16px;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+    }
+    .pipeline-step {
+      flex: 0 0 auto;
+      width: clamp(108px, 11.5vw, 128px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scroll-snap-align: start;
+    }
+    .pipeline-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* small picture icon inside each step thumb */
+    .pipeline-thumb::before {
+      content: "";
+      width: 24px;
+      height: 24px;
+      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E");
+      opacity: 0.7;
+    }
+    /* connector arrow to the next step */
+    .pipeline-step:not(:last-child) .pipeline-thumb::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -18px;
+      transform: translateY(-50%);
+      font-size: 13px;
+      color: var(--ink-3);
+    }
+    .pipeline-num {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--ink-3);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 2px 7px;
+    }
+    .pipeline-label {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .pipeline-note {
+      font-size: 12px;
+      color: var(--ink-3);
+      margin-top: 18px;
+      font-style: italic;
+    }
 
     /* ════════════════════════════
        1. HERO
@@ -609,7 +706,7 @@
 
         <div class="hero-image fade-up" style="transition-delay:170ms;">
           <!-- Replace with: <img src="../../images/Global Content Studio Case Study/Hero.png" alt="Global Content Studio interface" /> -->
-          <div class="img-placeholder">Hero — full app screenshot (sidebar · editor · details panel)</div>
+          <div class="img-placeholder"><span class="img-placeholder-label">Hero.png</span>Full app screenshot — sidebar · editor · details panel</div>
         </div>
       </div>
     </section>
@@ -752,6 +849,64 @@
       </div>
     </section>
 
+    <!-- ════ 5b. THE PIPELINE — quick 9-step horizontal look ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up" style="margin-bottom: clamp(32px, 4vw, 48px);">
+          <span class="eyebrow">The Pipeline</span>
+          <h2 class="exp-h2">Nine steps, prompt to published</h2>
+          <p class="exp-body">
+            A quick look at how one piece moves through the studio — from a single
+            prompt to a compliance-checked, localized asset live across five regions.
+          </p>
+        </div>
+
+        <!-- PIPELINE: these step labels are a scaffold pulled from the case study —
+             rename them to your real 9 steps. Drop a small icon or screenshot into
+             each .pipeline-thumb (swap the <div class="pipeline-thumb"> for an <img>). -->
+        <div class="pipeline-flow fade-up" style="transition-delay:90ms;" role="list" aria-label="Nine-step content pipeline">
+          <div class="pipeline-step" role="listitem">
+            <div class="pipeline-thumb"><span class="pipeline-num">01</span></div>
+            <div class="pipeline-label">Prompt &amp; brief</div>
+          </div>
+          <div class="pipeline-step" role="listitem">
+            <div class="pipeline-thumb"><span class="pipeline-num">02</span></div>
+            <div class="pipeline-label">Brand-trained draft</div>
+          </div>
+          <div class="pipeline-step" role="listitem">
+            <div class="pipeline-thumb"><span class="pipeline-num">03</span></div>
+            <div class="pipeline-label">Structured editor</div>
+          </div>
+          <div class="pipeline-step" role="listitem">
+            <div class="pipeline-thumb"><span class="pipeline-num">04</span></div>
+            <div class="pipeline-label">Ambient quality</div>
+          </div>
+          <div class="pipeline-step" role="listitem">
+            <div class="pipeline-thumb"><span class="pipeline-num">05</span></div>
+            <div class="pipeline-label">Selection refine</div>
+          </div>
+          <div class="pipeline-step" role="listitem">
+            <div class="pipeline-thumb"><span class="pipeline-num">06</span></div>
+            <div class="pipeline-label">Review &amp; approve</div>
+          </div>
+          <div class="pipeline-step" role="listitem">
+            <div class="pipeline-thumb"><span class="pipeline-num">07</span></div>
+            <div class="pipeline-label">Localize · 6-pass</div>
+          </div>
+          <div class="pipeline-step" role="listitem">
+            <div class="pipeline-thumb"><span class="pipeline-num">08</span></div>
+            <div class="pipeline-label">Materialize to storage</div>
+          </div>
+          <div class="pipeline-step" role="listitem">
+            <div class="pipeline-thumb"><span class="pipeline-num">09</span></div>
+            <div class="pipeline-label">Publish &amp; ship</div>
+          </div>
+        </div>
+
+        <p class="pipeline-note fade-up">Placeholder flow — rename to your real 9 steps and drop a small image into each block.</p>
+      </div>
+    </section>
+
     <!-- ════ 6. EXPERIENCE · 01 — BRAND-TRAINED GENERATOR ════ -->
     <section class="cs-section">
       <div class="wrap">
@@ -766,7 +921,7 @@
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
           <!-- Replace with: <img class="cs-image" src="../../images/Global Content Studio Case Study/Generator.png" alt="Brand-trained AI generator" /> -->
-          <div class="img-placeholder img-placeholder--wide">Sidebar prompt → generated FF-voiced article in editor</div>
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Generator.png</span>Sidebar prompt → generated FF-voiced article in editor</div>
         </div>
       </div>
     </section>
@@ -785,7 +940,7 @@
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
           <!-- Replace with: <img class="cs-image" src="../../images/Global Content Studio Case Study/Editors.png" alt="Structured editors for nine content types" /> -->
-          <div class="img-placeholder img-placeholder--wide">Multi-editor grid — article · quiz · checklist · money tips · coach insights</div>
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Editors.png</span>Multi-editor grid — article · quiz · checklist · money tips · coach insights</div>
         </div>
       </div>
     </section>
@@ -804,7 +959,7 @@
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
           <!-- Replace with: <img class="cs-image" src="../../images/Global Content Studio Case Study/Library.png" alt="Library with status, filters, and bulk actions" /> -->
-          <div class="img-placeholder img-placeholder--wide">Library view — status chips · audience filter · bulk action bar · my queue toggle</div>
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Library.png</span>Library view — status chips · audience filter · bulk action bar · my queue toggle</div>
         </div>
       </div>
     </section>
@@ -838,7 +993,7 @@
           </div>
           <div class="fade-up" style="transition-delay:90ms;">
             <!-- Replace with: <img class="cs-image" src="../../images/Global Content Studio Case Study/Quality.png" alt="Ambient quality checklist with click-to-fix" /> -->
-            <div class="img-placeholder img-placeholder--tall">Details panel — quality checklist with click-to-fix menu open</div>
+            <div class="img-placeholder img-placeholder--tall"><span class="img-placeholder-label">Quality.png</span>Details panel — quality checklist with click-to-fix menu open</div>
           </div>
         </div>
       </div>
@@ -858,7 +1013,7 @@
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
           <!-- Replace with: <img class="cs-image" src="../../images/Global Content Studio Case Study/Selection.png" alt="Selection-based AI toolbar" /> -->
-          <div class="img-placeholder img-placeholder--wide">Selection-based AI toolbar floating above highlighted text</div>
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Selection.png</span>Selection-based AI toolbar floating above highlighted text</div>
         </div>
       </div>
     </section>
@@ -878,7 +1033,7 @@
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
           <!-- Replace with: <img class="cs-image" src="../../images/Global Content Studio Case Study/Details.png" alt="Polished UX details" /> -->
-          <div class="img-placeholder img-placeholder--wide">Details montage — autosave · similar-content warning · soft-delete · coachmark</div>
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Details.png</span>Details montage — autosave · similar-content warning · soft-delete · coachmark</div>
         </div>
       </div>
     </section>
@@ -899,7 +1054,7 @@
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
           <!-- Replace with: <img class="cs-image" src="../../images/Global Content Studio Case Study/Localization.png" alt="Six-pass localization pipeline across five locales" /> -->
-          <div class="img-placeholder img-placeholder--wide">6-pass localization pipeline across 5 locales — es-MX · es-CO · en-PH · en-CA · en-CA-QC</div>
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Localization.png</span>6-pass localization pipeline across 5 locales — es-MX · es-CO · en-PH · en-CA · en-CA-QC</div>
         </div>
       </div>
     </section>

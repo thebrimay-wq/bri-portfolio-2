@@ -364,6 +364,16 @@ footer {
 }
 
 
+/* ── Embedded mode ────────────────────────────────────────── */
+/*
+ * When a page is opened inside the homepage side panel (in an iframe),
+ * the parent adds `.embedded` to <html>. Hide the page's own nav + footer
+ * so it reads as a focused preview, not a nested full site.
+ */
+html.embedded #site-nav,
+html.embedded footer { display: none !important; }
+
+
 /* ── Scroll reveal ────────────────────────────────────────── */
 /*
  * Two patterns in use across the site:

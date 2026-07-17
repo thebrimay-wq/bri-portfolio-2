@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles/site.css" />
+  <script src="/scripts/embed.js"></script>
   <style>
 
     /* ─── Page wrapper ───────────────────────────── */
@@ -374,6 +375,47 @@
       flex-shrink: 0;
     }
 
+    /* Grouped skills (Design & Product / Engineering / AI-Native) */
+    .skills-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .skill-group {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (max-width: 640px) {
+      .skill-group { grid-template-columns: 1fr; gap: 12px; }
+    }
+
+    .skill-group-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-tag {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-2);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 5px 13px;
+    }
+
     /* ─── Education ──────────────────────────────── */
     .education-block {
       display: grid;
@@ -427,24 +469,25 @@
 
           <div>
             <h1 class="hero-name" id="hero-name">Bri May</h1>
-            <p class="hero-title">Senior Product Designer</p>
+            <p class="hero-title">AI-Native Product Designer · Product Creative Director</p>
           </div>
 
           <div class="hero-location-row">
             <span>Pleasanton, CA</span>
             <span class="dot" aria-hidden="true"></span>
-            <a href="https://imbrimay.com" target="_blank" rel="noopener">imbrimay.com ↗</a>
+            <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
+            <span class="dot" aria-hidden="true"></span>
+            <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener">linkedin.com/in/brimay ↗</a>
           </div>
 
           <div class="hero-summary">
-            <p>Senior Product Designer with <strong>10+ years</strong> of experience building and scaling 0→1 SaaS products and complex digital platforms.</p>
-            <p>Led design of a financial wellness platform used by enterprise clients including <strong>Meta, NFL, and JPMorgan Chase</strong> — driving <strong>200%+ engagement growth</strong> and contributing to <strong>$12M+ in revenue</strong>.</p>
-            <p>Sole product designer across multiple product ecosystems, owning strategy, UX, UI, and user research. Known for translating complex systems into simple, high-impact experiences and rapidly prototyping AI-powered products.</p>
+            <p><strong>A designer who ships.</strong> Ten years of product design, spent in the seam between design and engineering — turning Figma systems into production React front-ends and rapidly prototyping AI-native products from concept to launch.</p>
+            <p>Built the <strong>AI Global Content Studio</strong> solo, end to end, in one month — scaling global launches to one country per week and winning the Federal Reserve as a client. My work has driven <strong>200%+ engagement growth</strong> and contributed to <strong>$12M+ in revenue</strong>.</p>
           </div>
 
           <div class="hero-actions">
             <a href="#experience" class="btn btn-primary">View Experience</a>
-            <a href="#" class="btn btn-outline">Download PDF</a>
+            <a href="BriMay_Resume_2026.pdf" class="btn btn-outline" download>Download PDF ↓</a>
           </div>
         </div>
 
@@ -476,9 +519,10 @@
         <div class="company-block reveal">
           <div class="company-header">
             <div class="company-name">Financial Finesse</div>
-            <div class="company-period">2016 – Present</div>
-            <div class="company-context">Financial wellness platform for enterprise workforces.</div>
+            <div class="company-period">2015 – Present</div>
+            <div class="company-context">Enterprise financial-wellness SaaS · clients incl. Meta, NFL, JPMorgan Chase, Nestlé, Patagonia.</div>
             <div class="company-clients">
+              <span class="client-tag">Federal Reserve</span>
               <span class="client-tag">Meta</span>
               <span class="client-tag">NFL</span>
               <span class="client-tag">JPMorgan Chase</span>
@@ -491,37 +535,19 @@
 
           <div class="role-list">
 
-            <!-- Senior Product Designer -->
+            <!-- AI-Native Product Designer · Product Creative Director -->
             <div class="role-entry">
               <div class="role-left">
-                <div class="role-title">Senior Product Designer</div>
-                <div class="role-period">2023 – Present</div>
-              </div>
-              <div class="role-right">
-                <ul class="role-bullets">
-                  <li>Drove <span class="metric">200%+ increase</span> in platform engagement through redesign of core product experiences</li>
-                  <li>Contributed to <span class="metric">$12M+ in revenue growth</span> by improving usability, adoption, and value perception</li>
-                  <li>Led 0→1 product initiatives from concept to MVP, owning full product design lifecycle</li>
-                  <li>Redesigned the core dashboard in 6 weeks, accelerating delivery while measurably improving usability</li>
-                  <li>Built and scaled design systems in Figma across multiple product surfaces</li>
-                  <li>Partner with product and engineering to define roadmap and ship high-impact work</li>
-                  <li class="highlight-bullet">Designed and launched <strong>Smart Benefits</strong> — an AI-powered SaaS platform adopted by one of the largest retirement record keepers in the U.S. and used within Olympic organizations, bringing scalable, intelligent benefits access to enterprise-level workforces</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Creative Director -->
-            <div class="role-entry">
-              <div class="role-left">
-                <div class="role-title">Creative Director</div>
+                <div class="role-title">AI-Native Product Designer · Product Creative Director</div>
                 <div class="role-period">2022 – Present</div>
               </div>
               <div class="role-right">
                 <ul class="role-bullets">
-                  <li>Defined company-wide design vision across product and brand ecosystems</li>
-                  <li>Established visual systems and storytelling frameworks across all touchpoints</li>
-                  <li>Directed campaigns, digital experiences, and video initiatives supporting product growth</li>
-                  <li>Partnered with leadership on design strategy and company direction</li>
+                  <li>Design and ship production front-ends in <span class="metric">React</span> — translating Figma design systems into responsive, accessible, tokenized components in code</li>
+                  <li class="highlight-bullet">Saw a gap in the company and built the <strong>AI Global Content Studio</strong> end to end — designed and shipped the entire app solo with AI, no engineers, in <span class="metric">one month</span>. It saved millions of dollars, scaled global launches from months to <span class="metric">one country per week</span>, and won the <span class="metric">Federal Reserve</span> as a client</li>
+                  <li>Designed &amp; launched <strong>Smart Benefits</strong>, an AI-powered SaaS platform adopted by one of the largest U.S. retirement record keepers and used within Olympic organizations</li>
+                  <li>Build and maintain the cross-surface design system (Figma → code); prototype AI-powered flows and hand off pixel-accurate, buildable specs</li>
+                  <li>As Product Creative Director, set company-wide design vision and visual systems across product, brand, and digital experiences</li>
                 </ul>
               </div>
             </div>
@@ -530,30 +556,25 @@
             <div class="role-entry">
               <div class="role-left">
                 <div class="role-title">Product Designer</div>
-                <div class="role-period">2018 – 2022</div>
+                <div class="role-period">2016 – 2022</div>
               </div>
               <div class="role-right">
                 <ul class="role-bullets">
-                  <li>Transitioned the company from marketing-led design to product-led experience</li>
-                  <li>Designed dashboards, onboarding flows, and content ecosystems</li>
-                  <li>Introduced user testing and research practices to inform product decisions</li>
-                  <li>Identified drop-off points and improved onboarding activation</li>
-                  <li>Delivered scalable UX solutions in close partnership with engineering</li>
+                  <li>Transitioned the org from marketing-led design to a product-led practice; owned UX/UI for dashboards, onboarding, and content ecosystems</li>
+                  <li>Rapidly prototyped and shipped features with engineering; introduced user testing and research to inform product decisions and lift activation</li>
                 </ul>
               </div>
             </div>
 
-            <!-- Lead Graphic Designer -->
+            <!-- Sr. Graphic Designer -->
             <div class="role-entry">
               <div class="role-left">
-                <div class="role-title">Lead Graphic Designer</div>
-                <div class="role-period">2016 – 2018</div>
+                <div class="role-title">Sr. Graphic Designer</div>
+                <div class="role-period">2015 – 2016</div>
               </div>
               <div class="role-right">
                 <ul class="role-bullets">
-                  <li>Built foundational brand identity across web and marketing channels</li>
-                  <li>Designed campaigns and digital assets supporting company growth</li>
-                  <li>Established early design systems and visual standards</li>
+                  <li>Built the foundational brand identity and earliest design systems across web and marketing — the year the role grew into product design</li>
                 </ul>
               </div>
             </div>
@@ -561,19 +582,17 @@
           </div>
         </div>
 
-        <!-- CK Communications -->
+        <!-- CKC Communications -->
         <div class="company-block reveal">
           <div class="single-role-block">
             <div class="single-role-left">
-              <div class="company-name">CK Communications</div>
-              <div class="role-title">Senior Graphic Designer</div>
-              <div class="role-period">2013 – 2016</div>
+              <div class="company-name">CKC Communications</div>
+              <div class="role-title">Graphic Designer</div>
+              <div class="role-period">2012 – 2015</div>
             </div>
             <div class="role-right">
               <ul class="role-bullets">
-                <li>Led branding, websites, and campaigns for <span class="metric">50+ companies</span> across industries</li>
-                <li>Created 15+ brand identities from concept to launch</li>
-                <li>Managed visual design across digital and marketing initiatives</li>
+                <li>Delivered branding, websites, and campaigns for <span class="metric">50+ companies</span> across industries — where I learned to move fast without losing craft</li>
               </ul>
             </div>
           </div>
@@ -591,6 +610,13 @@
         <div class="work-list reveal">
           <div class="work-item">
             <div>
+              <div class="work-title">AI Global Content Studio</div>
+              <div class="work-desc">In-house AI engine — global scale at one country / week; won the Federal Reserve</div>
+            </div>
+            <div class="work-tag">AI · Built in 1 mo</div>
+          </div>
+          <div class="work-item">
+            <div>
               <div class="work-title">Financial Finesse Hub</div>
               <div class="work-desc">End-to-end platform design for enterprise financial wellness</div>
             </div>
@@ -605,8 +631,8 @@
           </div>
           <div class="work-item">
             <div>
-              <div class="work-title">AI Coaching Experience (Aimee)</div>
-              <div class="work-desc">Conversational onboarding and personalization system</div>
+              <div class="work-title">Aimee — AI Coaching Experience</div>
+              <div class="work-desc">Conversational onboarding &amp; personalization system</div>
             </div>
             <div class="work-tag">AI · UX</div>
           </div>
@@ -620,12 +646,44 @@
           <h2 class="section-title" id="skills-heading">What I bring</h2>
         </div>
 
-        <div class="skills-list reveal">
-          <div class="skill-item">Product Design (0→1, UX/UI, systems)</div>
-          <div class="skill-item">AI Product Design &amp; Rapid Prototyping</div>
-          <div class="skill-item">User Research &amp; Testing</div>
-          <div class="skill-item">Design Systems · Figma</div>
-          <div class="skill-item">Cross-functional Collaboration &amp; Roadmap Partnership</div>
+        <div class="skills-groups reveal">
+          <div class="skill-group">
+            <div class="skill-group-label">Design &amp; Product</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Product Design (0→1)</span>
+              <span class="skill-tag">UX / UI</span>
+              <span class="skill-tag">Design Systems</span>
+              <span class="skill-tag">Interaction &amp; Motion</span>
+              <span class="skill-tag">Prototyping</span>
+              <span class="skill-tag">User Research &amp; Testing</span>
+              <span class="skill-tag">Figma</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-label">Engineering</div>
+            <div class="skill-tags">
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">JavaScript (ES6+)</span>
+              <span class="skill-tag">HTML5 &amp; CSS3</span>
+              <span class="skill-tag">Framer Motion</span>
+              <span class="skill-tag">Vite</span>
+              <span class="skill-tag">Design Tokens</span>
+              <span class="skill-tag">Responsive &amp; Accessible UI</span>
+              <span class="skill-tag">Git / GitHub</span>
+              <span class="skill-tag">CI &amp; Static Deploy</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-label">AI-Native</div>
+            <div class="skill-tags">
+              <span class="skill-tag">AI Product Design</span>
+              <span class="skill-tag">Rapid AI Prototyping</span>
+              <span class="skill-tag">LLM-Powered Features</span>
+              <span class="skill-tag">Conversational / Agent UX</span>
+              <span class="skill-tag">Prompt Engineering</span>
+              <span class="skill-tag">AI-Assisted Coding</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -636,13 +694,24 @@
           <h2 class="section-title" id="edu-heading">Background</h2>
         </div>
 
-        <div class="education-block reveal">
-          <div>
-            <div class="role-period" style="font-size: 13px; color: var(--ink-3);">B.S. Business – Marketing</div>
+        <div class="reveal">
+          <div class="education-block" style="margin-bottom: 32px;">
+            <div>
+              <div class="role-period" style="font-size: 13px; color: var(--ink-3);">2012 – 2015</div>
+            </div>
+            <div>
+              <div class="edu-school">California State University, Chico</div>
+              <div class="edu-degree">B.S. Business, Marketing · Soccer, full-ride athletic scholarship</div>
+            </div>
           </div>
-          <div>
-            <div class="edu-school">California State University, Chico</div>
-            <div class="edu-degree">B.S. Business, Marketing concentration</div>
+          <div class="education-block">
+            <div>
+              <div class="role-period" style="font-size: 13px; color: var(--ink-3);">2 years</div>
+            </div>
+            <div>
+              <div class="edu-school">Arizona State University</div>
+              <div class="edu-degree">D1 Soccer, full-ride athletic scholarship</div>
+            </div>
           </div>
         </div>
       </section>
