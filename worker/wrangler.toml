@@ -1,0 +1,6 @@
+name = "brix"
+main = "brix.js"
+compatibility_date = "2024-11-01"
+
+# The Anthropic API key is stored as a secret, not here:
+#   npx wrangler secret put ANTHROPIC_API_KEY
