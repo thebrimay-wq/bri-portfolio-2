@@ -207,6 +207,7 @@
     .bullet-list { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
     .bullet-item { display: flex; gap: 12px; align-items: flex-start; font-size: clamp(14px, 1.1vw, 16px); color: var(--ink-2); line-height: 1.6; }
     .bullet-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); flex-shrink: 0; margin-top: 9px; }
+    .bullet-item strong { color: var(--ink); font-weight: 600; }
 
     /* ════ PROCESS ════ */
     .process-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin-bottom: clamp(48px, 6vw, 72px); }
@@ -220,7 +221,7 @@
     .impact-section { text-align: center; }
     .impact-h2 {
       font-size: clamp(26px, 3.5vw, 46px); font-weight: 700; letter-spacing: -0.03em;
-      line-height: 1.1; max-width: 560px; margin: 0 auto clamp(52px, 6vw, 80px); text-align: center;
+      line-height: 1.1; max-width: 620px; margin: 0 auto clamp(52px, 6vw, 80px); text-align: center;
     }
     .impact-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
@@ -229,7 +230,7 @@
     }
     @media (max-width: 640px) { .impact-grid { grid-template-columns: 1fr; } }
     .impact-cell { background: var(--bg); padding: clamp(28px, 3.5vw, 48px) clamp(20px, 2.5vw, 36px); }
-    .impact-val { font-size: clamp(28px, 3.5vw, 52px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-bottom: 12px; color: var(--ink); }
+    .impact-val { font-size: clamp(24px, 3vw, 44px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-bottom: 12px; color: var(--ink); }
     .impact-label { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
     .client-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
     .client-pill {
@@ -284,34 +285,34 @@
     <!-- ════ 1. HERO ════ -->
     <section class="hero">
       <div class="wrap">
-        <p class="hero-eyebrow fade-up">Product Design Lead · Financial Finesse · 2024–2025</p>
+        <p class="hero-eyebrow fade-up">Lead Product Designer · Design Engineer · Financial Finesse</p>
         <h1 class="fade-up" style="transition-delay:50ms;">
-          A static Q&amp;A tool, rebuilt as a CFP-backed AI coach —
-          <span>trusted enough to reach 1M+ employees</span>
+          One AI financial coach, designed and built to feel native everywhere —
+          <span>the Hub, client sites, and Microsoft Teams</span>
         </h1>
         <p class="hero-lead fade-up" style="transition-delay:90ms;">
-          Aimee started as a keyword search box — you had to know what to ask. I led its
-          redesign into a conversational coach that starts the conversation, grounds every
-          answer in certified financial-planning expertise, and connects to each employee's
-          actual benefits. Now embedded in enterprise benefits platforms at Fortune 500 scale.
+          Aimee is Financial Finesse's AI financial coach. I designed and built its front end
+          end-to-end — the visual language, the interaction model, a full component library, and
+          coded interactive prototypes — then made it deployable in three places from one codebase,
+          all hostable through our UberAdmin platform.
         </p>
         <div class="hero-stats fade-up" style="transition-delay:130ms;">
           <div>
-            <div class="hero-stat-val">1M+</div>
-            <div class="hero-stat-label">Employees reached</div>
+            <div class="hero-stat-val">3 surfaces</div>
+            <div class="hero-stat-label">Hub · client sites · Teams — one codebase</div>
           </div>
           <div>
-            <div class="hero-stat-val">Fortune 500</div>
-            <div class="hero-stat-label">Embedded in benefits platforms</div>
+            <div class="hero-stat-val">1 system</div>
+            <div class="hero-stat-label">Design system + locked component library</div>
           </div>
           <div>
-            <div class="hero-stat-val">CFP-backed</div>
-            <div class="hero-stat-label">Every answer grounded</div>
+            <div class="hero-stat-val">Design → build</div>
+            <div class="hero-stat-label">Front end owned end-to-end</div>
           </div>
         </div>
         <div class="hero-image fade-up" style="transition-delay:170ms;">
-          <!-- Replace with: <img src="../images/Aimee AI Case Study/Hero.png" alt="Aimee AI coach interface" /> -->
-          <div class="img-placeholder"><span class="img-placeholder-label">Hero.png</span>Aimee coach in context — conversation + benefits panel</div>
+          <!-- Replace with: <img src="../images/Aimee AI Case Study/Hero.png" alt="Aimee AI coach in the Hub" /> -->
+          <div class="img-placeholder"><span class="img-placeholder-label">Hero.png</span>Aimee as a full coach in the Hub — chat, cards, wellness</div>
         </div>
       </div>
     </section>
@@ -321,12 +322,12 @@
       <div class="wrap fade-up">
         <span class="eyebrow">At a glance</span>
         <div class="glance">
-          <p class="glance-summary">Aimee began as a static keyword Q&amp;A tool — you had to know what to ask. I led its redesign into a CFP-backed conversational coach that starts the conversation, grounds every answer in certified expertise, and connects to each employee's real benefits. It now reaches 1M+ employees across Fortune 500 clients.</p>
+          <p class="glance-summary">Aimee is Financial Finesse's AI financial coach. I owned the front-end design and design engineering end-to-end — a documented design system, a locked component library, and coded interactive prototypes — so one coaching experience deploys natively across the Hub, embeddable client-site widgets, and Microsoft Teams, all provisioned through UberAdmin.</p>
           <dl class="glance-facts">
-            <div><dt>Role</dt><dd>Product Design Lead</dd></div>
-            <div><dt>Timeline</dt><dd>2024–2025</dd></div>
-            <div><dt>Team</dt><dd>Cross-functional — design, AI, content</dd></div>
-            <div><dt>Scope</dt><dd>AI UX · Conversation design · Behavior design</dd></div>
+            <div><dt>Role</dt><dd>Lead Product Designer / Design Engineer</dd></div>
+            <div><dt>Scope</dt><dd>Front-end design · Design system · Prototyping · Handoff</dd></div>
+            <div><dt>Surfaces</dt><dd>Hub · Client sites · MS Teams</dd></div>
+            <div><dt>Stack</dt><dd>Next.js · Tailwind · Recharts · A2UI</dd></div>
           </dl>
         </div>
       </div>
@@ -336,27 +337,31 @@
     <section class="cs-section owned-section">
       <div class="wrap fade-up">
         <span class="eyebrow">My Role</span>
-        <h2 class="owned-h2">From search box to coaching system</h2>
+        <h2 class="owned-h2">Front-end design and design engineering, end to end</h2>
         <div class="owned-list">
           <div class="owned-item">
-            <div class="owned-label">Product Strategy</div>
-            <p class="owned-text">Reframed a search tool as a coaching system — defining what a trustworthy, embeddable AI coach actually needed to be.</p>
+            <div class="owned-label">Visual &amp; Interaction</div>
+            <p class="owned-text">Defined Aimee's visual language and interaction model — how she talks, streams, surfaces content, and hands off to a human coach.</p>
           </div>
           <div class="owned-item">
-            <div class="owned-label">Conversation Design</div>
-            <p class="owned-text">Designed Aimee's voice, flows, and turn-by-turn behavior — from cold-start prompts to guided next steps.</p>
+            <div class="owned-label">Design System</div>
+            <p class="owned-text">Authored <code>DESIGN-SYSTEM.md</code> as the single source of truth: tokens, typography, every chat and card component, chart rules, accessibility hard-rules, and a running anti-patterns list.</p>
           </div>
           <div class="owned-item">
-            <div class="owned-label">AI UX</div>
-            <p class="owned-text">Designed the patterns that make AI feel safe and grounded — sourcing, constraints, and graceful limits.</p>
+            <div class="owned-label">Component Library</div>
+            <p class="owned-text">Built a locked, approved library — a component "API" of reusable in-chat blocks — that engineering could implement 1:1.</p>
           </div>
           <div class="owned-item">
-            <div class="owned-label">Behavior Design</div>
-            <p class="owned-text">Built proactivity and next-step guidance into every exchange, so sessions end in action, not a dead end.</p>
+            <div class="owned-label">Prototypes</div>
+            <p class="owned-text">Designed and coded high-fidelity interactive prototypes — real HTML/CSS/JS with live streaming, animation, and state — to test flows before a line of production code.</p>
           </div>
           <div class="owned-item">
-            <div class="owned-label">Ship</div>
-            <p class="owned-text">Partnered with engineering to embed Aimee inside enterprise benefits platforms at 1M+ scale.</p>
+            <div class="owned-label">Multi-surface</div>
+            <p class="owned-text">Designed the embeddable SDK widget for client sites and adapted the same system to Microsoft Teams — all hostable through UberAdmin.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Handoff</div>
+            <p class="owned-text">Wrote the engineering spec (Next.js + Tailwind + A2UI) so the prototypes translated to production without redesign.</p>
           </div>
         </div>
       </div>
@@ -366,19 +371,19 @@
     <section class="cs-section">
       <div class="wrap fade-up">
         <span class="eyebrow">The Problem</span>
-        <h2 class="solution-h2">Access to content isn't the same as guidance</h2>
+        <h2 class="solution-h2">One coach, three very different homes</h2>
         <div class="problem-bullets">
           <div class="problem-bullet">
             <span class="bullet-dot"></span>
-            <span>Keyword search required people to <strong>already know what to ask</strong> — and most didn't know where to start.</span>
+            <span>Aimee had to live in three contexts — the logged-in <strong>Hub</strong>, embedded on <strong>client benefits sites</strong>, and inside surfaces like <strong>Microsoft Teams</strong> — each with different screen real estate, brand, and entry point.</span>
           </div>
           <div class="problem-bullet">
             <span class="bullet-dot"></span>
-            <span>There was no connection between content and an employee's <strong>actual benefits</strong>, and sessions ended without a clear next step.</span>
+            <span>The coaching experience itself had to be <strong>identical and recognizable</strong> everywhere. Three separate front ends would fracture the brand and triple maintenance.</span>
           </div>
           <div class="problem-bullet">
             <span class="bullet-dot"></span>
-            <span>Generic AI wasn't an option — financial decisions are high-stakes, and the product had to be <strong>trustworthy enough for employers to embed</strong>.</span>
+            <span>A trust problem specific to finance: people need to know they're talking to AI, but <strong>"virtual assistant" reads as fake</strong> — the wrong first impression when someone's asking about their retirement.</span>
           </div>
         </div>
         <div style="margin-top: 48px;">
@@ -395,32 +400,32 @@
       <div class="wrap">
         <span class="eyebrow fade-up">The Opportunity</span>
         <p class="opportunity-pullquote fade-up" style="transition-delay:60ms;">
-          What if financial guidance didn't wait to be asked — and every answer was one you could trust?
+          What if one design system could make a single AI coach feel native everywhere — and honest about being AI?
         </p>
         <p class="opportunity-sub fade-up" style="transition-delay:100ms;">
-          What if the tool started the conversation, grounded every response in certified
-          expertise, and already knew each employee's benefits?
+          One component library, one token set, one configurable host — rendering natively in the
+          Hub, on a client's site, and inside Teams.
         </p>
         <div class="transform-table fade-up" style="transition-delay:130ms;">
           <div class="transform-row">
-            <span class="transform-from">Keyword Q&amp;A search box</span>
+            <span class="transform-from">Three separate front ends</span>
             <span class="transform-arrow">→</span>
-            <span class="transform-to">Conversational coaching</span>
+            <span class="transform-to">One system, three homes</span>
           </div>
           <div class="transform-row">
-            <span class="transform-from">You must know what to ask</span>
+            <span class="transform-from">Free-form chat bubbles</span>
             <span class="transform-arrow">→</span>
-            <span class="transform-to">Aimee starts the conversation</span>
+            <span class="transform-to">A typed component library</span>
           </div>
           <div class="transform-row">
-            <span class="transform-from">Generic, ungrounded answers</span>
+            <span class="transform-from">"Virtual assistant"</span>
             <span class="transform-arrow">→</span>
-            <span class="transform-to">CFP-backed, sourced guidance</span>
+            <span class="transform-to">Honest AI, premium humans</span>
           </div>
           <div class="transform-row">
-            <span class="transform-from">Content with no next step</span>
+            <span class="transform-from">Cards dumped mid-sentence</span>
             <span class="transform-arrow">→</span>
-            <span class="transform-to">A guided next step every time</span>
+            <span class="transform-to">Prose first, then structure</span>
           </div>
         </div>
       </div>
@@ -430,158 +435,161 @@
     <section id="aimee-solution" class="cs-section">
       <div class="wrap fade-up">
         <span class="eyebrow">The Solution</span>
-        <h2 class="solution-h2">From search tool to coaching system</h2>
+        <h2 class="solution-h2">One system, three homes</h2>
         <p class="solution-body">
-          Aimee was rebuilt around trust and momentum: it opens the conversation, grounds
-          every answer in certified financial-planning expertise, personalizes to each
-          employee's benefits, and always points to a concrete next step.
+          Rather than build three front ends, I built one: a documented design system, a locked
+          component library that Aimee "speaks" in, coded prototypes to test with, and a single
+          configurable host. Every response is assembled from typed blocks — never free-form bubbles.
         </p>
         <div class="numbered-list">
           <div class="numbered-item">
             <span class="numbered-item-n">01</span>
-            <p class="numbered-item-text"><strong>A CFP-backed knowledge base</strong> — every response grounded in certified financial-planner expertise, not the open internet</p>
+            <p class="numbered-item-text"><strong>A documented design system</strong> — <code>DESIGN-SYSTEM.md</code> as the source of truth: tokens, typography, accessibility hard-rules, and a running anti-patterns list</p>
           </div>
           <div class="numbered-item">
             <span class="numbered-item-n">02</span>
-            <p class="numbered-item-text"><strong>Proactive prompting</strong> — Aimee suggests what to explore next instead of waiting to be asked</p>
+            <p class="numbered-item-text"><strong>A locked component "API"</strong> — chat primitives, a typed card system, data-viz blocks, and follow-up chips, each built to a documented anatomy and CSS contract</p>
           </div>
           <div class="numbered-item">
             <span class="numbered-item-n">03</span>
-            <p class="numbered-item-text"><strong>Benefits integration</strong> — personalized to each employee's actual enrolled benefits</p>
+            <p class="numbered-item-text"><strong>Coded interactive prototypes</strong> — real HTML/CSS/JS with live streaming and state, so flows could be felt and tested, not just reviewed</p>
           </div>
           <div class="numbered-item">
             <span class="numbered-item-n">04</span>
-            <p class="numbered-item-text"><strong>Guided next steps</strong> — every exchange ends in a concrete action, tool, or resource</p>
+            <p class="numbered-item-text"><strong>One configurable host</strong> — provisioned through UberAdmin so the Hub, client sites, and Teams all deploy from a single system</p>
           </div>
         </div>
         <p class="solution-quote">
-          The result isn't a search box. It's a coach that meets people before they know the right question.
+          Aimee speaks in a vocabulary, not free-form bubbles — every response assembled from typed, approved blocks.
         </p>
       </div>
     </section>
 
-    <!--
-      ════════════════════════════════════════════════════════════════
-      EXPERIENCE 01–06 — DRAFT SCAFFOLD (Bri to finalize)
-      Headlines + bodies below are a starting point based on the angle.
-      Rewrite the copy and drop real screenshots into each image slot
-      (folder: images/Aimee AI Case Study/). Filenames are suggested.
-      ════════════════════════════════════════════════════════════════
-    -->
-
-    <!-- ════ EXPERIENCE · 01 — VOICE / PERSONALITY ════ -->
+    <!-- ════ EXPERIENCE · 01 — HONEST AI ════ -->
     <section class="cs-section">
       <div class="wrap">
         <div class="exp-header fade-up">
           <span class="eyebrow">Experience · 01</span>
-          <h2 class="exp-h2">A coach with a personality — not a script</h2>
+          <h2 class="exp-h2">Honest AI, premium humans</h2>
           <p class="exp-body">
-            Aimee's voice is warm, plain-spoken, and never preachy. The tone was designed to
-            make a high-stakes topic feel approachable — so people keep talking instead of
-            bouncing off a wall of jargon.
+            Aimee is labeled an "AI coach," not "virtual" — hiding the AI only breaks trust later.
+            Certified human coaches are framed as a one-click premium upgrade, so Aimee feels
+            capable and humans feel credentialed. A gold-railed handoff card makes the escalation
+            feel like an upgrade, not a fallback.
           </p>
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
-          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Voice.png" alt="Aimee voice and personality" /> -->
-          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Voice.png</span>Aimee's tone in a real conversation — warm, plain-spoken</div>
+          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Handoff.png" alt="AI labeling and human-coach handoff card" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Handoff.png</span>"AI coach" labeling + gold human-coach handoff card</div>
         </div>
       </div>
     </section>
 
-    <!-- ════ EXPERIENCE · 02 — CFP GROUNDING ════ -->
-    <section class="cs-section">
-      <div class="wrap">
-        <div class="exp-header fade-up">
-          <span class="eyebrow">Experience · 02</span>
-          <h2 class="exp-h2">Every answer you can trace</h2>
-          <p class="exp-body">
-            Responses are grounded in a CFP-backed knowledge base — not the open internet.
-            The design makes that grounding visible, so employees (and employers) can trust
-            where guidance comes from.
-          </p>
-        </div>
-        <div class="fade-up" style="transition-delay:90ms;">
-          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Grounding.png" alt="CFP-backed sourcing" /> -->
-          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Grounding.png</span>Sourced, CFP-backed answer with visible grounding</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ EXPERIENCE · 03 — BENEFITS INTEGRATION ════ -->
-    <section class="cs-section">
-      <div class="wrap">
-        <div class="exp-header fade-up">
-          <span class="eyebrow">Experience · 03</span>
-          <h2 class="exp-h2">Guidance that knows your benefits</h2>
-          <p class="exp-body">
-            Aimee personalizes to each employee's actual enrolled benefits — turning generic
-            advice into guidance that fits the plan, the employer, and the moment.
-          </p>
-        </div>
-        <div class="fade-up" style="transition-delay:90ms;">
-          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Benefits.png" alt="Benefits-aware personalization" /> -->
-          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Benefits.png</span>Answer personalized to the employee's enrolled benefits</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ EXPERIENCE · 04 — PROACTIVE PROMPTING ════ -->
+    <!-- ════ EXPERIENCE · 02 — COMPONENT VOCABULARY ════ -->
     <section class="cs-section">
       <div class="wrap">
         <div class="two-col">
           <div class="fade-up">
-            <span class="eyebrow">Experience · 04</span>
-            <h2 class="exp-h2">It starts the conversation</h2>
+            <span class="eyebrow">Experience · 02</span>
+            <h2 class="exp-h2">A vocabulary, not free-form bubbles</h2>
             <p class="exp-body">
-              Instead of a blank search box, Aimee opens with the right questions — proactively
-              surfacing what to explore next based on each person's situation.
+              Every response is assembled from typed blocks — the "vocabulary" Aimee speaks in.
+              A base card with a colored left rail signals its type at a glance.
             </p>
             <div class="bullet-list">
-              <div class="bullet-item"><span class="bullet-dot"></span><span>Cold-start prompts tuned to the employee's context</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>Suggestions for what to explore next, not just answers</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>Momentum by design — the conversation keeps moving</span></div>
+              <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Navy rail</strong> — analysis</span></div>
+              <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Teal rail</strong> — recommendation</span></div>
+              <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Gold rail</strong> — human-coach handoff</span></div>
+              <div class="bullet-item"><span class="bullet-dot"></span><span>Coral reserved for the single most-urgent item — restraint as a rule</span></div>
             </div>
           </div>
           <div class="fade-up" style="transition-delay:90ms;">
-            <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Proactive.png" alt="Proactive prompting" /> -->
-            <div class="img-placeholder img-placeholder--tall"><span class="img-placeholder-label">Proactive.png</span>Proactive prompts / suggested next questions</div>
+            <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Components.png" alt="Typed card system with colored left rails" /> -->
+            <div class="img-placeholder img-placeholder--tall"><span class="img-placeholder-label">Components.png</span>Card system — colored left rails by type</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ════ EXPERIENCE · 05 — GUIDED NEXT STEP ════ -->
+    <!-- ════ EXPERIENCE · 03 — STREAMING ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up">
+          <span class="eyebrow">Experience · 03</span>
+          <h2 class="exp-h2">Prose first, then structure</h2>
+          <p class="exp-body">
+            Aimee's prose types itself in character-by-character; structured content — cards, charts,
+            chips — stays hidden and only fades in after the prose finishes (gated behind a
+            <code>.prose-done</code> state). Never dump cards on screen mid-sentence. It keeps
+            responses feeling composed and human, not like a dashboard loading.
+          </p>
+        </div>
+        <div class="fade-up" style="transition-delay:90ms;">
+          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Streaming.png" alt="Streaming prose then revealed cards" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Streaming.png</span>Character-by-character prose → cards fade in after</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EXPERIENCE · 04 — DATA VIZ ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up">
+          <span class="eyebrow">Experience · 04</span>
+          <h2 class="exp-h2">Numbers you can read at a glance</h2>
+          <p class="exp-body">
+            A set of data-viz blocks turns plan data into something legible in a chat: stat tiles,
+            before/after compare tiles, a circular hero-score gauge, retirement progress bars, and
+            debt-priority rows — all following one chart palette and the system's accessibility rules.
+          </p>
+        </div>
+        <div class="fade-up" style="transition-delay:90ms;">
+          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/DataViz.png" alt="Stat tiles, hero-score gauge, and charts" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">DataViz.png</span>Stat tiles · hero-score gauge · progress bars · charts</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EXPERIENCE · 05 — TYPOGRAPHY / A11Y ════ -->
     <section class="cs-section">
       <div class="wrap">
         <div class="exp-header fade-up">
           <span class="eyebrow">Experience · 05</span>
-          <h2 class="exp-h2">Always a next step</h2>
+          <h2 class="exp-h2">The user's words never shrink</h2>
           <p class="exp-body">
-            Every exchange is designed to end in action — a concrete next step, a tool, or a
-            resource — so a conversation becomes progress instead of a dead end.
+            A rule I enforced across the system: the user's message and Aimee's reply always render
+            at the exact same size (16px mobile / 17px desktop) — never shrink the user's words
+            beneath the AI's. It keeps the conversation feeling like a dialogue between equals. It
+            sits alongside accessibility hard-rules — never yellow text on white, one hover treatment
+            at a time — codified so they can't drift.
           </p>
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
-          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/NextStep.png" alt="Guided next steps" /> -->
-          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">NextStep.png</span>Guided next-step / action hand-off at the end of a chat</div>
+          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/System.png" alt="Design system typography and accessibility rules" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">System.png</span>Design-system type scale + accessibility hard-rules</div>
         </div>
       </div>
     </section>
 
-    <!-- ════ EXPERIENCE · 06 — MOBILE / EMBEDDED ════ -->
+    <!-- ════ EXPERIENCE · 06 — THREE SURFACES ════ -->
     <section class="cs-section">
       <div class="wrap">
         <div class="exp-header fade-up">
           <span class="eyebrow">Experience · 06</span>
-          <h2 class="exp-h2">Coaching that meets people where they are</h2>
+          <h2 class="exp-h2">One coach, three surfaces</h2>
           <p class="exp-body">
-            Aimee was designed to embed cleanly inside partner benefits platforms and work as
-            well on a phone as on desktop — the same trusted coach, wherever the decision happens.
+            The same coaching experience holds up whether it's woven into our platform, floating on a
+            client's marketing site, or wrapped in a completely different host UI.
           </p>
+          <div class="bullet-list">
+            <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Hub</strong> — a full-screen coach inside Hub V3, integrated with the user's plan, benefits, and wellness score</span></div>
+            <div class="bullet-item"><span class="bullet-dot"></span><span><strong>SDK widget</strong> — a floating button that opens a chat popup over a client's own site (prototyped over a mock provider, "Meridian Benefits"), with an article reader that insets inside the same window</span></div>
+            <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Microsoft Teams</strong> — the same coach adapted to live inside Teams' chrome</span></div>
+          </div>
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
-          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Mobile.png" alt="Mobile and embedded experience" /> -->
-          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Mobile.png</span>Embedded + mobile experience across host platforms</div>
+          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Surfaces.png" alt="Aimee across Hub, client widget, and Teams" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Surfaces.png</span>Hub · embeddable widget (Meridian) · Microsoft Teams</div>
         </div>
       </div>
     </section>
@@ -590,37 +598,38 @@
     <section class="cs-section opportunity-section">
       <div class="wrap">
         <span class="eyebrow fade-up">Process</span>
-        <h2 class="solution-h2 fade-up" style="transition-delay:60ms;">Designing under compliance constraint</h2>
+        <h2 class="solution-h2 fade-up" style="transition-delay:60ms;">Designed and coded, end to end</h2>
         <p class="process-body fade-up" style="transition-delay:100ms;">
-          In financial wellness, the hard part isn't what the AI can say — it's what it
-          must not. I designed Aimee for a bounded, sourced, on-topic experience, treating
-          compliance as the design problem rather than a checkbox at the end. That constraint
-          is exactly what made Aimee trustworthy enough for employers to embed.
+          I didn't hand off static mockups — I coded the prototypes. Real HTML/CSS/JS with live
+          streaming and state became the source of truth, the design system became the spec, and the
+          component library was locked so engineering could implement it 1:1 in Next.js + Tailwind,
+          with an A2UI model that maps Aimee's structured JSON responses to my components. Design and
+          build in one loop — so the same system drives every surface.
         </p>
         <div class="transform-table fade-up" style="transition-delay:130ms;">
           <div class="transform-row">
-            <span class="transform-from">Generic open-domain chatbot</span>
+            <span class="transform-from">Static mockups</span>
             <span class="transform-arrow">→</span>
-            <span class="transform-to">CFP-backed, constrained coach</span>
+            <span class="transform-to">Coded, interactive prototypes</span>
           </div>
           <div class="transform-row">
-            <span class="transform-from">Maximize what the AI can say</span>
+            <span class="transform-from">A design doc no one reads</span>
             <span class="transform-arrow">→</span>
-            <span class="transform-to">Design for what it must not</span>
+            <span class="transform-to">DESIGN-SYSTEM.md as the build spec</span>
           </div>
           <div class="transform-row">
-            <span class="transform-from">Answers from the open internet</span>
+            <span class="transform-from">Free-form design handoff</span>
             <span class="transform-arrow">→</span>
-            <span class="transform-to">Bounded, sourced, on-topic</span>
+            <span class="transform-to">A locked component API, implemented 1:1</span>
           </div>
           <div class="transform-row">
-            <span class="transform-from">Trust as an afterthought</span>
+            <span class="transform-from">Redesign at production time</span>
             <span class="transform-arrow">→</span>
-            <span class="transform-to">Trust as the core requirement</span>
+            <span class="transform-to">Prototypes that shipped without redesign</span>
           </div>
         </div>
         <p class="process-pullquote fade-up" style="transition-delay:170ms;">
-          The constraint wasn't a limitation — it was the design. Trust is what made Aimee embeddable at all.
+          "Open the prototype to see the streaming effect — it's the kind of detail that doesn't translate in a screenshot."
         </p>
       </div>
     </section>
@@ -629,19 +638,19 @@
     <section class="cs-section impact-section">
       <div class="wrap">
         <p class="eyebrow fade-up" style="text-align:center;">Impact</p>
-        <h2 class="impact-h2 fade-up" style="transition-delay:60ms;">Guidance that reaches millions</h2>
+        <h2 class="impact-h2 fade-up" style="transition-delay:60ms;">One coherent coach, everywhere it needs to be</h2>
         <div class="impact-grid fade-up" style="transition-delay:90ms;">
           <div class="impact-cell">
-            <div class="impact-val">1M+</div>
-            <p class="impact-label">Employees reached with in-product guidance</p>
+            <div class="impact-val">3 surfaces</div>
+            <p class="impact-label">Hub, embeddable client widgets, and Teams — from one component library</p>
           </div>
           <div class="impact-cell">
-            <div class="impact-val">Fortune 500</div>
-            <p class="impact-label">Embedded in enterprise benefits platforms</p>
+            <div class="impact-val">1 source of truth</div>
+            <p class="impact-label">Documented design system + a locked, approved component library</p>
           </div>
           <div class="impact-cell">
-            <div class="impact-val">Q&amp;A → Coach</div>
-            <p class="impact-label">From keyword search to conversational guidance</p>
+            <div class="impact-val">Prototype → production</div>
+            <p class="impact-label">Next.js · Tailwind · Recharts · A2UI, built 1:1 with the spec</p>
           </div>
         </div>
         <div class="client-pills fade-up" style="transition-delay:120ms;">
@@ -664,35 +673,35 @@
       <div class="wrap">
         <div class="fade-up" style="max-width: 640px; margin-bottom: clamp(52px, 7vw, 80px);">
           <span class="eyebrow">What I'd do next</span>
-          <h2 class="next-h2">Aimee proved the model. Here's where it goes further.</h2>
+          <h2 class="next-h2">The system is built to grow. Here's where it goes.</h2>
         </div>
         <div class="next-list">
           <div class="next-item fade-up">
             <span class="next-item-n">01</span>
             <div>
-              <h3 class="next-item-title">Proactive, not reactive</h3>
-              <p class="next-item-body">Move from answering questions to anticipating needs — surfacing timely nudges before an employee thinks to ask.</p>
+              <h3 class="next-item-title">More host surfaces</h3>
+              <p class="next-item-body">Extend beyond Teams — Slack, a native mobile SDK, and other embedded surfaces — using the same component API and configurable host.</p>
             </div>
           </div>
           <div class="next-item fade-up" style="transition-delay:70ms;">
             <span class="next-item-n">02</span>
             <div>
-              <h3 class="next-item-title">Deeper benefits personalization</h3>
-              <p class="next-item-body">Act on real plan data, not just profile inputs — so guidance reflects exactly what each employee is enrolled in.</p>
+              <h3 class="next-item-title">Deeper plan personalization</h3>
+              <p class="next-item-body">Richer benefit- and plan-aware responses drawn from each user's real data, so the guidance fits the person, not just the question.</p>
             </div>
           </div>
           <div class="next-item fade-up" style="transition-delay:140ms;">
             <span class="next-item-n">03</span>
             <div>
-              <h3 class="next-item-title">Continuity across the journey</h3>
-              <p class="next-item-body">Remember context between sessions so Aimee feels like an ongoing relationship, not a one-off chat.</p>
+              <h3 class="next-item-title">A growing component vocabulary</h3>
+              <p class="next-item-body">Expand the A2UI block library as Aimee takes on new tasks — every new capability rendered through the same design system.</p>
             </div>
           </div>
           <div class="next-item fade-up" style="transition-delay:210ms;">
             <span class="next-item-n">04</span>
             <div>
-              <h3 class="next-item-title">Measurable behavior change</h3>
-              <p class="next-item-body">Tie coaching to real financial outcomes — not just engagement — to prove the guidance actually moves the needle.</p>
+              <h3 class="next-item-title">Design-system governance</h3>
+              <p class="next-item-body">Versioning and token management so the system stays coherent as more surfaces and teams adopt it.</p>
             </div>
           </div>
         </div>
@@ -704,10 +713,11 @@
       <div class="wrap fade-up">
         <span class="eyebrow" style="margin-bottom:36px; display:block;">Final Takeaway</span>
         <p class="takeaway-text">
-          Aimee proved that in a high-stakes domain, trust is the product. By grounding
-          every answer in CFP expertise and designing for what the AI must not say, a static
-          Q&amp;A tool became a coach reaching 1M+ employees.
-          <strong>Constraint, designed well, is what makes AI trustworthy enough to ship.</strong>
+          Aimee ships as one coherent AI-coaching front end that runs across the Hub, embeddable
+          client widgets, and Teams — backed by a documented design system, a locked component
+          library, tested prototypes, and a production architecture that keeps every surface in sync
+          from a single source of truth.
+          <strong>Designed and built by one person — proof that a design engineer can own the whole thing, from token to production.</strong>
         </p>
       </div>
     </section>
