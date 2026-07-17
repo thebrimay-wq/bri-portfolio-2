@@ -334,17 +334,17 @@ Padding: `13px 24px` (primary/secondary), `13px 18px` (ghost).
 2. **At a glance** — fast-scan block: `.glance-summary` TL;DR + `.glance-facts` (Role · Timeline · Team · Scope) + a **`.jump-nav`** "Jump to" chip row (`#owned` · solution id · `#process` · `#impact`; styles in `site.css`). Lets a recruiter get the whole story in ~10s and skip to the key sections.
 3. **What I Owned** (`.owned-section`, surface bg) — 5 role items (label + text)
 4. **The Problem**
-5. **The Opportunity** (surface bg, pullquote + transform-table)
-6. **The Solution** (numbered-list + solution-quote)
-7. **The Pipeline** (optional — GCS only; horizontal `.pipeline-flow`)
-8–13. **Experience · 01–06** (eyebrow + exp-h2 + exp-body + image), optional **07**
-14. **Process** (surface bg, transform-table + process-pullquote) — framing varies per study (solo AI-native build / leadership / systems)
-15. **Impact** (impact-grid + client-pills)
-16. **What's Next** (4 next-items)
-17. **Final Takeaway** (surface bg, one bold closing sentence)
+5. **The Solution** (numbered-list; no closing solution-quote)
+6. **The Pipeline** (optional — GCS only; horizontal `.pipeline-flow`)
+7–10. **Experience · 01–04** (eyebrow + exp-h2 + tight exp-body + image) — cap at ~4; each is one distinctive capability/decision
+11. **Process** (surface bg, transform-table + process-pullquote) — framing varies per study (solo AI-native build / leadership / systems)
+12. **Impact** (impact-grid + client-pills)
+13. **Final Takeaway** (surface bg, one bold closing sentence)
 + Bottom nav (`.bottom-cta`) — Back to Work / Next case / Contact. Loop: GCS → Aimee → Hub → GCS.
 
-**Scannability rule:** every case study must read fast AND deep — the At-a-glance block + declarative section headlines carry the scan; the section bodies carry the depth. Keep bodies tight, avoid long text blocks.
+**Trimmed for a hiring audience (2026-07-17):** removed the standalone **The Opportunity** and **What's Next** sections, capped **Experiences at ~4**, dropped the redundant `.solution-quote`, and tightened hero leads/takeaways. A VP skims in 30–90s — cut anything that isn't the fast scan (at-a-glance + jump chips) or a senior-signal section (What I Owned · Process · Impact · a few sharp Experiences).
+
+**Scannability rule:** every case study must read fast AND deep — the At-a-glance block + declarative section headlines carry the scan; the section bodies carry the depth. Keep bodies to 1–2 sentences, avoid long text blocks.
 
 ---
 
@@ -412,3 +412,4 @@ Padding: `13px 24px` (primary/secondary), `13px 18px` (ghost).
 | 2026-07-17 | Named the homepage agent **Brix** (B-mark avatar). Removed the **Smart Benefits** case study (kept in résumé). Added an **About** portrait slot (`/images/bri-about.jpg`). |
 | 2026-07-17 | **Fast-scan pattern** — added an **At a glance** block (`.glance`, TL;DR + Role/Timeline/Team/Scope) to Global Content Studio + Hub so case studies scan in ~10s and still go deep. **Restructured the Hub** to the full template (added What I Owned + Process). |
 | 2026-07-17 | **Aimee rewritten** to the real design-engineering story (design system, locked component library, coded prototypes, 3 surfaces, Next.js/Tailwind/A2UI) with a live design-system link. Added **"Jump to" anchor chips** (`.jump-nav`) to all case studies and made the homepage **side panel float as a rounded box**. |
+| 2026-07-17 | **Trimmed all case studies for a hiring audience** — cut The Opportunity + What's Next, capped Experiences at ~4 (renumbered 01–04), dropped `.solution-quote`, tightened leads/takeaways. Reduces length ~30% while keeping the scan layer + senior-signal sections. |
