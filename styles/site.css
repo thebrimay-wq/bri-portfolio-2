@@ -374,6 +374,45 @@ html.embedded #site-nav,
 html.embedded footer { display: none !important; }
 
 
+/* ── Case-study jump nav (anchor chips) ──────────────────── */
+/*
+ * A "Jump to" chip row inside the At-a-glance block lets scanners
+ * skip to the most important sections. Used on all case studies.
+ */
+.jump-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(28px, 4vw, 40px);
+  padding-top: clamp(24px, 3vw, 32px);
+  border-top: 1px solid var(--border);
+}
+.jump-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-right: 2px;
+}
+.jump-chip {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+.jump-chip:hover { background: var(--surface); border-color: var(--ink-3); transform: translateY(-1px); }
+
+/* Offset anchored sections below the sticky nav on the full page */
+[id="owned"], [id="process"], [id="impact"], [id$="-solution"] { scroll-margin-top: 84px; }
+
+
 /* ── Scroll reveal ────────────────────────────────────────── */
 /*
  * Two patterns in use across the site:
