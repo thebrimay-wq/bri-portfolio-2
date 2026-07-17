@@ -3,375 +3,270 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aimee AI — Case Study | Bri May</title>
+  <title>Aimee AI Coach — Case Study | Bri May</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/site.css" />
   <script src="/scripts/embed.js"></script>
   <style>
-    main {
+
+    /* ── wrapper ── */
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); }
+
+    /* ── section base ── */
+    .cs-section {
+      padding: clamp(80px, 10vw, 128px) 0;
+      border-top: 1px solid var(--border);
+    }
+    .eyebrow { margin-bottom: 20px; }
+
+    /* ── cs images ── */
+    .cs-image {
+      width: 100%; height: auto; display: block;
+      border-radius: 16px; transition: transform 0.5s ease;
+    }
+    .cs-image:hover { transform: scale(1.01); }
+
+    /* ── image placeholder (used until real images are dropped in) ── */
+    .img-placeholder {
       width: 100%;
-      padding: 0 var(--px);
-    }
-
-    .back-link { padding-top: 32px; }
-
-    .hero {
-      padding-top: 56px;
-      padding-bottom: 80px;
-    }
-
-
-    .hero h1 {
-      font-size: clamp(38px, 5vw, 64px);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.05;
-      max-width: 760px;
-      margin-top: 16px;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(17px, 1.4vw, 20px);
-      color: var(--ink-2);
-      max-width: 620px;
-      margin-top: 24px;
-      line-height: 1.7;
-    }
-
-    .meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      margin-top: 48px;
-    }
-
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-      padding-right: 32px;
-      margin-right: 32px;
-      border-right: 1px solid var(--border);
-    }
-
-    .meta-item:last-child {
-      border-right: none;
-      padding-right: 0;
-      margin-right: 0;
-    }
-
-    .meta-item .label {
-      font-size: 11px;
-    }
-
-    .meta-item .value {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--ink);
-      margin-top: 4px;
-    }
-
-    .hero-image {
-      margin: 56px 0;
-      width: 100%;
-      aspect-ratio: 21 / 9;
+      aspect-ratio: 16 / 9;
       background: var(--surface);
+      border: 1px dashed var(--border);
       border-radius: 16px;
-    }
-
-    .stats-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 48px 0;
-    }
-
-    .stats-item {
       display: flex;
       flex-direction: column;
-      padding-right: 40px;
-      margin-right: 40px;
-      border-right: 1px solid var(--border);
-    }
-
-    .stats-item:last-child {
-      border-right: none;
-      padding-right: 0;
-      margin-right: 0;
-    }
-
-    .stats-item .value {
-      font-size: clamp(32px, 3vw, 44px);
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    .stats-item .label {
-      font-size: 13px;
-      margin-top: 8px;
-    }
-
-    .before-after {
-      border-top: 1px solid var(--border);
-      padding: 96px 0;
-    }
-
-    .before-after h2 {
-      font-size: clamp(26px, 2.5vw, 36px);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 48px;
-      margin-top: 16px;
-    }
-
-    .before-after-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    @media (max-width: 768px) {
-      .before-after-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      border-radius: 14px;
-      overflow: hidden;
-      background: var(--surface);
-      border: 1px solid var(--border);
-    }
-
-    .card-image {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      background: #ebebeb;
-    }
-
-    .card.after .card-image {
-      background: #e8ede8;
-    }
-
-    .card-body {
-      padding: 24px 28px;
-    }
-
-    .card-body .label {
-      font-size: 11px;
-    }
-
-    .card-body p {
-      font-size: 14px;
-      color: var(--ink-2);
-      margin-top: 10px;
-      line-height: 1.65;
-    }
-
-    .problem {
-      border-top: 1px solid var(--border);
-      padding: 96px 0;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 64px;
-    }
-
-    @media (max-width: 768px) {
-      .problem {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .problem-left h2 {
-      font-size: clamp(24px, 2.5vw, 34px);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-top: 12px;
-      max-width: 280px;
-    }
-
-    .problem-right {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-    }
-
-    .problem h3 {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 10px;
-    }
-
-    .problem ul {
-      font-size: 14px;
-      color: var(--ink-2);
-      line-height: 1.7;
-      list-style: disc inside;
-    }
-
-    .solution {
-      border-top: 1px solid var(--border);
-      padding: 96px 0;
-    }
-
-    .solution h2 {
-      font-size: clamp(26px, 2.5vw, 36px);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 48px;
-      margin-top: 16px;
-    }
-
-    .solution-image {
-      width: 100%;
-      aspect-ratio: 16 / 6;
-      background: var(--surface);
-      border-radius: 14px;
-      margin-bottom: 48px;
-    }
-
-    .key-decisions {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-    }
-
-    @media (max-width: 768px) {
-      .key-decisions {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .decision {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .decision-number {
-      font-size: 36px;
-      font-weight: 300;
-      color: var(--ink-3);
-      letter-spacing: -0.03em;
-    }
-
-    .decision-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--ink);
-      margin-top: 16px;
-      letter-spacing: -0.01em;
-    }
-
-    .decision-desc {
-      font-size: 14px;
-      color: var(--ink-2);
-      line-height: 1.65;
-      margin-top: 10px;
-    }
-
-    .impact {
-      border-top: 1px solid var(--border);
-      padding: 96px 0;
-    }
-
-    .impact h2 {
-      font-size: clamp(26px, 2.5vw, 36px);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 48px;
-      margin-top: 16px;
-    }
-
-    .learnings {
-      border-top: 1px solid var(--border);
-      padding: 96px 0;
-    }
-
-    .learnings h2 {
-      font-size: clamp(26px, 2.5vw, 36px);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 48px;
-      margin-top: 16px;
-    }
-
-    .learnings-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-    }
-
-    @media (max-width: 768px) {
-      .learnings-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .learning-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 32px;
-    }
-
-    .learning-card .number {
-      font-size: 13px;
-      color: var(--ink-3);
-      font-weight: 500;
-    }
-
-    .learning-card .title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--ink);
-      margin-top: 8px;
-    }
-
-    .learning-card .text {
-      font-size: 14px;
-      color: var(--ink-2);
-      line-height: 1.6;
-      margin-top: 12px;
-    }
-
-    .next-project {
-      border-top: 1px solid var(--border);
-      padding: 64px 0;
-    }
-
-    .next-project a {
-      display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 12px;
-      text-decoration: none;
-      color: var(--ink);
-      transition: opacity 0.15s ease;
+      color: var(--ink-3);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-align: center;
+      padding: 24px;
+    }
+    .img-placeholder::before {
+      content: "";
+      width: 30px; height: 30px;
+      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E");
+    }
+    .img-placeholder-label {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px; font-weight: 600; color: var(--ink-2);
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 3px 9px;
+    }
+    .img-placeholder--tall { aspect-ratio: 4 / 3; }
+    .img-placeholder--wide { aspect-ratio: 21 / 9; }
+
+    /* ════ 1. HERO ════ */
+    .hero { padding: clamp(80px, 10vw, 130px) 0 0; overflow: hidden; }
+    .hero-eyebrow {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--ink-3); margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(30px, 4vw, 58px); font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.05; max-width: 820px;
+      margin-bottom: 28px; color: var(--ink);
+    }
+    .hero h1 span { color: var(--ink-3); }
+    .hero-lead {
+      font-size: clamp(16px, 1.3vw, 19px); color: var(--ink-2);
+      line-height: 1.72; max-width: 620px; margin-bottom: 52px;
+    }
+    .hero-stats { display: flex; gap: 52px; flex-wrap: wrap; margin-bottom: clamp(52px, 7vw, 96px); }
+    .hero-stat-val {
+      font-size: clamp(22px, 2.5vw, 34px); font-weight: 700;
+      letter-spacing: -0.03em; line-height: 1; margin-bottom: 7px; color: var(--ink);
+    }
+    .hero-stat-label {
+      font-size: 11px; color: var(--ink-3); font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .hero-image { width: 100%; }
+    .hero-image img, .hero-image .img-placeholder {
+      width: 100%; height: auto; display: block;
+      border-radius: 16px 16px 0 0; aspect-ratio: 16 / 9;
     }
 
-    .next-project a:hover {
-      opacity: 0.5;
+    /* ════ AT A GLANCE ════ */
+    .glance {
+      display: grid; grid-template-columns: 1.5fr 1fr;
+      gap: clamp(32px, 5vw, 72px); align-items: start; margin-top: 8px;
+    }
+    @media (max-width: 768px) { .glance { grid-template-columns: 1fr; gap: 32px; } }
+    .glance-summary {
+      font-size: clamp(18px, 1.6vw, 23px); line-height: 1.6;
+      color: var(--ink); font-weight: 500; max-width: 640px;
+    }
+    .glance-facts { display: flex; flex-direction: column; }
+    .glance-facts > div {
+      display: flex; justify-content: space-between; gap: 20px;
+      padding: 14px 0; border-top: 1px solid var(--border);
+    }
+    .glance-facts > div:last-child { border-bottom: 1px solid var(--border); }
+    .glance-facts dt {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--ink-3); flex-shrink: 0;
+    }
+    .glance-facts dd {
+      font-size: 14px; color: var(--ink); font-weight: 500;
+      text-align: right; margin: 0; line-height: 1.45;
     }
 
-    .next-project a h3 {
-      font-size: clamp(24px, 2.5vw, 36px);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      margin-top: 12px;
+    /* ════ WHAT I OWNED ════ */
+    .owned-section { background: var(--surface); }
+    .owned-h2 {
+      font-size: clamp(26px, 3vw, 40px); font-weight: 700;
+      letter-spacing: -0.03em; line-height: 1.14;
+      margin-bottom: clamp(40px, 5vw, 56px); max-width: 720px;
+    }
+    .owned-list { display: flex; flex-direction: column; max-width: 820px; }
+    .owned-item {
+      display: grid; grid-template-columns: 220px 1fr;
+      gap: clamp(16px, 3vw, 40px); padding: clamp(24px, 3vw, 32px) 0;
+      border-top: 1px solid var(--border); align-items: start;
+    }
+    .owned-item:last-child { border-bottom: 1px solid var(--border); }
+    @media (max-width: 700px) { .owned-item { grid-template-columns: 1fr; gap: 8px; } }
+    .owned-label { font-size: clamp(15px, 1.2vw, 17px); font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+    .owned-text { font-size: clamp(15px, 1.15vw, 17px); color: var(--ink-2); line-height: 1.7; margin: 0; }
+
+    /* ════ PROBLEM ════ */
+    .problem-bullets { display: flex; flex-direction: column; gap: 18px; max-width: 720px; margin-top: 36px; }
+    .problem-bullet {
+      display: flex; gap: 14px; align-items: flex-start;
+      font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.7;
+    }
+    .problem-bullet .bullet-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3);
+      flex-shrink: 0; margin-top: 10px;
+    }
+    .problem-bullet strong { color: var(--ink); font-weight: 600; }
+    .skip-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--ink-3);
+      text-decoration: none; cursor: pointer; transition: color 0.2s ease;
+    }
+    .skip-link:hover { color: var(--ink); }
+
+    /* ════ OPPORTUNITY ════ */
+    .opportunity-section { background: var(--surface); }
+    .opportunity-pullquote {
+      font-size: clamp(32px, 5vw, 72px); font-weight: 700;
+      letter-spacing: -0.04em; line-height: 1.06; max-width: 980px;
+      margin-bottom: 32px; color: var(--ink);
+    }
+    .opportunity-sub {
+      font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2);
+      line-height: 1.72; max-width: 620px; margin-bottom: clamp(52px, 7vw, 96px);
+    }
+    .transform-table { max-width: 720px; }
+    .transform-row {
+      display: flex; align-items: center; gap: 20px;
+      padding: clamp(20px, 2.5vw, 32px) 0; border-top: 1px solid var(--border);
+    }
+    .transform-from { font-size: clamp(15px, 1.2vw, 17px); color: var(--ink-3); text-decoration: line-through; flex: 1; }
+    .transform-arrow { font-size: 12px; color: var(--ink-3); letter-spacing: 0.05em; flex-shrink: 0; }
+    .transform-to { font-size: clamp(15px, 1.2vw, 17px); font-weight: 600; color: var(--ink); flex: 1; }
+
+    /* ════ SOLUTION ════ */
+    .solution-h2 {
+      font-size: clamp(26px, 3vw, 40px); font-weight: 700;
+      letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 32px; max-width: 720px;
+    }
+    .solution-body {
+      font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2);
+      line-height: 1.78; max-width: 720px; margin-bottom: 40px;
+    }
+    .numbered-list { display: flex; flex-direction: column; margin-bottom: 48px; max-width: 760px; }
+    .numbered-item {
+      display: grid; grid-template-columns: 48px 1fr;
+      gap: clamp(16px, 2.5vw, 32px); padding: clamp(20px, 2.5vw, 28px) 0;
+      border-top: 1px solid var(--border); align-items: start;
+    }
+    .numbered-item-n { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-3); padding-top: 4px; }
+    .numbered-item-text { font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.72; margin: 0; }
+    .numbered-item-text strong { color: var(--ink); font-weight: 600; }
+    .solution-quote {
+      font-size: clamp(17px, 1.4vw, 20px); color: var(--ink); line-height: 1.65;
+      font-weight: 500; font-style: italic; border-left: 2px solid var(--border);
+      padding-left: 24px; margin: 0; max-width: 720px;
     }
 
-    .next-project svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
+    /* ════ EXPERIENCE ════ */
+    .exp-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 0; }
+    .exp-body { font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.75; max-width: 620px; margin-top: 20px; margin-bottom: 0; }
+    .exp-header { max-width: 720px; margin-bottom: clamp(44px, 6vw, 72px); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 7vw, 96px); align-items: center; }
+    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+    .bullet-list { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+    .bullet-item { display: flex; gap: 12px; align-items: flex-start; font-size: clamp(14px, 1.1vw, 16px); color: var(--ink-2); line-height: 1.6; }
+    .bullet-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); flex-shrink: 0; margin-top: 9px; }
+
+    /* ════ PROCESS ════ */
+    .process-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin-bottom: clamp(48px, 6vw, 72px); }
+    .process-pullquote {
+      font-size: clamp(17px, 1.4vw, 20px); color: var(--ink); line-height: 1.65;
+      font-weight: 500; font-style: italic; border-left: 2px solid var(--border);
+      padding-left: 24px; margin: clamp(48px, 6vw, 72px) 0 0; max-width: 720px;
     }
 
+    /* ════ IMPACT ════ */
+    .impact-section { text-align: center; }
+    .impact-h2 {
+      font-size: clamp(26px, 3.5vw, 46px); font-weight: 700; letter-spacing: -0.03em;
+      line-height: 1.1; max-width: 560px; margin: 0 auto clamp(52px, 6vw, 80px); text-align: center;
+    }
+    .impact-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--border); border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; text-align: left; margin-bottom: clamp(48px, 6vw, 72px);
+    }
+    @media (max-width: 640px) { .impact-grid { grid-template-columns: 1fr; } }
+    .impact-cell { background: var(--bg); padding: clamp(28px, 3.5vw, 48px) clamp(20px, 2.5vw, 36px); }
+    .impact-val { font-size: clamp(28px, 3.5vw, 52px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-bottom: 12px; color: var(--ink); }
+    .impact-label { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+    .client-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .client-pill {
+      font-size: 13px; font-weight: 500; color: var(--ink-2);
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 100px; padding: 6px 16px;
+    }
+
+    /* ════ WHAT'S NEXT ════ */
+    .next-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; max-width: 640px; }
+    .next-list { display: flex; flex-direction: column; }
+    .next-item {
+      display: grid; grid-template-columns: 56px 1fr; gap: clamp(20px, 3vw, 40px);
+      padding: clamp(28px, 3.5vw, 44px) 0; border-top: 1px solid var(--border); align-items: start;
+    }
+    .next-item-n { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding-top: 4px; }
+    .next-item-title { font-size: clamp(17px, 1.5vw, 20px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 14px; color: var(--ink); }
+    .next-item-body { font-size: clamp(15px, 1.1vw, 17px); color: var(--ink-2); line-height: 1.75; max-width: 680px; margin: 0; }
+
+    /* ════ FINAL TAKEAWAY ════ */
+    .takeaway-section { background: var(--surface); padding: clamp(88px, 12vw, 160px) 0; border-top: 1px solid var(--border); }
+    .takeaway-text { font-size: clamp(24px, 3.5vw, 48px); font-weight: 700; letter-spacing: -0.035em; line-height: 1.12; max-width: 900px; color: var(--ink); }
+    .takeaway-text strong { color: var(--ink); }
+
+    /* ════ BOTTOM NAV ════ */
+    .bottom-cta { padding: clamp(40px, 5vw, 64px) 0; border-top: 1px solid var(--border); }
+    .cta-links { display: flex; gap: 32px; flex-wrap: wrap; align-items: center; }
+
+    @media (max-width: 768px) {
+      .cs-section { padding: 72px 0; }
+      .hero { padding-top: 72px; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- NAV -->
   <nav id="site-nav">
     <div class="nav-inner">
       <a href="../" class="nav-logo">Bri May</a>
@@ -385,182 +280,449 @@
   </nav>
 
   <main>
-    <a href="../work/" class="back-link">← All Work</a>
 
+    <!-- ════ 1. HERO ════ -->
     <section class="hero">
-      <p class="label">AI Experience Design</p>
-      <h1>Aimee AI Coach</h1>
-      <p class="hero-subtitle">Redesigned a static Q&A tool into a CFP-backed AI coach — now reaching over 1 million employees.</p>
-
-      <div class="meta-row">
-        <div class="meta-item">
-          <div class="label">Role</div>
-          <div class="value">Product Design Lead</div>
+      <div class="wrap">
+        <p class="hero-eyebrow fade-up">Product Design Lead · Financial Finesse · 2024–2025</p>
+        <h1 class="fade-up" style="transition-delay:50ms;">
+          A static Q&amp;A tool, rebuilt as a CFP-backed AI coach —
+          <span>trusted enough to reach 1M+ employees</span>
+        </h1>
+        <p class="hero-lead fade-up" style="transition-delay:90ms;">
+          Aimee started as a keyword search box — you had to know what to ask. I led its
+          redesign into a conversational coach that starts the conversation, grounds every
+          answer in certified financial-planning expertise, and connects to each employee's
+          actual benefits. Now embedded in enterprise benefits platforms at Fortune 500 scale.
+        </p>
+        <div class="hero-stats fade-up" style="transition-delay:130ms;">
+          <div>
+            <div class="hero-stat-val">1M+</div>
+            <div class="hero-stat-label">Employees reached</div>
+          </div>
+          <div>
+            <div class="hero-stat-val">Fortune 500</div>
+            <div class="hero-stat-label">Embedded in benefits platforms</div>
+          </div>
+          <div>
+            <div class="hero-stat-val">CFP-backed</div>
+            <div class="hero-stat-label">Every answer grounded</div>
+          </div>
         </div>
-        <div class="meta-item">
-          <div class="label">Company</div>
-          <div class="value">Financial Finesse</div>
-        </div>
-        <div class="meta-item">
-          <div class="label">Timeline</div>
-          <div class="value">2024–2025</div>
-        </div>
-        <div class="meta-item">
-          <div class="label">Scope</div>
-          <div class="value">AI UX · Conversation Design</div>
+        <div class="hero-image fade-up" style="transition-delay:170ms;">
+          <!-- Replace with: <img src="../images/Aimee AI Case Study/Hero.png" alt="Aimee AI coach interface" /> -->
+          <div class="img-placeholder"><span class="img-placeholder-label">Hero.png</span>Aimee coach in context — conversation + benefits panel</div>
         </div>
       </div>
     </section>
 
-    <div class="hero-image">
-      <!-- Replace with: <img src='images/aimee-hero.jpg' alt='Aimee AI Coach Interface' /> -->
+    <!-- ════ AT A GLANCE ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">At a glance</span>
+        <div class="glance">
+          <p class="glance-summary">Aimee began as a static keyword Q&amp;A tool — you had to know what to ask. I led its redesign into a CFP-backed conversational coach that starts the conversation, grounds every answer in certified expertise, and connects to each employee's real benefits. It now reaches 1M+ employees across Fortune 500 clients.</p>
+          <dl class="glance-facts">
+            <div><dt>Role</dt><dd>Product Design Lead</dd></div>
+            <div><dt>Timeline</dt><dd>2024–2025</dd></div>
+            <div><dt>Team</dt><dd>Cross-functional — design, AI, content</dd></div>
+            <div><dt>Scope</dt><dd>AI UX · Conversation design · Behavior design</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ WHAT I OWNED ════ -->
+    <section class="cs-section owned-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">My Role</span>
+        <h2 class="owned-h2">From search box to coaching system</h2>
+        <div class="owned-list">
+          <div class="owned-item">
+            <div class="owned-label">Product Strategy</div>
+            <p class="owned-text">Reframed a search tool as a coaching system — defining what a trustworthy, embeddable AI coach actually needed to be.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Conversation Design</div>
+            <p class="owned-text">Designed Aimee's voice, flows, and turn-by-turn behavior — from cold-start prompts to guided next steps.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">AI UX</div>
+            <p class="owned-text">Designed the patterns that make AI feel safe and grounded — sourcing, constraints, and graceful limits.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Behavior Design</div>
+            <p class="owned-text">Built proactivity and next-step guidance into every exchange, so sessions end in action, not a dead end.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Ship</div>
+            <p class="owned-text">Partnered with engineering to embed Aimee inside enterprise benefits platforms at 1M+ scale.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ THE PROBLEM ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">The Problem</span>
+        <h2 class="solution-h2">Access to content isn't the same as guidance</h2>
+        <div class="problem-bullets">
+          <div class="problem-bullet">
+            <span class="bullet-dot"></span>
+            <span>Keyword search required people to <strong>already know what to ask</strong> — and most didn't know where to start.</span>
+          </div>
+          <div class="problem-bullet">
+            <span class="bullet-dot"></span>
+            <span>There was no connection between content and an employee's <strong>actual benefits</strong>, and sessions ended without a clear next step.</span>
+          </div>
+          <div class="problem-bullet">
+            <span class="bullet-dot"></span>
+            <span>Generic AI wasn't an option — financial decisions are high-stakes, and the product had to be <strong>trustworthy enough for employers to embed</strong>.</span>
+          </div>
+        </div>
+        <div style="margin-top: 48px;">
+          <a class="skip-link" onclick="document.getElementById('aimee-solution').scrollIntoView({behavior:'smooth'})" href="#aimee-solution">
+            Jump to solution →
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ THE OPPORTUNITY ════ -->
+    <section class="cs-section opportunity-section">
+      <div class="wrap">
+        <span class="eyebrow fade-up">The Opportunity</span>
+        <p class="opportunity-pullquote fade-up" style="transition-delay:60ms;">
+          What if financial guidance didn't wait to be asked — and every answer was one you could trust?
+        </p>
+        <p class="opportunity-sub fade-up" style="transition-delay:100ms;">
+          What if the tool started the conversation, grounded every response in certified
+          expertise, and already knew each employee's benefits?
+        </p>
+        <div class="transform-table fade-up" style="transition-delay:130ms;">
+          <div class="transform-row">
+            <span class="transform-from">Keyword Q&amp;A search box</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Conversational coaching</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">You must know what to ask</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Aimee starts the conversation</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">Generic, ungrounded answers</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">CFP-backed, sourced guidance</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">Content with no next step</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">A guided next step every time</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ THE SOLUTION ════ -->
+    <section id="aimee-solution" class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">The Solution</span>
+        <h2 class="solution-h2">From search tool to coaching system</h2>
+        <p class="solution-body">
+          Aimee was rebuilt around trust and momentum: it opens the conversation, grounds
+          every answer in certified financial-planning expertise, personalizes to each
+          employee's benefits, and always points to a concrete next step.
+        </p>
+        <div class="numbered-list">
+          <div class="numbered-item">
+            <span class="numbered-item-n">01</span>
+            <p class="numbered-item-text"><strong>A CFP-backed knowledge base</strong> — every response grounded in certified financial-planner expertise, not the open internet</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">02</span>
+            <p class="numbered-item-text"><strong>Proactive prompting</strong> — Aimee suggests what to explore next instead of waiting to be asked</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">03</span>
+            <p class="numbered-item-text"><strong>Benefits integration</strong> — personalized to each employee's actual enrolled benefits</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">04</span>
+            <p class="numbered-item-text"><strong>Guided next steps</strong> — every exchange ends in a concrete action, tool, or resource</p>
+          </div>
+        </div>
+        <p class="solution-quote">
+          The result isn't a search box. It's a coach that meets people before they know the right question.
+        </p>
+      </div>
+    </section>
+
+    <!--
+      ════════════════════════════════════════════════════════════════
+      EXPERIENCE 01–06 — DRAFT SCAFFOLD (Bri to finalize)
+      Headlines + bodies below are a starting point based on the angle.
+      Rewrite the copy and drop real screenshots into each image slot
+      (folder: images/Aimee AI Case Study/). Filenames are suggested.
+      ════════════════════════════════════════════════════════════════
+    -->
+
+    <!-- ════ EXPERIENCE · 01 — VOICE / PERSONALITY ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up">
+          <span class="eyebrow">Experience · 01</span>
+          <h2 class="exp-h2">A coach with a personality — not a script</h2>
+          <p class="exp-body">
+            Aimee's voice is warm, plain-spoken, and never preachy. The tone was designed to
+            make a high-stakes topic feel approachable — so people keep talking instead of
+            bouncing off a wall of jargon.
+          </p>
+        </div>
+        <div class="fade-up" style="transition-delay:90ms;">
+          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Voice.png" alt="Aimee voice and personality" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Voice.png</span>Aimee's tone in a real conversation — warm, plain-spoken</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EXPERIENCE · 02 — CFP GROUNDING ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up">
+          <span class="eyebrow">Experience · 02</span>
+          <h2 class="exp-h2">Every answer you can trace</h2>
+          <p class="exp-body">
+            Responses are grounded in a CFP-backed knowledge base — not the open internet.
+            The design makes that grounding visible, so employees (and employers) can trust
+            where guidance comes from.
+          </p>
+        </div>
+        <div class="fade-up" style="transition-delay:90ms;">
+          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Grounding.png" alt="CFP-backed sourcing" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Grounding.png</span>Sourced, CFP-backed answer with visible grounding</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EXPERIENCE · 03 — BENEFITS INTEGRATION ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up">
+          <span class="eyebrow">Experience · 03</span>
+          <h2 class="exp-h2">Guidance that knows your benefits</h2>
+          <p class="exp-body">
+            Aimee personalizes to each employee's actual enrolled benefits — turning generic
+            advice into guidance that fits the plan, the employer, and the moment.
+          </p>
+        </div>
+        <div class="fade-up" style="transition-delay:90ms;">
+          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Benefits.png" alt="Benefits-aware personalization" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Benefits.png</span>Answer personalized to the employee's enrolled benefits</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EXPERIENCE · 04 — PROACTIVE PROMPTING ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="two-col">
+          <div class="fade-up">
+            <span class="eyebrow">Experience · 04</span>
+            <h2 class="exp-h2">It starts the conversation</h2>
+            <p class="exp-body">
+              Instead of a blank search box, Aimee opens with the right questions — proactively
+              surfacing what to explore next based on each person's situation.
+            </p>
+            <div class="bullet-list">
+              <div class="bullet-item"><span class="bullet-dot"></span><span>Cold-start prompts tuned to the employee's context</span></div>
+              <div class="bullet-item"><span class="bullet-dot"></span><span>Suggestions for what to explore next, not just answers</span></div>
+              <div class="bullet-item"><span class="bullet-dot"></span><span>Momentum by design — the conversation keeps moving</span></div>
+            </div>
+          </div>
+          <div class="fade-up" style="transition-delay:90ms;">
+            <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Proactive.png" alt="Proactive prompting" /> -->
+            <div class="img-placeholder img-placeholder--tall"><span class="img-placeholder-label">Proactive.png</span>Proactive prompts / suggested next questions</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EXPERIENCE · 05 — GUIDED NEXT STEP ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up">
+          <span class="eyebrow">Experience · 05</span>
+          <h2 class="exp-h2">Always a next step</h2>
+          <p class="exp-body">
+            Every exchange is designed to end in action — a concrete next step, a tool, or a
+            resource — so a conversation becomes progress instead of a dead end.
+          </p>
+        </div>
+        <div class="fade-up" style="transition-delay:90ms;">
+          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/NextStep.png" alt="Guided next steps" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">NextStep.png</span>Guided next-step / action hand-off at the end of a chat</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EXPERIENCE · 06 — MOBILE / EMBEDDED ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up">
+          <span class="eyebrow">Experience · 06</span>
+          <h2 class="exp-h2">Coaching that meets people where they are</h2>
+          <p class="exp-body">
+            Aimee was designed to embed cleanly inside partner benefits platforms and work as
+            well on a phone as on desktop — the same trusted coach, wherever the decision happens.
+          </p>
+        </div>
+        <div class="fade-up" style="transition-delay:90ms;">
+          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Mobile.png" alt="Mobile and embedded experience" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Mobile.png</span>Embedded + mobile experience across host platforms</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ PROCESS ════ -->
+    <section class="cs-section opportunity-section">
+      <div class="wrap">
+        <span class="eyebrow fade-up">Process</span>
+        <h2 class="solution-h2 fade-up" style="transition-delay:60ms;">Designing under compliance constraint</h2>
+        <p class="process-body fade-up" style="transition-delay:100ms;">
+          In financial wellness, the hard part isn't what the AI can say — it's what it
+          must not. I designed Aimee for a bounded, sourced, on-topic experience, treating
+          compliance as the design problem rather than a checkbox at the end. That constraint
+          is exactly what made Aimee trustworthy enough for employers to embed.
+        </p>
+        <div class="transform-table fade-up" style="transition-delay:130ms;">
+          <div class="transform-row">
+            <span class="transform-from">Generic open-domain chatbot</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">CFP-backed, constrained coach</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">Maximize what the AI can say</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Design for what it must not</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">Answers from the open internet</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Bounded, sourced, on-topic</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">Trust as an afterthought</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Trust as the core requirement</span>
+          </div>
+        </div>
+        <p class="process-pullquote fade-up" style="transition-delay:170ms;">
+          The constraint wasn't a limitation — it was the design. Trust is what made Aimee embeddable at all.
+        </p>
+      </div>
+    </section>
+
+    <!-- ════ IMPACT ════ -->
+    <section class="cs-section impact-section">
+      <div class="wrap">
+        <p class="eyebrow fade-up" style="text-align:center;">Impact</p>
+        <h2 class="impact-h2 fade-up" style="transition-delay:60ms;">Guidance that reaches millions</h2>
+        <div class="impact-grid fade-up" style="transition-delay:90ms;">
+          <div class="impact-cell">
+            <div class="impact-val">1M+</div>
+            <p class="impact-label">Employees reached with in-product guidance</p>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-val">Fortune 500</div>
+            <p class="impact-label">Embedded in enterprise benefits platforms</p>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-val">Q&amp;A → Coach</div>
+            <p class="impact-label">From keyword search to conversational guidance</p>
+          </div>
+        </div>
+        <div class="client-pills fade-up" style="transition-delay:120ms;">
+          <span class="client-pill">Meta</span>
+          <span class="client-pill">NFL</span>
+          <span class="client-pill">JPMorgan Chase</span>
+          <span class="client-pill">CVS Health</span>
+          <span class="client-pill">Federal Reserve</span>
+          <span class="client-pill">Patagonia</span>
+          <span class="client-pill">McKinsey</span>
+          <span class="client-pill">Nestlé</span>
+          <span class="client-pill">Comcast</span>
+          <span class="client-pill">General Mills</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ WHAT I'D DO NEXT ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="fade-up" style="max-width: 640px; margin-bottom: clamp(52px, 7vw, 80px);">
+          <span class="eyebrow">What I'd do next</span>
+          <h2 class="next-h2">Aimee proved the model. Here's where it goes further.</h2>
+        </div>
+        <div class="next-list">
+          <div class="next-item fade-up">
+            <span class="next-item-n">01</span>
+            <div>
+              <h3 class="next-item-title">Proactive, not reactive</h3>
+              <p class="next-item-body">Move from answering questions to anticipating needs — surfacing timely nudges before an employee thinks to ask.</p>
+            </div>
+          </div>
+          <div class="next-item fade-up" style="transition-delay:70ms;">
+            <span class="next-item-n">02</span>
+            <div>
+              <h3 class="next-item-title">Deeper benefits personalization</h3>
+              <p class="next-item-body">Act on real plan data, not just profile inputs — so guidance reflects exactly what each employee is enrolled in.</p>
+            </div>
+          </div>
+          <div class="next-item fade-up" style="transition-delay:140ms;">
+            <span class="next-item-n">03</span>
+            <div>
+              <h3 class="next-item-title">Continuity across the journey</h3>
+              <p class="next-item-body">Remember context between sessions so Aimee feels like an ongoing relationship, not a one-off chat.</p>
+            </div>
+          </div>
+          <div class="next-item fade-up" style="transition-delay:210ms;">
+            <span class="next-item-n">04</span>
+            <div>
+              <h3 class="next-item-title">Measurable behavior change</h3>
+              <p class="next-item-body">Tie coaching to real financial outcomes — not just engagement — to prove the guidance actually moves the needle.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ FINAL TAKEAWAY ════ -->
+    <section class="takeaway-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow" style="margin-bottom:36px; display:block;">Final Takeaway</span>
+        <p class="takeaway-text">
+          Aimee proved that in a high-stakes domain, trust is the product. By grounding
+          every answer in CFP expertise and designing for what the AI must not say, a static
+          Q&amp;A tool became a coach reaching 1M+ employees.
+          <strong>Constraint, designed well, is what makes AI trustworthy enough to ship.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- ════ BOTTOM NAV ════ -->
+    <div class="bottom-cta">
+      <div class="wrap fade-up">
+        <nav class="cta-links" aria-label="Case study navigation">
+          <a href="../work/" class="btn-secondary">← Back to Work</a>
+          <a href="../work/hub/" class="btn-secondary">Next: Financial Finesse Hub →</a>
+          <a href="../contact/" class="btn-secondary">Contact ↗</a>
+        </nav>
+      </div>
     </div>
 
-    <section class="stats-row">
-      <div class="stats-item">
-        <div class="value">1M+</div>
-        <div class="label">Employees reached</div>
-      </div>
-      <div class="stats-item">
-        <div class="value">↑ X%</div>
-        <div class="label">Session engagement vs. legacy <!-- TODO: add real number --></div>
-      </div>
-      <div class="stats-item">
-        <div class="value">X+</div>
-        <div class="label">Employer clients <!-- TODO --></div>
-      </div>
-    </section>
-
-    <section class="before-after">
-      <p class="label">Before & After</p>
-      <h2>The transformation</h2>
-
-      <div class="before-after-grid">
-        <div class="card">
-          <div class="card-image">
-            <!-- Replace with: <img src='images/aimee-before.jpg' alt='Before: Keyword Q&A' /> -->
-          </div>
-          <div class="card-body">
-            <div class="label">Before</div>
-            <p><strong>Keyword Q&A</strong><br>Users had to know what to ask. No personalization, no follow-up, no next steps.</p>
-          </div>
-        </div>
-
-        <div class="card after">
-          <div class="card-image">
-            <!-- Replace with: <img src='images/aimee-after.jpg' alt='After: Conversational AI Coach' /> -->
-          </div>
-          <div class="card-body">
-            <div class="label">After</div>
-            <p><strong>Conversational AI Coach</strong><br>Proactive, empathetic, benefits-integrated — with guided next steps built into every exchange.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="problem">
-      <div class="problem-left">
-        <p class="label">The Problem</p>
-        <h2>Access to content isn't the same as guidance.</h2>
-      </div>
-      <div class="problem-right">
-        <div>
-          <h3>Nobody knew where to start</h3>
-          <ul>
-            <li>Keyword search required users to already know what to ask.</li>
-            <li>No connection between content and the employee's actual benefits.</li>
-            <li>Sessions ended without a clear action or next step.</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Generic AI wasn't an option</h3>
-          <ul>
-            <li>Financial decisions are high-stakes — bad information causes real harm.</li>
-            <li>The product needed to be trustworthy enough for employers to embed in their benefits platforms.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="solution">
-      <p class="label">The Solution</p>
-      <h2>From search tool to coaching system.</h2>
-
-      <div class="solution-image">
-        <!-- Replace with: <img src='images/aimee-solution.jpg' alt='Aimee AI Solution Architecture' /> -->
-      </div>
-
-      <div class="key-decisions">
-        <div class="decision">
-          <div class="decision-number">1</div>
-          <div class="decision-title">CFP-backed knowledge base</div>
-          <div class="decision-desc">Not the open internet. Every response grounded in certified financial planner expertise.</div>
-        </div>
-        <div class="decision">
-          <div class="decision-number">2</div>
-          <div class="decision-title">Proactive prompting</div>
-          <div class="decision-desc">Aimee suggests what to explore next, not just answering what was asked.</div>
-        </div>
-        <div class="decision">
-          <div class="decision-number">3</div>
-          <div class="decision-title">Benefits integration</div>
-          <div class="decision-desc">Personalized to each employee's actual enrolled benefits.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="impact">
-      <p class="label">Impact</p>
-      <h2>Reaching millions.</h2>
-
-      <div class="stats-row" style="border: none;">
-        <div class="stats-item">
-          <div class="value">1M+</div>
-          <div class="label">Employees reached</div>
-        </div>
-        <div class="stats-item">
-          <div class="value">↑ X%</div>
-          <div class="label">Session engagement vs. legacy <!-- TODO: add real number --></div>
-        </div>
-        <div class="stats-item">
-          <div class="value">X+</div>
-          <div class="label">Employer clients <!-- TODO --></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="learnings">
-      <p class="label">Learnings</p>
-      <h2>What I took away.</h2>
-
-      <div class="learnings-grid">
-        <div class="learning-card">
-          <div class="number">01</div>
-          <div class="title">Trust is the product</div>
-          <div class="text">In high-stakes domains, the experience of trustworthiness matters as much as accuracy.</div>
-        </div>
-        <div class="learning-card">
-          <div class="number">02</div>
-          <div class="title">Proactivity changes behavior</div>
-          <div class="text">Suggesting next steps drove more return visits than any UI change.</div>
-        </div>
-        <div class="learning-card">
-          <div class="number">03</div>
-          <div class="title">Constraints clarify</div>
-          <div class="text">The CFP-only constraint made every design decision easier.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="next-project">
-      <p class="label">Next Project</p>
-      <a href="../work/hub/">
-        <h3>Financial Finesse Hub</h3>
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </section>
   </main>
 
   <footer>
@@ -568,21 +730,19 @@
       <span class="footer-left">Bri May</span>
       <div class="footer-links">
         <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
-        <a href="https://linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
       <span class="footer-right">© 2025 Bri May</span>
     </div>
   </footer>
 
+  <script src="/scripts/main.js"></script>
   <script>
     const nav = document.getElementById('site-nav');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 8) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-    });
+      nav.classList.toggle('scrolled', window.scrollY > 8);
+    }, { passive: true });
   </script>
+
 </body>
 </html>
