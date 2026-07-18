@@ -33,17 +33,29 @@
 
     /* ── Chat pane ── */
     .chat-pane {
+      position: relative;
       display: flex;
       flex-direction: column;
       min-width: 0;
       min-height: 0;
       overflow: hidden;
     }
+    /* Empty state: greeting + composer centered together; composer un-docks */
+    .chat-pane.is-empty { justify-content: center; }
+    .chat-pane.is-empty .chat-scroll { flex: 0 1 auto; overflow: hidden; }
+    .chat-pane.is-empty .composer-bar {
+      position: static; border-top: none;
+      background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
+    }
+    .chat-pane:not(.is-empty) .empty-state { display: none; }
+    .empty-state { max-width: 600px; margin: 0 auto; text-align: center; }
+    .empty-state .agent-intro h1 { margin-inline: auto; }
+    .empty-state .starter { text-align: left; }
     .chat-scroll { flex: 1; overflow-y: auto; }
     .chat-inner {
-      max-width: 780px;
+      max-width: 720px;
       margin: 0 auto;
-      padding: clamp(36px, 6vw, 80px) var(--px) 24px;
+      padding: clamp(36px, 6vw, 80px) var(--px) 28px;
     }
 
     /* ── intro headline ── */
@@ -64,8 +76,8 @@
     .agent-intro h1 .muted { color: var(--ink-3); }
 
     /* ── thread ── */
-    .thread { display: flex; flex-direction: column; gap: clamp(20px, 3vw, 28px); }
-    .msg { display: flex; gap: 12px; max-width: 100%; }
+    .thread { display: flex; flex-direction: column; gap: clamp(26px, 3.4vw, 34px); }
+    .msg { display: flex; gap: 14px; max-width: 100%; }
     .msg--agent { align-items: flex-start; }
     .msg--user { justify-content: flex-end; }
     .msg {
@@ -80,20 +92,21 @@
       display: flex; align-items: center; justify-content: center; color: #fff; margin-top: 2px;
     }
     .avatar-mark { width: 34px; height: 34px; display: block; }
-    .msg-content { display: flex; flex-direction: column; gap: 14px; min-width: 0; max-width: 100%; }
-    .msg-name {
-      font-size: 12px; font-weight: 600; letter-spacing: 0.01em;
-      color: var(--ink-3); margin-bottom: -4px;
-    }
+    .msg-content { display: flex; flex-direction: column; gap: 12px; min-width: 0; max-width: 100%; }
+    .msg--agent .msg-content { flex: 1; }
+    .msg-name { display: none; }
+    /* Assistant: flat text on the page, no bubble (ChatGPT / Claude style) */
     .bubble {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 4px 16px 16px 16px; padding: 14px 18px;
-      font-size: clamp(15px, 1.15vw, 16px); line-height: 1.6; color: var(--ink); max-width: 560px;
+      background: none; border: none; border-radius: 0; padding: 0;
+      font-size: 16px; line-height: 1.7; color: var(--ink); max-width: 100%;
       white-space: pre-wrap;
     }
+    /* User: soft light pill, no tail */
     .bubble--user {
-      background: var(--ink); color: #fff; border: none;
-      border-radius: 16px 16px 4px 16px; max-width: 420px;
+      background: var(--surface); color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 18px; padding: 11px 17px;
+      font-size: 15.5px; line-height: 1.55; max-width: 460px;
     }
 
     /* ── chips ── */
@@ -137,21 +150,20 @@
     .bubble strong { font-weight: 650; color: var(--ink); }
 
     /* ── follow-up suggestions ── */
-    .chips--fu { margin-top: 12px; }
+    .chips--fu { margin-top: 6px; }
     .chip--fu {
-      color: var(--ink-2); background: var(--surface); border-color: var(--border);
-      border-radius: 10px; font-size: 13.5px; padding: 8px 13px 8px 11px;
+      color: var(--ink-2); background: transparent; border-color: var(--border);
+      border-radius: 100px; font-size: 13.5px; padding: 7px 15px;
     }
-    .chip--fu:hover { color: var(--ink); background: #fff; border-color: var(--ink-3); }
-    .chip--fu .fu-arrow { color: var(--accent); font-weight: 600; }
+    .chip--fu:hover { color: var(--ink); background: var(--surface); border-color: var(--ink-3); }
 
     /* ── stop button (streaming) ── */
     .send-btn.is-stop { background: var(--surface); border-color: var(--border); color: var(--ink); }
     .send-btn.is-stop:hover { background: var(--surface-2, #f0f2f5); }
     .stop-square { width: 11px; height: 11px; border-radius: 2.5px; background: var(--ink); display: block; }
 
-    /* ── typing ── */
-    .typing { display: inline-flex; gap: 5px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; }
+    /* ── typing (flat, no bubble) ── */
+    .typing { display: inline-flex; gap: 5px; padding: 6px 2px; background: none; border: none; }
     .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); animation: blink 1.3s infinite ease-in-out both; }
     .typing span:nth-child(2) { animation-delay: 0.18s; }
     .typing span:nth-child(3) { animation-delay: 0.36s; }
@@ -207,26 +219,61 @@
       -webkit-backdrop-filter: blur(12px);
       position: sticky; bottom: 0;
     }
-    .composer-inner { max-width: 780px; margin: 0 auto; padding: 16px var(--px) 18px; }
-    .composer-form {
-      display: flex; align-items: center; gap: 8px;
-      background: var(--bg); border: 1px solid var(--border); border-radius: 100px;
-      padding: 7px 7px 7px 20px; transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    .composer-inner { max-width: 720px; margin: 0 auto; padding: 14px var(--px) 16px; position: relative; }
+    /* soft scrim so the thread dissolves under the composer (docked state only) */
+    .chat-pane:not(.is-empty) .composer-bar::before {
+      content: ''; position: absolute; left: 0; right: 0; top: -44px; height: 44px;
+      background: linear-gradient(to top, var(--bg), rgba(255, 255, 255, 0)); pointer-events: none;
     }
-    .composer-form:focus-within { border-color: var(--ink); box-shadow: 0 6px 24px rgba(0,0,0,0.06); }
+    .composer-form {
+      display: flex; align-items: flex-end; gap: 8px;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 26px;
+      padding: 8px 8px 8px 18px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .composer-form:focus-within { border-color: var(--ink-3); box-shadow: 0 10px 34px rgba(0,0,0,0.09); }
     .composer-input {
       flex: 1; border: none; outline: none; background: transparent;
-      font-family: inherit; font-size: 15px; color: var(--ink); padding: 8px 0;
+      font-family: inherit; font-size: 16px; line-height: 1.5; color: var(--ink);
+      padding: 9px 0; resize: none; max-height: 200px; overflow-y: auto;
     }
     .composer-input::placeholder { color: var(--ink-3); }
     .send-btn {
-      flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; border: none;
+      flex-shrink: 0; width: 38px; height: 38px; border-radius: 12px; border: none;
       background: var(--ink); color: #fff; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s ease, transform 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
     }
-    .send-btn:hover { background: #222; transform: translateY(-1px); }
-    .composer-hint { font-size: 12px; color: var(--ink-3); margin-top: 10px; padding-left: 4px; }
+    .send-btn:hover { background: #222; }
+    .send-btn:disabled { opacity: 0.35; cursor: default; }
+    .composer-hint { font-size: 12px; color: var(--ink-3); margin-top: 10px; text-align: center; }
+
+    /* ── message action row (copy / feedback) ── */
+    .msg-actions { display: flex; gap: 2px; margin-top: 2px; opacity: 0; transition: opacity 0.18s ease; }
+    .msg--agent:hover .msg-actions, .msg-actions:focus-within { opacity: 1; }
+    @media (hover: none) { .msg-actions { opacity: 0.7; } }
+    .act-btn {
+      width: 30px; height: 30px; border-radius: 8px; border: none; background: none;
+      color: var(--ink-3); cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .act-btn:hover { background: var(--surface); color: var(--ink); }
+    .act-btn.is-on { color: var(--accent); }
+
+    /* ── new chat control ── */
+    .newchat-btn {
+      position: absolute; top: 14px; right: 18px; z-index: 6;
+      font-family: inherit; font-size: 13px; font-weight: 500; color: var(--ink-2);
+      background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--border); border-radius: 100px; padding: 7px 14px;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease;
+    }
+    .newchat-btn:hover { border-color: var(--ink-3); color: var(--ink); background: #fff; }
+    .newchat-btn[hidden] { display: none; }
+
+    ::selection { background: rgba(155, 107, 87, 0.18); }
 
     /* ── side panel (floats as a rounded box, Claude-desktop style) ── */
     .panel {
@@ -314,12 +361,19 @@
   <div class="agent-wrap" id="agent-wrap">
 
     <!-- CHAT PANE -->
-    <section class="chat-pane">
+    <section class="chat-pane is-empty" id="chat-pane">
+      <button class="newchat-btn" id="newchat-btn" hidden aria-label="Start a new chat">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v3.5h3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        New chat
+      </button>
       <div class="chat-scroll" id="chat-scroll">
         <div class="chat-inner">
-          <div class="agent-intro">
-            <span class="agent-kicker"><span class="status-dot"></span>Brix · Bri's portfolio agent</span>
-            <h1>What would you like to see?<br><span class="muted">Ask me about Bri's work.</span></h1>
+          <div class="empty-state" id="empty-state">
+            <div class="agent-intro">
+              <span class="agent-kicker">Brix · on-device portfolio agent</span>
+              <h1>What would you like to know<br><span class="muted">about Bri?</span></h1>
+            </div>
+            <div id="starter-mount"></div>
           </div>
           <div class="thread" id="thread" role="log" aria-live="polite" aria-label="Conversation with Brix"></div>
         </div>
@@ -328,19 +382,18 @@
       <div class="composer-bar">
         <div class="composer-inner">
           <form class="composer-form" id="composer-form" autocomplete="off">
-            <label for="composer-input" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Ask Brix</label>
-            <input
-              type="text" id="composer-input" class="composer-input"
-              placeholder="Ask Brix — try &ldquo;case studies&rdquo;, &ldquo;about Bri&rdquo;, or &ldquo;résumé&rdquo;&hellip;"
-              aria-label="Ask Brix"
-            />
+            <label for="composer-input" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Message Brix</label>
+            <textarea
+              id="composer-input" class="composer-input" rows="1"
+              placeholder="Message Brix…"
+              aria-label="Message Brix"></textarea>
             <button type="submit" class="send-btn" id="send-btn" aria-label="Send">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
           </form>
-          <p class="composer-hint">Runs on-device · knows only Bri. Ask anything about her work &amp; background — pages open on the right. ↗</p>
+          <p class="composer-hint">Runs on-device · knows only Bri. Pages open on the right. ↗</p>
         </div>
       </div>
     </section>
@@ -716,13 +769,44 @@
         return msg;
       }
 
+      // Copy / feedback row under an answer — a familiar frontier-LLM affordance.
+      const ICN = {
+        copy: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2.2" stroke="currentColor" stroke-width="1.7"/><path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+        check: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        up: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M7 11v9M11 6.5 10 11h6.5a2 2 0 0 1 1.95 2.44l-1.1 5A2 2 0 0 1 15.4 20H7v-9l2.2-6.1a1.4 1.4 0 0 1 2.6.9l-.8 4.2" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+        down: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="transform:rotate(180deg)"><path d="M7 11v9M11 6.5 10 11h6.5a2 2 0 0 1 1.95 2.44l-1.1 5A2 2 0 0 1 15.4 20H7v-9l2.2-6.1a1.4 1.4 0 0 1 2.6.9l-.8 4.2" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>'
+      };
+      function buildActions(text) {
+        const plain = text.replace(/\*\*/g, '');
+        const row = document.createElement('div');
+        row.className = 'msg-actions';
+        const copy = document.createElement('button');
+        copy.className = 'act-btn'; copy.type = 'button'; copy.title = 'Copy'; copy.setAttribute('aria-label', 'Copy'); copy.innerHTML = ICN.copy;
+        copy.addEventListener('click', async () => {
+          try { await navigator.clipboard.writeText(plain); } catch (e) { /* clipboard unavailable */ }
+          copy.innerHTML = ICN.check; copy.classList.add('is-on');
+          setTimeout(() => { copy.innerHTML = ICN.copy; copy.classList.remove('is-on'); }, 1400);
+        });
+        row.appendChild(copy);
+        [['up', 'Good response'], ['down', 'Bad response']].forEach(([k, lbl]) => {
+          const b = document.createElement('button');
+          b.className = 'act-btn'; b.type = 'button'; b.title = lbl; b.setAttribute('aria-label', lbl); b.innerHTML = ICN[k];
+          b.addEventListener('click', () => {
+            const on = b.classList.toggle('is-on');
+            if (on) { const sib = k === 'up' ? b.nextElementSibling : b.previousElementSibling; if (sib) sib.classList.remove('is-on'); }
+          });
+          row.appendChild(b);
+        });
+        return row;
+      }
+
       function buildFollowups(list) {
         const wrap = document.createElement('div');
         wrap.className = 'chips chips--fu';
         list.forEach(fu => {
           const btn = document.createElement('button');
           btn.className = 'chip chip--fu'; btn.type = 'button';
-          btn.innerHTML = '<span class="fu-arrow" aria-hidden="true">→</span> ' + esc(fu.label);
+          btn.textContent = fu.label;
           btn.addEventListener('click', () => {
             if (busy) return;
             if (fu.intent) handleIntent(fu.intent, fu.label);
@@ -741,6 +825,7 @@
         sendBtn.classList.toggle('is-stop', streaming);
         sendBtn.setAttribute('aria-label', streaming ? 'Stop' : 'Send');
         sendBtn.innerHTML = streaming ? '<span class="stop-square"></span>' : SEND_ICON;
+        if (streaming) sendBtn.disabled = false; else syncSend();
       }
       let active = null; // { finish() } — cancels the think delay or the stream in progress
 
@@ -756,6 +841,7 @@
         let streamer = null;
 
         function attachRest(content) {
+          if (res.text) content.appendChild(buildActions(res.text));
           if (res.block) content.appendChild(elFromHtml(res.block));
           if (res.followups && res.followups.length) content.appendChild(buildFollowups(res.followups));
           if (res.starter) content.appendChild(buildStarter());
@@ -787,6 +873,7 @@
 
       function handleIntent(intentId, userLabel) {
         if (busy) return;
+        startChat();
         if (userLabel) addUserMessage(userLabel);
         respond(intentId);
       }
@@ -900,26 +987,62 @@
       function submitQuery(q, display) {
         q = (q || '').trim();
         if (!q) return;
+        startChat();
         addUserMessage(display || q);
         route(q);
       }
+
+      // ── Empty state ⇄ active chat ──
+      const chatPane = document.getElementById('chat-pane');
+      const emptyState = document.getElementById('empty-state');
+      const newchatBtn = document.getElementById('newchat-btn');
+      let started = false;
+      function startChat() {
+        if (started) return;
+        started = true;
+        chatPane.classList.remove('is-empty');
+        newchatBtn.hidden = false;
+      }
+      function resetChat() {
+        started = false;
+        thread.innerHTML = '';
+        lastEntry = null; lastListShown = false;
+        if (active) { active.finish && active.finish(); active = null; }
+        busy = false; setComposerState(false);
+        chatPane.classList.add('is-empty');
+        newchatBtn.hidden = true;
+        input.value = ''; autogrow();
+        scroller.scrollTop = 0;
+        input.focus({ preventScroll: true });
+      }
+      newchatBtn.addEventListener('click', resetChat);
+
+      // Mount the explore list into the empty state.
+      document.getElementById('starter-mount').appendChild(buildStarter());
+
+      // ── Composer: auto-grow textarea, Enter to send, disabled when empty ──
+      function autogrow() {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 200) + 'px';
+      }
+      function syncSend() { if (!sendBtn.classList.contains('is-stop')) sendBtn.disabled = !input.value.trim(); }
+      input.addEventListener('input', () => { autogrow(); syncSend(); });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
+      });
+      syncSend();
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (busy) return;
         const q = input.value.trim();
         if (!q) return;
-        input.value = '';
+        input.value = ''; autogrow(); syncSend();
         submitQuery(q);
       });
       // Send button doubles as a stop control while Brix is streaming.
       sendBtn.addEventListener('click', (e) => {
         if (sendBtn.classList.contains('is-stop') && active) { e.preventDefault(); active.finish(); }
-      });
-
-      deliver({
-        text: "Hi — I'm **Brix**, Bri's portfolio agent. I run entirely in your browser and know exactly one subject: Bri. Ask me anything about her work and background, or explore:",
-        starter: true
       });
     })();
   </script>
