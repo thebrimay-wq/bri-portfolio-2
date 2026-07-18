@@ -151,9 +151,11 @@
       background: #34C759; box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.15);
     }
     .agent-intro h1 {
-      font-size: clamp(28px, 4vw, 44px); font-weight: 700;
-      letter-spacing: -0.03em; line-height: 1.1; color: var(--ink); max-width: 620px;
+      font-size: clamp(23px, 4.4vw, 38px); font-weight: 700;
+      letter-spacing: -0.03em; line-height: 1.14; color: var(--ink);
     }
+    /* Each line stays intact — never wrap mid-phrase (e.g. an orphaned "know") */
+    .agent-intro h1 .hl-line { display: block; white-space: nowrap; }
     .agent-intro h1 .muted { color: var(--ink-3); }
 
     /* ── thread ── */
@@ -480,7 +482,7 @@
           <div class="empty-state" id="empty-state">
             <div class="agent-intro">
               <span class="agent-kicker">Brix · on-device portfolio agent</span>
-              <h1>What would you like to know<br><span class="muted">about Bri?</span></h1>
+              <h1><span class="hl-line">What would you like to know</span><span class="hl-line muted">about Bri?</span></h1>
             </div>
             <div id="starter-mount"></div>
           </div>
