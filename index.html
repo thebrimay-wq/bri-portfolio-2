@@ -127,6 +127,29 @@
     .starter-arrow { flex: 0 0 auto; color: var(--ink-3); opacity: 0; transform: translateX(-4px); transition: opacity 0.16s ease, transform 0.16s ease; }
     .starter-item:hover .starter-arrow { opacity: 1; transform: translateX(0); }
 
+    /* ── streaming cursor ── */
+    .stream-cursor {
+      display: inline-block; width: 7px; height: 1.05em; margin-left: 1px;
+      vertical-align: text-bottom; background: var(--accent); border-radius: 1px;
+      animation: caret 1s steps(1) infinite;
+    }
+    @keyframes caret { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+    .bubble strong { font-weight: 650; color: var(--ink); }
+
+    /* ── follow-up suggestions ── */
+    .chips--fu { margin-top: 12px; }
+    .chip--fu {
+      color: var(--ink-2); background: var(--surface); border-color: var(--border);
+      border-radius: 10px; font-size: 13.5px; padding: 8px 13px 8px 11px;
+    }
+    .chip--fu:hover { color: var(--ink); background: #fff; border-color: var(--ink-3); }
+    .chip--fu .fu-arrow { color: var(--accent); font-weight: 600; }
+
+    /* ── stop button (streaming) ── */
+    .send-btn.is-stop { background: var(--surface); border-color: var(--border); color: var(--ink); }
+    .send-btn.is-stop:hover { background: var(--surface-2, #f0f2f5); }
+    .stop-square { width: 11px; height: 11px; border-radius: 2.5px; background: var(--ink); display: block; }
+
     /* ── typing ── */
     .typing { display: inline-flex; gap: 5px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; }
     .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); animation: blink 1.3s infinite ease-in-out both; }
@@ -317,7 +340,7 @@
               </svg>
             </button>
           </form>
-          <p class="composer-hint">Ask Brix about Bri's work &amp; background — or pick a suggestion. Pages open on the right. ↗</p>
+          <p class="composer-hint">Runs on-device · knows only Bri. Ask anything about her work &amp; background — pages open on the right. ↗</p>
         </div>
       </div>
     </section>
@@ -595,21 +618,50 @@
         return wrap;
       }
 
-      function addAgentMessage(res) {
-        const msg = elFromHtml(`
-          <div class="msg msg--agent">
-            <div class="avatar"><svg class="avatar-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="12.5" stroke="#fff" stroke-width="1.5"/><path d="M11.6 26.6 29 12.8" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><text x="20" y="25.4" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="700" fill="#fff">B</text></svg></div>
-            <div class="msg-content"><div class="msg-name">Brix</div></div>
-          </div>`);
-        const content = msg.querySelector('.msg-content');
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble';
-        bubble.textContent = res.text;
-        content.appendChild(bubble);
-        if (res.block) content.appendChild(elFromHtml(res.block));
-        if (res.starter) content.appendChild(buildStarter());
-        if (res.chips && res.chips.length) content.appendChild(buildChips(res.chips));
-        thread.appendChild(msg);
+      const AVATAR = '<div class="avatar"><svg class="avatar-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="12.5" stroke="#fff" stroke-width="1.5"/><path d="M11.6 26.6 29 12.8" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><text x="20" y="25.4" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="700" fill="#fff">B</text></svg></div>';
+
+      function buildAgentShell() {
+        const msg = elFromHtml(`<div class="msg msg--agent">${AVATAR}<div class="msg-content"><div class="msg-name">Brix</div></div></div>`);
+        return { msg, content: msg.querySelector('.msg-content') };
+      }
+
+      // Split text into stream tokens, honoring **bold** spans.
+      function tokenizeRich(text) {
+        const out = [];
+        text.split('**').forEach((seg, si) => {
+          const bold = si % 2 === 1;
+          (seg.match(/\S+\s*|\s+/g) || []).forEach(w => out.push({ t: w, bold }));
+        });
+        return out;
+      }
+      function renderStatic(text) {
+        return text.split('**').map((s, i) => i % 2 ? '<strong>' + esc(s) + '</strong>' : esc(s)).join('');
+      }
+      function nearBottom() { return scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 140; }
+      function stick() { scroller.scrollTop = scroller.scrollHeight; }
+
+      // Token-by-token streaming, with a stop() that fast-forwards to the end.
+      function streamInto(bubble, text, onDone) {
+        const tokens = tokenizeRich(text);
+        const cursor = document.createElement('span');
+        cursor.className = 'stream-cursor';
+        bubble.appendChild(cursor);
+        let i = 0, stopped = false, timer = null;
+        function appendToken(tok) {
+          if (tok.bold) { const s = document.createElement('strong'); s.textContent = tok.t; bubble.insertBefore(s, cursor); }
+          else bubble.insertBefore(document.createTextNode(tok.t), cursor);
+        }
+        function finishNow() { while (i < tokens.length) { appendToken(tokens[i]); i++; } cursor.remove(); onDone(); }
+        function step() {
+          if (stopped) return;
+          if (i >= tokens.length) { cursor.remove(); onDone(); return; }
+          const tok = tokens[i]; appendToken(tok); i++;
+          if (nearBottom()) stick();
+          const pause = /[.!?…]\s*$/.test(tok.t) ? 150 : /[,;:]\s*$/.test(tok.t) ? 70 : 0;
+          timer = setTimeout(step, 16 + Math.random() * 20 + pause);
+        }
+        step();
+        return { finish() { stopped = true; clearTimeout(timer); finishNow(); } };
       }
 
       // First-time explore list — a scannable menu of where to start.
@@ -664,19 +716,74 @@
         return msg;
       }
 
-      let busy = false;
-      function respond(intentId) {
-        const res = (RESPONSES[intentId] || RESPONSES.fallback)();
-        const typing = showTyping();
-        busy = true;
-        setTimeout(() => {
-          typing.remove();
-          addAgentMessage(res);
-          busy = false;
-          scrollToEnd();
-          input.focus({ preventScroll: true });
-        }, TYPING_MS);
+      function buildFollowups(list) {
+        const wrap = document.createElement('div');
+        wrap.className = 'chips chips--fu';
+        list.forEach(fu => {
+          const btn = document.createElement('button');
+          btn.className = 'chip chip--fu'; btn.type = 'button';
+          btn.innerHTML = '<span class="fu-arrow" aria-hidden="true">→</span> ' + esc(fu.label);
+          btn.addEventListener('click', () => {
+            if (busy) return;
+            if (fu.intent) handleIntent(fu.intent, fu.label);
+            else submitQuery(fu.q, fu.label);
+          });
+          wrap.appendChild(btn);
+        });
+        return wrap;
       }
+
+      // ── Delivery: think → stream → attach block / follow-ups / chips ──
+      let busy = false;
+      const sendBtn = document.getElementById('send-btn');
+      const SEND_ICON = sendBtn.innerHTML;
+      function setComposerState(streaming) {
+        sendBtn.classList.toggle('is-stop', streaming);
+        sendBtn.setAttribute('aria-label', streaming ? 'Stop' : 'Send');
+        sendBtn.innerHTML = streaming ? '<span class="stop-square"></span>' : SEND_ICON;
+      }
+      let active = null; // { finish() } — cancels the think delay or the stream in progress
+
+      function deliver(res) {
+        busy = true;
+        setComposerState(true);
+        const typing = showTyping();
+        const len = (res.text || '').length;
+        const thinkMs = reduceMotion ? 60 : Math.min(850, 220 + len * 0.9);
+        let started = false;
+        const t = setTimeout(start, thinkMs);
+        active = { finish() { if (!started) { clearTimeout(t); start(true); } else if (streamer) streamer.finish(); } };
+        let streamer = null;
+
+        function attachRest(content) {
+          if (res.block) content.appendChild(elFromHtml(res.block));
+          if (res.followups && res.followups.length) content.appendChild(buildFollowups(res.followups));
+          if (res.starter) content.appendChild(buildStarter());
+          if (res.chips && res.chips.length) content.appendChild(buildChips(res.chips));
+          busy = false; active = null; setComposerState(false);
+          if (nearBottom()) stick();
+          input.focus({ preventScroll: true });
+        }
+        function start(instant) {
+          started = true;
+          typing.remove();
+          const { msg, content } = buildAgentShell();
+          const bubble = document.createElement('div');
+          bubble.className = 'bubble';
+          content.appendChild(bubble);
+          thread.appendChild(msg);
+          stick();
+          if (instant || reduceMotion) { bubble.innerHTML = renderStatic(res.text || ''); attachRest(content); }
+          else streamer = streamInto(bubble, res.text || '', () => attachRest(content));
+        }
+      }
+
+      function respond(intentId) {
+        lastEntry = null;
+        lastListShown = (intentId === 'casestudies');
+        deliver((RESPONSES[intentId] || RESPONSES.fallback)());
+      }
+      function respondWith(res) { deliver(res); }
 
       function handleIntent(intentId, userLabel) {
         if (busy) return;
@@ -685,52 +792,133 @@
       }
       window.__handleIntent = handleIntent;
 
-      function respondWith(res) {
-        const typing = showTyping();
-        busy = true;
-        setTimeout(() => {
-          typing.remove();
-          addAgentMessage(res);
-          busy = false;
-          scrollToEnd();
-          input.focus({ preventScroll: true });
-        }, TYPING_MS);
-      }
+      // ── Retrieval: normalize, fuzzy-match, score with confidence ──
+      const STOP = new Set(['the','a','an','of','is','are','am','to','and','or','for','with','on','in','at','about','what','whats','who','whos','how','why','when','where','which','does','do','did','she','her','hers','bri','bris','you','your','yours','me','my','tell','show','give','can','could','would','was','were','be','been','has','have','had','i','it','its','that','this','these','those','they','their','them','please','just','also','some','any','much','many','a','lot','really','so','then','get','got'].filter(Boolean));
+      const SYN = { coding:'code', coder:'code', codes:'code', develop:'code', developer:'code', developers:'code', dev:'code', programming:'code', program:'code', money:'revenue', earned:'revenue', earns:'revenue', earn:'revenue', made:'revenue', dollars:'revenue', jobs:'work', job:'work', projects:'work', project:'work', portfolio:'work', tools:'skills', tool:'skills', tech:'skills', stack:'skills', technologies:'skills', technology:'skills', capabilities:'skills', reach:'contact', phone:'phone', cell:'phone', llm:'ai', located:'location', live:'location', lives:'location', living:'location', based:'location', hiring:'hire', school:'education', degree:'education', studied:'education', college:'education', university:'education', coach:'aimee', gcs:'global', history:'history' };
 
-      // Keyless "wiki about Bri": score the question against the KB, answer from
-      // it; else fall back to a nav intent; else a funny redirect to Bri.
-      function answerLocally(q) {
-        const s = q.toLowerCase();
-        let best = null, score = 0;
+      function norm(s) { return s.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim(); }
+      function toks(s) { return norm(s).split(' ').map(w => SYN[w] || w).filter(w => w && !STOP.has(w)); }
+      function lev(a, b) {
+        const m = a.length, n = b.length; if (Math.abs(m - n) > 1) return 2;
+        const d = Array.from({ length: m + 1 }, (_, i) => [i].concat(new Array(n).fill(0)));
+        for (let j = 0; j <= n; j++) d[0][j] = j;
+        for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++)
+          d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+        return d[m][n];
+      }
+      function fuzzy(a, b) {
+        if (a === b) return true;
+        if (a.length < 4 || b.length < 4) return false;
+        if (a.length >= 5 && b.length >= 5 && (a.startsWith(b) || b.startsWith(a))) return true;
+        return lev(a, b) <= 1;
+      }
+      function retrieve(query) {
+        const nq = norm(query);
+        const qt = toks(query);
+        let best = null, bestScore = 0, second = null, secondScore = 0;
         for (const e of KB) {
           let sc = 0;
-          for (const k of e.keys) if (s.includes(k)) sc += k.length >= 3 ? 2 : 1;
-          if (sc > score) { score = sc; best = e; }
+          for (const key of e.keys) {
+            const kl = key.toLowerCase().trim();
+            if (kl.length >= 3 && nq.includes(kl)) { sc += 3; continue; }
+            for (const w of kl.split(' ')) {
+              if (!w || STOP.has(w)) continue;
+              if (qt.some(t => fuzzy(t, w))) { sc += 1; break; }
+            }
+          }
+          if (sc > bestScore) { second = best; secondScore = bestScore; best = e; bestScore = sc; }
+          else if (sc > secondScore) { second = e; secondScore = sc; }
         }
-        if (best && score >= 2) {
-          const block = best.href
-            ? `<div class="link-row"><a class="link-btn link-btn--secondary" href="${best.href}" data-panel-title="${esc(best.title || '')}">${esc(best.label || 'Open →')}</a></div>`
-            : null;
-          respondWith({ text: best.text, block, chips: best.chips || [] });
-          return;
+        return { entry: best, score: bestScore, second: secondScore >= 2 ? second : null };
+      }
+
+      // ── Contextual follow-ups, generated per answer ──
+      function followupsFor(entry) {
+        if (!entry) return [{ label: 'Her case studies', intent: 'casestudies' }, { label: 'Why hire her', q: 'why hire bri' }, { label: 'Get in touch', intent: 'contact' }];
+        const has = arr => arr.some(x => entry.keys.includes(x));
+        if (entry.href === '/work/global-content-studio/') return [{ label: 'How did she build it solo?', q: 'does she code react' }, { label: 'What was the impact?', q: 'impact and results' }, { label: 'See Aimee next', q: 'aimee ai coach' }];
+        if (entry.href === '/aimee-ai/') return [{ label: 'What did she design & build?', q: 'design engineer react' }, { label: 'Its three surfaces?', q: 'aimee three surfaces widget teams' }, { label: 'See the Hub next', q: 'financial finesse hub' }];
+        if (entry.href === '/work/hub/') return [{ label: 'What drove the +200%?', q: 'impact results revenue' }, { label: 'Her AI build', q: 'global content studio' }, { label: 'See Aimee next', q: 'aimee ai coach' }];
+        if (has(['design engineer','do you code','does she code','react'])) return [{ label: 'Show me proof', q: 'global content studio' }, { label: 'Her tech stack', q: 'skills stack' }, { label: 'Why that matters', q: 'why hire bri' }];
+        if (has(['impact','results','metrics'])) return [{ label: 'Which project drove revenue?', q: 'financial finesse hub' }, { label: 'The solo AI build', q: 'global content studio' }, { label: 'Why hire her', q: 'why hire bri' }];
+        if (has(['skills','tech','stack'])) return [{ label: 'Does she really code?', q: 'does she code' }, { label: 'Her AI work', q: 'ai native work' }, { label: 'See a build', q: 'global content studio' }];
+        if (has(['ai ','ai-native','ai native'])) return [{ label: 'The AI she built solo', q: 'global content studio' }, { label: 'The Aimee coach', q: 'aimee ai coach' }, { label: 'Does she code?', q: 'does she code' }];
+        if (has(['why hire','different','stand out'])) return [{ label: 'Show me the proof', q: 'global content studio' }, { label: 'The numbers', q: 'impact results' }, { label: 'How to reach her', intent: 'contact' }];
+        if (has(['who is','about bri','overview'])) return [{ label: 'Her best work', intent: 'casestudies' }, { label: 'Does she code?', q: 'does she code' }, { label: 'Why hire her', q: 'why hire bri' }];
+        if (has(['phone','contact','reach her'])) return [{ label: 'See her work first', intent: 'casestudies' }, { label: 'Why hire her', q: 'why hire bri' }];
+        return [{ label: 'Her case studies', intent: 'casestudies' }, { label: 'Why hire her', q: 'why hire bri' }, { label: 'Get in touch', intent: 'contact' }];
+      }
+      function linkRow(entry) {
+        return `<div class="link-row"><a class="link-btn link-btn--secondary" href="${entry.href}" data-panel-title="${esc(entry.title || '')}">${esc(entry.label || 'Open →')}</a></div>`;
+      }
+      function serveEntry(entry, alt) {
+        lastEntry = entry; lastListShown = false;
+        const res = { text: entry.text, block: entry.href ? linkRow(entry) : null, followups: followupsFor(entry) };
+        if (alt) {
+          res.text = 'Closest I have — tell me if I misread you: ' + entry.text;
+          const label = (alt.keys.find(k => k.length >= 4) || alt.keys[0] || '').replace(/^\w/, c => c.toUpperCase());
+          res.followups = [{ label: 'I meant: ' + label, q: alt.keys[0] }].concat(res.followups).slice(0, 4);
         }
+        deliver(res);
+      }
+
+      // ── One-turn memory ──
+      let lastEntry = null;
+      let lastListShown = false;
+      const ORD = { first: 0, '1st': 0, '1': 0, second: 1, '2nd': 1, '2': 1, third: 2, '3rd': 2, '3': 2, last: CASE_STUDIES.length - 1 };
+      function ordinalIndex(s) {
+        for (const w of s.split(' ')) if (w in ORD) return ORD[w];
+        return null;
+      }
+      function isContinuation(s) {
+        return s.split(' ').length <= 5 &&
+          /^(tell me more|more|say more|go on|and\b|continue|elaborate|expand|keep going|deeper|go deeper|explain|details|and\?|why\??|really\??|so\??)$/.test(s.trim());
+      }
+
+      // ── Router: memory → retrieval (with confidence) → intent → redirect ──
+      function route(q) {
+        const s = norm(q);
+        const ord = ordinalIndex(s);
+        if (lastListShown && ord != null && CASE_STUDIES[ord]) {
+          const entry = KB.find(e => e.href === CASE_STUDIES[ord].href);
+          if (entry) { serveEntry(entry); return; }
+        }
+        if (isContinuation(s) && lastEntry) {
+          const fu = followupsFor(lastEntry)[0];
+          if (fu) { fu.intent ? respond(fu.intent) : route(fu.q); return; }
+        }
+        const r = retrieve(q);
+        // Confident KB hit wins outright; navigation words beat a weak fuzzy hit.
+        if (r.entry && r.score >= 2) { serveEntry(r.entry); return; }
         const intent = matchIntent(q);
         if (intent !== 'fallback') { respond(intent); return; }
-        respondWith({ text: funny(), block: null, chips: ['casestudies', 'about', 'resume', 'contact'] });
+        if (r.entry && r.score >= 1) { serveEntry(r.entry, r.second); return; }
+        lastEntry = null; lastListShown = false;
+        deliver({ text: funny(), followups: [{ label: 'Her case studies', intent: 'casestudies' }, { label: 'About Bri', intent: 'about' }, { label: 'Why hire her', q: 'why hire bri' }] });
+      }
+
+      function submitQuery(q, display) {
+        q = (q || '').trim();
+        if (!q) return;
+        addUserMessage(display || q);
+        route(q);
       }
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
+        if (busy) return;
         const q = input.value.trim();
-        if (!q || busy) return;
+        if (!q) return;
         input.value = '';
-        addUserMessage(q);
-        answerLocally(q);
+        submitQuery(q);
+      });
+      // Send button doubles as a stop control while Brix is streaming.
+      sendBtn.addEventListener('click', (e) => {
+        if (sendBtn.classList.contains('is-stop') && active) { e.preventDefault(); active.finish(); }
       });
 
-      addAgentMessage({
-        text: "Hi — I'm Brix, Bri's portfolio agent. Ask me anything about her work and background, or explore:",
-        block: null,
+      deliver({
+        text: "Hi — I'm **Brix**, Bri's portfolio agent. I run entirely in your browser and know exactly one subject: Bri. Ask me anything about her work and background, or explore:",
         starter: true
       });
     })();
