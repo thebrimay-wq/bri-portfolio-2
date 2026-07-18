@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Bri May — Senior Product Designer & Creative Director. Ask the portfolio agent to show you case studies, Bri's background, résumé, or contact info." />
+  <meta name="description" content="Bri May — AI-Native Product Designer & Design Engineer. Ask the portfolio agent to show you case studies, Bri's background, résumé, or contact info." />
   <title>Bri May — Product Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -108,6 +108,24 @@
     .chip:hover { background: var(--surface); border-color: var(--ink-3); transform: translateY(-1px); }
     .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .chip .plus { color: var(--ink-3); font-size: 15px; line-height: 1; }
+
+    /* ── first-time explore list ── */
+    .starter { margin-top: 18px; border-top: 1px solid var(--border); }
+    .starter-item {
+      display: flex; align-items: center; gap: 14px; width: 100%;
+      font-family: inherit; font-size: 16px; font-weight: 500; color: var(--ink-2);
+      background: none; border: none; border-bottom: 1px solid var(--border);
+      padding: 16px 8px; cursor: pointer; text-align: left;
+      transition: color 0.16s ease, background 0.16s ease, padding-left 0.16s ease;
+    }
+    .starter-item:hover { color: var(--ink); background: var(--surface); padding-left: 14px; }
+    .starter-item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+    .starter-icon { flex: 0 0 22px; width: 22px; height: 22px; color: var(--accent); }
+    .starter-icon svg { width: 22px; height: 22px; display: block; }
+    .starter-label { flex: 1; }
+    .starter-featured { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--color-accent-light, #f5ede9); border-radius: 100px; padding: 3px 8px; }
+    .starter-arrow { flex: 0 0 auto; color: var(--ink-3); opacity: 0; transform: translateX(-4px); transition: opacity 0.16s ease, transform 0.16s ease; }
+    .starter-item:hover .starter-arrow { opacity: 1; transform: translateX(0); }
 
     /* ── typing ── */
     .typing { display: inline-flex; gap: 5px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; }
@@ -448,7 +466,7 @@
       // Brix knows. Anything not covered gets a funny redirect back to Bri.
       const KB = [
         { keys: ['who is', "who's bri", 'about bri', 'what does she do', 'what does bri do', 'what do you do', 'overview', 'summary', 'elevator', 'introduce'],
-          text: "Bri May is an AI-native product designer, creative director, and design engineer with about 10 years in product. She works in the seam between design and engineering — she designs AND builds, turning Figma systems into production React and shipping AI-native products end to end. Her work has driven 200%+ engagement growth, $12M+ in revenue, and reached 1M+ employees across Fortune 500 clients." },
+          text: "Bri May is an AI-native product designer and design engineer with about 10 years in product. She works in the seam between design and engineering — she designs AND builds, turning Figma systems into production React and shipping AI-native products end to end, on her own. Her work has driven 200%+ engagement growth, $12M+ in revenue, and reached 1M+ employees across Fortune 500 clients." },
         { keys: ['design engineer', 'do you code', 'does she code', 'can she code', 'she code', 'build it', 'builds', 'engineering', 'react', 'front-end', 'front end', 'frontend', 'developer', 'technical', 'hands on', 'hands-on'],
           text: "Yes — Bri is a design engineer. She doesn't just hand off mockups; she ships production front-ends in React (with Tailwind, Vite, design tokens, Framer Motion). She built the Global Content Studio app solo, end to end, and coded the Aimee front end herself. Designing and building in one loop is her edge." },
         { keys: ['global content studio', 'content studio', 'margin', 'federal reserve', 'content team', 'localization', 'localiz'],
@@ -458,7 +476,7 @@
           text: "Aimee is Financial Finesse's AI financial coach. Bri designed and built the front end end-to-end — a documented design system, a locked component library, and coded interactive prototypes — and made one system ship to three surfaces: the Hub, an embeddable client-site widget, and Microsoft Teams. Signature calls: honest AI over “virtual assistant,” and the user's words never shrink.",
           href: '/aimee-ai/', title: 'Aimee AI Coach', label: 'Open the case study →' },
         { keys: ['hub', 'financial finesse hub', 'wellness platform', 'redesign', 'onboarding'],
-          text: "The Financial Finesse Hub is a ground-up redesign Bri led as creative director and lead designer — turning a static content library into a personalized, guided system. It drove +200% engagement and $12M in revenue and won Fortune 500 clients. She led the design team from research to launch.",
+          text: "The Financial Finesse Hub is a ground-up redesign Bri led as the lead product designer — turning a static content library into a personalized, guided system. It drove +200% engagement and $12M in revenue and won Fortune 500 clients. She led the design team from research to launch.",
           href: '/work/hub/', title: 'Financial Finesse Hub', label: 'Open the case study →' },
         { keys: ['smart benefits', 'open enrollment', 'enrollment', 'recordkeeper', 'embed mode'],
           text: "Smart Benefits is an AI-powered open-enrollment experience Bri designed with three white-label embed modes, adopted by one of the largest U.S. retirement recordkeepers. It's part of her work history — there's no dedicated case study for it on the site." },
@@ -471,9 +489,9 @@
         { keys: ['ai ', 'ai-native', 'ai native', 'artificial intelligence', 'llm', 'machine learning', 'generative'],
           text: "AI is the through-line of Bri's recent work: she built Global Content Studio (a brand-trained AI content studio) solo, designed and built the Aimee AI coach across three surfaces, and prototypes AI-native products end to end — with AI as her engineering partner." },
         { keys: ['experience', 'years', 'how long', 'tenure', 'senior'],
-          text: "About 10 years in product design (designing since 2011), most of it at Financial Finesse — where she's grown from graphic design to product design to AI-native product designer and product creative director." },
+          text: "About 10 years in product design (designing since 2011), most of it at Financial Finesse — where she's grown from graphic design to product design to AI-native product designer and design engineer." },
         { keys: ['work history', 'financial finesse', 'current role', 'where does she work', 'employer', 'career', 'ckc', 'history'],
-          text: "Bri has been at Financial Finesse since 2015 — now AI-Native Product Designer & Product Creative Director, previously Product Designer and Sr. Graphic Designer. Before that she was a graphic designer at CKC Communications (2012–2015), doing branding and websites for 50+ companies." },
+          text: "Bri has been at Financial Finesse since 2015 — now AI-Native Product Designer & Design Engineer, previously Product Designer and Sr. Graphic Designer. Before that she was a graphic designer at CKC Communications (2012–2015), doing branding and websites for 50+ companies." },
         { keys: ['education', 'school', 'college', 'university', 'degree', 'study', 'studied', 'major', 'asu', 'chico', 'arizona state'],
           text: "Bri earned a B.S. in Business (Marketing) from Cal State Chico on a full-ride soccer scholarship, after two years playing Division I soccer at Arizona State — also on a full-ride athletic scholarship." },
         { keys: ['soccer', 'sports', 'athlete', 'division 1', 'division i'],
@@ -482,6 +500,9 @@
           text: "Outside work, Bri is family-first (she has a son), plays soccer, and shoots photography — mostly families and newborns. She's also into travel and food, warm-water scuba, dirtbikes, wakeboarding, and three-day sourdough." },
         { keys: ['location', 'where does she live', 'based', 'remote', 'pleasanton', 'bay area'],
           text: "Bri is based in Pleasanton, CA — in the Bay Area." },
+        { keys: ['phone', 'number', 'call', 'text', 'cell', 'reach her', 'get in touch', 'how to contact'],
+          text: "The fastest way to reach Bri is email — thebrimay@gmail.com — or call/text her at 209-601-0181. She's also on LinkedIn.",
+          href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
         { keys: ['why hire', 'what makes', 'different', 'stand out', 'unique', 'strength', 'pitch', 'special', 'value'],
           text: "The short pitch: most designers hand off mockups — Bri ships them. She's a senior product designer who also builds in React and AI-natively, so she moves from idea to production without a translation layer. That's how she built an AI studio solo in a month and helped drive $12M in revenue." },
       ];
@@ -519,18 +540,18 @@
           chips: ['about', 'resume', 'contact']
         }),
         about: () => ({
-          text: "Bri May is an AI-native product designer and creative director — a decade in product, designing since 2011, working in the seam between design and engineering. She's shipped for companies like Meta, the NFL, and JPMorgan, and now designs and builds AI products end to end.",
+          text: "Bri May is an AI-native product designer and design engineer — a decade in product, designing since 2011, working in the seam between design and engineering. She's shipped for companies like Meta, the NFL, and JPMorgan, and now designs and builds AI products end to end, on her own.",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="/about/" data-panel-title="About Bri">Read the full story →</a></div>',
           chips: ['casestudies', 'resume', 'contact']
         }),
         resume: () => ({
-          text: "The short version: an AI-native product designer & creative director — ten years in the seam between design and engineering, shipping production React front-ends and AI products end to end. Want the full detail?",
+          text: "The short version: an AI-native product designer & design engineer — ten years in the seam between design and engineering, shipping production React front-ends and AI products end to end. Want the full detail?",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="/resume/" data-panel-title="Résumé">View résumé →</a><a class="link-btn link-btn--secondary" href="/resume/BriMay_Resume_2026.pdf" download>Download PDF ↓</a></div>',
           chips: ['casestudies', 'about', 'contact']
         }),
         contact: () => ({
-          text: "Bri's currently exploring senior product design roles. Here are the best ways to reach her:",
-          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="mailto:thebrimay@gmail.com">Email Bri</a><a class="link-btn link-btn--secondary" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="link-btn link-btn--secondary" href="/contact/" data-panel-title="Contact">Contact page →</a></div>',
+          text: "Bri's currently exploring senior product design roles. The fastest ways to reach her — email or text at 209-601-0181:",
+          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="mailto:thebrimay@gmail.com">Email Bri</a><a class="link-btn link-btn--secondary" href="tel:+12096010181">Call / text ↗</a><a class="link-btn link-btn--secondary" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="link-btn link-btn--secondary" href="/contact/" data-panel-title="Contact">Contact page →</a></div>',
           chips: ['casestudies', 'about', 'resume']
         }),
         greet: () => ({ text: "Hey! Here's what I can help you explore:", block: null, chips: ['casestudies', 'about', 'resume', 'contact'] }),
@@ -586,8 +607,50 @@
         bubble.textContent = res.text;
         content.appendChild(bubble);
         if (res.block) content.appendChild(elFromHtml(res.block));
+        if (res.starter) content.appendChild(buildStarter());
         if (res.chips && res.chips.length) content.appendChild(buildChips(res.chips));
         thread.appendChild(msg);
+      }
+
+      // First-time explore list — a scannable menu of where to start.
+      const STARTER = [
+        { kind: 'page', href: '/work/global-content-studio/', title: 'Global Content Studio', featured: true,
+          label: 'Start with the featured case study',
+          svg: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.09 5.26L19.5 9.5l-4 3.64L16.6 19 12 15.9 7.4 19l1.1-5.86-4-3.64 5.41-1.24L12 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>' },
+        { kind: 'intent', id: 'casestudies', label: 'Browse all case studies',
+          svg: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>' },
+        { kind: 'intent', id: 'about', label: 'About Bri',
+          svg: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' },
+        { kind: 'intent', id: 'resume', label: 'View résumé',
+          svg: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' },
+        { kind: 'intent', id: 'contact', label: 'Get in touch',
+          svg: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' }
+      ];
+      const STARTER_ARROW = '<span class="starter-arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+
+      function buildStarter() {
+        const wrap = document.createElement('div');
+        wrap.className = 'starter';
+        STARTER.forEach(it => {
+          let el;
+          if (it.kind === 'page') {
+            el = document.createElement('a');
+            el.href = it.href;
+            el.setAttribute('data-panel-title', it.title);
+          } else {
+            el = document.createElement('button');
+            el.type = 'button';
+            el.addEventListener('click', () => handleIntent(it.id, it.label));
+          }
+          el.className = 'starter-item';
+          el.innerHTML =
+            `<span class="starter-icon">${it.svg}</span>` +
+            `<span class="starter-label">${esc(it.label)}</span>` +
+            (it.featured ? '<span class="starter-featured">Featured</span>' : '') +
+            STARTER_ARROW;
+          wrap.appendChild(el);
+        });
+        return wrap;
       }
 
       function showTyping() {
@@ -666,9 +729,9 @@
       });
 
       addAgentMessage({
-        text: "Hi — I'm Brix, Bri's portfolio agent. Ask me anything about her work and background, or start with one of these.",
+        text: "Hi — I'm Brix, Bri's portfolio agent. Ask me anything about her work and background, or explore:",
         block: null,
-        chips: ['casestudies', 'about', 'resume', 'contact']
+        starter: true
       });
     })();
   </script>

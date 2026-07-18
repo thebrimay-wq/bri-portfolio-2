@@ -16,7 +16,7 @@ const INTERESTS = [
 ];
 
 const EXPERIENCE = [
-  { role: 'Creative Director & Lead Product Designer', company: 'Financial Finesse', period: '2020 – Present' },
+  { role: 'AI-Native Product Designer & Design Engineer', company: 'Financial Finesse', period: '2020 – Present' },
   { role: 'Senior Product Designer', company: 'Independent / Agency', period: '2017 – 2020' },
   { role: 'Product & Brand Designer', company: 'Various Startups', period: '2014 – 2017' },
 ];
@@ -60,7 +60,7 @@ export default function About() {
                   lineHeight: 1.7,
                   marginBottom: 18,
                 }}>
-                  Today I'm a Senior Product Designer and Creative Director — 10+ years in product
+                  Today I'm an AI-Native Product Designer and Design Engineer — 10+ years in product
                   design, designing since 2011. I live at the intersection of strategy and craft,
                   where a strong point of view meets pixel-level execution.
                 </p>

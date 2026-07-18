@@ -9,7 +9,7 @@ import FadeUp from '../components/FadeUp.jsx';
 
 const META = {
   name:        'Bri May',
-  title:       'Lead Product Designer & Creative Director',
+  title:       'AI-Native Product Designer & Design Engineer',
   intro:       'I design product experiences that simplify complexity, strengthen trust, and drive measurable business impact. My work sits at the intersection of product design, UX strategy, visual systems, and creative direction.',
   location:    'Bay Area, CA',
   availability:'Open to remote',
@@ -51,14 +51,14 @@ const IMPACT = [
   },
   {
     result:  'Full-cycle design leadership across 10 years',
-    context: 'Led product design, brand, marketing, and executive storytelling from IC to Creative Director — shipping across every major surface.',
+    context: 'Owned product design and front-end build across every major surface — from Figma tokens to shipped, accessible React UI, solo.',
   },
 ];
 
 const EXPERIENCE = [
   {
     company: 'Financial Finesse',
-    role:    'Lead Product Designer & Creative Director',
+    role:    'AI-Native Product Designer & Design Engineer',
     period:  '2015 – Present',
     summary: 'Led design across product, brand, and marketing for a financial wellness platform serving Fortune 500 companies. Owned end-to-end experience design across major platform redesigns, AI integration, UX strategy, design systems, and executive-facing storytelling.',
     bullets: [

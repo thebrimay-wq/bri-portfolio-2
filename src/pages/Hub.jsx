@@ -69,7 +69,7 @@ function HeroSection() {
 
         <FadeUp>
           <p className="eyebrow" style={{ marginBottom: 24 }}>
-            Creative Director &amp; Lead Product Designer · Financial Finesse
+            Lead Product Designer · Financial Finesse
           </p>
         </FadeUp>
 
