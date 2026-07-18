@@ -90,7 +90,7 @@
     .hero-summary {
       font-size: clamp(17px, 1.4vw, 20px);
       color: var(--ink-2);
-      line-height: 1.75;
+      line-height: 1.7;
       max-width: 640px;
     }
 
@@ -191,10 +191,10 @@
     }
 
     .company-context {
-      font-size: 13px;
-      color: var(--ink-3);
+      font-size: clamp(17px, 1.4vw, 20px);
+      color: var(--ink-2);
       margin-top: 10px;
-      line-height: 1.55;
+      line-height: 1.7;
       max-width: 560px;
     }
 
@@ -259,9 +259,9 @@
     }
 
     .role-bullets li {
-      font-size: 14px;
+      font-size: clamp(17px, 1.4vw, 20px);
       color: var(--ink-2);
-      line-height: 1.65;
+      line-height: 1.7;
       padding-left: 16px;
       position: relative;
       margin-bottom: 10px;
@@ -275,11 +275,6 @@
       left: 0;
       color: var(--border);
       font-weight: 400;
-    }
-
-    /* Smart Benefits highlight bullet */
-    .role-bullets li.highlight-bullet {
-      color: var(--ink);
     }
 
     .role-bullets li.highlight-bullet::before {
@@ -309,43 +304,6 @@
     .single-role-left .company-name { font-size: 17px; }
     .single-role-left .role-title { font-size: 14px; font-weight: 500; color: var(--ink-2); margin-top: 4px; }
     .single-role-left .role-period { font-size: 12px; color: var(--ink-3); margin-top: 3px; }
-
-    /* ─── Selected Work ───────────────────────────── */
-    .work-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .work-item {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: baseline;
-      gap: 24px;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .work-item:first-child { border-top: 1px solid var(--border); }
-
-    .work-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--ink);
-      letter-spacing: -0.01em;
-    }
-
-    .work-desc {
-      font-size: 13px;
-      color: var(--ink-3);
-      margin-top: 3px;
-    }
-
-    .work-tag {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--ink-3);
-      white-space: nowrap;
-    }
 
     /* ─── Skills ─────────────────────────────────── */
     .skills-list {
@@ -598,45 +556,6 @@
           </div>
         </div>
 
-      </section>
-
-      <!-- ── Selected Work ──────────────────────── -->
-      <section class="resume-section" id="work" aria-labelledby="work-heading">
-        <div class="section-header reveal">
-          <p class="eyebrow">Selected Work</p>
-          <h2 class="section-title" id="work-heading">Projects worth noting</h2>
-        </div>
-
-        <div class="work-list reveal">
-          <div class="work-item">
-            <div>
-              <div class="work-title">AI Global Content Studio</div>
-              <div class="work-desc">In-house AI engine — global scale at one country / week; won the Federal Reserve</div>
-            </div>
-            <div class="work-tag">AI · Built in 1 mo</div>
-          </div>
-          <div class="work-item">
-            <div>
-              <div class="work-title">Financial Finesse Hub</div>
-              <div class="work-desc">End-to-end platform design for enterprise financial wellness</div>
-            </div>
-            <div class="work-tag">200% engagement ↑</div>
-          </div>
-          <div class="work-item">
-            <div>
-              <div class="work-title">Smart Benefits</div>
-              <div class="work-desc">AI-powered benefits experience for enterprise-scale workforces</div>
-            </div>
-            <div class="work-tag">SaaS · AI</div>
-          </div>
-          <div class="work-item">
-            <div>
-              <div class="work-title">Aimee — AI Coaching Experience</div>
-              <div class="work-desc">Conversational onboarding &amp; personalization system</div>
-            </div>
-            <div class="work-tag">AI · UX</div>
-          </div>
-        </div>
       </section>
 
       <!-- ── Skills ─────────────────────────────── -->
