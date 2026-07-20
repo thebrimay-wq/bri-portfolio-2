@@ -42,6 +42,13 @@
     /* ── cs images / placeholders ── */
     .cs-image { width: 100%; height: auto; display: block; border-radius: 16px; transition: transform 0.5s ease; }
     .cs-image:hover { transform: scale(1.01); }
+
+    /* ── inline demo video (rounded, autoplay-loop, 2× via JS) ── */
+    .cs-video-slot { position: relative; }
+    .cs-video { width: 100%; height: auto; display: block; border-radius: 16px; box-shadow: 0 1px 0 rgba(0,0,0,0.02); }
+    /* until the video's data loads, show the placeholder and keep the <video> out of the way */
+    .cs-video-slot:not(.loaded) .cs-video { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .cs-video-slot.loaded .cs-video-ph { display: none; }
     .img-placeholder {
       width: 100%; aspect-ratio: 16 / 9; background: var(--surface);
       border: 1px dashed var(--border); border-radius: 16px;
@@ -264,9 +271,16 @@
           </div>
         </div>
 
-        <div style="margin-top:clamp(44px,6vw,64px);">
-          <!-- Replace with: <img class="cs-image" src="../../images/Global Content Studio Case Study/Library.png" alt="Content library with status, filters, and queue" /> -->
-          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Library.png</span>The content library — status · audience filter · localization queue</div>
+        <div class="cs-video-slot fade-up" style="margin-top:clamp(44px,6vw,64px);">
+          <!-- Drop gcs-localize-article.mp4 (H.264, ideally) into images/Global Content Studio Case Study/.
+               A .mov also works in Safari/most Chrome; .mp4 is best cross-browser. Plays at 2× (set in JS). -->
+          <video class="cs-video" autoplay muted loop playsinline preload="metadata"
+            aria-label="Localizing an article in Global Content Studio, sped up 2×"
+            onloadeddata="this.closest('.cs-video-slot').classList.add('loaded')">
+            <source src="../../images/Global Content Studio Case Study/gcs-localize-article.mp4" type="video/mp4" />
+            <source src="../../images/Global Content Studio Case Study/gcs-localize-article.mov" type="video/quicktime" />
+          </video>
+          <div class="img-placeholder cs-video-ph"><span class="img-placeholder-label">gcs-localize-article.mp4</span>Localizing an article — video plays here (2× speed)</div>
         </div>
       </div>
     </section>
@@ -529,6 +543,18 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 8);
     }, { passive: true });
+
+    // Demo videos play at 2×. Respect reduced-motion: pause + expose controls.
+    (function () {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelectorAll('video.cs-video').forEach(function (v) {
+        const setRate = function () { try { v.playbackRate = 2; } catch (e) {} };
+        setRate();
+        v.addEventListener('loadedmetadata', setRate);
+        v.addEventListener('play', setRate);
+        if (reduce) { v.removeAttribute('autoplay'); v.setAttribute('controls', ''); v.pause(); }
+      });
+    })();
   </script>
 
   <script src="/scripts/nav.js"></script>
