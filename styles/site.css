@@ -143,10 +143,30 @@ img, video {
   color: var(--accent);
 }
 
+/* Mobile menu toggle (button injected by scripts/nav.js) */
+.nav-toggle {
+  display: none;
+  width: 40px; height: 40px; padding: 0;
+  border: none; background: none; color: var(--ink); cursor: pointer;
+  align-items: center; justify-content: center;
+  border-radius: 8px; margin-right: -8px;
+}
+.nav-toggle:hover { background: var(--surface); }
+
 @media (max-width: 640px) {
   .nav-links {
     display: none;
   }
+  .nav-toggle { display: inline-flex; }
+  #site-nav.menu-open .nav-links {
+    display: flex; flex-direction: column; gap: 2px;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 6px var(--px) 18px;
+  }
+  #site-nav.menu-open .nav-links a { font-size: 16px; padding: 11px 0; }
 }
 
 

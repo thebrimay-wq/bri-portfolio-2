@@ -29,6 +29,8 @@ jobs:
           # Copy static site files
           cp index.html _site/
           cp CNAME _site/
+          cp favicon.svg _site/ 2>/dev/null || true
+          cp apple-touch-icon.png _site/ 2>/dev/null || true
           # Copy root images first, then public/images on top (clean filenames win)
           cp -r images/. _site/images/ 2>/dev/null || true
           cp -r public/images/. _site/images/ 2>/dev/null || true
