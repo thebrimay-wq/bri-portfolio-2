@@ -15,14 +15,10 @@
     .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); }
 
     /* ── section base ── */
-    .cs-section {
-      padding: clamp(80px, 10vw, 128px) 0;
-      border-top: 1px solid var(--border);
-    }
-    .cs-section--surface { background: var(--surface); }
+    .cs-section { padding: clamp(80px, 10vw, 128px) 0; border-top: 1px solid var(--border); }
     .eyebrow { margin-bottom: 20px; }
 
-    /* ── skip / jump link ── */
+    /* ── skip-to-solution link ── */
     .skip-link {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 13px; font-weight: 500; color: var(--ink-3);
@@ -53,202 +49,84 @@
     .img-placeholder--wide { aspect-ratio: 21 / 9; }
 
     /* ════ AT A GLANCE ════ */
-    .glance {
-      display: grid; grid-template-columns: 1.5fr 1fr;
-      gap: clamp(32px, 5vw, 72px); align-items: start; margin-top: 8px;
-    }
+    .glance { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; margin-top: 8px; }
     @media (max-width: 768px) { .glance { grid-template-columns: 1fr; gap: 32px; } }
-    .glance-summary {
-      font-size: clamp(18px, 1.6vw, 23px); line-height: 1.6;
-      color: var(--ink); font-weight: 500; max-width: 640px;
-    }
+    .glance-summary { font-size: clamp(18px, 1.6vw, 23px); line-height: 1.6; color: var(--ink); font-weight: 500; max-width: 640px; }
     .glance-facts { display: flex; flex-direction: column; }
-    .glance-facts > div {
-      display: flex; justify-content: space-between; gap: 20px;
-      padding: 14px 0; border-top: 1px solid var(--border);
-    }
+    .glance-facts > div { display: flex; justify-content: space-between; gap: 20px; padding: 14px 0; border-top: 1px solid var(--border); }
     .glance-facts > div:last-child { border-bottom: 1px solid var(--border); }
-    .glance-facts dt {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--ink-3); flex-shrink: 0;
-    }
-    .glance-facts dd {
-      font-size: 14px; color: var(--ink); font-weight: 500;
-      text-align: right; margin: 0; line-height: 1.45;
-    }
+    .glance-facts dt { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); flex-shrink: 0; }
+    .glance-facts dd { font-size: 14px; color: var(--ink); font-weight: 500; text-align: right; margin: 0; line-height: 1.45; }
 
     /* ════ 1. HERO ════ */
     .hero { padding: clamp(80px, 10vw, 130px) 0 0; overflow: hidden; }
-    .hero-eyebrow {
-      font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--ink-3); margin-bottom: 24px;
-    }
-    .hero h1 {
-      font-size: clamp(30px, 4vw, 58px); font-weight: 700; letter-spacing: -0.025em;
-      line-height: 1.05; max-width: 880px; margin-bottom: 28px; color: var(--ink);
-    }
+    .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 24px; }
+    .hero h1 { font-size: clamp(30px, 4vw, 58px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; max-width: 880px; margin-bottom: 28px; color: var(--ink); }
     .hero h1 span { color: var(--ink-3); }
-    .hero-lead {
-      font-size: clamp(16px, 1.3vw, 19px); color: var(--ink-2);
-      line-height: 1.72; max-width: 640px; margin-bottom: 52px;
-    }
+    .hero-lead { font-size: clamp(16px, 1.3vw, 19px); color: var(--ink-2); line-height: 1.72; max-width: 640px; margin-bottom: 52px; }
     .hero-stats { display: flex; gap: 52px; flex-wrap: wrap; margin-bottom: clamp(52px, 7vw, 96px); }
-    .hero-stat-val {
-      font-size: clamp(22px, 2.5vw, 34px); font-weight: 700; letter-spacing: -0.03em;
-      line-height: 1; margin-bottom: 7px; color: var(--ink);
-    }
-    .hero-stat-label {
-      font-size: 11px; color: var(--ink-3); font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-    }
+    .hero-stat-val { font-size: clamp(22px, 2.5vw, 34px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 7px; color: var(--ink); }
+    .hero-stat-label { font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
     .hero-image { width: 100%; }
-    .hero-image img, .hero-image .img-placeholder {
-      width: 100%; height: auto; display: block;
-      border-radius: 16px 16px 0 0; aspect-ratio: 16 / 9;
-    }
+    .hero-image img, .hero-image .img-placeholder { width: 100%; height: auto; display: block; border-radius: 16px 16px 0 0; aspect-ratio: 16 / 9; }
 
-    /* ════ section headings + body ════ */
-    .cs-h2 {
-      font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em;
-      line-height: 1.14; margin-bottom: 32px; max-width: 760px; color: var(--ink);
-    }
-    .cs-body {
-      font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2);
-      line-height: 1.78; max-width: 720px; margin: 0 0 24px;
-    }
-    .cs-body:last-child { margin-bottom: 0; }
-    .cs-body em { font-style: italic; }
-    .exp-header { max-width: 760px; margin-bottom: clamp(40px, 5vw, 56px); }
+    /* ════ 2. WHAT I OWNED ════ */
+    .owned-section { background: var(--surface); }
+    .owned-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: clamp(40px, 5vw, 56px); max-width: 720px; }
+    .owned-list { display: flex; flex-direction: column; max-width: 820px; }
+    .owned-item { display: grid; grid-template-columns: 220px 1fr; gap: clamp(16px, 3vw, 40px); padding: clamp(24px, 3vw, 32px) 0; border-top: 1px solid var(--border); align-items: start; }
+    .owned-item:last-child { border-bottom: 1px solid var(--border); }
+    @media (max-width: 700px) { .owned-item { grid-template-columns: 1fr; gap: 8px; } }
+    .owned-label { font-size: clamp(15px, 1.2vw, 17px); font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+    .owned-text { font-size: clamp(15px, 1.15vw, 17px); color: var(--ink-2); line-height: 1.7; margin: 0; }
 
-    /* ════ Before / After ════ */
-    .beforeafter {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: clamp(16px, 2.5vw, 24px); max-width: 900px; margin-top: clamp(40px, 5vw, 56px);
-    }
-    @media (max-width: 640px) { .beforeafter { grid-template-columns: 1fr; } }
-    .ba-card { border: 1px solid var(--border); border-radius: 16px; padding: clamp(24px, 3vw, 32px); background: var(--bg); }
-    .ba-card--after { background: var(--surface); border-color: rgba(155, 107, 87, 0.4); }
-    .ba-tag { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
-    .ba-card--after .ba-tag { color: var(--accent); }
-    .ba-title { font-size: clamp(17px, 1.4vw, 20px); font-weight: 700; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 8px; }
-    .ba-text { font-size: 15px; color: var(--ink-2); line-height: 1.6; margin: 0; }
+    /* ════ 3. PROBLEM ════ */
+    .problem-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin: 0 0 24px; }
+    .problem-bullets { display: flex; flex-direction: column; gap: 18px; max-width: 720px; margin-top: 36px; }
+    .problem-bullet { display: flex; gap: 14px; align-items: flex-start; font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.7; }
+    .problem-bullet .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); flex-shrink: 0; margin-top: 10px; }
+    .problem-bullet strong { color: var(--ink); font-weight: 600; }
 
-    /* ════ two-column lists + sub-label ════ */
-    .two-col {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: clamp(40px, 6vw, 80px); align-items: start; max-width: 900px;
-    }
-    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; gap: 40px; } }
-    .mini-label { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); margin-bottom: 18px; }
-    .bullet-list { display: flex; flex-direction: column; gap: 14px; }
-    .bullet-item {
-      display: flex; gap: 12px; align-items: flex-start;
-      font-size: clamp(15px, 1.15vw, 17px); color: var(--ink-2); line-height: 1.65;
-    }
-    .bullet-item strong { color: var(--ink); font-weight: 600; }
-    .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); flex-shrink: 0; margin-top: 9px; }
+    /* ════ 4. PROCESS surface + transform table ════ */
+    .opportunity-section { background: var(--surface); }
+    .transform-table { max-width: 720px; }
+    .transform-row { display: flex; align-items: center; gap: 20px; padding: clamp(20px, 2.5vw, 32px) 0; border-top: 1px solid var(--border); }
+    .transform-from { font-size: clamp(15px, 1.2vw, 17px); color: var(--ink-3); text-decoration: line-through; flex: 1; }
+    .transform-arrow { font-size: 12px; color: var(--ink-3); letter-spacing: 0.05em; flex-shrink: 0; }
+    .transform-to { font-size: clamp(15px, 1.2vw, 17px); font-weight: 600; color: var(--ink); flex: 1; }
 
-    /* ════ Solution — numbered pillars ════ */
-    .numbered-list { display: flex; flex-direction: column; max-width: 820px; margin-top: 8px; }
-    .numbered-item {
-      display: grid; grid-template-columns: 48px 1fr; gap: clamp(16px, 2.5vw, 32px);
-      padding: clamp(22px, 2.6vw, 30px) 0; border-top: 1px solid var(--border); align-items: start;
-    }
+    /* ════ 5. SOLUTION ════ */
+    .solution-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 32px; max-width: 720px; }
+    .solution-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin-bottom: 40px; }
+    .numbered-list { display: flex; flex-direction: column; margin-bottom: 0; max-width: 820px; }
+    .numbered-item { display: grid; grid-template-columns: 48px 1fr; gap: clamp(16px, 2.5vw, 32px); padding: clamp(20px, 2.5vw, 28px) 0; border-top: 1px solid var(--border); align-items: start; }
     .numbered-item:last-child { border-bottom: 1px solid var(--border); }
-    .numbered-item-n { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-3); padding-top: 5px; }
+    .numbered-item-n { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-3); padding-top: 4px; }
     .numbered-item-text { font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.72; margin: 0; }
     .numbered-item-text strong { color: var(--ink); font-weight: 700; }
+    .why-note { display: block; margin-top: 6px; font-size: 13.5px; color: var(--ink-3); line-height: 1.55; font-style: italic; }
 
-    /* ════ Atlas pipeline (gate + vertical steps) ════ */
-    .atlas-gate {
-      max-width: 820px; border: 1px dashed var(--border); border-radius: 14px;
-      background: var(--surface); padding: clamp(20px, 2.4vw, 26px) clamp(22px, 2.6vw, 30px); margin-bottom: 8px;
-    }
-    .atlas-gate-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-    .atlas-gate-name { font-size: clamp(16px, 1.3vw, 18px); font-weight: 700; color: var(--ink); margin-bottom: 6px; }
-    .atlas-gate-desc { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin: 0 0 8px; }
-    .atlas-why { font-size: 13px; color: var(--ink-3); line-height: 1.55; margin: 0; font-style: italic; }
-    .atlas-list { max-width: 820px; }
-    .atlas-step {
-      display: grid; grid-template-columns: 48px 1fr; gap: clamp(16px, 2.5vw, 28px);
-      padding: clamp(22px, 2.6vw, 30px) 0; border-top: 1px solid var(--border); align-items: start;
-    }
-    .atlas-step:last-child { border-bottom: 1px solid var(--border); }
-    .atlas-n { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: var(--ink-3); padding-top: 5px; }
-    .atlas-name { font-size: clamp(16px, 1.35vw, 19px); font-weight: 700; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 8px; }
-    .atlas-desc { font-size: clamp(15px, 1.15vw, 17px); color: var(--ink-2); line-height: 1.7; margin: 0 0 8px; }
-    .atlas-note { font-size: 14px; color: var(--ink-3); line-height: 1.6; max-width: 820px; margin-top: 28px; font-style: italic; }
+    /* ════ 6. EXPERIENCE / PIPELINE HEADERS ════ */
+    .exp-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 0; }
+    .exp-body { font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.75; max-width: 640px; margin-top: 20px; margin-bottom: 0; }
+    .exp-header { max-width: 760px; margin-bottom: clamp(40px, 5vw, 56px); }
 
-    /* ════ stat cards ════ */
-    .stat-cards {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin: clamp(40px, 5vw, 56px) 0;
-    }
-    @media (max-width: 900px) { .stat-cards { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 480px) { .stat-cards { grid-template-columns: 1fr; } }
-    .stat-card { background: var(--bg); padding: clamp(26px, 3vw, 40px) clamp(20px, 2.2vw, 30px); }
-    .stat-card-val { font-size: clamp(28px, 3.2vw, 44px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: var(--ink); margin-bottom: 12px; }
-    .stat-card-label { font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+    /* ════ 7. PROCESS body / pullquote ════ */
+    .process-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin-bottom: clamp(40px, 5vw, 56px); }
+    .process-pullquote { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink); line-height: 1.65; font-weight: 500; font-style: italic; border-left: 2px solid var(--border); padding-left: 24px; margin: clamp(48px, 6vw, 72px) 0 0; max-width: 720px; }
 
-    /* ════ counterfactual compare ════ */
-    .compare {
-      display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.5vw, 24px);
-      max-width: 900px; margin-top: clamp(28px, 3.5vw, 40px);
-    }
-    @media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }
-    .compare-card { border: 1px solid var(--border); border-radius: 16px; padding: clamp(24px, 3vw, 32px); background: var(--bg); }
-    .compare-card--actual { background: var(--surface); border-color: rgba(155, 107, 87, 0.4); }
-    .compare-head { font-size: clamp(20px, 2vw, 28px); font-weight: 700; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 4px; line-height: 1; }
-    .compare-sub { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 22px; }
-    .compare-card--actual .compare-sub { color: var(--accent); }
-
-    /* ════ callout (honest framing) ════ */
-    .callout {
-      border-left: 2px solid var(--accent); padding-left: 24px; max-width: 760px;
-      margin-top: clamp(36px, 4.5vw, 56px); font-size: clamp(16px, 1.3vw, 18px);
-      color: var(--ink-2); line-height: 1.75;
-    }
-    .callout strong { color: var(--ink); font-weight: 600; }
-
-    /* ════ pull quote ════ */
-    .cs-pullquote {
-      font-size: clamp(17px, 1.4vw, 20px); color: var(--ink); line-height: 1.65;
-      font-weight: 500; font-style: italic; border-left: 2px solid var(--border);
-      padding-left: 24px; margin: clamp(40px, 5vw, 56px) 0 0; max-width: 720px;
-    }
-
-    /* ════ IMPACT ════ */
+    /* ════ 8. IMPACT ════ */
     .impact-section { text-align: center; }
-    .impact-h2 {
-      font-size: clamp(26px, 3.5vw, 46px); font-weight: 700; letter-spacing: -0.03em;
-      line-height: 1.1; max-width: 640px; margin: 0 auto clamp(52px, 6vw, 80px); text-align: center;
-    }
-    .impact-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
-      text-align: left; margin-bottom: clamp(48px, 6vw, 72px);
-    }
+    .impact-h2 { font-size: clamp(26px, 3.5vw, 46px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; max-width: 620px; margin: 0 auto clamp(52px, 6vw, 80px); text-align: center; }
+    .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; text-align: left; margin-bottom: clamp(48px, 6vw, 72px); }
     @media (max-width: 640px) { .impact-grid { grid-template-columns: 1fr; } }
     .impact-cell { background: var(--bg); padding: clamp(28px, 3.5vw, 48px) clamp(20px, 2.5vw, 36px); }
     .impact-val { font-size: clamp(28px, 3.5vw, 52px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-bottom: 12px; color: var(--ink); }
     .impact-label { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
     .client-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-    .client-pill {
-      font-size: 13px; font-weight: 500; color: var(--ink-2);
-      background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px;
-    }
+    .client-pill { font-size: 13px; font-weight: 500; color: var(--ink-2); background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; }
 
-    /* ════ Learnings — numbered ════ */
-    .learn-list { display: flex; flex-direction: column; max-width: 820px; }
-    .learn-item {
-      display: grid; grid-template-columns: 56px 1fr; gap: clamp(20px, 3vw, 40px);
-      padding: clamp(28px, 3.5vw, 44px) 0; border-top: 1px solid var(--border); align-items: start;
-    }
-    .learn-n { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding-top: 6px; }
-    .learn-title { font-size: clamp(17px, 1.5vw, 20px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 14px; color: var(--ink); }
-    .learn-body { font-size: clamp(15px, 1.15vw, 17px); color: var(--ink-2); line-height: 1.75; max-width: 680px; margin: 0; }
-
-    /* ════ FINAL TAKEAWAY ════ */
+    /* ════ 9. FINAL TAKEAWAY ════ */
     .takeaway-section { background: var(--surface); padding: clamp(88px, 12vw, 160px) 0; border-top: 1px solid var(--border); }
     .takeaway-text { font-size: clamp(24px, 3.5vw, 48px); font-weight: 700; letter-spacing: -0.035em; line-height: 1.12; max-width: 900px; color: var(--ink); }
     .takeaway-text strong { color: var(--ink); }
@@ -285,7 +163,7 @@
     <!-- ════ 1. HERO ════ -->
     <section class="hero">
       <div class="wrap">
-        <p class="hero-eyebrow fade-up">Case Study — AI Product Design &amp; Build · Financial Finesse · 2026</p>
+        <p class="hero-eyebrow fade-up">Lead Product Designer &amp; Builder · Financial Finesse · 2026</p>
 
         <h1 class="fade-up" style="transition-delay:50ms;">
           I designed and built an AI content studio that localized our content for 25 countries at one country a day —
@@ -326,7 +204,7 @@
       <div class="wrap fade-up">
         <span class="eyebrow">At a glance</span>
         <div class="glance">
-          <p class="glance-summary">Financial Finesse's team was writing company content on scattered, unregulated AI subscriptions. I designed and built Global Content Studio — one brand-trained AI studio with an 8-step localization pipeline called Atlas — solo, with Claude Code. It localized ~650 pieces into 25 countries in 25 days: work that would have cost $2.44M and taken 9 months by hand.</p>
+          <p class="glance-summary">Financial Finesse's team was writing company content on scattered, unregulated AI subscriptions. I designed and built Global Content Studio — one brand-trained AI studio with an 8-step localization pipeline (Atlas) — solo, with Claude Code. It localized ~650 pieces into 25 countries in 25 days: work that would have cost $2.44M and taken 9 months by hand.</p>
           <dl class="glance-facts">
             <div><dt>Role</dt><dd>Lead Product Designer &amp; Builder</dd></div>
             <div><dt>Timeline</dt><dd>2026 · ~2 wks to build, 4 to refine</dd></div>
@@ -336,75 +214,93 @@
         </div>
         <div class="jump-nav">
           <span class="jump-label">Jump to</span>
-          <a class="jump-chip" href="#origin">Origin</a>
-          <a class="jump-chip" href="#solution">Solution</a>
-          <a class="jump-chip" href="#atlas">The Atlas pipeline</a>
-          <a class="jump-chip" href="#numbers">The numbers</a>
+          <a class="jump-chip" href="#owned">What I owned</a>
+          <a class="jump-chip" href="#gcs-solution">Solution</a>
+          <a class="jump-chip" href="#process">Process</a>
+          <a class="jump-chip" href="#impact">Impact</a>
         </div>
       </div>
     </section>
 
-    <!-- ════ 1. THE ORIGIN ════ -->
-    <section id="origin" class="cs-section">
+    <!-- ════ 2. WHAT I OWNED ════ -->
+    <section id="owned" class="cs-section owned-section">
       <div class="wrap fade-up">
-        <span class="eyebrow">Where this started</span>
-        <h2 class="cs-h2">Everyone had an AI tool. None of them sounded like us.</h2>
-        <p class="cs-body">Last year, AI went from novelty to daily habit across the company. I watched most of our team reach for it to write and edit content — each on their own paid subscription, each with no guardrails. The output was fast, but it didn't sound like Financial Finesse, and we had no way to regulate what any of it said. In a business built on financial trust, that's a real risk.</p>
-        <p class="cs-body">So I asked a simple question: what if there was one tool, built on our voice standards, our tone, and our expertise — so everything that came out of it matched the company by default? People would stop reaching for tools we couldn't control, and every piece would be on-brand the moment it was generated.</p>
-        <p class="cs-body">That idea became the Global Content Studio. Writers went from spending hours on a piece to minutes.</p>
+        <span class="eyebrow">My Role</span>
+        <h2 class="owned-h2">Strategy, design, AI training, and the build — end to end</h2>
 
-        <div class="beforeafter">
-          <div class="ba-card ba-card--before">
-            <span class="ba-tag">Before</span>
-            <div class="ba-title">Scattered, unregulated AI</div>
-            <p class="ba-text">Personal subscriptions, off-brand voice, compliance risk on every draft.</p>
+        <div class="owned-list">
+          <div class="owned-item">
+            <div class="owned-label">Strategy</div>
+            <p class="owned-text">Spotted the risk in the team's scattered, unregulated AI and defined the product — then saw where the company was headed and pivoted it from a writing tool into a localization engine.</p>
           </div>
-          <div class="ba-card ba-card--after">
-            <span class="ba-tag">After</span>
-            <div class="ba-title">One brand-trained studio</div>
-            <p class="ba-text">Company voice by default, compliance built in, content in minutes instead of hours.</p>
+          <div class="owned-item">
+            <div class="owned-label">Product design</div>
+            <p class="owned-text">UX, UI, and the authoring workflow — from a single prompt to a compliance-checked, localized asset, one country at a time or in bulk.</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ 2. THE PROBLEM — going global ════ -->
-    <section class="cs-section cs-section--surface">
-      <div class="wrap fade-up">
-        <span class="eyebrow">The turn</span>
-        <h2 class="cs-h2">Then we decided to go global.</h2>
-        <p class="cs-body">Once the studio proved itself for writing, I saw where the company was headed: every market, every country. Localizing our library the traditional way would have meant hiring one in-country specialist per market, then having each of them translate, culturally adapt, and QA every single item. It was slow, expensive, and it didn't scale.</p>
-
-        <div class="two-col" style="margin-top:clamp(40px,5vw,56px);">
-          <div>
-            <div class="mini-label">The scale problem</div>
-            <div class="bullet-list">
-              <div class="bullet-item"><span class="bullet-dot"></span><span>~650 global content pieces to localize</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>25 countries — each with its own language, laws, and culture</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>16,250 localized outputs needed in total</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>Traditional path: recruit, onboard, and manage 25 in-country localizers</span></div>
-            </div>
+          <div class="owned-item">
+            <div class="owned-label">AI training</div>
+            <p class="owned-text">Built the brand voice, compliance rules, and the per-country LLM Wiki the model runs on — the source-of-truth layer that makes generic AI safe for Financial Finesse.</p>
           </div>
-          <div>
-            <div class="mini-label">Why translation alone wasn't enough</div>
-            <div class="bullet-list">
-              <div class="bullet-item"><span class="bullet-dot"></span><span>Financial advice changes by country: tax structures, retirement systems, regulations</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>Tone, customs, religion, and ways of life all shape how money is discussed</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>A literal translation would be technically correct and completely wrong for the reader</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>Getting it wrong in a financial context isn't a typo — it's a liability</span></div>
-            </div>
+          <div class="owned-item">
+            <div class="owned-label">Build</div>
+            <p class="owned-text">Coded the entire app myself with Claude Code, zero to one, no engineering help — first working version in about two weeks, refined over four.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Ship</div>
+            <p class="owned-text">Designed the Atlas pipeline and the human-in-the-loop QA that lets it run at scale — in production, localizing our library across 25 countries.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ════ 3. THE SOLUTION ════ -->
-    <section id="solution" class="cs-section">
+    <!-- ════ 3. THE PROBLEM ════ -->
+    <section class="cs-section">
       <div class="wrap fade-up">
-        <span class="eyebrow">The solution</span>
-        <h2 class="cs-h2">From a writing tool to a localization engine.</h2>
-        <p class="cs-body" style="margin-bottom:8px;">I pivoted the studio from writing content to writing <em>and</em> localizing it. It can take an existing article or write a brand-new one, then adapt it for any country in the world — one at a time or in bulk. Not a translation. A rewrite in the correct tone, financial structure, customs, and culture.</p>
+        <span class="eyebrow">The Problem</span>
+        <h2 class="solution-h2">Everyone had an AI tool. None of them sounded like us — and then we decided to go global.</h2>
+        <p class="problem-body">Last year, AI went from novelty to daily habit across the company. Most of the team reached for it to write and edit content — each on their own paid subscription, each with no guardrails. The output was fast, but it didn't sound like Financial Finesse, and we had no way to regulate what any of it said. In a business built on financial trust, that's a real risk.</p>
+        <p class="problem-body">Then the company set its sights on every market. Localizing our library the traditional way would have meant hiring one in-country specialist per market, then having each of them translate, culturally adapt, and QA every single item — slow, expensive, and impossible to scale.</p>
 
+        <div class="problem-bullets">
+          <div class="problem-bullet">
+            <span class="bullet-dot"></span>
+            <span><strong>~650 pieces × 25 countries = 16,250</strong> localized outputs needed — and 25 in-country localizers to recruit and manage.</span>
+          </div>
+          <div class="problem-bullet">
+            <span class="bullet-dot"></span>
+            <span>Financial advice <strong>changes by country</strong>: tax structures, retirement systems, and regulations are all different.</span>
+          </div>
+          <div class="problem-bullet">
+            <span class="bullet-dot"></span>
+            <span>Tone, customs, religion, and ways of life all shape how money is discussed — a literal translation would be technically correct and <strong>completely wrong for the reader</strong>.</span>
+          </div>
+          <div class="problem-bullet">
+            <span class="bullet-dot"></span>
+            <span>Getting it wrong in a financial context isn't a typo — <strong>it's a liability</strong>.</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 48px;">
+          <a class="skip-link" onclick="document.getElementById('gcs-solution').scrollIntoView({behavior:'smooth'})" href="#gcs-solution">
+            Jump to solution →
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ 5. THE SOLUTION ════ -->
+    <section id="gcs-solution" class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">The Solution</span>
+        <h2 class="solution-h2">From a writing tool to a localization engine</h2>
+        <p class="solution-body">
+          I pivoted the studio from writing content to writing <em>and</em> localizing it. It can take an existing
+          article or write a brand-new one, then adapt it for any country in the world — one at a time or in bulk.
+          Not a translation. A rewrite in the correct tone, financial structure, customs, and culture.
+        </p>
         <div class="numbered-list">
           <div class="numbered-item">
             <span class="numbered-item-n">01</span>
@@ -426,177 +322,114 @@
       </div>
     </section>
 
-    <!-- ════ 4. THE PIPELINE — Atlas ════ -->
-    <section id="atlas" class="cs-section cs-section--surface">
+    <!-- ════ 6. THE PIPELINE — Atlas ════ -->
+    <section class="cs-section">
       <div class="wrap">
         <div class="exp-header fade-up">
-          <span class="eyebrow">Inside Atlas</span>
-          <h2 class="cs-h2" style="margin-bottom:24px;">What happens to every article.</h2>
-          <p class="cs-body">I designed an 8-step pipeline — Atlas — that every article moves through, whether it's brand-new or being localized. It starts with a fit check that decides whether the piece even belongs in that market, then runs eight controlled steps before anything can publish.</p>
+          <span class="eyebrow">The Pipeline</span>
+          <h2 class="exp-h2">Inside Atlas — what happens to every article</h2>
+          <p class="exp-body">
+            Every article moves through Atlas, an 8-step pipeline — whether it's brand-new or being localized. It
+            starts with a fit check that decides whether the piece even belongs in that market (if it's built around
+            something that doesn't exist there, we don't localize it), then runs eight controlled steps. Confidence
+            scoring runs across the whole pipeline: each output is rated at least 0.9 on tone, financial structure,
+            customs, culture, and compliance.
+          </p>
         </div>
 
-        <div class="fade-up" style="transition-delay:80ms;">
-          <div class="atlas-gate">
-            <span class="atlas-gate-label">Gate · Fit check</span>
-            <div class="atlas-gate-name">Does this topic even apply here?</div>
-            <p class="atlas-gate-desc">Before anything runs, we ask whether the topic even applies in this market. If an article is built around something that doesn't exist there, we don't localize it.</p>
-            <p class="atlas-why">Why it matters: we never localize advice that doesn't fit the reader's country.</p>
+        <div class="numbered-list fade-up" style="transition-delay:90ms;">
+          <div class="numbered-item">
+            <span class="numbered-item-n">01</span>
+            <p class="numbered-item-text"><strong>Triage.</strong> Size up how much the article needs to change to work in the new market, so simple pieces move fast and complex ones get the attention they need.<span class="why-note">Why it matters: effort goes where it's actually needed.</span></p>
           </div>
-
-          <div class="atlas-list">
-            <div class="atlas-step">
-              <span class="atlas-n">01</span>
-              <div>
-                <div class="atlas-name">Triage</div>
-                <p class="atlas-desc">Size up how much the article needs to change to work in the new market, so simple pieces move fast and complex ones get the attention they need.</p>
-                <p class="atlas-why">Why it matters: effort goes where it's actually needed.</p>
-              </div>
-            </div>
-            <div class="atlas-step">
-              <span class="atlas-n">02</span>
-              <div>
-                <div class="atlas-name">Research the local facts</div>
-                <p class="atlas-desc">Pull the real facts for that country from LLM Wiki: local programs, limits, and rules. Anything time-sensitive is flagged to be verified before it ships.</p>
-                <p class="atlas-why">Why it matters: local facts come from a source of truth we control, not a web search.</p>
-              </div>
-            </div>
-            <div class="atlas-step">
-              <span class="atlas-n">03</span>
-              <div>
-                <div class="atlas-name">Rewrite for the market</div>
-                <p class="atlas-desc">Rewrite the article in the local language and our coach voice. For English-speaking markets, we swap the regional facts rather than translate.</p>
-                <p class="atlas-why">Why it matters: it reads as locally authored, not as raw machine translation.</p>
-              </div>
-            </div>
-            <div class="atlas-step">
-              <span class="atlas-n">04</span>
-              <div>
-                <div class="atlas-name">Cultural review</div>
-                <p class="atlas-desc">Check that tone, examples, and expressions fit the culture, customs, and ways of life of the market.</p>
-                <p class="atlas-why">Why it matters: we catch wording that reads as foreign or off-brand before a human ever sees it.</p>
-              </div>
-            </div>
-            <div class="atlas-step">
-              <span class="atlas-n">05</span>
-              <div>
-                <div class="atlas-name">Numbers &amp; compliance</div>
-                <p class="atlas-desc">Verify every figure, rate, and legal statement against the market, and flag anything that needs a closer look.</p>
-                <p class="atlas-why">Why it matters: in financial content, a wrong number is a real risk.</p>
-              </div>
-            </div>
-            <div class="atlas-step">
-              <span class="atlas-n">06</span>
-              <div>
-                <div class="atlas-name">The guardrail</div>
-                <p class="atlas-desc">Automatically scrub every localized article of US-specific links and US-only terms, swapping them for the local equivalent. Anything the system can't safely fix is blocked from publishing until a person handles it.</p>
-                <p class="atlas-why">Why it matters: a US reference never slips through unseen.</p>
-              </div>
-            </div>
-            <div class="atlas-step">
-              <span class="atlas-n">07</span>
-              <div>
-                <div class="atlas-name">Human review</div>
-                <p class="atlas-desc">A financial coach reviews everything the system flagged and approves the article. Every localized piece waits here for a person.</p>
-                <p class="atlas-why">Why it matters: nothing publishes itself — a human always has the final say.</p>
-              </div>
-            </div>
-            <div class="atlas-step">
-              <span class="atlas-n">08</span>
-              <div>
-                <div class="atlas-name">Publish</div>
-                <p class="atlas-desc">Once approved, the article is released to our shared library for that market, where everyone sees the same reviewed version.</p>
-                <p class="atlas-why">Why it matters: one controlled, consistent release across every market we serve.</p>
-              </div>
-            </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">02</span>
+            <p class="numbered-item-text"><strong>Research the local facts.</strong> Pull the real facts for that country from LLM Wiki — local programs, limits, and rules. Anything time-sensitive is flagged to be verified before it ships.<span class="why-note">Why it matters: local facts come from a source of truth we control, not a web search.</span></p>
           </div>
-
-          <p class="atlas-note">Confidence scoring runs across the pipeline: each output is rated at least 0.9 on tone, financial structure, customs, culture, and compliance — with reasons for every change and a flag on anything uncertain.</p>
+          <div class="numbered-item">
+            <span class="numbered-item-n">03</span>
+            <p class="numbered-item-text"><strong>Rewrite for the market.</strong> Rewrite the article in the local language and our coach voice. For English-speaking markets, we swap the regional facts rather than translate.<span class="why-note">Why it matters: it reads as locally authored, not as raw machine translation.</span></p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">04</span>
+            <p class="numbered-item-text"><strong>Cultural review.</strong> Check that tone, examples, and expressions fit the culture, customs, and ways of life of the market.<span class="why-note">Why it matters: we catch wording that reads as foreign or off-brand before a human ever sees it.</span></p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">05</span>
+            <p class="numbered-item-text"><strong>Numbers &amp; compliance.</strong> Verify every figure, rate, and legal statement against the market, and flag anything that needs a closer look.<span class="why-note">Why it matters: in financial content, a wrong number is a real risk.</span></p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">06</span>
+            <p class="numbered-item-text"><strong>The guardrail.</strong> Automatically scrub every localized article of US-specific links and US-only terms, swapping them for the local equivalent. Anything the system can't safely fix is blocked from publishing until a person handles it.<span class="why-note">Why it matters: a US reference never slips through unseen.</span></p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">07</span>
+            <p class="numbered-item-text"><strong>Human review.</strong> A financial coach reviews everything the system flagged and approves the article. Every localized piece waits here for a person.<span class="why-note">Why it matters: nothing publishes itself — a human always has the final say.</span></p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">08</span>
+            <p class="numbered-item-text"><strong>Publish.</strong> Once approved, the article is released to our shared library for that market, where everyone sees the same reviewed version.<span class="why-note">Why it matters: one controlled, consistent release across every market we serve.</span></p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ════ 5. THE NUMBERS ════ -->
-    <section id="numbers" class="cs-section">
+    <!-- ════ 7. PROCESS — solo build + the counterfactual ════ -->
+    <section id="process" class="cs-section opportunity-section">
       <div class="wrap">
-        <span class="eyebrow fade-up">The impact</span>
-        <h2 class="cs-h2 fade-up" style="transition-delay:60ms; margin-bottom:24px;">9 months of work, done in 25 days.</h2>
-        <p class="cs-body fade-up" style="transition-delay:100ms;">We localized ~650 content pieces into 25 countries — 16,250 outputs — at one country a day, 25 days in all. Here's what that same work would have cost done the traditional way, by hand.</p>
+        <span class="eyebrow fade-up">Process</span>
+        <h2 class="solution-h2 fade-up" style="transition-delay:60ms;">Designed and built solo. Zero to one, no dev team.</h2>
+        <p class="process-body fade-up" style="transition-delay:100ms;">
+          I built this entire app myself with Claude Code — from zero to one, with no engineering help. The first
+          working version came together in about two weeks; I spent the four after that tuning the pipeline until
+          every step held up under real content. A traditional version would have needed a PM, a designer, and a
+          multi-person dev pod running for months. I did it as one designer who can build — directing AI, shipping
+          production code. Here's what the localization run would have cost the traditional way, by hand:
+        </p>
 
-        <div class="stat-cards fade-up" style="transition-delay:130ms;">
-          <div class="stat-card"><div class="stat-card-val">$2.42M</div><div class="stat-card-label">Net cost avoided vs. hiring 25 in-country localizers (99.1% lower)</div></div>
-          <div class="stat-card"><div class="stat-card-val">115&times;</div><div class="stat-card-label">Cheaper than the human counterfactual</div></div>
-          <div class="stat-card"><div class="stat-card-val">615&times;</div><div class="stat-card-label">Less human effort</div></div>
-          <div class="stat-card"><div class="stat-card-val">25 days</div><div class="stat-card-label">To localize all 25 countries, down from ~9.4 months</div></div>
-        </div>
-
-        <div class="compare fade-up">
-          <div class="compare-card">
-            <div class="compare-head">~$2.44M</div>
-            <div class="compare-sub">The traditional way (modeled conservatively)</div>
-            <div class="bullet-list">
-              <div class="bullet-item"><span class="bullet-dot"></span><span>25 in-country localizers, one per market, to recruit and manage</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>~2.5 hours per item at a $60/hr blended rate</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>40,625 hours of human work</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>~9.4 months even with all 25 working in parallel — before any hiring lead time</span></div>
-            </div>
+        <div class="transform-table fade-up" style="transition-delay:130ms;">
+          <div class="transform-row">
+            <span class="transform-from">~9.4 months, even with 25 people in parallel</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">25 days — one country a day</span>
           </div>
-          <div class="compare-card compare-card--actual">
-            <div class="compare-head">$21,287</div>
-            <div class="compare-sub">What it actually cost — all in</div>
-            <div class="bullet-list">
-              <div class="bullet-item"><span class="bullet-dot"></span><span>$3,835 in Anthropic API usage</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>$4,760 in coach review time (two coaches)</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>$12,692 one-time cost to build the tool</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>Delivered in 25 days, one country per day</span></div>
-            </div>
+          <div class="transform-row">
+            <span class="transform-from">25 in-country localizers to recruit &amp; manage</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Solo, with an AI pipeline</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">~$2.44M in labor</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">$21,287 all in — 115× cheaper</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">Specs → handoff → dev sprint</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Design and build in one loop</span>
           </div>
         </div>
 
-        <p class="callout fade-up">Every figure comes from transparent, adjustable assumptions — hours per item, blended rate, team size. The human timeline is deliberately conservative: it doesn't even count the weeks or months it would take to recruit 25 in-country specialists. And because the studio is a reusable platform, that one-time build cost amortizes across every future localization run. <strong>The next library is nearly free.</strong></p>
+        <p class="process-pullquote fade-up" style="transition-delay:170ms;">
+          "A tool one designer built in two weeks changed what our company thought it could go after — and helped us win the Federal Reserve."
+        </p>
       </div>
     </section>
 
-    <!-- ════ 6. THE BUILD — solo ════ -->
-    <section class="cs-section cs-section--surface">
-      <div class="wrap fade-up">
-        <span class="eyebrow">How it was built</span>
-        <h2 class="cs-h2">Designed and built solo. Zero to one, no dev team.</h2>
-        <p class="cs-body">I built this entire app myself with Claude Code — from zero to one, with no engineering help. The first working version came together in about two weeks. I spent the four weeks after that perfecting the product and tuning the pipeline until every step held up under real content.</p>
-        <p class="cs-body">This is the part I'm proudest of. The product proves what AI unlocks for a content team. The way I built it proves the same thing for design. A traditional version of this project would have needed a PM, a designer, and a multi-person dev pod running for months. I did it as one designer who can build — directing AI, shipping production code.</p>
-
-        <div class="hero-stats" style="margin-top:clamp(40px,5vw,56px); margin-bottom:0;">
-          <div><div class="hero-stat-val">~2 weeks</div><div class="hero-stat-label">Zero to first working version</div></div>
-          <div><div class="hero-stat-val">+4 weeks</div><div class="hero-stat-label">Refining product &amp; pipeline</div></div>
-          <div><div class="hero-stat-val">Solo</div><div class="hero-stat-label">Designed, built &amp; shipped end to end</div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ 7. THE TRAJECTORY SHIFT ════ -->
-    <section class="cs-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow">What changed</span>
-        <h2 class="cs-h2">It changed where the company was going.</h2>
-        <p class="cs-body">When I showed the Global Content Studio to our CEO, the reaction wasn't "nice tool." It was a shift in what the company believed was possible. Going global stopped being a someday goal that required a translation budget and a hiring plan, and became something we could actually do — now, in days.</p>
-        <p class="cs-body">That capability changed our trajectory. Being able to localize our entire library accurately, on-brand, and at a fraction of the cost became part of how we won new business — including the Federal Reserve. The studio didn't just save money on content. It became a reason clients chose us.</p>
-        <p class="cs-pullquote">"A tool one designer built in two weeks changed what our company thought it could go after — and helped us win the Federal Reserve."</p>
-      </div>
-    </section>
-
-    <!-- ════ 8. IMPACT / CLIENTS ════ -->
+    <!-- ════ 8. IMPACT ════ -->
     <section id="impact" class="cs-section impact-section">
       <div class="wrap">
         <p class="eyebrow fade-up" style="text-align:center;">Impact</p>
-        <h2 class="impact-h2 fade-up" style="transition-delay:60ms;">In production, serving the companies that trust us.</h2>
+        <h2 class="impact-h2 fade-up" style="transition-delay:60ms;">9 months of work, done in 25 days — in production today.</h2>
 
         <div class="impact-grid fade-up" style="transition-delay:90ms;">
           <div class="impact-cell">
-            <div class="impact-val">25</div>
-            <p class="impact-label">Countries localized from one authoring system</p>
+            <div class="impact-val">$2.42M</div>
+            <p class="impact-label">Net cost avoided vs. hiring 25 in-country localizers — 99.1% lower</p>
           </div>
           <div class="impact-cell">
-            <div class="impact-val">16,250</div>
-            <p class="impact-label">On-brand outputs delivered in the first run</p>
+            <div class="impact-val">25</div>
+            <p class="impact-label">Countries localized from one authoring system — 16,250 on-brand outputs</p>
           </div>
           <div class="impact-cell">
             <div class="impact-val">1M+</div>
@@ -615,37 +448,6 @@
           <span class="client-pill">Nestlé</span>
           <span class="client-pill">Comcast</span>
           <span class="client-pill">General Mills</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ 9. LEARNINGS ════ -->
-    <section class="cs-section cs-section--surface">
-      <div class="wrap fade-up">
-        <span class="eyebrow">Learnings</span>
-        <h2 class="cs-h2" style="margin-bottom:clamp(40px,5vw,56px);">What I took away from building it.</h2>
-        <div class="learn-list">
-          <div class="learn-item">
-            <span class="learn-n">01</span>
-            <div>
-              <div class="learn-title">A source of truth beats a smarter model.</div>
-              <p class="learn-body">The LLM Wiki was the unlock. Giving the AI vetted, country-specific knowledge to pull from is what turned localization from a plausible guess into something we could actually trust and ship.</p>
-            </div>
-          </div>
-          <div class="learn-item">
-            <span class="learn-n">02</span>
-            <div>
-              <div class="learn-title">Keep the human where the stakes are.</div>
-              <p class="learn-body">Automating the work isn't the same as removing the person. Designing the pipeline so a coach signs off on every flagged article is what made the speed safe in a financial context.</p>
-            </div>
-          </div>
-          <div class="learn-item">
-            <span class="learn-n">03</span>
-            <div>
-              <div class="learn-title">Building it myself made it better.</div>
-              <p class="learn-body">There was no spec, no handoff, no waiting on a dev sprint. Designing and building in one loop meant I could feel every rough edge in the pipeline and fix it the same day. That's the real thesis: a designer who can build ships a better product, faster.</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
