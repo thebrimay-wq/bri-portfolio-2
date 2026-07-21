@@ -125,6 +125,33 @@
       display: block;
       border-radius: 16px 16px 0 0;
     }
+    /* ── hero welcome video (framed, autoplay-loop, normal speed) ── */
+    .cs-video-slot { position: relative; }
+    .cs-video { width: 100%; height: auto; display: block; }
+    .cs-video-slot:not(.loaded) .cs-video { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .cs-video-slot.loaded .cs-video-ph { display: none; }
+    /* rounded card on all corners, scaled a hair so encoder hairlines clip off
+       every side, with a 2026-style hairline stroke + soft layered drop shadow */
+    .hero-image .cs-video-slot {
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.03),
+        0 12px 30px rgba(0, 0, 0, 0.07),
+        0 28px 60px rgba(0, 0, 0, 0.06);
+    }
+    .hero-image .cs-video-slot::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.07);
+      pointer-events: none; z-index: 2;
+    }
+    .hero-image .cs-video { border-radius: 0; transform: scale(1.012); transform-origin: center; }
+    .cs-video-ph {
+      width: 100%; aspect-ratio: 16 / 9; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink-3); font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+    }
 
     /* ════════════════════════════
        2. PROBLEM
@@ -626,7 +653,13 @@
         </div>
 
         <div class="hero-image fade-up" style="transition-delay:170ms;">
-          <img src="../../images/Financial Finesse Case Study/Hero.png" alt="Financial Finesse Hub redesigned interface" />
+          <div class="cs-video-slot">
+            <video class="cs-video" autoplay muted loop playsinline preload="metadata"
+              onloadeddata="this.closest('.cs-video-slot').classList.add('loaded')">
+              <source src="../../images/Financial Finesse Hub Case Study/welcome-to-financial-finesse.mp4" type="video/mp4" />
+            </video>
+            <div class="cs-video-ph">Welcome to Financial Finesse</div>
+          </div>
         </div>
       </div>
     </section>
