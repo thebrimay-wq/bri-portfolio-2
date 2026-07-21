@@ -40,6 +40,12 @@
       border-radius: 16px; transition: transform 0.5s ease;
     }
     .cs-image:hover { transform: scale(1.01); }
+    /* portrait phone screenshots — cap width + center so they read as a phone,
+       not a full-bleed wall of image */
+    .cs-image--phone { max-width: 380px; margin-inline: auto; }
+    /* a row of phone screenshots shown side by side */
+    .phone-row { display: flex; gap: clamp(16px, 3vw, 36px); justify-content: center; align-items: flex-start; flex-wrap: wrap; }
+    .phone-row .cs-image { max-width: 320px; width: 100%; margin: 0; }
 
     /* ── image placeholder (used until real images are dropped in) ── */
     .img-placeholder {
@@ -480,8 +486,7 @@
         </div>
 
         <div style="margin-top:clamp(44px,6vw,64px);">
-          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/System.png" alt="One system assembling typed blocks into a coaching response" /> -->
-          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Overview.png</span>One system — typed blocks assembling into a full coaching response</div>
+          <img class="cs-image" src="/images/aimee-landing.png" alt="Aimee's home screen — one system across the Hub: greeting, composer, and a picked-for-you list, with a live coach available" loading="lazy" />
         </div>
       </div>
     </section>
@@ -500,8 +505,7 @@
           </p>
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
-          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Handoff.png" alt="AI labeling and human-coach handoff card" /> -->
-          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Handoff.png</span>"AI coach" labeling + gold human-coach handoff card</div>
+          <img class="cs-image" src="/images/aimee-coachhandoff-dt.png" alt="Aimee handing off to a live certified coach — a green LIVE banner as Cyrus Purnell, CFP, joins the conversation to continue the plan" loading="lazy" />
         </div>
       </div>
     </section>
@@ -523,10 +527,10 @@
               <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Gold rail</strong> — human-coach handoff</span></div>
               <div class="bullet-item"><span class="bullet-dot"></span><span>Coral reserved for the single most-urgent item — restraint as a rule</span></div>
             </div>
+            <a href="https://glittering-sopapillas-a86d93.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="margin-top:28px;">See the components live ↗</a>
           </div>
           <div class="fade-up" style="transition-delay:90ms;">
-            <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Components.png" alt="Typed card system with colored left rails" /> -->
-            <div class="img-placeholder img-placeholder--tall"><span class="img-placeholder-label">Components.png</span>Card system — colored left rails by type</div>
+            <img class="cs-image" src="/images/aimee-components.png" alt="The typed card system — an analysis card (navy rail), a recommendation card (teal rail), and a coach card (gold rail), each signaling its type at a glance" loading="lazy" />
           </div>
         </div>
       </div>
@@ -547,8 +551,7 @@
           </p>
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
-          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/System.png" alt="Design system typography and accessibility rules" /> -->
-          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">System.png</span>Design-system type scale + accessibility hard-rules</div>
+          <img class="cs-image" src="/images/aimee-charts-dt.png" alt="A coaching response where the user's question and Aimee's reply render at the same text size — a snapshot with cards and an assets-vs-debt chart below" loading="lazy" />
         </div>
       </div>
     </section>
@@ -569,9 +572,10 @@
             <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Microsoft Teams</strong> — the same coach adapted to live inside Teams' chrome</span></div>
           </div>
         </div>
-        <div class="fade-up" style="transition-delay:90ms;">
-          <!-- Replace with: <img class="cs-image" src="../images/Aimee AI Case Study/Surfaces.png" alt="Aimee across Hub, client widget, and Teams" /> -->
-          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Surfaces.png</span>Hub · embeddable widget (Meridian) · Microsoft Teams</div>
+        <div class="fade-up phone-row" style="transition-delay:90ms;">
+          <img class="cs-image" src="/images/aimee-milestones.png" alt="Aimee on mobile — the wellness-milestones card" loading="lazy" />
+          <img class="cs-image" src="/images/aimee-charts.png" alt="Aimee on mobile — a financial snapshot response with charts" loading="lazy" />
+          <img class="cs-image" src="/images/aimee-coachhandoff.png" alt="Aimee on mobile — handing off to a live coach" loading="lazy" />
         </div>
       </div>
     </section>
