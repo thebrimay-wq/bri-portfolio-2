@@ -287,7 +287,8 @@
     .cs-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
     .cs-card--featured { border-color: rgba(155, 107, 87, 0.45); box-shadow: 0 4px 20px rgba(155, 107, 87, 0.10); }
     .cs-card--featured:hover { box-shadow: 0 14px 36px rgba(155, 107, 87, 0.16); }
-    .cs-card-swatch { flex-shrink: 0; width: 64px; height: 64px; border-radius: 10px; }
+    .cs-card-swatch { flex-shrink: 0; width: 64px; height: 64px; border-radius: 10px; overflow: hidden; }
+    .cs-card-swatch img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .cs-card-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1; }
     .cs-card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
     .mini-tag {
@@ -719,9 +720,9 @@
       ];
 
       const CASE_STUDIES = [
-        { featured: true, title: 'Global Content Studio', href: '/work/global-content-studio/', swatch: '#EDE6DC', tags: ['AI Product', 'Solo Build'], impact: 'Brand-trained AI content studio, built solo — 25 countries localized in 25 days, ~$2.42M saved.' },
-        { title: 'Financial Wellness Hub', href: '/work/hub/', swatch: '#EBE8F4', tags: ['Platform Design', 'UX Strategy'], impact: 'A redesign that drove +200% engagement and $12M in revenue.' },
-        { title: 'Aimee AI Coach', href: '/aimee-ai/', swatch: '#E2E7F0', tags: ['AI Experience', 'Product Design'], impact: 'A conversational AI coach reaching 1M+ employees.' }
+        { featured: true, title: 'Global Content Studio', href: '/work/global-content-studio/', swatch: '#EDE6DC', thumb: '/images/gcs-card.png', tags: ['AI Product', 'Solo Build'], impact: 'Brand-trained AI content studio, built solo — 25 countries localized in 25 days, ~$2.42M saved.' },
+        { title: 'Financial Wellness Hub', href: '/work/hub/', swatch: '#EBE8F4', thumb: '/images/hub-card.png', tags: ['Platform Design', 'UX Strategy'], impact: 'A redesign that drove +200% engagement and $12M in revenue.' },
+        { title: 'Aimee AI Coach', href: '/aimee-ai/', swatch: '#E2E7F0', thumb: '/images/aimee-card.png', tags: ['AI Experience', 'Product Design'], impact: 'A conversational AI coach reaching 1M+ employees.' }
       ];
 
       const CHIP_LABELS = { casestudies: 'Case studies', about: 'About Bri', resume: 'Résumé', contact: 'Contact' };
@@ -734,7 +735,7 @@
         return '<div class="cs-cards">' + CASE_STUDIES.map(cs => `
           <a class="cs-card${cs.featured ? ' cs-card--featured' : ''}" href="${cs.href}" data-panel-title="${esc(cs.title)}">
             ${cs.featured ? '<span class="featured-pill">Featured</span>' : ''}
-            <span class="cs-card-swatch" style="background:${cs.swatch}"></span>
+            <span class="cs-card-swatch" style="background:${cs.swatch}">${cs.thumb ? `<img src="${cs.thumb}" alt="" loading="lazy" />` : ''}</span>
             <span class="cs-card-body">
               <span class="cs-card-tags">${cs.tags.map(t => `<span class="mini-tag">${t}</span>`).join('')}</span>
               <span class="cs-card-title">${cs.title}</span>
