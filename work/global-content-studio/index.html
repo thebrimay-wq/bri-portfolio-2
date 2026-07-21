@@ -49,6 +49,8 @@
     /* until the video's data loads, show the placeholder and keep the <video> out of the way */
     .cs-video-slot:not(.loaded) .cs-video { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     .cs-video-slot.loaded .cs-video-ph { display: none; }
+    /* in the hero the media bleeds to the section bottom — round the top only */
+    .hero-image .cs-video { border-radius: 16px 16px 0 0; }
     .img-placeholder {
       width: 100%; aspect-ratio: 16 / 9; background: var(--surface);
       border: 1px dashed var(--border); border-radius: 16px;
@@ -213,8 +215,15 @@
         </div>
 
         <div class="hero-image fade-up" style="transition-delay:170ms;">
-          <!-- Replace with: <img src="../../images/Global Content Studio Case Study/Hero.png" alt="Global Content Studio interface" /> -->
-          <div class="img-placeholder"><span class="img-placeholder-label">Hero.png</span>Full app screenshot — sidebar · editor · details panel</div>
+          <div class="cs-video-slot">
+            <!-- Live demo in the hero: localizing an article, 2× (set in JS). -->
+            <video class="cs-video" autoplay muted loop playsinline preload="metadata"
+              aria-label="Localizing an article in Global Content Studio, sped up 2×"
+              onloadeddata="this.closest('.cs-video-slot').classList.add('loaded')">
+              <source src="../../images/Global Content Studio Case Study/gcs-localize-article-compatible.mp4" type="video/mp4" />
+            </video>
+            <div class="img-placeholder cs-video-ph"><span class="img-placeholder-label">gcs-localize-article-compatible.mp4</span>Live demo — localizing an article (2× speed)</div>
+          </div>
         </div>
       </div>
     </section>
@@ -271,15 +280,9 @@
           </div>
         </div>
 
-        <div class="cs-video-slot fade-up" style="margin-top:clamp(44px,6vw,64px);">
-          <!-- File: images/Global Content Studio Case Study/gcs-localize-article-compatible.mp4 (H.264, 15MB).
-               Plays at 2× (set in JS). -->
-          <video class="cs-video" autoplay muted loop playsinline preload="metadata"
-            aria-label="Localizing an article in Global Content Studio, sped up 2×"
-            onloadeddata="this.closest('.cs-video-slot').classList.add('loaded')">
-            <source src="../../images/Global Content Studio Case Study/gcs-localize-article-compatible.mp4" type="video/mp4" />
-          </video>
-          <div class="img-placeholder cs-video-ph"><span class="img-placeholder-label">gcs-localize-article-compatible.mp4</span>Localizing an article — video plays here (2× speed)</div>
+        <div class="fade-up" style="margin-top:clamp(44px,6vw,64px);">
+          <!-- Replace with: <img class="cs-image" src="../../images/Global Content Studio Case Study/Library.png" alt="Content library with status, filters, and queue" /> -->
+          <div class="img-placeholder img-placeholder--wide"><span class="img-placeholder-label">Library.png</span>The content library — status · audience filter · localization queue</div>
         </div>
       </div>
     </section>
