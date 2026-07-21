@@ -246,9 +246,36 @@
     .home-card-icon { width: 42px; height: 42px; border-radius: 12px; background: var(--surface); display: inline-flex; align-items: center; justify-content: center; color: var(--ink); flex: 0 0 auto; }
     .home-card-icon svg { width: 22px; height: 22px; display: block; }
     .home-card--featured .home-card-icon { background: var(--color-accent-light, #f5ede9); color: var(--accent); }
+    .home-card-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
     .home-card-title { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
     .home-card-sub { font-size: 13px; color: var(--ink-2); line-height: 1.5; }
     .home-card-featured { position: absolute; top: 14px; right: 14px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--color-accent-light, #f5ede9); border-radius: 100px; padding: 3px 8px; }
+
+    /* ── Mobile: full-page empty state + compact list cards ──
+       (placed after the base card/composer CSS so these win on source order) */
+    @media (max-width: 900px) {
+      /* greeting + cards fill the screen; composer docks at the bottom */
+      .chat-pane.is-empty { justify-content: stretch; }
+      .chat-pane.is-empty .chat-scroll { flex: 1 1 auto; overflow-y: auto; }
+      .chat-pane.is-empty .chat-inner {
+        min-height: 100%; display: flex; flex-direction: column; justify-content: center;
+        padding-top: 16px; padding-bottom: 16px;
+      }
+      .chat-pane.is-empty .composer-bar {
+        position: sticky; bottom: 0; border-top: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      }
+      .agent-intro { margin-bottom: 6px; }
+      /* compact horizontal cards so all four fit above the composer */
+      .home-cards { gap: 10px; margin-top: clamp(18px, 5vw, 26px); }
+      .home-card { flex-direction: row; align-items: center; gap: 14px; padding: 14px 16px; }
+      .home-card-icon { width: 38px; height: 38px; border-radius: 10px; }
+      .home-card-icon svg { width: 20px; height: 20px; }
+      .home-card-text { flex: 1; gap: 2px; }
+      .home-card-title { font-size: 14.5px; }
+      .home-card-sub { font-size: 12.5px; line-height: 1.4; }
+      .home-card-featured { position: static; align-self: flex-start; flex: 0 0 auto; }
+    }
 
     /* ── streaming cursor ── */
     .stream-cursor {
@@ -884,10 +911,9 @@
           }
           el.className = 'home-card' + (it.featured ? ' home-card--featured' : '');
           el.innerHTML =
-            (it.featured ? '<span class="home-card-featured">Featured</span>' : '') +
             `<span class="home-card-icon">${it.svg}</span>` +
-            `<span class="home-card-title">${esc(it.title)}</span>` +
-            `<span class="home-card-sub">${esc(it.sub)}</span>`;
+            `<span class="home-card-text"><span class="home-card-title">${esc(it.title)}</span><span class="home-card-sub">${esc(it.sub)}</span></span>` +
+            (it.featured ? '<span class="home-card-featured">Featured</span>' : '');
           wrap.appendChild(el);
         });
         return wrap;
