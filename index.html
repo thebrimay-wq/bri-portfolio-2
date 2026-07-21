@@ -430,7 +430,7 @@
     @media (prefers-reduced-motion: reduce) {
       .msg { animation: none; opacity: 1; transform: none; }
       .typing span { animation: none; opacity: 0.5; }
-      .cs-card:hover, .link-btn:hover, .chip:hover, .send-btn:hover { transform: none; }
+      .cs-card:hover, .link-btn:hover, .chip:hover, .send-btn:hover, .home-card:hover { transform: none; }
       .agent-wrap, .panel { transition: none; }
     }
   </style>
@@ -858,13 +858,13 @@
 
       // First-time explore list — a scannable menu of where to start.
       const STARTER = [
-        { kind: 'intent', id: 'casestudies', featured: true, title: 'Case studies', sub: 'Bri’s featured product work, designed and built end to end',
+        { kind: 'intent', id: 'casestudies', featured: true, title: 'What has Bri shipped?', sub: 'Her featured product work — designed and built end to end',
           svg: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>' },
-        { kind: 'intent', id: 'about', title: 'About Bri', sub: 'A decade in product — designing and building AI products solo',
+        { kind: 'intent', id: 'about', title: 'Who is Bri?', sub: 'A decade in product, designing and building AI products solo',
           svg: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' },
-        { kind: 'intent', id: 'resume', title: 'Résumé', sub: 'Experience, skills, and background — with a downloadable PDF',
+        { kind: 'intent', id: 'resume', title: 'What’s her experience?', sub: 'Roles, skills, and background — plus a downloadable PDF',
           svg: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' },
-        { kind: 'intent', id: 'contact', title: 'Get in touch', sub: 'Open to senior product design roles — email, text, or LinkedIn',
+        { kind: 'intent', id: 'contact', title: 'Is Bri open to roles?', sub: 'Yes — reach her by email, text, or LinkedIn',
           svg: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' }
       ];
 
