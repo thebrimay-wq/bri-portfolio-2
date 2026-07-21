@@ -49,8 +49,10 @@
     /* until the video's data loads, show the placeholder and keep the <video> out of the way */
     .cs-video-slot:not(.loaded) .cs-video { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     .cs-video-slot.loaded .cs-video-ph { display: none; }
-    /* in the hero the media bleeds to the section bottom — round the top only */
-    .hero-image .cs-video { border-radius: 16px 16px 0 0; }
+    /* in the hero the media bleeds to the section bottom — round the top only,
+       and clip ~4px of black edge off the left via overflow on the slot */
+    .hero-image .cs-video-slot { overflow: hidden; border-radius: 16px 16px 0 0; }
+    .hero-image .cs-video { border-radius: 0; width: calc(100% + 4px); margin-left: -4px; }
     .img-placeholder {
       width: 100%; aspect-ratio: 16 / 9; background: var(--surface);
       border: 1px dashed var(--border); border-radius: 16px;
