@@ -47,7 +47,8 @@
     .cs-video-slot { position: relative; }
     .cs-video { width: 100%; height: auto; display: block; border-radius: 16px; box-shadow: 0 1px 0 rgba(0,0,0,0.02); }
     /* until the video's data loads, show the placeholder and keep the <video> out of the way */
-    .cs-video-slot:not(.loaded) .cs-video { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .cs-video-slot:not(.loaded) .cs-video,
+    .cs-video-slot:not(.loaded) .cs-image { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     .cs-video-slot.loaded .cs-video-ph { display: none; }
     /* Hero video = a rounded card (all corners), scaled a hair so encoder
        hairlines clip off on every side, with a 2026-style hairline stroke +
@@ -327,6 +328,15 @@
             <span class="bullet-dot"></span>
             <span>Getting it wrong in a financial context isn't a typo — <strong>it's a liability</strong>.</span>
           </div>
+        </div>
+
+        <div class="cs-video-slot" style="margin-top:clamp(44px,6vw,64px);">
+          <!-- Localize QA — pieces awaiting review across 26 locales. Auto-appears (framed) once the
+               file exists at the path below. Upload the PNG there via GitHub web or a file attach. -->
+          <img class="cs-image" src="../../images/Global Content Studio Case Study/Localize-QA.png"
+            alt="Localize QA — 1,816 pieces awaiting review across 26 locales"
+            onload="this.closest('.cs-video-slot').classList.add('loaded')" />
+          <div class="img-placeholder cs-video-ph"><span class="img-placeholder-label">Localize-QA.png</span>Localize QA — pieces awaiting review across 26 locales</div>
         </div>
 
         <div style="margin-top: 48px;">
