@@ -272,15 +272,15 @@
         </div>
 
         <div class="cs-video-slot fade-up" style="margin-top:clamp(44px,6vw,64px);">
-          <!-- Drop gcs-localize-article.mp4 (H.264, ideally) into images/Global Content Studio Case Study/.
-               A .mov also works in Safari/most Chrome; .mp4 is best cross-browser. Plays at 2× (set in JS). -->
+          <!-- File: images/Global Content Studio Case Study/gcs-localize-article-compatible.mov (H.264).
+               Two source hints so Chrome + Safari both decode the H.264 stream. Plays at 2× (set in JS). -->
           <video class="cs-video" autoplay muted loop playsinline preload="metadata"
             aria-label="Localizing an article in Global Content Studio, sped up 2×"
             onloadeddata="this.closest('.cs-video-slot').classList.add('loaded')">
-            <source src="../../images/Global Content Studio Case Study/gcs-localize-article.mp4" type="video/mp4" />
-            <source src="../../images/Global Content Studio Case Study/gcs-localize-article.mov" type="video/quicktime" />
+            <source src="../../images/Global Content Studio Case Study/gcs-localize-article-compatible.mov" type="video/mp4" />
+            <source src="../../images/Global Content Studio Case Study/gcs-localize-article-compatible.mov" type="video/quicktime" />
           </video>
-          <div class="img-placeholder cs-video-ph"><span class="img-placeholder-label">gcs-localize-article.mp4</span>Localizing an article — video plays here (2× speed)</div>
+          <div class="img-placeholder cs-video-ph"><span class="img-placeholder-label">gcs-localize-article-compatible.mov</span>Localizing an article — video plays here (2× speed)</div>
         </div>
       </div>
     </section>
