@@ -86,6 +86,37 @@
     .img-placeholder--tall { aspect-ratio: 4 / 3; }
     .img-placeholder--wide { aspect-ratio: 21 / 9; }
 
+    /* ── Atlas interactive pipeline (rebuilt from the FF product artifact) ── */
+    .atlas { --navy: #063853; --teal: #00507C; --teal-2: #007CAB; --line: #D6DCEA; }
+    .atlas-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; padding-bottom: 6px; }
+    .atlas-inner { min-width: 680px; }
+    .atlas-groups { display: flex; padding: 0 8px; margin-bottom: 14px; }
+    .atlas-group { font-size: 11px; letter-spacing: 0.08em; color: #8A93A6; font-weight: 700; text-transform: uppercase; text-align: center; }
+    .atlas-track { display: flex; align-items: flex-start; padding: 8px 8px 4px; }
+    .atlas-step { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+    .atlas-step::before { content: ""; position: absolute; top: 21px; right: 50%; width: 100%; height: 2px; background: var(--line); z-index: 0; }
+    .atlas-step:first-child::before { display: none; }
+    .atlas-dot { position: relative; z-index: 1; width: 44px; height: 44px; border-radius: 50%; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; transition: transform .15s ease, box-shadow .15s ease; }
+    .atlas-step[data-guardrail="1"] .atlas-dot { background: #fff; color: var(--teal); border: 2px solid var(--teal-2); }
+    .atlas-step-title { font-size: 12.5px; font-weight: 700; color: var(--navy); text-align: center; line-height: 1.3; max-width: 96px; }
+    .atlas-step.is-active .atlas-dot, .atlas-step:hover .atlas-dot { transform: scale(1.08); box-shadow: 0 4px 12px rgba(6, 56, 83, .35); }
+    .atlas-step[data-guardrail="1"].is-active .atlas-dot, .atlas-step[data-guardrail="1"]:hover .atlas-dot { box-shadow: 0 4px 12px rgba(0, 124, 171, .35); }
+    .atlas-step:focus-visible { outline: none; }
+    .atlas-step:focus-visible .atlas-dot { outline: 2px solid var(--teal-2); outline-offset: 3px; }
+    .atlas-detail { margin-top: 24px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; min-height: 132px; box-shadow: 0 2px 4px rgba(0, 0, 0, .03), 0 12px 30px rgba(0, 0, 0, .05); }
+    .atlas-detail-step { font-size: 11px; letter-spacing: 0.06em; color: var(--teal); font-weight: 700; text-transform: uppercase; margin-bottom: 7px; }
+    .atlas-detail-title { font-size: clamp(17px, 1.6vw, 20px); font-weight: 700; color: var(--navy); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .atlas-detail-desc { font-size: clamp(14px, 1.1vw, 15.5px); color: #383838; line-height: 1.55; }
+    .atlas-detail-why { margin-top: 13px; padding-top: 13px; border-top: 1px solid var(--line); }
+    .atlas-detail-why-label { font-size: 10.5px; letter-spacing: 0.05em; color: var(--teal-2); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+    .atlas-detail-why-text { font-size: 13.5px; color: #565656; line-height: 1.45; }
+    .atlas-hint { margin-top: 12px; font-size: 12px; color: var(--ink-3); text-align: center; }
+    .atlas-outcomes { margin-top: 20px; padding: 20px 24px; background: #F4F7FE; border-radius: 16px; border: 1px solid var(--line); }
+    .atlas-outcomes-label { display: block; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .atlas-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .atlas-pill { background: #E4F3E8; color: #1E6B3C; font-size: 12.5px; font-weight: 700; padding: 7px 14px; border-radius: 32px; }
+    @media (prefers-reduced-motion: reduce) { .atlas-dot { transition: none; } }
+
     /* ════ AT A GLANCE ════ */
     .glance { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; margin-top: 8px; }
     @media (max-width: 768px) { .glance { grid-template-columns: 1fr; gap: 32px; } }
@@ -398,44 +429,97 @@
           </p>
         </div>
 
-        <div class="fade-up" style="margin-bottom:clamp(44px,6vw,64px);">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/atlas.png" alt="The Atlas pipeline — a nine-step flow from fit check through triage, local-fact research, market rewrite, cultural review, numbers and compliance, the guardrail that scrubs US-specific references, human review, and publish" loading="lazy" />
+        <div class="atlas fade-up" id="atlas" style="transition-delay:90ms;">
+          <div class="atlas-scroll">
+            <div class="atlas-inner">
+              <div class="atlas-groups">
+                <span class="atlas-group" style="flex:6">Get it right</span>
+                <span class="atlas-group" style="flex:1">Guarantee it</span>
+                <span class="atlas-group" style="flex:2">Approve &amp; ship</span>
+              </div>
+              <div class="atlas-track" role="tablist" aria-label="Atlas pipeline steps"></div>
+            </div>
+          </div>
+          <div class="atlas-detail" aria-live="polite">
+            <div class="atlas-detail-step"></div>
+            <div class="atlas-detail-title"></div>
+            <p class="atlas-detail-desc"></p>
+            <div class="atlas-detail-why">
+              <div class="atlas-detail-why-label">Why it matters</div>
+              <div class="atlas-detail-why-text"></div>
+            </div>
+          </div>
+          <p class="atlas-hint">Hover or tap a step to see what happens and why it matters.</p>
+          <div class="atlas-outcomes">
+            <span class="atlas-outcomes-label">What comes out the other side</span>
+            <div class="atlas-pills">
+              <span class="atlas-pill">Locally accurate</span>
+              <span class="atlas-pill">On brand</span>
+              <span class="atlas-pill">Compliant</span>
+              <span class="atlas-pill">No US references</span>
+              <span class="atlas-pill">Human approved</span>
+              <span class="atlas-pill">Repeatable at scale</span>
+            </div>
+          </div>
         </div>
 
-        <div class="numbered-list fade-up" style="transition-delay:90ms;">
-          <div class="numbered-item">
-            <span class="numbered-item-n">01</span>
-            <p class="numbered-item-text"><strong>Triage.</strong> Size up how much the article needs to change to work in the new market, so simple pieces move fast and complex ones get the attention they need.<span class="why-note">Why it matters: effort goes where it's actually needed.</span></p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">02</span>
-            <p class="numbered-item-text"><strong>Research the local facts.</strong> Pull the real facts for that country from LLM Wiki — local programs, limits, and rules. Anything time-sensitive is flagged to be verified before it ships.<span class="why-note">Why it matters: local facts come from a source of truth we control, not a web search.</span></p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">03</span>
-            <p class="numbered-item-text"><strong>Rewrite for the market.</strong> Rewrite the article in the local language and our coach voice. For English-speaking markets, we swap the regional facts rather than translate.<span class="why-note">Why it matters: it reads as locally authored, not as raw machine translation.</span></p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">04</span>
-            <p class="numbered-item-text"><strong>Cultural review.</strong> Check that tone, examples, and expressions fit the culture, customs, and ways of life of the market.<span class="why-note">Why it matters: we catch wording that reads as foreign or off-brand before a human ever sees it.</span></p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">05</span>
-            <p class="numbered-item-text"><strong>Numbers &amp; compliance.</strong> Verify every figure, rate, and legal statement against the market, and flag anything that needs a closer look.<span class="why-note">Why it matters: in financial content, a wrong number is a real risk.</span></p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">06</span>
-            <p class="numbered-item-text"><strong>The guardrail.</strong> Automatically scrub every localized article of US-specific links and US-only terms, swapping them for the local equivalent. Anything the system can't safely fix is blocked from publishing until a person handles it.<span class="why-note">Why it matters: a US reference never slips through unseen.</span></p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">07</span>
-            <p class="numbered-item-text"><strong>Human review.</strong> A financial coach reviews everything the system flagged and approves the article. Every localized piece waits here for a person.<span class="why-note">Why it matters: nothing publishes itself — a human always has the final say.</span></p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">08</span>
-            <p class="numbered-item-text"><strong>Publish.</strong> Once approved, the article is released to our shared library for that market, where everyone sees the same reviewed version.<span class="why-note">Why it matters: one controlled, consistent release across every market we serve.</span></p>
-          </div>
-        </div>
+        <script>
+          (function () {
+            var A = document.getElementById('atlas');
+            if (!A) return;
+            var STEPS = [
+              { n: 0, t: 'Fit check', d: "First we ask whether the topic even applies in this market. If an article is built around something that doesn't exist there, we don't localize it.", w: "We never publish advice that doesn't fit the reader's country." },
+              { n: 1, t: 'Triage', d: "We size up what the article needs and how much has to change to work in the new market.", w: "Effort goes where it is needed, so simple pieces move quickly." },
+              { n: 2, t: 'Research the local facts', d: "We gather the real facts for that country from official government and regulator sources: the local programs, limits, and rules.", w: "The numbers and details are accurate for that market, not assumed or carried over from the US." },
+              { n: 3, t: 'Rewrite for the market', d: "We rewrite the article in the local language and our coach voice. For English-speaking markets, we swap the regional facts rather than translate.", w: "It reads as if it were written locally, warm and plain, never like a machine translation." },
+              { n: 4, t: 'Cultural review', d: "We check that the tone, examples, and expressions fit the culture of the market.", w: "Nothing reads as foreign, tone-deaf, or off-brand." },
+              { n: 5, t: 'Numbers & compliance', d: "We verify every figure, rate, and legal statement against the market and flag anything that needs a closer look.", w: "Financial accuracy and regulatory safety in each country." },
+              { n: 6, t: 'The guardrail', d: "Automatically, every localized article is scrubbed of US-specific links and US-only terms. Anything the system cannot safely fix is blocked from publishing until a person handles it.", w: "The promise in action: no US reference reaches a finished article, no matter who runs the process." },
+              { n: 7, t: 'Human review', d: "A financial coach reviews what the system flagged and approves the article. For sensitive markets, this review is always required.", w: "A person always has the final say. Nothing in a reviewed market publishes itself." },
+              { n: 8, t: 'Publish', d: "Once approved, the article is released to our shared library for that market, where everyone sees the same reviewed version.", w: "A controlled, consistent release across every market we serve." }
+            ];
+            var track = A.querySelector('.atlas-track');
+            var dStep = A.querySelector('.atlas-detail-step');
+            var dTitle = A.querySelector('.atlas-detail-title');
+            var dDesc = A.querySelector('.atlas-detail-desc');
+            var dWhy = A.querySelector('.atlas-detail-why-text');
+            var btns = [];
+            function show(i) {
+              var s = STEPS[i];
+              for (var j = 0; j < btns.length; j++) {
+                var on = j === i;
+                btns[j].classList.toggle('is-active', on);
+                btns[j].setAttribute('aria-selected', on ? 'true' : 'false');
+              }
+              dStep.textContent = 'Step ' + s.n;
+              dTitle.textContent = s.t;
+              dDesc.textContent = s.d;
+              dWhy.textContent = s.w;
+            }
+            STEPS.forEach(function (s, i) {
+              var b = document.createElement('button');
+              b.className = 'atlas-step';
+              b.type = 'button';
+              b.setAttribute('role', 'tab');
+              b.setAttribute('aria-label', 'Step ' + s.n + ': ' + s.t);
+              if (s.n === 6) b.setAttribute('data-guardrail', '1');
+              var dot = document.createElement('span');
+              dot.className = 'atlas-dot';
+              dot.textContent = s.n;
+              var title = document.createElement('span');
+              title.className = 'atlas-step-title';
+              title.textContent = s.t;
+              b.appendChild(dot);
+              b.appendChild(title);
+              b.addEventListener('mouseenter', function () { show(i); });
+              b.addEventListener('focus', function () { show(i); });
+              b.addEventListener('click', function () { show(i); });
+              track.appendChild(b);
+              btns.push(b);
+            });
+            show(0);
+          })();
+        </script>
 
         <div class="fade-up" style="margin-top:clamp(44px,6vw,64px);">
           <img class="cs-image" src="../../images/Global Content Studio Case Study/localization.png" alt="One Life Event article — Starting a Family — localized side-by-side across three markets: English for Ireland, Simplified Chinese, and Czech, each rewritten with local facts and voice rather than translated" loading="lazy" />
@@ -506,7 +590,17 @@
           </div>
         </div>
 
-        <div class="client-pills fade-up" style="transition-delay:120ms;">
+        <div class="cs-video-slot fade-up" style="margin-top:clamp(44px,6vw,64px);transition-delay:110ms;">
+          <!-- Published output in the member product. Auto-appears (framed) once the file exists at
+               the path below — upload it as gcs-impact.png via GitHub web, same as the other shots. -->
+          <img class="cs-image" src="../../images/Global Content Studio Case Study/gcs-impact.png"
+            alt="A localized article — The £100 Rule and Your Child's Tax-Free Allowance — published and live in the Financial Finesse member product for the UK market"
+            loading="lazy"
+            onload="this.closest('.cs-video-slot').classList.add('loaded')" />
+          <div class="img-placeholder cs-video-ph"><span class="img-placeholder-label">gcs-impact.png</span>A localized article, published and live in the member product</div>
+        </div>
+
+        <div class="client-pills fade-up" style="transition-delay:150ms;">
           <span class="client-pill">Meta</span>
           <span class="client-pill">NFL</span>
           <span class="client-pill">JPMorgan Chase</span>
