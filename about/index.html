@@ -173,8 +173,13 @@
     .interest-card:nth-child(5) { border-radius: 0 0 0 16px; }
     .interest-card:nth-child(8) { border-radius: 0 0 16px 0; }
     .interest-icon {
-      font-size: 28px;
       margin-bottom: 16px;
+      display: block;
+      color: var(--ink);
+    }
+    .interest-icon svg {
+      width: 26px;
+      height: 26px;
       display: block;
     }
     .interest-title {
@@ -287,42 +292,42 @@
       <h2 class="fade-up">What I'm actually into.</h2>
       <div class="interests-grid">
         <div class="interest-card fade-up">
-          <span class="interest-icon">⚽</span>
+          <span class="interest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l4.3 3.1-1.6 5H8.3l-1.6-5L12 7.5z"/><path d="M12 3v4.5M20.4 9.1l-3.7 1.5M18.7 18.4l-3-3.8M5.3 18.4l3-3.8M3.6 9.1l3.7 1.5"/></svg></span>
           <div class="interest-title">Soccer</div>
           <div class="interest-desc">D1 scholarship, lifelong player. Still competing in weekend leagues — the field is my reset button.</div>
         </div>
         <div class="interest-card fade-up">
-          <span class="interest-icon">📷</span>
+          <span class="interest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5a2 2 0 0 1 2-2h1.6l1.2-1.8a1 1 0 0 1 .84-.45h6.72a1 1 0 0 1 .84.45L17.4 6.5H19a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8.5z"/><circle cx="12" cy="12.5" r="3.4"/></svg></span>
           <div class="interest-title">Photography</div>
           <div class="interest-desc">I photograph families and newborns. There's nothing better than capturing a moment that'll matter forever.</div>
         </div>
         <div class="interest-card fade-up">
-          <span class="interest-icon">✈️</span>
+          <span class="interest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4.5L3.5 11l6 2.2M21 4.5l-3.2 15-4.3-5.3M21 4.5L9.5 13.2M9.5 13.2v5.3l3.5-4.8"/></svg></span>
           <div class="interest-title">Travel & Food</div>
           <div class="interest-desc">Chasing great cuisine and even better cocktails. Always looking for the next place I've never been and the dish I've never tried.</div>
         </div>
         <div class="interest-card fade-up">
-          <span class="interest-icon">🌊</span>
+          <span class="interest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s5.5 5.6 5.5 9.5A5.5 5.5 0 0 1 12 18a5.5 5.5 0 0 1-5.5-5.5C6.5 8.6 12 3 12 3z"/><path d="M9.5 12.5a2.5 2.5 0 0 0 2.5 2.5"/></svg></span>
           <div class="interest-title">Scuba Diving</div>
           <div class="interest-desc">Warm ocean, great visibility, zero deadlines. Some of my favorite places in the world are underwater.</div>
         </div>
         <div class="interest-card fade-up">
-          <span class="interest-icon">🏍️</span>
+          <span class="interest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="16" r="3.5"/><circle cx="18.5" cy="16" r="3.5"/><path d="M5.5 16l3.5-5h5l2.8 4.4M9 11l-1.3-2.2M6 8.8h4M14 11h4.2"/></svg></span>
           <div class="interest-title">Dirtbiking</div>
           <div class="interest-desc">Nothing clears your head like being in the dirt with no signal. It's the most analog thing I do.</div>
         </div>
         <div class="interest-card fade-up">
-          <span class="interest-icon">🏄</span>
+          <span class="interest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9c1.7 0 1.7 1.5 3.3 1.5S7 9 8.7 9s1.7 1.5 3.3 1.5S13.7 9 15.3 9 17 10.5 18.7 10.5 20.3 9 22 9"/><path d="M2 15c1.7 0 1.7 1.5 3.3 1.5S7 15 8.7 15s1.7 1.5 3.3 1.5S13.7 15 15.3 15 17 16.5 18.7 16.5 20.3 15 22 15"/></svg></span>
           <div class="interest-title">Wakeboarding</div>
           <div class="interest-desc">On the water every chance I get. There's a flow state to it that feels a lot like good design, honestly.</div>
         </div>
         <div class="interest-card fade-up">
-          <span class="interest-icon">🍞</span>
+          <span class="interest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13.5a5 5 0 0 1 3.4-4.7C8 6.6 9.8 5.5 12 5.5s4 1.1 4.6 3.3A5 5 0 0 1 20 13.5v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3z"/><path d="M9.5 10.5v5M14.5 10.5v5"/></svg></span>
           <div class="interest-title">Sourdough Baking</div>
           <div class="interest-desc">The kind of hobby that starts at 11pm and takes three days. My starter has a name. I'm not embarrassed.</div>
         </div>
         <div class="interest-card fade-up">
-          <span class="interest-icon">👨‍👩‍👦</span>
+          <span class="interest-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5l-1.3-1.2C6.4 15.4 3.5 12.8 3.5 9.6 3.5 7 5.5 5 8 5c1.5 0 2.9.7 3.9 1.9l.1.1.1-.1A5.2 5.2 0 0 1 16 5c2.5 0 4.5 2 4.5 4.6 0 3.2-2.9 5.8-7.2 9.7L12 20.5z"/></svg></span>
           <div class="interest-title">Family</div>
           <div class="interest-desc">My son and the people I love are what everything else is in service of. Biggest influence on how I think about what matters.</div>
         </div>
