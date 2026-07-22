@@ -49,8 +49,7 @@
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 6px 20px rgba(0, 0, 0, 0.06);
     }
     .rail-head { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 10px; }
-    .rail-brand { display: flex; align-items: center; gap: 13px; font-size: 16px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
-    .rail-brand-mark { flex: 0 0 auto; height: 18px; width: auto; display: block; }
+    .rail-brand { display: inline-flex; align-items: center; font-size: 19px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
     .rail .rail-x { display: none; }
     /* desktop collapse toggle in the rail header; floating re-open button
        (compound selectors so they beat the base .icon-btn display rule) */
@@ -513,7 +512,7 @@
     <!-- LEFT RAIL (ChatGPT / Claude-style sidebar) -->
     <aside class="rail" id="rail" aria-label="Menu">
       <div class="rail-head">
-        <a href="/" class="rail-brand"><img class="rail-brand-mark" src="/images/b-icon%203.svg" alt="" />Bri May</a>
+        <a href="/" class="rail-brand">Bri May</a>
         <button class="icon-btn rail-collapse" id="rail-collapse" type="button" aria-label="Collapse sidebar">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M9 5v14" stroke="currentColor" stroke-width="1.7"/></svg>
         </button>
