@@ -2,6 +2,11 @@
    Self-injects a hamburger button so no per-page markup is needed.
    The homepage uses the left rail instead and has no #site-nav. */
 (function () {
+  // Keep the footer copyright year current, everywhere this script loads.
+  var yr = String(new Date().getFullYear());
+  var yearEls = document.querySelectorAll('.footer-year');
+  for (var i = 0; i < yearEls.length; i++) yearEls[i].textContent = yr;
+
   var nav = document.getElementById('site-nav');
   if (!nav) return;
   var inner = nav.querySelector('.nav-inner');
