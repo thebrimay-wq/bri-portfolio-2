@@ -42,7 +42,7 @@
     .hero p {
       font-size: clamp(17px, 1.4vw, 20px);
       color: var(--ink-2);
-      max-width: 500px;
+      max-width: 620px;
       margin-top: 24px;
       line-height: 1.7;
     }
@@ -66,15 +66,20 @@
     }
 
     .contact-row {
-      padding: 32px 0;
+      padding: 26px 0;
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: 8px;
       border-bottom: 1px solid var(--border);
+    }
+
+    .contact-row:first-child {
+      padding-top: 0;
     }
 
     .contact-row:last-child {
       border-bottom: none;
+      padding-bottom: 0;
     }
 
     .contact-row-label {
@@ -83,7 +88,6 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--ink-3);
-      min-width: 60px;
     }
 
     .contact-row-link {
