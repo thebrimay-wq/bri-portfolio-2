@@ -49,7 +49,9 @@
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 6px 20px rgba(0, 0, 0, 0.06);
     }
     .rail-head { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 10px; }
-    .rail-brand { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+    .rail-brand { display: flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+    .rail-brand-mark { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: #AD9E88; display: inline-flex; align-items: center; justify-content: center; }
+    .rail-brand-mark svg { width: 17px; height: 17px; display: block; }
     .rail .rail-x { display: none; }
     /* desktop collapse toggle in the rail header; floating re-open button
        (compound selectors so they beat the base .icon-btn display rule) */
@@ -220,10 +222,10 @@
 
     .avatar {
       flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
-      background: #2A2D3C; box-shadow: 0 0 0 1px var(--border);
+      background: #AD9E88;
       display: flex; align-items: center; justify-content: center; margin-top: 2px;
     }
-    .avatar-mark { width: auto; height: 21px; display: block; }
+    .avatar-mark { width: auto; height: 22px; display: block; }
     .msg-content { display: flex; flex-direction: column; gap: 12px; min-width: 0; max-width: 100%; }
     .msg--agent .msg-content { flex: 1; }
     .msg-name { display: none; }
@@ -508,20 +510,13 @@
 </head>
 <body>
 
-  <!-- Shared gold gradient for the Brix "B" mark (referenced by every avatar) -->
-  <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
-    <linearGradient id="brix-gold" x1="0" y1="0" x2="0.3" y2="1">
-      <stop offset="0" stop-color="#BC8A50"/><stop offset="0.5" stop-color="#EACB95"/><stop offset="1" stop-color="#AF7B45"/>
-    </linearGradient>
-  </defs></svg>
-
   <div class="app" id="app">
     <div class="rail-scrim" id="rail-scrim" hidden></div>
 
     <!-- LEFT RAIL (ChatGPT / Claude-style sidebar) -->
     <aside class="rail" id="rail" aria-label="Menu">
       <div class="rail-head">
-        <a href="/" class="rail-brand">Bri May</a>
+        <a href="/" class="rail-brand"><span class="rail-brand-mark"><svg viewBox="0 5 240 240" fill="none" stroke="#121212" stroke-width="15" stroke-linejoin="miter" aria-hidden="true"><path d="M52 216 V34 H118 C188 34 188 128 112 128 C188 128 188 216 118 216 Z"/><path d="M95 34 V128 L52 216"/></svg></span>Bri May</a>
         <button class="icon-btn rail-collapse" id="rail-collapse" type="button" aria-label="Collapse sidebar">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M9 5v14" stroke="currentColor" stroke-width="1.7"/></svg>
         </button>
@@ -935,7 +930,7 @@
         return wrap;
       }
 
-      const AVATAR = '<div class="avatar"><svg class="avatar-mark" viewBox="0 5 240 240" fill="none" stroke="url(#brix-gold)" stroke-width="8" stroke-linejoin="miter" aria-hidden="true"><path d="M52 216 V34 H118 C188 34 188 128 112 128 C188 128 188 216 118 216 Z"/><path d="M95 34 V128 L52 216"/></svg></div>';
+      const AVATAR = '<div class="avatar"><svg class="avatar-mark" viewBox="0 5 240 240" fill="none" stroke="#121212" stroke-width="13" stroke-linejoin="miter" aria-hidden="true"><path d="M52 216 V34 H118 C188 34 188 128 112 128 C188 128 188 216 118 216 Z"/><path d="M95 34 V128 L52 216"/></svg></div>';
 
       function buildAgentShell() {
         const msg = elFromHtml(`<div class="msg msg--agent">${AVATAR}<div class="msg-content"><div class="msg-name">Brix</div></div></div>`);
@@ -1020,7 +1015,7 @@
       function showTyping() {
         const msg = elFromHtml(`
           <div class="msg msg--agent" data-typing="1">
-            <div class="avatar"><svg class="avatar-mark" viewBox="0 5 240 240" fill="none" stroke="url(#brix-gold)" stroke-width="8" stroke-linejoin="miter" aria-hidden="true"><path d="M52 216 V34 H118 C188 34 188 128 112 128 C188 128 188 216 118 216 Z"/><path d="M95 34 V128 L52 216"/></svg></div>
+            <div class="avatar"><svg class="avatar-mark" viewBox="0 5 240 240" fill="none" stroke="#121212" stroke-width="13" stroke-linejoin="miter" aria-hidden="true"><path d="M52 216 V34 H118 C188 34 188 128 112 128 C188 128 188 216 118 216 Z"/><path d="M95 34 V128 L52 216"/></svg></div>
             <div class="msg-content"><div class="thinking" aria-label="Thinking">Thinking</div></div>
           </div>`);
         thread.appendChild(msg);
