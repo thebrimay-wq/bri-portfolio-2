@@ -14,4 +14,13 @@
   } catch (e) {
     /* cross-origin access can throw — ignore */
   }
+  /* Apply the saved theme before paint so there's no flash of the wrong
+     theme. Runs in <head>. With no saved choice, CSS falls back to the
+     OS preference via prefers-color-scheme. */
+  try {
+    var t = localStorage.getItem('theme');
+    if (t === 'dark' || t === 'light') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  } catch (e) { /* storage blocked — ignore */ }
 })();

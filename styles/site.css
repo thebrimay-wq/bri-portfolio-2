@@ -10,16 +10,67 @@
 
 /* ── Design Tokens ────────────────────────────────────────── */
 :root {
-  --bg:        #ffffff;
-  --ink:       #0A0A0A;
-  --ink-2:     #6B7280;
-  --ink-3:     #9CA3AF;
-  --border:    #E5E7EB;
-  --surface:   #F8FAFC;
-  --surface-2: #f0f2f5;
-  --accent:    #9B6B57;
-  --px:        clamp(24px, 5vw, 80px);
-  --max:       1160px;
+  color-scheme: light;
+  --bg:         #ffffff;
+  --ink:        #0A0A0A;
+  --ink-2:      #6B7280;
+  --ink-3:      #9CA3AF;
+  --border:     #E5E7EB;
+  --surface:    #F8FAFC;
+  --surface-2:  #f0f2f5;
+  --accent:     #9B6B57;
+  --accent-tint:#f5ede9;   /* soft accent wash (featured tiles) */
+  --gutter:     #FBFCFF;   /* app gutter behind floating rail/panel */
+  --btn-hover:  #222222;   /* primary-button hover fill */
+  --on-ink:     #ffffff;   /* text/icon that sits on an --ink fill */
+  --nav-bg:     rgba(255, 255, 255, 0.88); /* frosted sticky nav */
+  --frame-ring: rgba(0, 0, 0, 0.07);      /* hairline on framed media */
+  --hover-soft: rgba(0, 0, 0, 0.045);     /* subtle row/icon hover wash */
+  --px:         clamp(24px, 5vw, 80px);
+  --max:        1160px;
+}
+
+/* ── Dark theme ───────────────────────────────────────────────
+   Applied automatically when the OS is dark (unless the visitor
+   forced light) and whenever data-theme="dark" is set by the
+   toggle. Kept token-only so every page adapts for free. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg:         #101216;
+    --ink:        #F4F5F7;
+    --ink-2:      #9BA1AA;
+    --ink-3:      #6E747D;
+    --border:     #262A31;
+    --surface:    #191C21;
+    --surface-2:  #20242A;
+    --accent:     #CDA08C;
+    --accent-tint:#2A211C;
+    --gutter:     #0A0B0D;
+    --btn-hover:  #E7E8EA;
+    --on-ink:     #101216;
+    --nav-bg:     rgba(16, 18, 22, 0.82);
+    --frame-ring: rgba(255, 255, 255, 0.11);
+    --hover-soft: rgba(255, 255, 255, 0.06);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg:         #101216;
+  --ink:        #F4F5F7;
+  --ink-2:      #9BA1AA;
+  --ink-3:      #6E747D;
+  --border:     #262A31;
+  --surface:    #191C21;
+  --surface-2:  #20242A;
+  --accent:     #CDA08C;
+  --accent-tint:#2A211C;
+  --gutter:     #0A0B0D;
+  --btn-hover:  #E7E8EA;
+  --on-ink:     #101216;
+  --nav-bg:     rgba(16, 18, 22, 0.82);
+  --frame-ring: rgba(255, 255, 255, 0.11);
+  --hover-soft: rgba(255, 255, 255, 0.06);
 }
 
 
@@ -95,7 +146,7 @@ img, video {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.88);
+  background: var(--nav-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid transparent;
@@ -122,11 +173,27 @@ img, video {
   text-decoration: none;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 .nav-links {
   display: flex;
   gap: 32px;
   list-style: none;
 }
+
+/* Theme toggle (icon button injected by scripts/nav.js) */
+.nav-theme {
+  width: 38px; height: 38px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: transparent; color: var(--ink-2); cursor: pointer;
+  transition: color 0.18s, background 0.18s, border-color 0.18s;
+}
+.nav-theme:hover { color: var(--ink); background: var(--surface); }
 
 .nav-links a {
   font-size: 14px;
@@ -161,7 +228,7 @@ img, video {
   #site-nav.menu-open .nav-links {
     display: flex; flex-direction: column; gap: 2px;
     position: absolute; top: 100%; left: 0; right: 0;
-    background: rgba(255, 255, 255, 0.97);
+    background: var(--nav-bg);
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     padding: 6px var(--px) 18px;
@@ -188,7 +255,7 @@ img, video {
   letter-spacing: -0.01em;
   border-radius: 10px;
   background: var(--ink);
-  color: #fff;
+  color: var(--on-ink);
   border: none;
   text-decoration: none;
   cursor: pointer;
@@ -196,7 +263,7 @@ img, video {
 }
 
 .btn-primary:hover {
-  background: #222;
+  background: var(--btn-hover);
   transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
@@ -221,7 +288,7 @@ img, video {
 
 .btn-secondary:hover {
   background: var(--ink);
-  color: #fff;
+  color: var(--on-ink);
   border-color: var(--ink);
   transform: translateY(-1px);
 }
@@ -268,12 +335,12 @@ img, video {
 /* When .btn and .btn-primary are both applied */
 .btn.btn-primary {
   background: var(--ink);
-  color: #fff;
+  color: var(--on-ink);
   border: none;
 }
 
 .btn.btn-primary:hover {
-  background: #222;
+  background: var(--btn-hover);
   transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
@@ -501,7 +568,7 @@ html.embedded footer { display: none !important; }
    Placeholders stay dashed/flat; this is for actual .cs-image screenshots. */
 .cs-image {
   box-shadow:
-    inset 0 0 0 1px rgba(0, 0, 0, 0.07),
+    inset 0 0 0 1px var(--frame-ring),
     0 2px 4px rgba(0, 0, 0, 0.03),
     0 12px 30px rgba(0, 0, 0, 0.07),
     0 28px 60px rgba(0, 0, 0, 0.06);

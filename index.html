@@ -9,6 +9,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/site.css" />
+  <script>
+    /* Apply the saved theme before paint (no flash). Falls back to the OS
+       preference via prefers-color-scheme when nothing is saved. */
+    try { var _t = localStorage.getItem('theme'); if (_t === 'dark' || _t === 'light') document.documentElement.setAttribute('data-theme', _t); } catch (e) {}
+  </script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta property="og:type" content="website" />
@@ -32,7 +37,7 @@
     html, body { height: 100%; }
 
     /* ── App shell: rail | (chat pane | side panel) ── */
-    .app { display: flex; height: 100dvh; overflow: hidden; background: #FBFCFF; }
+    .app { display: flex; height: 100dvh; overflow: hidden; background: var(--gutter); }
 
     /* ── Left rail (sidebar) — floating rounded panel (Claude-desktop style) ── */
     .rail {
@@ -67,7 +72,7 @@
       padding: 9px 8px; cursor: pointer; margin-bottom: 12px;
       transition: background 0.15s ease, color 0.15s ease;
     }
-    .rail-newchat:hover { background: rgba(0,0,0,0.045); }
+    .rail-newchat:hover { background: var(--hover-soft); }
     .rail-newchat svg { color: var(--accent); }
     .rail-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); padding: 0 8px; margin-bottom: 6px; }
     .rail-nav { display: flex; flex-direction: column; gap: 2px; }
@@ -77,7 +82,7 @@
       padding: 9px 10px; border-radius: 8px; cursor: pointer;
       transition: background 0.14s ease, color 0.14s ease;
     }
-    .rail-item:hover { background: rgba(0,0,0,0.045); color: var(--ink); }
+    .rail-item:hover { background: var(--hover-soft); color: var(--ink); }
     .rail-ic { width: 18px; height: 18px; flex-shrink: 0; color: var(--ink-3); }
     .rail-item:hover .rail-ic { color: var(--accent); }
     .rail-recent { margin-top: 20px; min-height: 0; overflow-y: auto; }
@@ -91,10 +96,13 @@
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       transition: background 0.14s ease, color 0.14s ease;
     }
-    .rail-recent-item:hover { background: rgba(0,0,0,0.045); color: var(--ink); }
+    .rail-recent-item:hover { background: var(--hover-soft); color: var(--ink); }
     .rail-foot { margin-top: auto; padding: 14px 8px 4px; display: flex; flex-direction: column; gap: 7px; border-top: 1px solid var(--border); }
     .rail-foot-link { font-size: 12.5px; color: var(--ink-3); text-decoration: none; transition: color 0.14s ease; }
     .rail-foot-link:hover { color: var(--ink); }
+    .rail-theme { display: flex; align-items: center; gap: 9px; background: none; border: none; padding: 7px 0; margin-bottom: 4px; font: inherit; font-size: 12.5px; color: var(--ink-3); cursor: pointer; transition: color 0.14s ease; }
+    .rail-theme:hover { color: var(--ink); }
+    .rail-theme svg { width: 15px; height: 15px; flex: 0 0 auto; }
 
     .rail-scrim { display: none; }
 
@@ -104,7 +112,7 @@
       color: var(--ink-2); cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: background 0.14s ease, color 0.14s ease;
     }
-    .icon-btn:hover { background: rgba(0,0,0,0.05); color: var(--ink); }
+    .icon-btn:hover { background: var(--hover-soft); color: var(--ink); }
 
     /* mobile top bar (hidden on desktop) */
     .chat-topbar { display: none; }
@@ -131,7 +139,7 @@
       .chat-topbar {
         display: flex; align-items: center; justify-content: space-between; gap: 8px;
         flex-shrink: 0; padding: 8px 10px; border-bottom: 1px solid var(--border);
-        background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        background: var(--nav-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       }
       .chat-topbar-title { font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
     }
@@ -212,7 +220,7 @@
 
     .avatar {
       flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
-      background: #0A0A0A;
+      background: #0A0A0A; box-shadow: 0 0 0 1px var(--border);
       display: flex; align-items: center; justify-content: center; color: #fff; margin-top: 2px;
     }
     .avatar-mark { width: 34px; height: 34px; display: block; }
@@ -262,11 +270,11 @@
     .home-card--featured:hover { border-color: rgba(155, 107, 87, 0.6); box-shadow: 0 10px 28px rgba(155, 107, 87, 0.12); }
     .home-card-icon { width: 42px; height: 42px; border-radius: 12px; background: var(--surface); display: inline-flex; align-items: center; justify-content: center; color: var(--ink); flex: 0 0 auto; }
     .home-card-icon svg { width: 22px; height: 22px; display: block; }
-    .home-card--featured .home-card-icon { background: var(--color-accent-light, #f5ede9); color: var(--accent); }
+    .home-card--featured .home-card-icon { background: var(--accent-tint); color: var(--accent); }
     .home-card-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
     .home-card-title { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
     .home-card-sub { font-size: 13px; color: var(--ink-2); line-height: 1.5; }
-    .home-card-featured { position: absolute; top: 14px; right: 14px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--color-accent-light, #f5ede9); border-radius: 100px; padding: 3px 8px; }
+    .home-card-featured { position: absolute; top: 14px; right: 14px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--accent-tint); border-radius: 100px; padding: 3px 8px; }
 
     /* ── Mobile: full-page empty state + compact list cards ──
        (placed after the base card/composer CSS so these win on source order) */
@@ -280,7 +288,7 @@
       }
       .chat-pane.is-empty .composer-bar {
         position: sticky; bottom: 0; border-top: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        background: var(--nav-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       }
       .agent-intro { margin-bottom: 6px; }
       /* compact horizontal cards so all four fit above the composer */
@@ -365,7 +373,7 @@
     .featured-pill {
       position: absolute; top: 12px; right: 12px;
       font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-      color: #fff; background: var(--accent); border-radius: 100px; padding: 3px 10px;
+      color: var(--on-ink); background: var(--accent); border-radius: 100px; padding: 3px 10px;
     }
 
     /* ── inline link buttons ── */
@@ -376,15 +384,15 @@
       text-decoration: none; cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
-    .link-btn--primary { background: var(--ink); color: #fff; border: 1px solid var(--ink); }
-    .link-btn--primary:hover { background: #222; transform: translateY(-1px); }
+    .link-btn--primary { background: var(--ink); color: var(--on-ink); border: 1px solid var(--ink); }
+    .link-btn--primary:hover { background: var(--btn-hover); transform: translateY(-1px); }
     .link-btn--secondary { background: transparent; color: var(--ink); border: 1px solid var(--border); }
     .link-btn--secondary:hover { border-color: var(--ink); transform: translateY(-1px); }
 
     /* ── composer (pinned to bottom of chat pane) ── */
     .composer-bar {
       border-top: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.9);
+      background: var(--nav-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       position: sticky; bottom: 0;
@@ -546,6 +554,10 @@
       </div>
 
       <div class="rail-foot">
+        <button class="rail-theme" id="rail-theme" type="button" aria-label="Toggle theme">
+          <span id="rail-theme-icon"></span>
+          <span id="rail-theme-label">Dark mode</span>
+        </button>
         <a class="rail-foot-link" href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
         <a class="rail-foot-link" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
@@ -646,6 +658,38 @@
         if (e.target.closest('.rail-item, .rail-recent-item, .rail-brand') && window.matchMedia('(max-width: 900px)').matches) close();
       });
       window.__railClose = close;
+    })();
+
+    // ── Theme toggle (light ⇆ dark, persisted) ───────────────
+    (function () {
+      const btn = document.getElementById('rail-theme');
+      if (!btn) return;
+      const icon = document.getElementById('rail-theme-icon');
+      const label = document.getElementById('rail-theme-label');
+      const SUN = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.6M12 18.9v2.6M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12h2.6M18.9 12h2.6M4.2 19.8l1.8-1.8M18 6l1.8-1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+      const MOON = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.2A8 8 0 1 1 9.8 4a6.4 6.4 0 0 0 10.2 10.2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>';
+      const isDark = () => {
+        const t = document.documentElement.getAttribute('data-theme');
+        if (t) return t === 'dark';
+        return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      };
+      const paint = () => {
+        const dark = isDark();
+        icon.innerHTML = dark ? SUN : MOON;
+        label.textContent = dark ? 'Light mode' : 'Dark mode';
+      };
+      paint();
+      btn.addEventListener('click', () => {
+        const next = isDark() ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) { /* ignore */ }
+        paint();
+      });
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+          if (!document.documentElement.getAttribute('data-theme')) paint();
+        });
+      }
     })();
 
     // ── Side panel ───────────────────────────────────────────
