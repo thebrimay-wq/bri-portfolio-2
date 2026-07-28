@@ -270,6 +270,8 @@
     .home-card-icon { width: 42px; height: 42px; border-radius: 12px; background: var(--surface); display: inline-flex; align-items: center; justify-content: center; color: var(--ink); flex: 0 0 auto; }
     .home-card-icon svg { width: 22px; height: 22px; display: block; }
     .home-card--featured .home-card-icon { background: var(--accent-tint); color: var(--accent); }
+    .home-card-icon--thumb, .home-card--featured .home-card-icon--thumb { overflow: hidden; background: none; }
+    .home-card-icon--thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .home-card-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
     .home-card-title { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
     .home-card-sub { font-size: 13px; color: var(--ink-2); line-height: 1.5; }
@@ -977,8 +979,8 @@
       // First-time explore list — a scannable menu of where to start.
       const STARTER = [
         { kind: 'page', id: 'gcs', featured: true, href: '/work/global-content-studio/', panel: 'Global Content Studio', title: 'See Bri’s latest project.', sub: 'Global Content Studio — an AI content studio she built solo',
-          svg: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l1.9 5.3L19 10l-5.1 1.7L12 17l-1.9-5.3L5 10l5.1-1.7L12 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>' },
-        { kind: 'intent', id: 'casestudies', title: 'See all Bri’s case studies', sub: 'Three deep-dives into her product and AI work',
+          thumb: '/images/gcs-card.png' },
+        { kind: 'intent', id: 'casestudies', title: 'See all Bri’s case studies.', sub: 'Three deep-dives into her product and AI work',
           svg: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>' },
         { kind: 'page', id: 'resume', href: '/resume/', panel: 'Résumé', title: 'See Bri’s resume.', sub: 'Experience, skills, and a downloadable PDF',
           svg: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' },
@@ -1001,8 +1003,11 @@
             el.addEventListener('click', () => handleIntent(it.id, it.title));
           }
           el.className = 'home-card' + (it.featured ? ' home-card--featured' : '');
+          const iconInner = it.thumb
+            ? `<span class="home-card-icon home-card-icon--thumb"><img src="${it.thumb}" alt="" loading="lazy" /></span>`
+            : `<span class="home-card-icon">${it.svg}</span>`;
           el.innerHTML =
-            `<span class="home-card-icon">${it.svg}</span>` +
+            iconInner +
             `<span class="home-card-text"><span class="home-card-title">${esc(it.title)}</span><span class="home-card-sub">${esc(it.sub)}</span></span>` +
             (it.featured ? '<span class="home-card-featured">Featured</span>' : '');
           wrap.appendChild(el);
