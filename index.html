@@ -176,12 +176,13 @@
       background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
     }
     .chat-pane:not(.is-empty) .empty-state { display: none; }
-    .empty-state { max-width: 640px; margin: 0 auto; text-align: center; }
+    .empty-state { max-width: 720px; margin: 0 auto; text-align: center; }
     .empty-state .agent-intro h1 { margin-inline: auto; }
     .empty-state .home-cards { text-align: left; }
+    .empty-state .cs-cards { margin: clamp(24px, 4vw, 36px) auto 0; text-align: left; }
     .chat-scroll { flex: 1; overflow-y: auto; }
     .chat-inner {
-      max-width: 720px;
+      max-width: calc(720px + 2 * var(--px));
       margin: 0 auto;
       padding: clamp(36px, 6vw, 80px) var(--px) 28px;
       container-type: inline-size;
@@ -345,7 +346,7 @@
     }
 
     /* ── case study cards ── */
-    .cs-cards { display: flex; flex-direction: column; gap: 12px; max-width: 560px; }
+    .cs-cards { display: flex; flex-direction: column; gap: 12px; max-width: 720px; }
     .cs-card {
       position: relative; display: flex; align-items: center; gap: 18px; padding: 16px;
       border-radius: 14px; background: var(--bg); border: 1px solid var(--border);
@@ -359,6 +360,7 @@
     .cs-card-swatch img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .cs-card-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1; }
     .cs-card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .cs-card--featured .cs-card-tags { padding-right: 80px; }
     .mini-tag {
       font-size: 10px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
       color: var(--ink-3); background: var(--surface); border: 1px solid var(--border);
@@ -395,7 +397,7 @@
       -webkit-backdrop-filter: blur(12px);
       position: sticky; bottom: 0;
     }
-    .composer-inner { max-width: 720px; margin: 0 auto; padding: 14px var(--px) 16px; position: relative; }
+    .composer-inner { max-width: calc(720px + 2 * var(--px)); margin: 0 auto; padding: 14px var(--px) 16px; position: relative; }
     /* soft scrim so the thread dissolves under the composer (docked state only) */
     .chat-pane:not(.is-empty) .composer-bar::before {
       content: ''; position: absolute; left: 0; right: 0; top: -44px; height: 44px;
@@ -1291,8 +1293,8 @@
       document.getElementById('rail-newchat').addEventListener('click', resetChat);
       document.getElementById('topbar-newchat').addEventListener('click', resetChat);
 
-      // Mount the explore list into the empty state.
-      document.getElementById('starter-mount').appendChild(buildStarter());
+      // Mount the case-study tiles into the empty state (featured pill on GCS).
+      document.getElementById('starter-mount').innerHTML = caseCardsHtml();
 
       // ── Composer: auto-grow textarea, Enter to send, disabled when empty ──
       function autogrow() {
