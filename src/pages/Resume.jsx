@@ -18,7 +18,7 @@ const META = {
   linkedin:    'linkedin.com/in/brimay',
   linkedinUrl: 'https://linkedin.com/in/brimay',
   email:       'thebrimay@gmail.com',
-  resumePdf:   '/Bri-May-Resume.pdf',
+  resumePdf:   '/resume/BriMay_Resume.pdf',
   updated:     'April 2026',
 };
 
