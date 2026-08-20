@@ -6,6 +6,11 @@
    footer. Runs synchronously in <head> — no flash.
    ============================================ */
 (function () {
+  /* Scroll-reveal starts at opacity:0 and is un-hidden by JS. Mark the document
+     so those rules only apply when JS can actually reveal them — without this,
+     a JS-disabled visitor (or a crawler that doesn't execute) sees a blank page. */
+  document.documentElement.classList.add('js');
+
   try {
     var embedded = location.search.indexOf('embed=1') !== -1 || window.self !== window.top;
     if (embedded) {

@@ -7,6 +7,21 @@
   var yearEls = document.querySelectorAll('.footer-year');
   for (var i = 0; i < yearEls.length; i++) yearEls[i].textContent = yr;
 
+  // ── Skip link: first thing a keyboard user reaches on every inner page ──
+  var main = document.querySelector('main');
+  if (main && !document.querySelector('.skip-link')) {
+    if (!main.id) main.id = 'main';
+    var skip = document.createElement('a');
+    skip.className = 'skip-link';
+    skip.href = '#' + main.id;
+    skip.textContent = 'Skip to content';
+    skip.addEventListener('click', function () {
+      main.setAttribute('tabindex', '-1');
+      main.focus({ preventScroll: false });
+    });
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
+
   var nav = document.getElementById('site-nav');
   if (!nav) return;
   var inner = nav.querySelector('.nav-inner');

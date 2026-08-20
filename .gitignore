@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output (React mirror — the deployed site is the static HTML)
+dist/
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Local env
+.env
+.env.*

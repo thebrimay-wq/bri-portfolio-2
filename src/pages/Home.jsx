@@ -20,7 +20,7 @@ const WORK = [
     impact: 'Increased engagement 200% and supported $12M in revenue growth',
     tags: ['Platform Design', 'UX Strategy'],
     bg: '#EBE8F4',
-    image: '/images/hub-thumbnail.png',
+    image: '/images/hub-thumbnail.webp',
   },
   {
     to: '/work/aimee',
@@ -28,7 +28,7 @@ const WORK = [
     impact: 'Designed core AI conversation flows used by 500K+ active users',
     tags: ['AI Experience', 'Product Design'],
     bg: '#E2E7F0',
-    image: '/images/aimee-thumbnail.png',
+    image: '/images/aimee-thumbnail.webp',
   },
   {
     to: '/work/smart-benefits',
@@ -36,7 +36,7 @@ const WORK = [
     impact: 'Reduced benefits confusion 40%, improving employee retention scores',
     tags: ['Enterprise UX', 'Systems Design'],
     bg: '#E2EDE8',
-    image: '/images/smart-benefits-thumbnail.png',
+    image: '/images/smart-benefits-thumbnail.webp',
   },
 ];
 
@@ -121,7 +121,7 @@ function Hero() {
         {/* ── RIGHT: PORTRAIT ────────────────────────── */}
         <div className="hero__media">
           <motion.img
-            src="/images/bri-half-circle.png"
+            src="/images/bri-half-circle.webp"
             alt="Bri May — Senior Product Designer"
             className="hero__portrait"
             style={{ y: imageY }}

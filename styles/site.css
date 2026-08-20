@@ -13,8 +13,8 @@
   color-scheme: light;
   --bg:         #ffffff;
   --ink:        #0A0A0A;
-  --ink-2:      #6B7280;
-  --ink-3:      #9CA3AF;
+  --ink-2:      #515661;
+  --ink-3:      #697282;
   --border:     #E5E7EB;
   --surface:    #F8FAFC;
   --surface-2:  #f0f2f5;
@@ -39,8 +39,8 @@
     color-scheme: dark;
     --bg:         #101216;
     --ink:        #F4F5F7;
-    --ink-2:      #9BA1AA;
-    --ink-3:      #6E747D;
+    --ink-2:      #B3B8BE;
+    --ink-3:      #7F868F;
     --border:     #262A31;
     --surface:    #191C21;
     --surface-2:  #20242A;
@@ -58,8 +58,8 @@
   color-scheme: dark;
   --bg:         #101216;
   --ink:        #F4F5F7;
-  --ink-2:      #9BA1AA;
-  --ink-3:      #6E747D;
+  --ink-2:      #B3B8BE;
+  --ink-3:      #7F868F;
   --border:     #262A31;
   --surface:    #191C21;
   --surface-2:  #20242A;
@@ -105,9 +105,34 @@ a {
   text-decoration: none;
 }
 
+/* ── Screen-reader-only text, and the skip link that reveals itself on focus ── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: absolute; top: 8px; left: 8px; z-index: 200;
+  transform: translateY(-160%);
+  background: var(--ink); color: var(--bg);
+  font-size: 14px; font-weight: 500;
+  padding: 10px 16px; border-radius: 10px;
+  transition: transform 0.16s ease;
+}
+.skip-link:focus-visible,
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }
+
 img, video {
   display: block;
   max-width: 100%;
+  /* intrinsic width/height attributes are set on every <img> so the browser can
+     reserve space (no layout shift); height:auto keeps them undistorted once CSS
+     resizes them. Class rules that need a fixed height still win on specificity. */
+  height: auto;
 }
 
 
@@ -508,7 +533,7 @@ html.embedded footer { display: none !important; }
  *   Both .reveal.visible and .reveal.is-visible are supported.
  */
 
-.fade-up {
+.js .fade-up {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.55s ease, transform 0.55s ease;
@@ -519,7 +544,7 @@ html.embedded footer { display: none !important; }
   transform: none;
 }
 
-.reveal {
+.js .reveal {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -532,8 +557,8 @@ html.embedded footer { display: none !important; }
 }
 
 /* Staggered children */
-.reveal-group > *,
-.reveal-children > * {
+.js .reveal-group > *,
+.js .reveal-children > * {
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.45s ease, transform 0.45s ease;
@@ -553,6 +578,12 @@ html.embedded footer { display: none !important; }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  /* .js-scoped to match the specificity of the hiding rules above — an
+     unscoped selector here would lose the cascade and leave content invisible. */
+  .js .fade-up,
+  .js .reveal,
+  .js .reveal-group > *,
+  .js .reveal-children > *,
   .fade-up,
   .reveal,
   .reveal-group > *,

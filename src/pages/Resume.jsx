@@ -59,7 +59,7 @@ const EXPERIENCE = [
   {
     company: 'Financial Finesse',
     role:    'AI-Native Product Designer & Design Engineer',
-    period:  '2015 – Present',
+    period:  '2016 – Present',
     summary: 'Led design across product, brand, and marketing for a financial wellness platform serving Fortune 500 companies. Owned end-to-end experience design across major platform redesigns, AI integration, UX strategy, design systems, and executive-facing storytelling.',
     bullets: [
       'Led redesign of the Financial Wellness Hub, modernizing the platform and improving engagement by approximately 200%',

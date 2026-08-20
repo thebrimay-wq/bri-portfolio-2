@@ -7,13 +7,13 @@ import FadeUp from '../components/FadeUp.jsx';
 
 /* ─── IMAGE PATHS ────────────────────────────────────────── */
 const IMG = {
-  hero:      '/images/Financial Finesse Case Study/Hero.png',
-  aimee:     '/images/Financial Finesse Case Study/Aimee.png',
-  onboard:   '/images/Financial Finesse Case Study/Onboarding.png',
-  results:   '/images/Financial Finesse Case Study/Onboarding results.png',
-  actions:   '/images/Financial Finesse Case Study/AI Actions.png',
-  content:   '/images/Financial Finesse Case Study/Personalized Content.png',
-  mobile:    '/images/Financial Finesse Case Study/Mobile transition.png',
+  hero:      '/images/Financial Finesse Case Study/Hero.webp',
+  aimee:     '/images/Financial Finesse Case Study/Aimee.webp',
+  onboard:   '/images/Financial Finesse Case Study/Onboarding.webp',
+  results:   '/images/Financial Finesse Case Study/Onboarding results.webp',
+  actions:   '/images/Financial Finesse Case Study/AI Actions.webp',
+  content:   '/images/Financial Finesse Case Study/Personalized Content.webp',
+  mobile:    '/images/Financial Finesse Case Study/Mobile transition.webp',
 };
 
 /* ─── SHARED LAYOUT WRAPPER ──────────────────────────────── */
