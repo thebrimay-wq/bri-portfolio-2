@@ -49,6 +49,11 @@ three anchors at the top of the script to the new code boundaries.
 ### 2. Browser audit — a few minutes
 
 ```bash
+# If something already serves :8899, don't build over it — build-site.sh does
+# rm -rf on the output dir, which breaks a server whose cwd is inside it.
+# Either kill the old server first, or build to a fresh dir + fresh port and
+# point the audit there.
+pkill -f "http.server 8899" 2>/dev/null || true
 bash .claude/skills/portfolio-review/scripts/build-site.sh /tmp/portfolio-review/_site
 (cd /tmp/portfolio-review/_site && python3 -m http.server 8899 &)
 node .claude/skills/portfolio-review/scripts/browser-audit.mjs http://127.0.0.1:8899 "$CHROMIUM_PATH"
@@ -72,23 +77,31 @@ download filename).
 python3 .claude/skills/portfolio-review/scripts/asset-audit.py
 ```
 
-Reports unreferenced files, rasters over 600KB, and total deployed image
-weight. It reports only — deleting is a human decision, and a file referenced
-solely in CLAUDE.md is intentionally kept. Baseline after the 2026 cleanup:
+Reports unreferenced files, deployed files whose only references are in
+non-deployed contexts (`src/`, CLAUDE.md, README — dead weight that still
+ships), rasters over 600KB, and total deployed image weight. It reports
+only — deleting is a human decision. Baseline after the 2026 cleanup:
 ~51MB deployed. Meaningful growth over that means new unoptimized uploads.
 
 ### 4. Judgment layer — what scripts can't check
 
-Read anything the diff touched and ask:
+Scope: the diff against `origin/main` (what a merge would ship). On a clean
+tree with nothing to diff, apply these checks to the whole site at HEAD.
+Read anything in scope and ask:
 
 - **New KB answers**: is every number consistent with the canonical set in
-  CLAUDE.md (25 countries · ~$2.42M · +200% · $12M · 1M+ · FF 2016–present)?
+  CLAUDE.md (25 countries · ~$2.42M net avoided · +200% · $12M · 1M+ ·
+  FF 2016–present)? GCS also deliberately cites **$2.44M** — that's the
+  gross by-hand counterfactual, not a stale $2.42M; don't flag it.
   A stale number in one answer contradicts another page.
 - **New pages**: on the case-study template? (hero → at-a-glance + jump nav →
   What I Owned → Problem → Solution → Experiences ≤4 → Process → Impact →
   Takeaway → bottom-cta). Is the bottom-cta loop still a loop?
 - **New images**: WebP for heavy art, real `alt` text, intrinsic dimensions,
   under `public/images/` per CLAUDE.md.
+- **New top-level page directory**: it must be added in three places or it
+  silently escapes both the deploy and this audit — `deploy.yml`'s copy
+  list, `scripts/build-site.sh`, and `PAGES` in `scripts/browser-audit.mjs`.
 - **Copy**: does anything still say "three case studies" or an old title?
   `grep -ri "three deep-dives\|three case" --include=*.html .`
 
