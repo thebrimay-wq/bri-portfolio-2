@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brix — This Site as a Case Study | Bri May</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/site.css" />
+  <meta name="description" content="Case study: this portfolio itself — an AI-style concierge with an on-device retrieval engine, built with no framework, no backend, and no API key, audited to 42/42 checks." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Bri May" />
+  <meta property="og:image" content="https://imbrimay.com/images/og-cover.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://imbrimay.com/images/og-cover.png" />
+  <meta property="og:url" content="https://imbrimay.com/work/brix/" />
+  <link rel="canonical" href="https://imbrimay.com/work/brix/" />
+  <meta property="og:title" content="Brix — This Site as a Case Study | Bri May" />
+  <meta name="twitter:title" content="Brix — This Site as a Case Study | Bri May" />
+  <meta property="og:description" content="The portfolio as the proof: a conversational site with an on-device answer engine — no framework, no backend, no API key — designed, built, and audited by one person." />
+  <meta name="twitter:description" content="The portfolio as the proof: a conversational site with an on-device answer engine — no framework, no backend, no API key." />
+  <script src="/scripts/embed.js"></script>
+  <style>
+
+    /* ── wrapper ── */
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); }
+
+    /* ── section base ── */
+    .cs-section { padding: clamp(80px, 10vw, 128px) 0; border-top: 1px solid var(--border); }
+    .eyebrow { margin-bottom: 20px; }
+
+    /* ── skip-to-solution link ── */
+    .skip-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--ink-3);
+      text-decoration: none; cursor: pointer; transition: color 0.2s ease;
+    }
+    .skip-link:hover { color: var(--ink); }
+
+    /* ── cs images / placeholders ── */
+    .cs-image { width: 100%; height: auto; display: block; border-radius: 16px; transition: transform 0.5s ease; }
+    .cs-image:hover { transform: scale(1.01); }
+
+    /* ── inline demo video (rounded, autoplay-loop, 2× via JS) ── */
+    .cs-video-slot { position: relative; }
+    .cs-video { width: 100%; height: auto; display: block; border-radius: 16px; box-shadow: 0 1px 0 rgba(0,0,0,0.02); }
+    /* until the video's data loads, show the placeholder and keep the <video> out of the way */
+    .cs-video-slot:not(.loaded) .cs-video,
+    .cs-video-slot:not(.loaded) .cs-image { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .cs-video-slot.loaded .cs-video-ph { display: none; }
+    /* Hero video = a rounded card (all corners), scaled a hair so encoder
+       hairlines clip off on every side, with a 2026-style hairline stroke +
+       soft layered drop shadow. */
+    .hero-image .cs-video-slot {
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.03),
+        0 12px 30px rgba(0, 0, 0, 0.07),
+        0 28px 60px rgba(0, 0, 0, 0.06);
+    }
+    .hero-image .cs-video-slot::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.07);
+      pointer-events: none; z-index: 2;
+    }
+    .hero-image .cs-video { border-radius: 0; transform: scale(1.012); transform-origin: center; }
+    .img-placeholder {
+      width: 100%; aspect-ratio: 16 / 9; background: var(--surface);
+      border: 1px dashed var(--border); border-radius: 16px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; color: var(--ink-3); font-size: 13px; font-weight: 500;
+      letter-spacing: 0.04em; text-align: center; padding: 24px;
+    }
+    .img-placeholder::before {
+      content: ""; width: 30px; height: 30px;
+      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E");
+    }
+    .img-placeholder-label {
+      display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px; font-weight: 600; letter-spacing: 0; color: var(--ink-2);
+      background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 9px;
+    }
+    .img-placeholder--tall { aspect-ratio: 4 / 3; }
+    .img-placeholder--wide { aspect-ratio: 21 / 9; }
+
+    /* ── Atlas interactive pipeline (rebuilt from the FF product artifact) ── */
+    .atlas { --navy: #063853; --teal: #00507C; --teal-2: #007CAB; --line: #D6DCEA; }
+    .atlas-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; padding-bottom: 6px; }
+    .atlas-inner { min-width: 680px; }
+    .atlas-groups { display: flex; padding: 0 8px; margin-bottom: 14px; }
+    .atlas-group { font-size: 11px; letter-spacing: 0.08em; color: #8A93A6; font-weight: 700; text-transform: uppercase; text-align: center; }
+    .atlas-track { display: flex; align-items: flex-start; padding: 8px 8px 4px; }
+    .atlas-step { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+    .atlas-step::before { content: ""; position: absolute; top: 21px; right: 50%; width: 100%; height: 2px; background: var(--line); z-index: 0; }
+    .atlas-step:first-child::before { display: none; }
+    .atlas-dot { position: relative; z-index: 1; width: 44px; height: 44px; border-radius: 50%; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; transition: transform .15s ease, box-shadow .15s ease; }
+    .atlas-step[data-guardrail="1"] .atlas-dot { background: #fff; color: var(--teal); border: 2px solid var(--teal-2); }
+    .atlas-step-title { font-size: 12.5px; font-weight: 700; color: var(--navy); text-align: center; line-height: 1.3; max-width: 96px; }
+    .atlas-step.is-active .atlas-dot, .atlas-step:hover .atlas-dot { transform: scale(1.08); box-shadow: 0 4px 12px rgba(6, 56, 83, .35); }
+    .atlas-step[data-guardrail="1"].is-active .atlas-dot, .atlas-step[data-guardrail="1"]:hover .atlas-dot { box-shadow: 0 4px 12px rgba(0, 124, 171, .35); }
+    .atlas-step:focus-visible { outline: none; }
+    .atlas-step:focus-visible .atlas-dot { outline: 2px solid var(--teal-2); outline-offset: 3px; }
+    .atlas-detail { margin-top: 24px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; min-height: 132px; box-shadow: 0 2px 4px rgba(0, 0, 0, .03), 0 12px 30px rgba(0, 0, 0, .05); }
+    .atlas-detail-step { font-size: 11px; letter-spacing: 0.06em; color: var(--teal); font-weight: 700; text-transform: uppercase; margin-bottom: 7px; }
+    .atlas-detail-title { font-size: clamp(17px, 1.6vw, 20px); font-weight: 700; color: var(--navy); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .atlas-detail-desc { font-size: clamp(14px, 1.1vw, 15.5px); color: #383838; line-height: 1.55; }
+    .atlas-detail-why { margin-top: 13px; padding-top: 13px; border-top: 1px solid var(--line); }
+    .atlas-detail-why-label { font-size: 10.5px; letter-spacing: 0.05em; color: var(--teal-2); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+    .atlas-detail-why-text { font-size: 13.5px; color: #565656; line-height: 1.45; }
+    .atlas-hint { margin-top: 12px; font-size: 12px; color: var(--ink-3); text-align: center; }
+    .atlas-outcomes { margin-top: 20px; padding: 20px 24px; background: #F4F7FE; border-radius: 16px; border: 1px solid var(--line); }
+    .atlas-outcomes-label { display: block; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .atlas-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .atlas-pill { background: #E4F3E8; color: #1E6B3C; font-size: 12.5px; font-weight: 700; padding: 7px 14px; border-radius: 32px; }
+    @media (prefers-reduced-motion: reduce) { .atlas-dot { transition: none; } }
+    /* Dark theme: the Atlas mirrors the (light) Financial Finesse product,
+       so rest the whole widget on a light bed to keep its navy/teal UI legible. */
+    :root[data-theme="dark"] .atlas { background: #F6F8FC; border: 1px solid var(--line); border-radius: 20px; padding: 24px 22px; }
+    :root[data-theme="dark"] .atlas-hint { color: #8A93A6; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .atlas { background: #F6F8FC; border: 1px solid var(--line); border-radius: 20px; padding: 24px 22px; }
+      :root:not([data-theme="light"]) .atlas-hint { color: #8A93A6; }
+    }
+
+    /* ════ AT A GLANCE ════ */
+    .glance { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; margin-top: 8px; }
+    @media (max-width: 768px) { .glance { grid-template-columns: 1fr; gap: 32px; } }
+    .glance-summary { font-size: clamp(18px, 1.6vw, 23px); line-height: 1.6; color: var(--ink); font-weight: 500; max-width: 640px; }
+    .glance-facts { display: flex; flex-direction: column; }
+    .glance-facts > div { display: flex; justify-content: space-between; gap: 20px; padding: 14px 0; border-top: 1px solid var(--border); }
+    .glance-facts > div:last-child { border-bottom: 1px solid var(--border); }
+    .glance-facts dt { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); flex-shrink: 0; }
+    .glance-facts dd { font-size: 14px; color: var(--ink); font-weight: 500; text-align: right; margin: 0; line-height: 1.45; }
+
+    /* ════ 1. HERO ════ */
+    .hero { padding: clamp(80px, 10vw, 130px) 0 clamp(64px, 8vw, 108px); overflow: visible; }
+    .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 24px; }
+    .hero h1 { font-size: clamp(30px, 4vw, 58px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; max-width: 880px; margin-bottom: 28px; color: var(--ink); }
+    .hero h1 span { color: var(--ink-3); }
+    .hero-lead { font-size: clamp(16px, 1.3vw, 19px); color: var(--ink-2); line-height: 1.72; max-width: 640px; margin-bottom: 52px; }
+    .hero-stats { display: flex; gap: 52px; flex-wrap: wrap; margin-bottom: clamp(52px, 7vw, 96px); }
+    .hero-stat-val { font-size: clamp(22px, 2.5vw, 34px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 7px; color: var(--ink); }
+    .hero-stat-label { font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    .hero-image { width: 100%; }
+    .hero-image img, .hero-image .img-placeholder { width: 100%; height: auto; display: block; border-radius: 16px 16px 0 0; aspect-ratio: 16 / 9; }
+
+    /* ════ 2. WHAT I OWNED ════ */
+    .owned-section { background: var(--surface); }
+    .owned-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: clamp(40px, 5vw, 56px); max-width: 720px; }
+    .owned-list { display: flex; flex-direction: column; max-width: 820px; }
+    .owned-item { display: grid; grid-template-columns: 220px 1fr; gap: clamp(16px, 3vw, 40px); padding: clamp(24px, 3vw, 32px) 0; border-top: 1px solid var(--border); align-items: start; }
+    .owned-item:last-child { border-bottom: 1px solid var(--border); }
+    @media (max-width: 700px) { .owned-item { grid-template-columns: 1fr; gap: 8px; } }
+    .owned-label { font-size: clamp(15px, 1.2vw, 17px); font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+    .owned-text { font-size: clamp(15px, 1.15vw, 17px); color: var(--ink-2); line-height: 1.7; margin: 0; }
+
+    /* ════ 3. PROBLEM ════ */
+    .problem-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin: 0 0 24px; }
+    .problem-bullets { display: flex; flex-direction: column; gap: 18px; max-width: 720px; margin-top: 36px; }
+    .problem-bullet { display: flex; gap: 14px; align-items: flex-start; font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.7; }
+    .problem-bullet .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); flex-shrink: 0; margin-top: 10px; }
+    .problem-bullet strong { color: var(--ink); font-weight: 600; }
+
+    /* ════ 4. PROCESS surface + transform table ════ */
+    .opportunity-section { background: var(--surface); }
+    .transform-table { max-width: 720px; }
+    .transform-row { display: flex; align-items: center; gap: 20px; padding: clamp(20px, 2.5vw, 32px) 0; border-top: 1px solid var(--border); }
+    .transform-from { font-size: clamp(15px, 1.2vw, 17px); color: var(--ink-3); text-decoration: line-through; flex: 1; }
+    .transform-arrow { font-size: 12px; color: var(--ink-3); letter-spacing: 0.05em; flex-shrink: 0; }
+    .transform-to { font-size: clamp(15px, 1.2vw, 17px); font-weight: 600; color: var(--ink); flex: 1; }
+
+    /* ════ 5. SOLUTION ════ */
+    .solution-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 32px; max-width: 720px; }
+    .solution-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin-bottom: 40px; }
+    .numbered-list { display: flex; flex-direction: column; margin-bottom: 0; max-width: 820px; }
+    .numbered-item { display: grid; grid-template-columns: 48px 1fr; gap: clamp(16px, 2.5vw, 32px); padding: clamp(20px, 2.5vw, 28px) 0; border-top: 1px solid var(--border); align-items: start; }
+    .numbered-item:last-child { border-bottom: 1px solid var(--border); }
+    .numbered-item-n { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-3); padding-top: 4px; }
+    .numbered-item-text { font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.72; margin: 0; }
+    .numbered-item-text strong { color: var(--ink); font-weight: 700; }
+    .why-note { display: block; margin-top: 6px; font-size: 13.5px; color: var(--ink-3); line-height: 1.55; font-style: italic; }
+
+    /* ════ 6. EXPERIENCE / PIPELINE HEADERS ════ */
+    .exp-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 0; }
+    .exp-body { font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.75; max-width: 640px; margin-top: 20px; margin-bottom: 0; }
+    .exp-header { max-width: 760px; margin-bottom: clamp(40px, 5vw, 56px); }
+
+    /* ════ 7. PROCESS body / pullquote ════ */
+    .process-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin-bottom: clamp(40px, 5vw, 56px); }
+    .process-pullquote { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink); line-height: 1.65; font-weight: 500; font-style: italic; border-left: 2px solid var(--border); padding-left: 24px; margin: clamp(48px, 6vw, 72px) 0 0; max-width: 720px; }
+
+    /* ════ 8. IMPACT ════ */
+    .impact-section { text-align: center; }
+    .impact-h2 { font-size: clamp(26px, 3.5vw, 46px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; max-width: 620px; margin: 0 auto clamp(52px, 6vw, 80px); text-align: center; }
+    .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; text-align: left; margin-bottom: clamp(48px, 6vw, 72px); }
+    @media (max-width: 640px) { .impact-grid { grid-template-columns: 1fr; } }
+    .impact-cell { background: var(--bg); padding: clamp(28px, 3.5vw, 48px) clamp(20px, 2.5vw, 36px); }
+    .impact-val { font-size: clamp(28px, 3.5vw, 52px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-bottom: 12px; color: var(--ink); }
+    .impact-label { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+    .client-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .client-pill { font-size: 13px; font-weight: 500; color: var(--ink-2); background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; }
+
+    /* ════ 9. FINAL TAKEAWAY ════ */
+    .takeaway-section { background: var(--surface); padding: clamp(88px, 12vw, 160px) 0; border-top: 1px solid var(--border); }
+    .takeaway-text { font-size: clamp(24px, 3.5vw, 48px); font-weight: 700; letter-spacing: -0.035em; line-height: 1.12; max-width: 900px; color: var(--ink); }
+    .takeaway-text strong { color: var(--ink); }
+
+    /* ════ BOTTOM NAV ════ */
+    .bottom-cta { padding: clamp(40px, 5vw, 64px) 0; border-top: 1px solid var(--border); }
+    .cta-links { display: flex; gap: 32px; flex-wrap: wrap; align-items: center; }
+
+    /* ════ RESPONSIVE ════ */
+    @media (max-width: 768px) {
+      .cs-section { padding: 72px 0; }
+      .hero { padding-top: 72px; }
+      .hero-stats { gap: 32px; }
+    }
+    /* This page's hero shot is 16:10 — don't force the template's 16:9 */
+    .hero-image img { aspect-ratio: auto; border-radius: 16px; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Bri May</a>
+      <ul class="nav-links">
+        <li><a href="/work/">Work</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/resume/">Résumé</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ════ HERO ════ -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="hero-eyebrow fade-up">Design Engineer · Personal Project · 2026</p>
+
+        <h1 class="fade-up" style="transition-delay:50ms;">
+          The portfolio is the case study — a site that answers recruiter questions itself,
+          <span>with no framework, no backend, and no API key.</span>
+        </h1>
+
+        <p class="hero-lead fade-up" style="transition-delay:90ms;">
+          Instead of a static gallery, I built this site as an AI-style product: Brix, a conversational
+          concierge whose retrieval engine runs entirely in your browser. Every part — the app-shell UI, the
+          engine, the design system, the accessibility architecture — is hand-built vanilla HTML, CSS, and
+          JavaScript, then audited the way I'd audit a product.
+        </p>
+
+        <div class="hero-stats fade-up" style="transition-delay:130ms;">
+          <div>
+            <div class="hero-stat-val">$0</div>
+            <div class="hero-stat-label">Backend &amp; per-answer cost</div>
+          </div>
+          <div>
+            <div class="hero-stat-val">37/38</div>
+            <div class="hero-stat-label">Screening questions answered</div>
+          </div>
+          <div>
+            <div class="hero-stat-val">AA</div>
+            <div class="hero-stat-label">Contrast in both themes</div>
+          </div>
+        </div>
+
+        <div class="hero-image fade-up" style="transition-delay:170ms;">
+          <img class="cs-image" src="/images/brix-case-study/hero-answer.webp"
+            alt="Brix answering 'How does this work — are you a real AI?' honestly, with the actual retrieval-engine source code rendered inside the chat answer"
+            width="2400" height="1500">
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ AT A GLANCE ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">At a glance</span>
+        <div class="glance">
+          <p class="glance-summary">A portfolio should prove its claims. So instead of writing "design engineer" on a static page, I built the page as the evidence: a three-column LLM-app shell with a chat concierge whose answer engine — tokenization, synonym expansion, fuzzy matching, confidence scoring — runs on-device in plain JavaScript. No framework, no build step, no server, no key. Then I audited it like a product: 38 real screening questions, 42 browser-verified checks, WCAG AA in both themes.</p>
+          <dl class="glance-facts">
+            <div><dt>Role</dt><dd>Designer &amp; Engineer — everything</dd></div>
+            <div><dt>Timeline</dt><dd>2026 · evenings and weekends</dd></div>
+            <div><dt>Team</dt><dd>Solo — with Claude Code</dd></div>
+            <div><dt>Scope</dt><dd>Product framing · UX/UI · Engine · A11y · QA</dd></div>
+          </dl>
+        </div>
+        <div class="jump-nav">
+          <span class="jump-label">Jump to</span>
+          <a class="jump-chip" href="#owned">What I owned</a>
+          <a class="jump-chip" href="#brix-solution">Solution</a>
+          <a class="jump-chip" href="#process">Process</a>
+          <a class="jump-chip" href="#impact">Impact</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ WHAT I OWNED ════ -->
+    <section id="owned" class="cs-section owned-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">What I Owned</span>
+        <h2 class="owned-h2">Product, design, engine, accessibility, and the audit — end to end</h2>
+
+        <div class="owned-list">
+          <div class="owned-item">
+            <div class="owned-label">Product framing</div>
+            <p class="owned-text">Reframed the portfolio from a gallery into a product with a job: get a recruiter from question to evidence in seconds — chat for the questions, an artifact-style side panel for the evidence.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">UX &amp; UI</div>
+            <p class="owned-text">The full app shell — floating rail, chat pane with streaming and stop, side panel with focus management, mobile drawer, first-run action cards, and a role lens for the two audiences that hire me.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">The engine</div>
+            <p class="owned-text">A keyless retrieval engine: normalize → stopwords → synonyms → fuzzy match (Levenshtein ≤ 1) → confidence score, with negative keys and multi-word weighting. Hand-written, tested against 38 real screening questions.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Accessibility</div>
+            <p class="owned-text">Not a pass at the end — the architecture: AA tokens in both themes, streaming that announces once instead of 87 times, skip links, keyboard-complete flows, and a full no-JavaScript version.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">The audit</div>
+            <p class="owned-text">Drove every page and feature in a scripted browser — network, layout at 320–1440px, contrast, live-region behavior, downloads — and fixed every one of the 12 defects it surfaced. 42/42 green.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ THE PROBLEM ════ -->
+    <section class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">The Problem</span>
+        <h2 class="solution-h2">A recruiter gives a portfolio 90 seconds. A claim isn't proof.</h2>
+        <p class="solution-body">
+          Every senior portfolio says "systems thinker" and "ships quality." None of it is checkable in the
+          time a screener actually spends. And the obvious fix — bolt on an AI chatbot — means an API key, a
+          backend, latency, cost, and an illusion that breaks the moment an interviewer pokes it. I wanted the
+          opposite: a site where the engineering claims are the site, inspectable in DevTools, honest about
+          exactly what it is.
+        </p>
+      </div>
+    </section>
+
+    <!-- ════ THE SOLUTION ════ -->
+    <section id="brix-solution" class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">The Solution</span>
+        <h2 class="solution-h2">An AI product with no AI bill — honest by design</h2>
+        <p class="solution-body">
+          Brix looks and feels like a frontier chat product — streaming tokens, a thinking state, a stop
+          button, follow-up chips, deep-linkable answers. Underneath, it's a deliberate constraint worn
+          proudly: ask it if it's a real LLM and it explains its own retrieval engine, then shows you the code.
+        </p>
+        <div class="numbered-list">
+          <div class="numbered-item">
+            <span class="numbered-item-n">01</span>
+            <p class="numbered-item-text"><strong>On-device retrieval, zero cost.</strong> Questions are normalized, stop-worded, synonym-expanded, and fuzzy-matched against a hand-written knowledge base, scored for confidence. Negative keys stop "case study" from matching the education entry; multi-word matches outrank single words. Nothing leaves the visitor's browser.</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">02</span>
+            <p class="numbered-item-text"><strong>The LLM feel, honestly earned.</strong> Token streaming with punctuation-aware pacing, a variable thinking delay, stop-to-finish, one-turn memory for follow-ups, and a graceful fallback that offers the three nearest topics it does know instead of a dead end.</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">03</span>
+            <p class="numbered-item-text"><strong>Evidence one click away.</strong> Internal links open in an artifact-style side panel — an iframe with focus managed in and back out, Esc to close — so the conversation never loses its place while the case studies load beside it.</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">04</span>
+            <p class="numbered-item-text"><strong>Show, don't claim.</strong> Ask whether Bri codes and the answer renders the engine's actual source in the chat. Every answer is shareable via <code style="font-family:ui-monospace,monospace;font-size:0.9em;">?q=</code> deep links — a recruiter can send a hiring manager straight to a specific answer.</p>
+          </div>
+        </div>
+
+        <div class="fade-up" style="margin-top:clamp(44px,6vw,64px);">
+          <img class="cs-image" src="/images/brix-case-study/side-panel.webp"
+            alt="The Work page opening inside the floating side panel next to the chat — the embedded page hides its own navigation and reads as a clean preview"
+            loading="lazy" width="2400" height="1500">
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EXPERIENCE 01 — tokens/dark ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up">
+          <span class="eyebrow">Experience · 01</span>
+          <h2 class="exp-h2">One token system, two faithful themes</h2>
+          <p class="exp-body">
+            Every color on the site flows through custom properties defined three times: light, system-dark,
+            and a manual toggle persisted to localStorage and applied in <em>&lt;head&gt;</em> — so there's no flash of
+            the wrong theme. The muted-text ramp is recomputed per theme at the same hue so hierarchy survives:
+            worst-case contrast is ≥ 4.5:1 against both the page and card surfaces, in both modes.
+          </p>
+        </div>
+        <div class="fade-up" style="transition-delay:90ms;">
+          <img class="cs-image" src="/images/brix-case-study/dark-mode.webp"
+            alt="The homepage in dark mode — same layout, tokens swapped: cards, lens chips, rail, and composer all re-themed with WCAG AA contrast maintained"
+            loading="lazy" width="2400" height="1500">
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EXPERIENCE 02 — a11y streaming ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up">
+          <span class="eyebrow">Experience · 02</span>
+          <h2 class="exp-h2">Streaming a screen reader can live with</h2>
+          <p class="exp-body">
+            Token-by-token streaming mutates the DOM ~90 times per answer — inside an <em>aria-live</em> region,
+            that's 90 announcements. Here, the thread streams silently and a separate polite live region
+            announces the finished answer exactly once: measured, one mutation per answer. Chat UIs almost
+            never get this right; it's the kind of invisible correctness I care about shipping.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EXPERIENCE 03 — resilience ════ -->
+    <section class="cs-section">
+      <div class="wrap">
+        <div class="exp-header fade-up">
+          <span class="eyebrow">Experience · 03</span>
+          <h2 class="exp-h2">Works with JavaScript off, fonts blocked, or 320px wide</h2>
+          <p class="exp-body">
+            The reveal animations are scoped to an <em>html.js</em> class, so a no-JS visitor (or a crawler) gets the
+            complete content, and the homepage ships a full <em>&lt;noscript&gt;</em> version. Images declare intrinsic
+            dimensions so nothing shifts as they load; videos open on hand-picked poster frames; the heavy
+            case-study art is WebP. The deploy went from 130&nbsp;MB to 51&nbsp;MB without losing a pixel that matters.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ PROCESS ════ -->
+    <section id="process" class="cs-section opportunity-section">
+      <div class="wrap">
+        <span class="eyebrow fade-up">Process</span>
+        <h2 class="solution-h2 fade-up" style="transition-delay:60ms;">Audited like a product, not admired like a page</h2>
+        <p class="process-body fade-up" style="transition-delay:100ms;">
+          The build loop was design-in-code: ship a slice, then attack it. I extracted the retrieval engine
+          into a test harness and ran 38 questions a FAANG screener actually asks — the first pass answered 20
+          and routed "show me her strongest case study" to my college degree. Word-boundary matching, negative
+          keys, and 19 new knowledge entries later it answers 37, and the last one routes correctly. Then a
+          scripted browser drove every page: network, overflow at four widths, contrast in both themes,
+          keyboard order, live-region mutation counts, downloads.
+        </p>
+
+        <div class="transform-table fade-up" style="transition-delay:130ms;">
+          <div class="transform-row">
+            <span class="transform-from">Static PDF portfolio, skimmed in 90 seconds</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">A concierge that answers the screen itself</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">API-key chatbot: cost, latency, breakable illusion</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">On-device engine — honest, instant, free</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">20/38 screening questions answered</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">37/38, verified by an automated probe</span>
+          </div>
+          <div class="transform-row">
+            <span class="transform-from">87 live-region announcements per answer</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">1 — measured, not assumed</span>
+          </div>
+        </div>
+
+        <p class="process-pullquote fade-up" style="transition-delay:170ms;">
+          "If the site claims I can design and build, the site has to survive the person who checks."
+        </p>
+      </div>
+    </section>
+
+    <!-- ════ IMPACT ════ -->
+    <section id="impact" class="cs-section impact-section">
+      <div class="wrap">
+        <p class="eyebrow fade-up" style="text-align:center;">Impact</p>
+        <h2 class="impact-h2 fade-up" style="transition-delay:60ms;">Every claim on this site is one DevTools tab from proof.</h2>
+
+        <div class="impact-grid fade-up" style="transition-delay:90ms;">
+          <div class="impact-cell">
+            <div class="impact-val">42/42</div>
+            <p class="impact-label">Browser-verified checks green — network, layout, a11y, engine, downloads</p>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-val">61%</div>
+            <p class="impact-label">Lighter deploy after the asset audit — 130 MB → 51 MB, WebP + poster frames</p>
+          </div>
+          <div class="impact-cell">
+            <div class="impact-val">0</div>
+            <p class="impact-label">Servers, API keys, and dollars per answer — and it works offline</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ FINAL TAKEAWAY ════ -->
+    <section class="takeaway-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow" style="margin-bottom:36px; display:block;">Final Takeaway</span>
+        <p class="takeaway-text">
+          This site is the working sample: product framing, interface craft, a hand-built engine, measured
+          accessibility, and a ship-then-audit loop — by one person.
+          <strong>The same loop I'd bring to your team.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- ════ BOTTOM NAV ════ -->
+    <div class="bottom-cta">
+      <div class="wrap fade-up">
+        <nav class="cta-links" aria-label="Case study navigation">
+          <a href="/work/" class="btn-secondary">← Back to Work</a>
+          <a href="/work/global-content-studio/" class="btn-secondary">Next: Global Content Studio →</a>
+          <a href="/contact/" class="btn-secondary">Contact ↗</a>
+        </nav>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-left">Bri May</span>
+      <div class="footer-links">
+        <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
+        <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+      </div>
+      <span class="footer-right">© <span class="footer-year">2026</span> Bri May</span>
+    </div>
+  </footer>
+
+  <script src="/scripts/main.js"></script>
+  <script src="/scripts/nav.js"></script>
+</body>
+</html>
