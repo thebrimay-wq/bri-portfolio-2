@@ -3,31 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Bri May — AI-Native Product Designer & Design Engineer. Ask the portfolio agent to show you case studies, Bri's background, résumé, or contact info." />
-  <title>Bri May — AI-Native Product Designer &amp; Design Engineer</title>
+  <meta name="description" content="Bri May: AI-Native Senior Product Designer who ships in code. I design the product, then I ship the code. Ask Brix, the on-device assistant, to show you case studies, Bri's background, résumé, or contact info." />
+  <title>Bri May: AI-Native Senior Product Designer who ships in code.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/site.css" />
   <!-- A real excerpt of the retrieval engine on this page — rendered into the
        chat when someone asks whether Bri codes. Kept as text/plain so it never executes. -->
-  <script type="text/plain" id="engine-excerpt">// index.html — the engine answering you right now
+  <script type="text/plain" id="engine-excerpt">// index.html — the engine answering you right now (verbatim)
 function retrieve(query) {
   const nq = norm(query);
   const qt = toks(query);
-  let best = null, bestScore = 0;
+  let best = null, bestScore = 0, second = null, secondScore = 0;
+  const scored = [];
   for (const e of KB) {
-    // negative keys veto an entry outright
+    // `not` keys veto an entry outright — this is what stops "case study"
+    // scoring against the education entry via the word "study".
     if (e.not && e.not.some(n => nq.includes(n))) continue;
     let sc = 0;
     for (const key of e.keys) {
-      // a multi-word key is a stronger signal than one word
-      if (nq.includes(key)) { sc += 3 + (key.split(' ').length - 1) * 2; continue; }
-      if (qt.some(t => fuzzy(t, key))) sc += 1;   // Levenshtein <= 1
+      const kl = key.toLowerCase().trim();
+      // A multi-word key is a much stronger signal than a single word,
+      // so it outranks a generic one-word match on another entry.
+      if (kl.length >= 3 && nq.includes(kl)) { sc += 3 + (kl.split(' ').length - 1) * 2; continue; }
+      for (const w of kl.split(' ')) {
+        if (!w || STOP.has(w)) continue;
+        if (qt.some(t => fuzzy(t, w))) { sc += 1; break; }
+      }
     }
-    if (sc > bestScore) { best = e; bestScore = sc; }
+    if (sc > 0) scored.push({ e, sc });
+    if (sc > bestScore) { second = best; secondScore = bestScore; best = e; bestScore = sc; }
+    else if (sc > secondScore) { second = e; secondScore = sc; }
   }
-  return { entry: best, score: bestScore };
+  scored.sort((a, b) => b.sc - a.sc);
+  return { entry: best, score: bestScore, second: secondScore >= 2 ? second : null, scored };
 }</script>
 
   <script>
@@ -45,27 +55,12 @@ function retrieve(query) {
   <meta name="twitter:image" content="https://imbrimay.com/images/og-cover.png" />
   <meta property="og:url" content="https://imbrimay.com/" />
   <link rel="canonical" href="https://imbrimay.com/" />
-  <meta property="og:title" content="Bri May — AI-Native Product Designer &amp; Design Engineer" />
-  <meta name="twitter:title" content="Bri May — AI-Native Product Designer &amp; Design Engineer" />
-  <meta property="og:description" content="Ask Brix, Bri's on-device portfolio agent, about her work — an AI-native product designer and design engineer who designs and builds AI products end to end." />
-  <meta name="twitter:description" content="Ask Brix, Bri's on-device portfolio agent, about her work — an AI-native product designer and design engineer who designs and builds AI products end to end." />
+  <meta property="og:title" content="Bri May: AI-Native Senior Product Designer who ships in code." />
+  <meta name="twitter:title" content="Bri May: AI-Native Senior Product Designer who ships in code." />
+  <meta property="og:description" content="Ask Brix, Bri's on-device portfolio agent, about her work — Bri May, AI-Native Senior Product Designer. I design the product, then I ship the code." />
+  <meta name="twitter:description" content="Ask Brix, Bri's on-device portfolio agent, about her work — Bri May, AI-Native Senior Product Designer. I design the product, then I ship the code." />
 
   <style>
-    /* Role-lens chips under the starter cards */
-    .lens-row {
-      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
-      margin-top: 18px; justify-content: center;
-    }
-    .lens-label { font-size: 12.5px; color: var(--ink-3); margin-right: 2px; }
-    .lens-chip {
-      font-family: inherit; font-size: 12.5px; font-weight: 500; color: var(--ink-2);
-      background: transparent; border: 1px solid var(--border); border-radius: 100px;
-      padding: 5px 13px; cursor: pointer;
-      transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
-    }
-    .lens-chip:hover { border-color: var(--ink-3); color: var(--ink); background: var(--hover-soft); }
-    .lens-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    @media (max-width: 900px) { .lens-row { justify-content: flex-start; } }
 
     /* An inline code exhibit inside a chat answer */
     .code-chat {
@@ -252,6 +247,11 @@ function retrieve(query) {
 
     /* ── intro headline ── */
     .agent-intro { margin-bottom: clamp(28px, 4vw, 44px); }
+    .hero-intro .hero-name { font-size: clamp(34px, 8cqw, 52px); font-weight: 650; letter-spacing: -0.035em; line-height: 1; color: var(--ink); margin: 0; }
+    .hero-intro .hero-title { font-size: clamp(17px, 3.4cqw, 21px); font-weight: 500; color: var(--ink); margin: 12px 0 0; }
+    .hero-intro .hero-line { font-size: clamp(17px, 3.4cqw, 21px); color: var(--ink-2); margin: 4px 0 0; }
+    .hero-intro .hero-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 22px; }
+    @media (max-width: 900px) { .hero-intro .hero-links { justify-content: flex-start; } }
     .agent-kicker {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
@@ -578,27 +578,27 @@ function retrieve(query) {
   <noscript>
     <style>.app, .rail-scrim, .skip-link { display: none !important; }</style>
     <div class="noscript-page">
-      <h1>Bri May — AI-Native Product Designer &amp; Design Engineer</h1>
-      <p>Ten years in the seam between design and engineering — turning Figma systems
-         into production React front-ends and shipping AI-native products end to end.
-         Work has driven 200%+ engagement growth, contributed $12M+ in revenue, and
-         reached 1M+ employees across Fortune 500 clients including the Federal
-         Reserve, Meta, the NFL, and JPMorgan Chase.</p>
+      <h1>Bri May</h1>
+      <p>AI-Native Senior Product Designer<br>I design the product, then I ship the code.</p>
+      <p><a href="https://github.com/thebrimay-wq/bri-portfolio-2">View the code</a> ·
+         <a href="/work/global-content-studio/">Global Content Studio</a> ·
+         <a href="/resume/BriMay_Resume.pdf">Résumé (PDF)</a></p>
       <h2>Selected work</h2>
       <ul>
-        <li><a href="/work/global-content-studio/">Global Content Studio</a> — a brand-trained AI
-            content studio designed and built solo; localized ~650 pieces for 25 countries in
-            25 days, avoiding ~$2.42M in cost.</li>
+        <li><a href="/work/global-content-studio/">Global Content Studio</a> — an AI content and
+            localization studio built solo in four weeks; 8,118 localized variants across 28
+            locales in production, 25 live.</li>
+        <li><a href="/work/brix/">Brix — This Site</a> — this portfolio itself: a conversational
+            site with an on-device answer engine, no backend or API key. Source on GitHub.</li>
+        <li><a href="/aimee-ai/">Aimee AI Coach</a> — one AI coach designed for the Hub, an
+            embeddable widget, and Microsoft Teams; production components merged by Bri.</li>
         <li><a href="/work/hub/">Financial Finesse Hub</a> — a ground-up platform redesign that
             drove +200% engagement and $12M in revenue.</li>
-        <li><a href="/aimee-ai/">Aimee AI Coach</a> — one conversational AI coach designed and
-            built to ship across three surfaces, reaching 1M+ employees.</li>
-        <li><a href="/work/brix/">Brix — This Site</a> — this portfolio itself: a conversational
-            site with an on-device answer engine, no backend or API key.</li>
       </ul>
       <h2>More</h2>
       <ul>
         <li><a href="/work/">All work</a></li>
+        <li><a href="/code/">Code</a> — what is public and where the rest lives</li>
         <li><a href="/about/">About Bri</a></li>
         <li><a href="/resume/">Résumé</a> · <a href="/resume/BriMay_Resume.pdf">Download PDF</a></li>
         <li><a href="/contact/">Contact</a> — <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a></li>
@@ -632,6 +632,10 @@ function retrieve(query) {
           <svg class="rail-ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7" stroke="currentColor" stroke-width="1.6"/></svg>
           Work
         </a>
+        <a class="rail-item" href="/code/" data-panel-title="Code">
+          <svg class="rail-ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Code
+        </a>
         <a class="rail-item" href="/about/" data-panel-title="About">
           <svg class="rail-ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 20c0-3.4 3-6 6.5-6s6.5 2.6 6.5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
           About
@@ -658,6 +662,7 @@ function retrieve(query) {
         </button>
         <a class="rail-foot-link" href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
         <a class="rail-foot-link" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a class="rail-foot-link" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </div>
     </aside>
 
@@ -680,9 +685,15 @@ function retrieve(query) {
       <div class="chat-scroll" id="chat-scroll">
         <div class="chat-inner">
           <div class="empty-state" id="empty-state">
-            <div class="agent-intro">
-              <span class="agent-kicker">Hi, I'm Brix, Bri's assistant.</span>
-              <h1><span class="hl-line">What would you like to know</span> <span class="hl-line muted">about Bri?</span></h1>
+            <div class="agent-intro hero-intro">
+              <h1 class="hero-name">Bri May</h1>
+              <p class="hero-title">AI-Native Senior Product Designer</p>
+              <p class="hero-line">I design the product, then I ship the code.</p>
+              <div class="hero-links">
+                <a class="link-btn link-btn--primary" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">View the code ↗</a>
+                <a class="link-btn link-btn--secondary" href="/work/global-content-studio/" data-panel-title="Global Content Studio">Global Content Studio →</a>
+                <a class="link-btn link-btn--secondary" href="/resume/BriMay_Resume.pdf" download>Résumé ↓</a>
+              </div>
             </div>
             <div id="starter-mount"></div>
           </div>
@@ -700,7 +711,7 @@ function retrieve(query) {
             <label for="composer-input" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Ask about Bri</label>
             <textarea
               id="composer-input" class="composer-input" rows="1"
-              placeholder="Ask about Bri…"
+              placeholder="Ask Brix anything about the work…"
               aria-label="Ask about Bri"></textarea>
             <button type="submit" class="send-btn" id="send-btn" aria-label="Send">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -889,16 +900,9 @@ function retrieve(query) {
 
       // Funny redirects — used when a question isn't about Bri, or isn't in the wiki.
       const FUNNY = [
-        "That's above my pay grade — and I work purely for exposure. Ask me about Bri's work instead?",
-        "Not in my training data, which is 100% Bri May. Want the case studies or the résumé?",
-        "I'd guess, but Bri designs for trust — a wrong answer would be off-brand. Try me on her work.",
-        "You've wandered off the map. Safe ground: Bri's case studies, her background, or how to reach her.",
-        "I know exactly one subject, and it rhymes with “Bri May.” What can I tell you about her?",
-        "Great question for a search engine. For anything about Bri, though, I'm your agent.",
-        "I only cover one topic, and it's 100% Bri — so I'll pass on that one. Ask me about her work?",
-        "Error 404: opinion not found. Bri facts, however, are fully in stock.",
-        "My knowledge starts and ends with Bri's portfolio — luckily that's a lot. Ask away.",
-        "Hard pass on that one, but I can talk Global Content Studio, the Hub, or Aimee all day.",
+        "I only know Bri's work, so I'll pass on that one.",
+        "That's outside what I know. I only cover Bri's work.",
+        "Not something I can answer. I only know Bri's portfolio.",
       ];
       const funny = () => FUNNY[Math.floor(Math.random() * FUNNY.length)];
 
@@ -914,29 +918,26 @@ function retrieve(query) {
           text: "Not something I'd speak for. Bri's compensation expectations depend on the role, scope and location — worth asking her directly at thebrimay@gmail.com or 209-601-0181. What I *can* tell you is what she'd be bringing: 200%+ engagement growth, $12M+ in revenue contributed, and an AI product shipped solo in a month.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
         { keys: ['design process', 'her process', 'how does she work', 'how she works', 'approach', 'methodology', 'workflow', 'how does she design'],
-          text: "Bri's process is build-to-think. She starts from the problem and the constraint, gets to something real fast — a coded prototype more often than a static mock — then tests it with users and iterates in code. Because she designs **and** builds, there's no handoff step: research, design system, and shipped React front-end are one loop. On Global Content Studio that loop took an AI content studio from idea to production in a month." },
+          text: "Bri's process is build-to-think: start from the problem and the constraint, get to something real fast, usually a coded prototype, test it with users, and iterate in the code that ships. On Global Content Studio that took the app from first commit to launch QA in under four weeks, then a four-day run that brought ten locales live." },
         { keys: ['user research', 'research', 'usability', 'usability testing', 'user testing', 'interviews', 'talk to users', 'validate'],
           text: "Yes. Bri introduced user research and usability testing at Financial Finesse — before that, design decisions were made on opinion. She runs interviews and usability sessions and feeds them straight into the design system. The Hub redesign was research-led end to end, and it drove **+200% engagement** and $12M in revenue." },
-        { keys: ['manage', 'managed', 'mentor', 'mentored', 'lead a team', 'led a team', 'leadership', 'reports', 'direct reports', 'size team', 'team size', 'how big'],
-          text: "Bri has led design without being a people manager in the classic sense. As **Lead Product Designer & Product Creative Director** she directed design strategy, set the standards and quality bar, and guided the design work as the practice scaled — mentoring designers and running cross-functional work with engineering and stakeholders. She's led projects and a practice; she hasn't run a large org." },
+        { keys: ['manage', 'managed', 'mentor', 'mentored', 'lead a team', 'led a team', 'leadership', 'reports', 'direct reports', 'size team', 'team size', 'how big', 'ai team', 'ai champion', 'champion', 'teach', 'train others', 'evangelist'],
+          // TODO(bri): lead with the AI Champion numbers (facts.md §10) once they exist.
+          text: "Bri leads through craft and standards rather than headcount: as Lead Product Designer and Product Creative Director she set the design standards and the quality bar and guided designers as the practice scaled. She is on the company's AI team and mentors colleagues on building with AI. She has not been a people manager by title." },
         { keys: ['accessibility', 'a11y', 'wcag', 'screen reader', 'accessible', 'aria', 'contrast'],
           text: "Accessibility is part of how Bri builds, not a pass at the end. She ships **accessible, tokenized React components** — semantic markup, keyboard-complete flows, visible focus, WCAG AA contrast baked into the design tokens, and reduced-motion respected. This site is built to the same bar: AA tokens in both light and dark, a skip link, and screen-reader-safe streaming in the chat." },
-        { keys: ['collaborate', 'collaboration', 'work with engineers', 'engineers', 'engineering team', 'handoff', 'cross functional', 'stakeholder', 'pm', 'product manager'],
-          text: "Bri works *inside* engineering rather than throwing designs over a wall. She hands off pixel-accurate, buildable specs — and often the components themselves, already written in React. She's led cross-functional work with engineering and stakeholders to prototype and ship features from concept to launch, which is much of why her work actually reaches production." },
+        { keys: ['collaborate', 'collaboration', 'work with engineers', 'engineers', 'engineering team', 'work with engineering', 'cross functional', 'stakeholder', 'pm', 'product manager'],
+          text: "Bri works inside engineering: she writes the components and merges them herself, 32 commits into the Aimee SDK, 80 into the Hub's Content Studio, 27 into the Python review API. Where engineering owns the build, they implement her coded prototypes 1:1. She has led cross-functional work with engineering and stakeholders from concept to launch." },
         { keys: ['0 to 1', '0-1', 'zero to one', 'greenfield', 'from scratch', 'new product', 'ambiguity', 'ambiguous', 'undefined'],
-          text: "0→1 is her strongest mode. Global Content Studio didn't exist as a request — Bri spotted the gap, defined the problem, and shipped the whole product solo in a month. She owns 0-to-1 design direction and system standards across the product, from Figma tokens to shipped, accessible React UI. Ambiguity is where she starts, not where she stalls." },
-        { keys: ['typescript', 'javascript', 'react', 'next', 'tailwind', 'vite', 'framer motion', 'code stack', 'what does she code', 'languages', 'performance', 'core web vitals', 'page speed', 'optimi'],
-          text: "Bri builds production front-ends in **React** with JavaScript, HTML/CSS, Tailwind, Vite, Framer Motion, design tokens and Git/CI. She built Aimee's front end on Next.js and Tailwind, and shipped Global Content Studio solo with Claude Code. She's a designer who writes shipping code, not a designer who's read about it." },
-        { keys: ['weakness', 'weaknesses', 'not good at', 'gaps', 'downside', 'limitations', 'failure', 'failed', 'mistake', 'went wrong', 'hardest'],
+          text: "Global Content Studio did not exist as a request. Bri saw the team writing company content on unregulated AI subscriptions, defined the product, and shipped it solo in four weeks. She owns product direction and system standards from Figma tokens to shipped, accessible UI." },
+        { keys: ['typescript', 'javascript', 'react', 'next', 'tailwind', 'vite', 'framer motion', 'code stack', 'build with', 'built with', 'cloudflare', 'work with api', 'with apis', 'apis', 'api integration', 'what does she code', 'languages', 'performance', 'core web vitals', 'page speed', 'optimi'],
+          text: "Bri builds in TypeScript and JavaScript: React and Lit front-ends with Tailwind, Vite, Framer Motion and design tokens. She works in Git and CI, deploys on Vercel and Cloudflare Workers, integrates REST and the Anthropic API, and writes Python when the service needs it (the localization review API). Tests are Vitest and Playwright." },
+        { keys: ['weakness', 'weaknesses', 'not good at', 'gaps', 'downside', 'limitations', 'hardest'],
           text: "Honest version: Bri's depth is one domain — a decade of financial wellness at Financial Finesse — so she's not arriving with a broad multi-industry résumé. She's also not a people manager by title; her leadership has been through craft, standards and mentorship. What she trades for that is unusual depth and the ability to design *and* ship a product on her own." },
         { keys: ['why leaving', 'why is she leaving', 'leave', 'looking for', 'next role', 'what does she want', 'motivation', 'seeking'],
-          text: "After ten years at Financial Finesse — from graphic design through Lead Product Designer to AI-native design engineer — Bri is looking for a bigger surface and a team that's building AI products seriously. She's exploring **Senior / Principal Product Designer and Design Engineer** roles where designing and building in one loop is the point." },
-        { keys: ['hiring for a design engineer', 'design engineer role', 'design engineer position', 'de role'],
-          intent: 'lens_de' },
-        { keys: ['hiring for a senior product designer', 'senior product designer role', 'product designer position', 'pd role', 'senior designer role'],
-          intent: 'lens_pd' },
+          text: "After ten years at Financial Finesse, from graphic design through Lead Product Designer to AI-Native Senior Product Designer on the AI team, Bri is looking for a team building AI products seriously, where designing the product and shipping the code is one job." },
         { keys: ['level', 'senior or staff', 'staff', 'principal', 'seniority', 'title', 'what level'],
-          text: "Bri targets **Senior / Staff / Principal Product Designer** and **Design Engineer** roles. Ten years in product, currently AI-Native Lead Product Designer — owning product-wide direction, the design system, and the shipped front-end code." },
+          text: "AI-Native Senior Product Designer, on Financial Finesse's AI team. She targets that title at the senior-to-staff level, and Design Engineer roles where designing the product and shipping the code is the job." },
         { keys: ['relocat', 'remote', 'onsite', 'hybrid', 'where would she work', 'commute', 'willing to move'],
           text: "Bri is in **Pleasanton, CA** — Bay Area — and works remotely today. She's open to remote and to hybrid roles in the Bay Area. Worth asking her directly about anything requiring a move." },
         { keys: ['start date', 'when can she start', 'notice period', 'how soon', 'timeline to start'],
@@ -949,45 +950,71 @@ function retrieve(query) {
         { keys: ['mobile', 'mobile design', 'ios', 'android', 'responsive', 'app design', 'native app', 'swift'],
           text: "Bri designs responsive, cross-surface products rather than native iOS/Android. Aimee ships to three surfaces from one system — the Hub, an embeddable widget on client sites, and Microsoft Teams — and everything she builds is responsive down to phone widths. She doesn't write Swift or Kotlin." },
         { keys: ['measure success', 'metrics', 'kpi', 'how do you know', 'success', 'outcome', 'track'],
-          text: "Bri measures in behavior and business outcomes, not screens shipped. Her headline numbers: **200%+ engagement growth**, **$12M+ revenue contributed**, 1M+ employees reached, and ~$2.42M in cost avoided on Global Content Studio. She introduced research and usability testing so activation could be measured and lifted rather than guessed at." },
+          text: "Bri measures in behavior and business outcomes, not screens shipped. Her headline numbers: +200% engagement growth, $12M in revenue contributed, and 8,118 localized variants in production across 28 locales from Global Content Studio. She introduced research and usability testing so activation could be measured and lifted rather than guessed at." },
         { keys: ['big tech', 'faang', 'startup', 'company size', 'enterprise', 'agency', 'worked where'],
           text: "Bri's product career is at **Financial Finesse** — a B2B2C financial-wellness company serving Fortune 500 clients like the Federal Reserve, Meta, the NFL and JPMorgan Chase — where she's shipped enterprise-scale products to 1M+ employees. Before that she was at CKC Communications, doing branding and sites for 50+ companies. Not big tech yet; that's the move she's making." },
         { keys: ['tests', 'testing', 'unit test', 'qa', 'code quality', 'ci', 'write tests'],
-          text: "Bri ships production front-end code with Git and CI, and QAs her work across breakpoints, themes and assistive tech. She's a design engineer rather than a full-stack engineer — deep on accessible, tokenized component code and interaction quality; test suites and back-end architecture are engineering partners' territory." },
+          text: "Yes. Global Content Studio has 221 Vitest tests across 12 files (the gate, policy, rewrite, index, single-flight, wiki, and feedback logic). This site ships a 50-question engine probe and a 44-check Playwright audit in its public repo, run on every change. Her Content Studio work in the Hub and the Python review API both landed with tests. She ships front-end and pipeline code rather than full-stack services." },
         { keys: ['how does this work', 'how do you work', 'how were you built', 'are you an llm', 'real llm', 'what model', 'chatgpt', 'claude', 'api', 'built this chat', 'this site built', 'this website built', 'brix', 'this portfolio', 'this site'],
+          not: ['work with api', 'with apis', 'anthropic api', 'api integration'],
           code: true,
           text: "Fair question — and the honest answer is a design decision. I'm **not** an LLM. I'm a small retrieval engine that runs entirely in your browser: no backend, no API key, no per-message cost, and nothing leaves your device. Your question gets normalized, stopworded, synonym-expanded and fuzzy-matched against a hand-written knowledge base about Bri, scored for confidence, then streamed back. Bri designed and built the whole thing — and wrote it up as a case study.",
           href: '/work/brix/', title: 'Brix — This Site', label: 'Read how this site was built →' },
+        { keys: ['github', 'git hub', 'repo', 'repository', 'source code', 'open source', 'code sample', 'see her code'],
+          not: ['case study', 'case studies'],
+          code: true,
+          text: "Yes. This site's source is public — the engine you're talking to is in index.html, and the screening-question probe and browser audit are in the repo under .claude/skills/portfolio-review/. Global Content Studio and Aimee are Financial Finesse's private codebases, so their code isn't public; those case studies show the architecture and the pipeline instead.",
+          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Open the repo on GitHub ↗</a><a class="link-btn link-btn--secondary" href="/work/brix/" data-panel-title="Brix — This Site">How this site works →</a></div>' },
+        { keys: ['what broke', 'broke', 'broken', 'went wrong', 'failure', 'failed', 'incident', 'bug', 'bugs', 'outage', 'what failed'],
+          text: "Plenty, and it is written up. On Global Content Studio: 5,455 published variants carried English titles and slugs on localized bodies; US-only links were invisible to every automated check until an independent verifier stage was added; the 5-worker pool derived five different locale briefs in parallel until a single-flight lock fixed it; a swallowed JSON parse error left jobs stuck at running; and a batch overwrote localizer-approved articles, which is why approved variants are skipped by default now. On this site: the first engine pass answered 20 of 38 screening questions and routed \"strongest case study\" to her college degree.",
+          href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read what broke and what changed →' },
+        { keys: ['how did she fix', 'fixed it', 'the fix', 'debug', 'debugging', 'root cause', 'how was it fixed'],
+          text: "Each fix is in the case study: an independent verify pass with a redo loop for US-only content; a keyed single-flight lock, with tests, for the brief race; unparseable model output now fails the job with a retry instead of hanging; approved articles are skipped unless a run says otherwise; and, on this engine, word-boundary matching and negative keys so \"study\" stops matching \"education\".",
+          href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read the fixes →' },
+        { keys: ['tradeoff', 'trade-off', 'tradeoffs', 'trade offs', 'trade-offs', 'decision', 'decisions', 'why did she choose', 'option not taken'],
+          text: "Three she would defend: a Cloudflare Worker holding the Anthropic key and the Azure connection string instead of calling either from the browser (one more deploy; no secrets client-side and one place to gate writes); a per-locale wiki the model is grounded on instead of open-web search (slower to build; the facts are ours); and five model calls per article instead of one, at five times the cost, because the one-pass output kept US framing. On this site: a keyword engine instead of an LLM, so there is no key, no bill, and nothing to break in an interview.",
+          href: '/work/global-content-studio/#decisions', title: 'Global Content Studio', label: 'Read the decisions →' },
+        { keys: ['architecture', 'architected', 'system design', 'how is it built', 'how was it built', 'how does the studio work', 'data flow', 'backend', 'back end', 'back-end', 'infra', 'infrastructure'],
+          text: "Global Content Studio: a TypeScript and Lit app on Vercel; a Cloudflare Worker that proxies the Anthropic API and exposes REST routes over Azure Blob Storage (entries, wiki, flags, versions) through a hand-written SharedKey client, because the Azure SDK cannot run in Workers; Dexie for local job state; a 5-worker localization pool with a serialized save queue; and a CLI workflow that fans out Sonnet subagents per article (gate, research, draft, verify, save) before a deterministic packager and link check. Nothing auto-publishes. The diagram is in the case study.",
+          href: '/work/global-content-studio/#architecture', title: 'Global Content Studio', label: 'See the architecture →' },
+        { keys: ['why no framework', 'no framework', 'vanilla', 'why not react', 'why vanilla', 'why not use react', 'why plain'],
+          text: "For this site, a framework would add a build step, a bundle, and a dependency tree to a page whose whole point is being inspectable in DevTools. Plain HTML, CSS, and JavaScript keep every claim one tab from proof, work with JavaScript off, and load with no server. Her production work is React and Lit; the choice is per product, not a preference.",
+          href: '/work/brix/', title: 'Brix — This Site', label: 'How this site is built →' },
+        { keys: ['do differently', 'differently', 'regret', 'in hindsight', 'started over', 'lessons', 'learned', 'lesson'],
+          text: "Three things, from her own logs: start with the verify pass instead of adding it after US-only links slipped through; version the locale briefs from day one, since a cached brief with the wrong register shipped before that existed; and measure cost per article before scaling from one pass to five. On this site: build the screening-question harness before the engine, not after it answered 20 of 38.",
+          href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read what changed →' },
         { keys: ['who is', "who's bri", 'about bri', 'what does she do', 'what does bri do', 'what do you do', 'overview', 'summary', 'elevator', 'introduce'],
-          text: "Bri May is an AI-native product designer and design engineer with about 10 years in product. She works in the seam between design and engineering — she designs AND builds, turning Figma systems into production React and shipping AI-native products end to end, on her own. Her work has driven 200%+ engagement growth, $12M+ in revenue, and reached 1M+ employees across Fortune 500 clients." },
+          text: "Bri May is an AI-Native Senior Product Designer at Financial Finesse, on the company's AI team. She designs the product, then she ships the code: this year she built Global Content Studio solo (TypeScript, Lit, a Cloudflare Worker, the Anthropic API), merged production code into the Aimee SDK and the Hub's Content Studio, and earlier led the Hub redesign that drove +200% engagement. About ten years in product." },
         { keys: ['design engineer', 'do you code', 'does she code', 'can she code', 'she code', 'build it', 'builds', 'engineering', 'react', 'front-end', 'front end', 'frontend', 'developer', 'technical', 'hands on', 'hands-on'],
           code: true,
-          text: "Yes — Bri is a design engineer. She doesn't just hand off mockups; she ships production front-ends in React (with Tailwind, Vite, design tokens, Framer Motion). She built the Global Content Studio app solo, end to end, and coded the Aimee front end herself. Designing and building in one loop is her edge." },
+          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Open the source on GitHub ↗</a><a class="link-btn link-btn--secondary" href="/code/" data-panel-title="Code">What is public →</a></div>',
+          text: "Yes. Her title is AI-Native Senior Product Designer, and the second half of the job is shipping the code: Global Content Studio built solo (TypeScript, Lit, a Cloudflare Worker, the Anthropic API, 221 tests), 32 commits into the production Aimee SDK, 80 into the Hub's Content Studio, 27 into the Python review API. The excerpt below is the engine answering you right now; the full source is on GitHub." },
         { keys: ['global content studio', 'content studio', 'margin', 'federal reserve', 'content team', 'localization', 'localiz'],
-          text: "Global Content Studio is a brand-trained AI content studio Bri designed AND built solo with Claude Code, end to end. It replaced the team's scattered, unregulated AI, then became a localization engine — an 8-step pipeline (Atlas) that adapts content for 25 countries. It localized ~650 pieces (16,250 outputs) in 25 days — work that would've cost ~$2.44M and 9 months by hand, so ~$2.42M saved — and helped win the Federal Reserve. In production for 1M+ employees.",
+          not: ['broke', 'broken', 'went wrong', 'failed', 'failure', 'fix', 'tradeoff', 'trade-off', 'architecture', 'differently', 'lesson'],
+          text: "Global Content Studio is the AI content and localization studio Bri built solo in four weeks: TypeScript and Lit, a Cloudflare Worker fronting the Anthropic API and Azure Blob Storage, and Atlas, an 8-step pipeline with a suitability gate, an independent verify pass, and human review before anything publishes. In production: 8,118 localized variants across 28 locales, 25 live; one four-day run shipped 3,512 pieces and brought ten locales live. By hand that run would have meant 25 in-country localizers and roughly $2.44M.",
           href: '/work/global-content-studio/', title: 'Global Content Studio', label: 'Open the case study →' },
         { keys: ['aimee', 'coach', 'conversational', 'design system', 'component library', 'three surfaces', '3 surfaces', 'microsoft teams', 'widget', 'sdk'],
           not: ['size team', 'size teams', 'how big', 'team size'],
-          text: "Aimee is Financial Finesse's AI financial coach. Bri designed and built the front end end-to-end — a documented design system, a locked component library, and coded interactive prototypes — and made one system ship to three surfaces: the Hub, an embeddable client-site widget, and Microsoft Teams. Signature calls: honest AI over “virtual assistant,” and the user's words never shrink.",
+          text: "Aimee is Financial Finesse's AI financial coach, shipping to the Hub, an embeddable client widget, and Microsoft Teams. Engineering built the Aimee SDK in React and A2UI from Bri's coded prototypes and spec. She then merged the design-system layer and the empty-state, conversations, icon, and card-shell components into the production SDK herself (32 commits, July–August 2026).",
           href: '/aimee-ai/', title: 'Aimee AI Coach', label: 'Open the case study →' },
         { keys: ['hub', 'financial finesse hub', 'wellness platform', 'redesign', 'onboarding'],
-          text: "The Financial Finesse Hub is a ground-up redesign Bri led as the lead product designer — turning a static content library into a personalized, guided system. It drove +200% engagement and $12M in revenue and won Fortune 500 clients. She led the design team from research to launch.",
+          text: "The Financial Finesse Hub is a ground-up redesign Bri led as lead product designer, turning a static content library into a personalized, guided system. It drove +200% engagement and $12M in revenue and won Fortune 500 clients. She led the redesign from research to launch.",
           href: '/work/hub/', title: 'Financial Finesse Hub', label: 'Open the case study →' },
         { keys: ['smart benefits', 'open enrollment', 'enrollment', 'recordkeeper', 'embed mode'],
           not: ['relocat', 'start date', 'when can she', 'notice period'],
           text: "Smart Benefits is an AI-powered open-enrollment experience Bri designed with three white-label embed modes, adopted by one of the largest U.S. retirement recordkeepers. It's part of her work history — there's no dedicated case study for it on the site." },
         { keys: ['impact', 'results', 'metrics', 'numbers', 'revenue', 'engagement', 'outcomes', 'how much', 'roi'],
-          text: "The headline numbers: 200%+ engagement growth, $12M+ in revenue contributed, and products reaching 1M+ employees across Fortune 500 clients. She also built Global Content Studio solo — localizing company content to 25 countries in 25 days, avoiding ~$2.42M in cost, and helping win the Federal Reserve." },
+          text: "The headline numbers: +200% engagement growth and $12M in revenue contributed after the Hub redesign, products in production for a platform serving 1M+ employees, and Global Content Studio, built solo: 8,118 localized variants across 28 locales, 3,512 of them in one four-day run." },
         { keys: ['clients', 'companies', 'worked with', 'brands', 'customers', 'fortune 500', 'fortune500'],
           text: "Bri's work reaches Fortune 500 clients including the Federal Reserve, Meta, the NFL, JPMorgan Chase, CVS Health, Patagonia, McKinsey, Nestlé, Comcast, and General Mills." },
         { keys: ['skills', 'tech', 'stack', 'tools', 'figma', 'capabilities', 'expertise', 'proficient', 'good at', 'visual design', 'craft', 'typography', 'visual ability'],
-          text: "Design & product: 0→1 product design, UX/UI, design systems, interaction & motion, prototyping, research, Figma. Engineering: React, JavaScript, HTML/CSS, Framer Motion, Vite, design tokens, accessible UI, Git. AI-native: AI product design, rapid prototyping, LLM-powered features, conversational/agent UX, prompt engineering." },
+          text: "Engineering: TypeScript, JavaScript, React, Lit, HTML/CSS, Tailwind, Vite, design tokens, accessible UI, Cloudflare Workers, Azure Blob Storage, Python, Vitest and Playwright, Git, CI. AI: the Anthropic API, RAG and grounding on per-locale wikis, evals and human-in-the-loop QA, multi-pass LLM pipelines, conversational UX. Design: product design from zero, design systems, prototyping in code, user research, interaction and motion, Figma." },
         { keys: ['ai ', 'ai-native', 'ai native', 'artificial intelligence', 'llm', 'machine learning', 'generative', 'use ai', 'ai in her', 'ai workflow', 'ai tools'],
-          text: "AI is the through-line of Bri's recent work: she built Global Content Studio (a brand-trained AI content studio) solo, designed and built the Aimee AI coach across three surfaces, and prototypes AI-native products end to end — with AI as her engineering partner." },
+          text: "AI is the through-line of Bri's recent work: Global Content Studio (the Anthropic API, an 8-step localization pipeline, per-locale wikis the model is grounded on instead of the open web), the Aimee AI coach across three surfaces, and the evals and human-in-the-loop QA that decide what ships." },
         { keys: ['experience', 'years', 'how long', 'tenure', 'senior'],
-          text: "About 10 years in product design (designing since 2011), most of it at Financial Finesse — where she's grown from graphic design to product design to AI-native product designer and design engineer." },
+          text: "About ten years in product design (designing since 2011), most of it at Financial Finesse, where she has grown from graphic design to product design to shipping the code herself." },
         { keys: ['work history', 'financial finesse', 'current role', 'where does she work', 'employer', 'career', 'ckc', 'history'],
-          text: "Bri has been at Financial Finesse since 2016 — now AI-Native Lead Product Designer, previously Lead Product Designer · Product Creative Director and Sr. Graphic Designer. Before that she was a graphic designer at CKC Communications (2012–2015), doing branding and websites for 50+ companies." },
+          text: "Bri has been at Financial Finesse since 2016 — now AI-Native Senior Product Designer (since 2025), previously Lead Product Designer · Product Creative Director and Sr. Graphic Designer. Before that she was a graphic designer at CKC Communications (2012–2015), doing branding and websites for 50+ companies." },
         { keys: ['education', 'school', 'college', 'university', 'degree', 'studied', 'asu', 'chico', 'arizona state', 'graduate'],
           not: ['case study', 'case studies', 'study of', 'strongest', 'best work'],
           text: "Bri earned a B.S. in Business (Marketing) from Cal State Chico on a full-ride soccer scholarship, after two years playing Division I soccer at Arizona State — also on a full-ride athletic scholarship." },
@@ -1001,14 +1028,14 @@ function retrieve(query) {
           text: "The fastest way to reach Bri is email — thebrimay@gmail.com — or call/text her at 209-601-0181. She's also on LinkedIn.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
         { keys: ['why hire', 'what makes', 'different', 'stand out', 'unique', 'strength', 'pitch', 'special', 'value'],
-          text: "The short pitch: most designers hand off mockups — Bri ships them. She's a senior product designer who also builds in React and AI-natively, so she moves from idea to production without a translation layer. That's how she built an AI studio solo in a month and helped drive $12M in revenue." },
+          text: "She designs the product, then she ships the code, so nothing is lost between the two. Proof: Global Content Studio, built solo, with 8,118 localized variants in production across 28 locales; 32 commits into the production Aimee SDK; 80 commits into the Hub's Content Studio, with tests; and this site. The product judgment is the Hub redesign: +200% engagement and $12M in revenue." },
       ];
 
       const CASE_STUDIES = [
-        { featured: true, title: 'Global Content Studio', href: '/work/global-content-studio/', swatch: '#EDE6DC', thumb: '/images/gcs-card.png', tags: ['AI Product', 'Solo Build'], impact: 'Brand-trained AI content studio, built solo — 25 countries localized in 25 days, ~$2.42M saved.' },
-        { title: 'Financial Wellness Hub', href: '/work/hub/', swatch: '#EBE8F4', thumb: '/images/hub-card.png', tags: ['Platform Design', 'UX Strategy'], impact: 'A redesign that drove +200% engagement and $12M in revenue.' },
+        { featured: true, title: 'Global Content Studio', href: '/work/global-content-studio/', swatch: '#EDE6DC', thumb: '/images/gcs-card.png', tags: ['AI Product', 'Solo Build'], impact: 'The AI localization studio built solo in four weeks — 8,118 localized variants across 28 locales in production.' },
+        { title: 'Brix — This Site', href: '/work/brix/', swatch: '#E8E4DE', thumb: '/images/brix-card.webp', tags: ['Design Engineering', 'Solo Build'], impact: "This portfolio itself — an on-device answer engine with no backend, no API key. You're using it right now." },
         { title: 'Aimee AI Coach', href: '/aimee-ai/', swatch: '#E2E7F0', thumb: '/images/aimee-card.png', tags: ['AI Experience', 'Product Design'], impact: 'A conversational AI coach reaching 1M+ employees.' },
-        { title: 'Brix — This Site', href: '/work/brix/', swatch: '#E8E4DE', thumb: '/images/brix-card.webp', tags: ['Design Engineering', 'Solo Build'], impact: "This portfolio itself — an on-device answer engine with no backend, no API key. You're using it right now." }
+        { title: 'Financial Wellness Hub', href: '/work/hub/', swatch: '#EBE8F4', thumb: '/images/hub-card.png', tags: ['Platform Design', 'UX Strategy'], impact: 'A redesign that drove +200% engagement and $12M in revenue.' }
       ];
 
       const CHIP_LABELS = { casestudies: 'Case studies', about: 'About Bri', resume: 'Résumé', contact: 'Contact' };
@@ -1038,29 +1065,19 @@ function retrieve(query) {
           chips: ['about', 'resume', 'contact']
         }),
         about: () => ({
-          text: "Bri May is an AI-native product designer and design engineer — a decade in product, designing since 2011, working in the seam between design and engineering. She's shipped for companies like Meta, the NFL, and JPMorgan, and now designs and builds AI products end to end, on her own.",
+          text: "Bri May, AI-Native Senior Product Designer at Financial Finesse. I design the product, then I ship the code: a decade in product, designing since 2011, shipped for clients like Meta, the NFL, and JPMorgan Chase, and this year building AI products end to end in TypeScript, React, Lit, Cloudflare Workers, and the Anthropic API.",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="/about/" data-panel-title="About Bri">Read the full story →</a></div>',
           chips: ['casestudies', 'resume', 'contact']
         }),
         resume: () => ({
-          text: "The short version: an AI-native product designer & design engineer — ten years in the seam between design and engineering, shipping production React front-ends and AI products end to end. Want the full detail?",
+          text: "The short version: AI-Native Senior Product Designer, ten years in product, who designs the product and ships the code: TypeScript, React, Lit, Cloudflare Workers, the Anthropic API, with tests. Want the full detail?",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="/resume/" data-panel-title="Résumé">View résumé →</a><a class="link-btn link-btn--secondary" href="/resume/BriMay_Resume.pdf" download>Download PDF ↓</a></div>',
           chips: ['casestudies', 'about', 'contact']
         }),
         contact: () => ({
-          text: "Bri's currently exploring Senior/Principal Product Designer and Design Engineer roles. The fastest way to reach her — email or text at 209-601-0181:",
+          text: "Bri is open to AI-Native Senior Product Designer roles, Bay Area or remote. The fastest way to reach her — email or text at 209-601-0181:",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="mailto:thebrimay@gmail.com">Email Bri</a><a class="link-btn link-btn--secondary" href="tel:+12096010181">Call / text ↗</a><a class="link-btn link-btn--secondary" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="link-btn link-btn--secondary" href="/contact/" data-panel-title="Contact">Contact page →</a></div>',
           chips: ['casestudies', 'about', 'resume']
-        }),
-        lens_de: () => ({
-          text: "Then start with the proof she can ship. Bri designs **and** writes the production front-end — React, design tokens, accessible components, Git/CI. The two things to look at: **Global Content Studio**, an AI product she built end to end, solo, in a month; and **this site** — an app-shell chat UI with an on-device retrieval engine, WCAG AA in both themes, and screen-reader-safe streaming, all hand-built with no framework.",
-          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="/work/global-content-studio/" data-panel-title="Global Content Studio">The solo AI build →</a><a class="link-btn link-btn--secondary" href="/work/brix/" data-panel-title="This Site">How this site works →</a><a class="link-btn link-btn--secondary" href="/resume/BriMay_Resume.pdf" download>Résumé PDF ↓</a></div>',
-          chips: ['casestudies', 'resume', 'contact']
-        }),
-        lens_pd: () => ({
-          text: "Then look at the product judgment first. Bri led the **Financial Finesse Hub** redesign — research through launch — driving **+200% engagement and $12M in revenue**; designed **Aimee**, an AI coach that ships to three surfaces from one system; and owns 0→1 direction, the design system, and user research. The engineering is the bonus: her designs ship because she can build them.",
-          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="/work/hub/" data-panel-title="Financial Finesse Hub">The Hub redesign →</a><a class="link-btn link-btn--secondary" href="/aimee-ai/" data-panel-title="Aimee AI Coach">Aimee →</a><a class="link-btn link-btn--secondary" href="/resume/BriMay_Resume.pdf" download>Résumé PDF ↓</a></div>',
-          chips: ['casestudies', 'resume', 'contact']
         }),
         greet: () => ({ text: "Hey! Here's what I can help you explore:", block: null, chips: ['casestudies', 'about', 'resume', 'contact'] }),
         fallback: () => ({ text: funny(), block: null, chips: ['casestudies', 'about', 'resume', 'contact'] })
@@ -1160,11 +1177,11 @@ function retrieve(query) {
       const STARTER = [
         { kind: 'page', id: 'gcs', featured: true, href: '/work/global-content-studio/', panel: 'Global Content Studio', title: 'See Bri’s latest project.', sub: 'Global Content Studio — an AI content studio she built solo',
           thumb: '/images/gcs-card.png' },
-        { kind: 'intent', id: 'casestudies', title: 'See all Bri’s case studies.', sub: 'Four deep-dives into her product and AI work',
+        { kind: 'page', id: 'code', href: '/code/', panel: 'Code', title: 'See the code she ships.', sub: 'The engine behind this site, its test harness, and what is public',
           svg: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>' },
         { kind: 'page', id: 'resume', href: '/resume/', panel: 'Résumé', title: 'See Bri’s resume.', sub: 'Experience, skills, and a downloadable PDF',
           svg: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' },
-        { kind: 'intent', id: 'contact', title: 'How do I contact Bri?', sub: 'Open to senior roles — reach her by email, text, or LinkedIn',
+        { kind: 'intent', id: 'contact', title: 'How do I contact Bri?', sub: 'Open to AI-Native Senior Product Designer roles — email, text, or LinkedIn',
           svg: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' }
       ];
 
@@ -1194,18 +1211,6 @@ function retrieve(query) {
         });
         const holder = document.createElement('div');
         holder.appendChild(wrap);
-        const lens = elFromHtml(
-          '<div class="lens-row">' +
-            '<span class="lens-label">Hiring for a specific role?</span>' +
-            '<button type="button" class="lens-chip" data-lens="lens_de">Design Engineer</button>' +
-            '<button type="button" class="lens-chip" data-lens="lens_pd">Senior Product Designer</button>' +
-          '</div>');
-        lens.querySelectorAll('.lens-chip').forEach(btn => {
-          btn.addEventListener('click', () => {
-            handleIntent(btn.dataset.lens, "I'm hiring for a " + btn.textContent.toLowerCase() + " — where should I look?");
-          });
-        });
-        holder.appendChild(lens);
         return holder;
       }
 
@@ -1308,7 +1313,7 @@ function retrieve(query) {
         thread.setAttribute('aria-busy', 'true');
         const typing = showTyping();
         const len = (res.text || '').length;
-        const thinkMs = reduceMotion ? 60 : Math.min(850, 220 + len * 0.9);
+        const thinkMs = 120; // one beat, not a fake think (brief §3)
         let started = false;
         const t = setTimeout(start, thinkMs);
         active = { finish() { if (!started) { clearTimeout(t); start(true); } else if (streamer) streamer.finish(); } };
@@ -1410,7 +1415,7 @@ function retrieve(query) {
         ['hub', 'The Financial Finesse Hub'], ['design engineer', 'Does she code?'],
         ['design process', 'Her design process'], ['user research', 'Her research practice'],
         ['manage', 'Leadership & mentoring'], ['accessibility', 'Accessibility'],
-        ['collaborate', 'Working with engineers'], ['0 to 1', '0→1 product work'],
+        ['collaborate', 'Working with engineers'], ['0 to 1', 'Starting products from nothing'],
         ['typescript', 'Her tech stack'], ['weakness', 'Her weak spots'],
         ['why leaving', "What she's looking for"], ['level', 'Seniority & level'],
         ['relocat', 'Location & remote'], ['impact', 'Impact & numbers'],
@@ -1456,6 +1461,7 @@ function retrieve(query) {
           }
         }
         if (entry.href) parts.push(linkRow(entry));
+        if (entry.block) parts.push(entry.block);
         const res = { text: entry.text, block: parts.length ? parts.join('') : null, followups: followupsFor(entry) };
         if (alt) {
           res.text = 'Closest I have — tell me if I misread you: ' + entry.text;
@@ -1496,6 +1502,10 @@ function retrieve(query) {
         const intent = matchIntent(q);
         if (intent !== 'fallback') { respond(intent); return; }
         if (r.entry && r.score >= 1) { serveEntry(r.entry, r.second); return; }
+        // An engineering question with no match still gets a real answer, never a joke.
+        if (/\b(broke|break|broken|fix|fixed|fail|failed|failure|tradeoff|trade-off|architecture|test|tests|debug|why)\b/.test(s)) {
+          const eng = KB.find(e => e.keys[0] === 'what broke'); if (eng) { serveEntry(eng); return; }
+        }
         lastEntry = null; lastListShown = false;
         // Don't just deflect — offer the nearest things we *do* know, so an
         // unanswered question still moves the visitor forward.
@@ -1509,8 +1519,8 @@ function retrieve(query) {
              { label: 'Why hire her', q: 'why hire bri' },
              { label: 'Get in touch', intent: 'contact' }];
         const text = near.length
-          ? "I don't have a good answer to that one — I only know what's in Bri's portfolio. Closest things I do know:"
-          : funny();
+          ? "I only know Bri's work. Closest things I do know:"
+          : funny() + " Closest things I do know:";
         deliver({ text, followups: chips });
       }
 

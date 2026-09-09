@@ -12,7 +12,7 @@ cp index.html CNAME "$OUT/"
 cp favicon.png apple-touch-icon.png "$OUT/" 2>/dev/null || true
 cp -r images/. "$OUT/images/"
 cp -r public/images/. "$OUT/images/" 2>/dev/null || true
-for d in styles scripts about resume work contact aimee-ai; do
+for d in styles scripts about resume work contact aimee-ai code; do
   [ -d "$d" ] && cp -r "$d" "$OUT/"
 done
 echo "built: $OUT ($(du -sh "$OUT" | cut -f1))"

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/site.css" />
-  <meta name="description" content="Case study: Aimee AI Coach — one design system shipped to three surfaces (Hub, embeddable widget, Microsoft Teams), designed and built by Bri May." />
+  <meta name="description" content="Case study: Aimee AI Coach — one design system for three surfaces (Hub, embeddable widget, Microsoft Teams). Designed by Bri May: coded prototypes and a component contract engineering implemented 1:1, then production components she merged herself." />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta property="og:type" content="article" />
@@ -346,15 +346,16 @@
     <!-- ════ 1. HERO ════ -->
     <section class="hero">
       <div class="wrap">
-        <p class="hero-eyebrow fade-up">Lead Product Designer · Design Engineer · Financial Finesse · 2026</p>
+        <p class="hero-eyebrow fade-up">AI-Native Senior Product Designer · Financial Finesse · 2026</p>
         <h1 class="fade-up" style="transition-delay:50ms;">
           One AI financial coach, designed and built to feel native everywhere —
           <span>the Hub, client sites, and Microsoft Teams</span>
         </h1>
         <p class="hero-lead fade-up" style="transition-delay:90ms;">
-          Aimee is Financial Finesse's AI financial coach. I designed and built its front end
-          end-to-end — visual language, interaction model, a full component library, and coded
-          prototypes — then made it deploy to three surfaces from one codebase.
+          Aimee is Financial Finesse's AI financial coach. I designed its front end end to end —
+          visual language, interaction model, a component contract, and coded prototypes. Engineering
+          built the SDK in React and A2UI from those, and I merged the design-system layer and four
+          components into it myself.
         </p>
         <div class="hero-stats fade-up" style="transition-delay:130ms;">
           <div>
@@ -371,7 +372,7 @@
           </div>
         </div>
         <div class="hero-actions fade-up" style="transition-delay:150ms;">
-          <a href="https://glittering-sopapillas-a86d93.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn-primary">Explore the live design system ↗</a>
+          <a href="/aimee-ai/components/" target="_blank" rel="noopener noreferrer" class="btn-primary">Explore the component library →</a>
         </div>
         <div class="hero-image fade-up" style="transition-delay:170ms;">
           <div class="cs-video-slot">
@@ -391,10 +392,10 @@
       <div class="wrap fade-up">
         <span class="eyebrow">At a glance</span>
         <div class="glance">
-          <p class="glance-summary">Aimee is Financial Finesse's AI financial coach. I owned the front-end design and design engineering end-to-end — a documented design system, a locked component library, and coded interactive prototypes — so one coaching experience deploys natively across the Hub, embeddable client-site widgets, and Microsoft Teams, all provisioned through UberAdmin.</p>
+          <p class="glance-summary">Aimee is Financial Finesse's AI financial coach, shipping to the Hub, an embeddable client widget, and Microsoft Teams. Engineering built the Aimee SDK in React and A2UI from Bri's coded prototypes and spec. She then merged the design-system layer and the empty-state, conversations, icon, and card-shell components into the production SDK herself (32 commits, July–August 2026).</p>
           <dl class="glance-facts">
-            <div><dt>Role</dt><dd>Lead Product Designer / Design Engineer</dd></div>
-            <div><dt>Scope</dt><dd>Front-end design · Design system · Prototyping · Handoff</dd></div>
+            <div><dt>Role</dt><dd>AI-Native Senior Product Designer · front-end design &amp; coded prototypes</dd></div>
+            <div><dt>Scope</dt><dd>Front-end design · Design system · Coded prototypes · Production components</dd></div>
             <div><dt>Surfaces</dt><dd>Hub · Client sites · MS Teams</dd></div>
             <div><dt>Stack</dt><dd>Next.js · Tailwind · Recharts · A2UI</dd></div>
           </dl>
@@ -413,15 +414,15 @@
     <section id="owned" class="cs-section owned-section">
       <div class="wrap fade-up">
         <span class="eyebrow">My Role</span>
-        <h2 class="owned-h2">Front-end design and design engineering, end to end</h2>
+        <h2 class="owned-h2">Front-end design, coded prototypes, and production components</h2>
         <div class="owned-list">
           <div class="owned-item">
             <div class="owned-label">Visual &amp; Interaction</div>
-            <p class="owned-text">Defined Aimee's visual language and interaction model — how she talks, streams, surfaces content, and hands off to a human coach.</p>
+            <p class="owned-text">Defined Aimee's visual language and interaction model — how she talks, streams, surfaces content, and brings in a human coach.</p>
           </div>
           <div class="owned-item">
             <div class="owned-label">Design System</div>
-            <p class="owned-text">Authored <code>DESIGN-SYSTEM.md</code> as the single source of truth: tokens, typography, every chat and card component, chart rules, accessibility hard-rules, and a running anti-patterns list.</p>
+            <p class="owned-text">Wrote the spec (<code>DESIGN-SYSTEM.md</code>: tokens, typography, every chat and card component, chart rules, accessibility hard-rules, an anti-patterns list), then the tokens themselves as the styles layer of the production SDK.</p>
           </div>
           <div class="owned-item">
             <div class="owned-label">Component Library</div>
@@ -436,8 +437,12 @@
             <p class="owned-text">Designed the embeddable SDK widget for client sites and adapted the same system to Microsoft Teams — all hostable through UberAdmin.</p>
           </div>
           <div class="owned-item">
-            <div class="owned-label">Handoff</div>
-            <p class="owned-text">Wrote the engineering spec (Next.js + Tailwind + A2UI) so the prototypes translated to production without redesign.</p>
+            <div class="owned-label">Coded by me</div>
+            <p class="owned-text">The interactive prototypes (HTML/CSS/JS with live streaming and state), the component contract, the engineering spec (Next.js + Tailwind + A2UI), and, in the production SDK, the design-token layer plus the empty-state, conversations, icon, and card-shell components: 32 commits, July–August 2026.</p>
+          </div>
+          <div class="owned-item">
+            <div class="owned-label">Built by engineering</div>
+            <p class="owned-text">The Aimee SDK itself, in React and A2UI, built by the platform engineers from my prototypes and spec and implemented 1:1; the host provisioning through UberAdmin; the model and coaching back end.</p>
           </div>
         </div>
       </div>
@@ -485,7 +490,7 @@
         <div class="numbered-list">
           <div class="numbered-item">
             <span class="numbered-item-n">01</span>
-            <p class="numbered-item-text"><strong>A documented design system</strong> — <code>DESIGN-SYSTEM.md</code> as the source of truth: tokens, typography, accessibility hard-rules, and a running anti-patterns list</p>
+            <p class="numbered-item-text"><strong>A design-system spec, then tokens as code</strong> — <code>DESIGN-SYSTEM.md</code> defines tokens, typography, accessibility hard-rules, and an anti-patterns list; the tokens ship as the styles layer of the production SDK</p>
           </div>
           <div class="numbered-item">
             <span class="numbered-item-n">02</span>
@@ -507,7 +512,7 @@
         <div class="fade-up phone-row" style="margin-top:clamp(20px,3vw,36px);">
           <img class="cs-image" src="/images/aimee-milestones.png" alt="Aimee on mobile — the wellness-milestones card" loading="lazy" width="840" height="1824">
           <img class="cs-image" src="/images/aimee-charts.png" alt="Aimee on mobile — a financial snapshot response with charts" loading="lazy" width="842" height="1826">
-          <img class="cs-image" src="/images/aimee-coachhandoff.png" alt="Aimee on mobile — handing off to a live coach" loading="lazy" width="844" height="1828">
+          <img class="cs-image" src="/images/aimee-coachhandoff.png" alt="Aimee on mobile — bringing in a live coach" loading="lazy" width="844" height="1828">
         </div>
       </div>
     </section>
@@ -521,12 +526,12 @@
           <p class="exp-body">
             Aimee is labeled an "AI coach," not "virtual" — hiding the AI only breaks trust later.
             Certified human coaches are framed as a one-click premium upgrade, so Aimee feels
-            capable and humans feel credentialed. A gold-railed handoff card makes the escalation
+            capable and humans feel credentialed. A gold-railed escalation card makes the step up
             feel like an upgrade, not a fallback.
           </p>
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
-          <img class="cs-image" src="/images/aimee-coachhandoff-dt.png" alt="Aimee handing off to a live certified coach — a green LIVE banner as Cyrus Purnell, CFP, joins the conversation to continue the plan" loading="lazy" width="2400" height="1445">
+          <img class="cs-image" src="/images/aimee-coachhandoff-dt.png" alt="Aimee bringing in a live certified coach — a green LIVE banner as Cyrus Purnell, CFP, joins the conversation to continue the plan" loading="lazy" width="2400" height="1445">
         </div>
       </div>
     </section>
@@ -545,10 +550,10 @@
             <div class="bullet-list">
               <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Navy rail</strong> — analysis</span></div>
               <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Teal rail</strong> — recommendation</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Gold rail</strong> — human-coach handoff</span></div>
+              <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Gold rail</strong> — human-coach escalation</span></div>
               <div class="bullet-item"><span class="bullet-dot"></span><span>Coral reserved for the single most-urgent item — restraint as a rule</span></div>
             </div>
-            <a href="https://glittering-sopapillas-a86d93.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="margin-top:28px;">See the components live ↗</a>
+            <a href="/aimee-ai/components/" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="margin-top:28px;">See the components live ↗</a>
           </div>
           <div class="fade-up" style="transition-delay:90ms;">
             <img class="cs-image" src="/images/aimee-components.png" alt="The typed card system — an analysis card (navy rail), a recommendation card (teal rail), and a coach card (gold rail), each signaling its type at a glance" loading="lazy" width="1584" height="1846">
@@ -612,11 +617,11 @@
         <span class="eyebrow fade-up">Process</span>
         <h2 class="solution-h2 fade-up" style="transition-delay:60ms;">Designed and coded, end to end</h2>
         <p class="process-body fade-up" style="transition-delay:100ms;">
-          I didn't hand off static mockups — I coded the prototypes. Real HTML/CSS/JS with live
-          streaming and state became the source of truth, the design system became the spec, and the
-          component library was locked so engineering could implement it 1:1 in Next.js + Tailwind,
-          with an A2UI model that maps Aimee's structured JSON responses to my components. Design and
-          build in one loop — so the same system drives every surface.
+          I coded the prototypes instead of drawing them. Real HTML/CSS/JS with live streaming and
+          state became the source of truth, the spec became the build contract, and the component
+          library was locked so engineering could implement it 1:1 in Next.js + Tailwind, with an A2UI
+          model that maps Aimee's structured JSON responses to my components. Then I merged the token
+          layer and four components into that SDK myself, so the same system drives every surface.
         </p>
         <div class="transform-table fade-up" style="transition-delay:130ms;">
           <div class="transform-row">
@@ -630,9 +635,9 @@
             <span class="transform-to">DESIGN-SYSTEM.md as the build spec</span>
           </div>
           <div class="transform-row">
-            <span class="transform-from">Free-form design handoff</span>
+            <span class="transform-from">Design specs engineering interprets</span>
             <span class="transform-arrow">→</span>
-            <span class="transform-to">A locked component API, implemented 1:1</span>
+            <span class="transform-to">A locked component contract, implemented 1:1</span>
           </div>
           <div class="transform-row">
             <span class="transform-from">Redesign at production time</span>
@@ -687,7 +692,7 @@
         <p class="takeaway-text">
           Aimee runs as one coherent AI coach across the Hub, embeddable client widgets,
           and Teams — one design system, one component library, one source of truth.
-          <strong>Designed and built by one person — proof that a design engineer can own the whole thing, from token to production.</strong>
+          <strong>Designed by one person, built with engineering, and finished in the production code by the same designer.</strong>
         </p>
       </div>
     </section>

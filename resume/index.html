@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles/site.css" />
-  <meta name="description" content="Bri May's résumé — AI-native product designer and design engineer, ten years in the seam between design and engineering, shipping production React and AI products end to end." />
+  <meta name="description" content="Bri May's résumé — AI-Native Senior Product Designer. I design the product, then I ship the code: TypeScript, React, Lit, Cloudflare Workers, the Anthropic API, and the localization pipeline behind Financial Finesse's 28-locale content library." />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta property="og:type" content="website" />
@@ -20,8 +20,8 @@
   <link rel="canonical" href="https://imbrimay.com/resume/" />
   <meta property="og:title" content="Résumé — Bri May" />
   <meta name="twitter:title" content="Résumé — Bri May" />
-  <meta property="og:description" content="AI-native product designer and design engineer — ten years shipping production React and AI products end to end." />
-  <meta name="twitter:description" content="AI-native product designer and design engineer — ten years shipping production React and AI products end to end." />
+  <meta property="og:description" content="AI-Native Senior Product Designer. I design the product, then I ship the code." />
+  <meta name="twitter:description" content="AI-Native Senior Product Designer. I design the product, then I ship the code." />
   <script src="/scripts/embed.js"></script>
   <style>
 
@@ -415,6 +415,82 @@
       margin-top: 4px;
     }
 
+
+    .hero-tagline { margin-top: 6px; font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); }
+
+    /* ─── Print: one Letter page, single column, real text, no tracked caps ─── */
+    @media print {
+      @page { size: Letter; margin: 0.45in 0.55in 0.4in; }
+      html, body { background: #fff !important; color: #141414 !important; font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 9.4pt; line-height: 1.3; }
+      #site-nav, footer, .hero-actions, .eyebrow, .dot, .company-context { display: none !important; }
+      * { letter-spacing: 0 !important; text-transform: none !important; box-shadow: none !important; }
+      .reveal, .reveal-children > *, .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .page { max-width: none; padding: 0; }
+      a { color: inherit !important; text-decoration: none !important; }
+      a[href]::after { content: none; }
+
+      /* header */
+      .hero { padding: 0; margin: 0; }
+      .hero-name { font-size: 24pt; font-weight: 650; line-height: 1; margin: 0 0 3pt; }
+      .hero-title { font-size: 11pt; font-weight: 500; color: #141414; margin: 0; }
+      .hero-tagline { font-size: 10pt; color: #5a5a5a; margin: 1pt 0 0; }
+      .hero-location-row { display: flex !important; flex-wrap: wrap; gap: 0 9pt; font-size: 8.5pt; max-width: none !important; color: #5a5a5a; margin: 6pt 0 0; }
+      .hero-location-row a, .hero-location-row span { color: #5a5a5a !important; }
+      .hero-summary { margin: 6pt 0 0; padding: 6pt 0 0; border-top: 1px solid #e2e2e2; }
+      .hero-summary p { font-size: 9.4pt; line-height: 1.34; margin: 0; max-width: none; color: #141414; }
+
+      /* impact strip */
+      .stats-row { display: flex; gap: 20pt; margin: 6pt 0 0; padding: 5pt 0; border-top: 1px solid #e2e2e2; border-bottom: 1px solid #e2e2e2; }
+      .stat { flex: 1; padding: 0; margin: 0; }
+      .stat-number { font-size: 14pt; font-weight: 650; line-height: 1.1; margin: 0; }
+      .stat-label { font-size: 8.2pt; line-height: 1.25; color: #5a5a5a; margin: 2pt 0 0; }
+
+      /* sections */
+      .resume-section { padding: 0; margin: 7pt 0 0; }
+      .section-header { margin: 0 0 4pt; }
+      .section-title { font-size: 8.8pt; font-weight: 650; color: #141414; margin: 0; padding: 0 0 3pt; border-bottom: 1px solid #141414; }
+
+      /* experience */
+      .company-block { margin: 0 0 4pt; padding: 0; border: 0; }
+      .company-header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8pt; margin: 3pt 0 2pt; }
+      .company-name { font-size: 10.5pt; font-weight: 650; }
+      .company-period { font-size: 8.8pt; color: #5a5a5a; margin-left: auto; }
+      .company-clients { flex-basis: 100%; margin: 0; display: flex; flex-wrap: wrap; gap: 0 5pt; }
+      .client-tag { font-size: 8.4pt; color: #5a5a5a; border: 0; padding: 0; background: none; }
+      .client-tag:not(:last-child)::after { content: " ·"; }
+      .role-list, .role-entry, .single-role-block, .education-block, .skill-group { display: block !important; }
+      .role-entry { margin: 3pt 0 0; padding: 0; }
+      .role-left { display: flex; align-items: baseline; gap: 8pt; margin: 0 0 1.5pt; }
+      .role-title { font-size: 9.8pt; font-weight: 600; color: #141414; margin: 0; }
+      .role-period { font-size: 8.6pt; color: #5a5a5a; margin: 0 0 0 auto; white-space: nowrap; }
+      .role-bullets { margin: 0; padding: 0 0 0 9pt; list-style: none; }
+      .role-bullets li { font-size: 9.05pt; line-height: 1.3; margin: 0 0 1.3pt; padding: 0 0 0 0; display: block; position: relative; color: #202020; }
+      .role-bullets li::before { content: "–" !important; display: block !important; position: absolute; left: -9pt; top: 0; color: #9a9a9a; font-weight: 400; background: none; width: auto; height: auto; }
+      .role-bullets a { color: #5a5a5a !important; }
+      .highlight-bullet { background: none; border: 0; padding: 0; }
+      .metric, strong { font-weight: 600; color: #141414; }
+      .single-role-block { margin: 5pt 0 0; }
+      .single-role-left { display: flex; align-items: baseline; gap: 8pt; margin: 0 0 1.5pt; }
+      .single-role-left .company-name { font-size: 9.8pt; }
+      .single-role-left .role-title::before { content: "· "; font-weight: 400; color: #5a5a5a; }
+      .single-role-left .role-title { font-size: 9.8pt; font-weight: 500; color: #141414; margin: 0; }
+      .single-role-left .role-period { margin-left: auto; }
+
+      /* skills */
+      .skills-groups { display: block; }
+      .skill-group { margin: 0 0 1.5pt; font-size: 9.05pt; line-height: 1.3; }
+      .skill-group-label { display: inline; font-weight: 600; color: #141414; font-size: 9.05pt; margin: 0; }
+      .skill-group-label::after { content: ": "; }
+      .skill-tags { display: inline; }
+      .skill-tag { display: inline; font-size: 9.05pt; border: 0; padding: 0; background: none; color: #202020; }
+      .skill-tag:not(:last-child)::after { content: ", "; }
+
+      /* education */
+      .education-block { margin: 0 0 1.5pt !important; display: flex !important; gap: 8pt; align-items: baseline; }
+      .education-block .role-period { font-size: 8.6pt !important; color: #5a5a5a !important; min-width: 58pt; margin: 0; }
+      .edu-school { font-size: 9.05pt; font-weight: 600; display: inline; }
+      .edu-degree { font-size: 9.05pt; display: inline; margin-left: 6pt; color: #202020; }
+    }
   </style>
 </head>
 <body>
@@ -442,22 +518,24 @@
 
           <div>
             <h1 class="hero-name" id="hero-name">Bri May</h1>
-            <p class="hero-title">AI-Native Lead Product Designer</p>
+            <p class="hero-title">AI-Native Senior Product Designer</p>
+            <p class="hero-tagline">I design the product, then I ship the code.</p>
           </div>
 
           <div class="hero-location-row">
             <span>Pleasanton, CA</span>
             <span class="dot" aria-hidden="true"></span>
+            <a href="https://imbrimay.com">imbrimay.com</a>
+            <span class="dot" aria-hidden="true"></span>
+            <a href="https://github.com/thebrimay-wq" rel="noopener">github.com/thebrimay-wq</a>
+            <span class="dot" aria-hidden="true"></span>
+            <a href="https://www.linkedin.com/in/brimay" rel="noopener">linkedin.com/in/brimay</a>
+            <span class="dot" aria-hidden="true"></span>
             <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
-            <span class="dot" aria-hidden="true"></span>
-            <a href="https://imbrimay.com" target="_blank" rel="noopener">imbrimay.com ↗</a>
-            <span class="dot" aria-hidden="true"></span>
-            <a href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener">linkedin.com/in/brimay ↗</a>
           </div>
 
           <div class="hero-summary">
-            <p><strong>A designer who ships.</strong> Ten years of product design, spent in the seam between design and engineering — turning Figma systems into production React front-ends and rapidly prototyping AI-native products from concept to launch.</p>
-            <p>Built the <strong>AI Global Content Studio</strong> solo, end to end, in one month — scaling global launches to one country per week and winning the Federal Reserve as a client. My work has driven <strong>200%+ engagement growth</strong> and contributed to <strong>$12M+ in revenue</strong>.</p>
+            <p>Senior product designer who designs the product and ships the code. Built an AI localization studio solo (TypeScript, Lit, Cloudflare Workers, Anthropic API) that took Financial Finesse's content library into 25 live markets; designed the Aimee AI coach across three surfaces; led the Hub redesign that drove +200% engagement.</p>
           </div>
 
           <div class="hero-actions">
@@ -466,20 +544,21 @@
           </div>
         </div>
 
-        <!-- Stats -->
+        <!-- Stats: build metric first, then engagement, then revenue (brief §7) -->
         <div class="stats-row reveal">
           <div class="stat">
-            <div class="stat-number">10+</div>
-            <div class="stat-label">Years experience</div>
+            <div class="stat-number">3,512</div>
+            <div class="stat-label">Localized pieces shipped in one four-day run · 10 new locales · 1 designer</div>
           </div>
           <div class="stat">
-            <div class="stat-number">200%+</div>
-            <div class="stat-label">Engagement growth driven</div>
+            <div class="stat-number">+200%</div>
+            <div class="stat-label">Engagement after the Hub redesign I led</div>
           </div>
           <div class="stat">
-            <div class="stat-number">$12M+</div>
-            <div class="stat-label">Revenue contributed</div>
+            <div class="stat-number">$12M</div>
+            <div class="stat-label">Revenue contributed by the redesigned platform</div>
           </div>
+          <!-- TODO(bri): definitions for +200% (metric, window) and $12M (bookings/ARR/attributed, period) — facts.md §6 -->
         </div>
       </section>
 
@@ -487,7 +566,7 @@
       <section class="resume-section" id="experience" aria-labelledby="exp-heading">
         <div class="section-header reveal">
           <p class="eyebrow">Experience</p>
-          <h2 class="section-title" id="exp-heading">Where I've done the work</h2>
+          <h2 class="section-title" id="exp-heading">Experience</h2>
         </div>
 
         <!-- Financial Finesse -->
@@ -495,7 +574,7 @@
           <div class="company-header">
             <div class="company-name">Financial Finesse</div>
             <div class="company-period">2016 – Present</div>
-            <div class="company-context">Bringing Financial Wellness to the 99% — our mission is to change financial lives.</div>
+            <div class="company-context">Financial wellness platform serving 1M+ employees at enterprise clients.</div>
             <div class="company-clients">
               <span class="client-tag">Federal Reserve</span>
               <span class="client-tag">Meta</span>
@@ -510,19 +589,19 @@
 
           <div class="role-list">
 
-            <!-- AI-Native Product Designer · Design Engineer -->
+            <!-- AI-Native Senior Product Designer -->
             <div class="role-entry">
               <div class="role-left">
-                <div class="role-title">AI-Native Product Designer · Design Engineer</div>
+                <div class="role-title">AI-Native Senior Product Designer, AI Team</div>
                 <div class="role-period">2025 – Present</div>
               </div>
               <div class="role-right">
                 <ul class="role-bullets">
-                  <li>Design and ship production front-ends in <span class="metric">React</span> — translating Figma design systems into responsive, accessible, tokenized components in code</li>
-                  <li class="highlight-bullet">Saw a gap in the company and built the <strong>AI Global Content Studio</strong> end to end — designed and shipped the entire app solo with AI, no engineers, in <span class="metric">one month</span>. It saved millions of dollars, scaled global launches from months to <span class="metric">one country per week</span>, and won the <span class="metric">Federal Reserve</span> as a client</li>
-                  <li>Designed &amp; launched <strong>Smart Benefits</strong>, an AI-powered SaaS platform adopted by one of the largest U.S. retirement record keepers and used within Olympic organizations</li>
-                  <li>Build and maintain the cross-surface design system (Figma → code); prototype AI-powered flows and hand off pixel-accurate, buildable specs</li>
-                  <li>Own the design direction and system standards across the product — from Figma tokens to shipped, accessible React UI</li>
+                  <li class="highlight-bullet">Built and shipped <strong>Global Content Studio</strong> solo in four weeks: TypeScript + Lit on Vercel, a Cloudflare Worker proxying the Anthropic API and fronting Azure Blob Storage, and an 8-step localization pipeline with a suitability gate, an independent verify pass, and human review before anything publishes (221 tests). One four-day run shipped <span class="metric">3,512 localized pieces</span> and brought 10 locales live; <span class="metric">8,118 variants</span> across 28 locales are in production, 25 live. <a href="https://imbrimay.com/work/global-content-studio/">imbrimay.com/work/global-content-studio</a></li>
+                  <!-- TODO(bri): AI Champion bullet goes third once the numbers in facts.md §10 exist -->
+                  <li>Designed <strong>Aimee</strong>, the AI financial coach, for the Hub, an embeddable client widget, and Microsoft Teams: coded prototypes, the design-system spec, and a locked component contract that engineering implemented 1:1 in React + A2UI; then merged the token layer and four components into the production SDK myself (32 commits). <a href="https://imbrimay.com/aimee-ai/">imbrimay.com/aimee-ai</a></li>
+                  <li>Own the design system as code: tokens as CSS custom properties and WCAG AA components in light and dark, running in the Aimee SDK, the Studio, and the Hub's Content Studio.</li>
+                  <li>Ship production code in the company's core repos: the Hub's Content Studio and localizer review queue (TypeScript + Lit, 80 commits, with tests) and the localization review API and console (Python + React, 27 commits, with tests).</li>
                 </ul>
               </div>
             </div>
@@ -535,8 +614,9 @@
               </div>
               <div class="role-right">
                 <ul class="role-bullets">
-                  <li>Transitioned the org from marketing-led design to a product-led practice; owned UX/UI for dashboards, onboarding, and content ecosystems</li>
-                  <li>Rapidly prototyped and shipped features with engineering; introduced user testing and research to inform product decisions and lift activation</li>
+                  <li>Led the Hub redesign from research through launch, turning a static content library into a personalized, guided platform: <span class="metric">+200% engagement</span>, <span class="metric">$12M</span> in revenue contributed, enterprise clients including Meta and the Federal Reserve. <a href="https://imbrimay.com/work/hub/">imbrimay.com/work/hub</a></li>
+                  <li>Moved the organization from marketing-led to product-led design; owned UX and UI for dashboards, onboarding, and the content ecosystem across web and mobile.</li>
+                  <li>Introduced user research and usability testing; set the design standards and quality bar as the practice scaled.</li>
                 </ul>
               </div>
             </div>
@@ -549,7 +629,7 @@
               </div>
               <div class="role-right">
                 <ul class="role-bullets">
-                  <li>Built the foundational brand identity and earliest design systems across web and marketing — the year the role grew into product design</li>
+                  <li>Built the brand identity and first design systems across web and marketing; the role grew into product design within a year.</li>
                 </ul>
               </div>
             </div>
@@ -567,7 +647,7 @@
             </div>
             <div class="role-right">
               <ul class="role-bullets">
-                <li>Delivered branding, websites, and campaigns for <span class="metric">50+ companies</span> across industries — where I learned to move fast without losing craft</li>
+                <li>Branding, websites, and campaigns for 50+ companies across industries.</li>
               </ul>
             </div>
           </div>
@@ -579,45 +659,49 @@
       <section class="resume-section" id="skills" aria-labelledby="skills-heading">
         <div class="section-header reveal">
           <p class="eyebrow">Skills</p>
-          <h2 class="section-title" id="skills-heading">What I bring</h2>
+          <h2 class="section-title" id="skills-heading">Skills</h2>
         </div>
 
         <div class="skills-groups reveal">
           <div class="skill-group">
-            <div class="skill-group-label">Design &amp; Product</div>
-            <div class="skill-tags">
-              <span class="skill-tag">Product Design (0→1)</span>
-              <span class="skill-tag">UX / UI</span>
-              <span class="skill-tag">Design Systems</span>
-              <span class="skill-tag">Interaction &amp; Motion</span>
-              <span class="skill-tag">Prototyping</span>
-              <span class="skill-tag">User Research &amp; Testing</span>
-              <span class="skill-tag">Figma</span>
-            </div>
-          </div>
-          <div class="skill-group">
             <div class="skill-group-label">Engineering</div>
             <div class="skill-tags">
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">JavaScript</span>
               <span class="skill-tag">React</span>
-              <span class="skill-tag">JavaScript (ES6+)</span>
-              <span class="skill-tag">HTML5 &amp; CSS3</span>
-              <span class="skill-tag">Framer Motion</span>
+              <span class="skill-tag">Lit</span>
+              <span class="skill-tag">HTML &amp; CSS</span>
+              <span class="skill-tag">Tailwind</span>
               <span class="skill-tag">Vite</span>
-              <span class="skill-tag">Design Tokens</span>
-              <span class="skill-tag">Responsive &amp; Accessible UI</span>
-              <span class="skill-tag">Git / GitHub</span>
-              <span class="skill-tag">CI &amp; Static Deploy</span>
+              <span class="skill-tag">Design tokens</span>
+              <span class="skill-tag">Accessible UI (WCAG AA)</span>
+              <span class="skill-tag">Cloudflare Workers</span>
+              <span class="skill-tag">Azure Blob Storage</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Vitest &amp; Playwright</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">CI</span>
             </div>
           </div>
           <div class="skill-group">
-            <div class="skill-group-label">AI-Native</div>
+            <div class="skill-group-label">AI</div>
             <div class="skill-tags">
-              <span class="skill-tag">AI Product Design</span>
-              <span class="skill-tag">Rapid AI Prototyping</span>
-              <span class="skill-tag">LLM-Powered Features</span>
-              <span class="skill-tag">Conversational / Agent UX</span>
-              <span class="skill-tag">Prompt Engineering</span>
-              <span class="skill-tag">AI-Assisted Coding</span>
+              <span class="skill-tag">Anthropic API</span>
+              <span class="skill-tag">RAG and grounding (per-locale wiki)</span>
+              <span class="skill-tag">Evals and human-in-the-loop QA</span>
+              <span class="skill-tag">Multi-pass LLM pipelines</span>
+              <span class="skill-tag">Conversational UX</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-label">Design</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Product design (0→1)</span>
+              <span class="skill-tag">Design systems</span>
+              <span class="skill-tag">Prototyping in code</span>
+              <span class="skill-tag">User research</span>
+              <span class="skill-tag">Interaction and motion</span>
+              <span class="skill-tag">Figma</span>
             </div>
           </div>
         </div>
@@ -627,7 +711,7 @@
       <section class="resume-section" id="education" aria-labelledby="edu-heading">
         <div class="section-header reveal">
           <p class="eyebrow">Education</p>
-          <h2 class="section-title" id="edu-heading">Background</h2>
+          <h2 class="section-title" id="edu-heading">Education</h2>
         </div>
 
         <div class="reveal">
@@ -637,7 +721,7 @@
             </div>
             <div>
               <div class="edu-school">California State University, Chico</div>
-              <div class="edu-degree">B.S. Business, Marketing · Soccer, full-ride athletic scholarship</div>
+              <div class="edu-degree">B.S. Business, Marketing · D1 soccer, full athletic scholarship</div>
             </div>
           </div>
           <div class="education-block">
@@ -646,7 +730,7 @@
             </div>
             <div>
               <div class="edu-school">Arizona State University</div>
-              <div class="edu-degree">D1 Soccer, full-ride athletic scholarship</div>
+              <div class="edu-degree">D1 soccer</div>
             </div>
           </div>
         </div>

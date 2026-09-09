@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Selected work by Bri May — product design, AI experience design, and behavioral design projects." />
+  <meta name="description" content="Selected work by Bri May: an AI localization studio designed and shipped solo, the engine behind this site, an AI coach across three surfaces, and a platform redesign." />
   <title>Work — Bri May</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,8 +20,8 @@
   <link rel="canonical" href="https://imbrimay.com/work/" />
   <meta property="og:title" content="Work — Bri May" />
   <meta name="twitter:title" content="Work — Bri May" />
-  <meta property="og:description" content="Selected work from Bri May — AI-native product design and design engineering across Global Content Studio, Aimee, and the Financial Wellness Hub." />
-  <meta name="twitter:description" content="Selected work from Bri May — AI-native product design and design engineering across Global Content Studio, Aimee, and the Financial Wellness Hub." />
+  <meta property="og:description" content="Selected work by Bri May: an AI localization studio designed and shipped solo, the engine behind this site, an AI coach across three surfaces, and a platform redesign." />
+  <meta name="twitter:description" content="Selected work by Bri May: an AI localization studio designed and shipped solo, the engine behind this site, an AI coach across three surfaces, and a platform redesign." />
   <script src="/scripts/embed.js"></script>
 
   <style>
@@ -188,6 +188,11 @@
       margin-bottom: 16px;
     }
 
+    .work-card-title a { color: inherit; text-decoration: none; }
+    .work-card-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .work-card-links { display: flex; align-items: center; gap: 18px; margin-top: 18px; }
+    .work-card-ext { font-size: 14px; font-weight: 500; color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--border); }
+    .work-card-ext:hover { color: var(--ink); border-color: var(--ink); }
     .work-card-cta {
       font-size: 13px;
       font-weight: 500;
@@ -286,17 +291,17 @@
     <!-- Page Intro -->
     <section class="intro-section container">
       <span class="label fade-up">Selected Work</span>
-      <h1 class="fade-up">Product, AI &amp; behavioral design.</h1>
-      <p class="fade-up">A selection of product design work across AI, financial wellness, and behavior-driven digital experiences.</p>
+      <h1 class="fade-up">AI products, designed and shipped.</h1>
+      <p class="fade-up">Products I designed and shipped in code.</p>
     </section>
 
     <!-- Work Grid -->
     <section class="work-grid-section container">
       <div class="work-grid">
         <!-- Card 1 -->
-        <a href="../work/global-content-studio/" class="work-card" style="text-decoration: none; color: inherit;">
+        <article class="work-card">
           <div class="work-card-image" style="background: #EDE6DC;">
-            <div class="work-card-image-inner"><img src="/images/gcs-card.png" alt="Global Content Studio — the authoring studio open on a laptop" loading="lazy" width="750" height="501"></div>
+            <div class="work-card-image-inner"><a href="../work/global-content-studio/" aria-hidden="true" tabindex="-1"><img src="/images/gcs-card.png" alt="Global Content Studio — the authoring studio open on a laptop" loading="lazy" width="750" height="501"></a></div>
           </div>
           <div class="work-card-body">
             <div class="work-card-tags">
@@ -304,21 +309,33 @@
               <span class="work-tag">Solo Build</span>
               <span class="work-tag">Workflow Design</span>
             </div>
-            <h2 class="work-card-title">Global Content Studio</h2>
-            <p class="work-card-desc">A brand-trained AI content studio — designed and built solo with Claude Code, with an 8-step pipeline that localizes content for 25 countries. It did ~9 months of localization in 25 days, and helped win the Federal Reserve.</p>
-            <span class="work-card-cta">
-              View Project
-              <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
+            <h2 class="work-card-title"><a href="../work/global-content-studio/">Global Content Studio</a></h2>
+            <p class="work-card-desc">The AI content and localization studio I designed and shipped solo in four weeks: TypeScript and Lit, a Cloudflare Worker, the Anthropic API, an 8-step pipeline with an independent verify pass and human review. 8,118 localized variants across 28 locales in production.</p>
+            <div class="work-card-links"><a href="../work/global-content-studio/" class="work-card-cta">View project →</a></div>
           </div>
-        </a>
+        </article>
 
         <!-- Card 2 -->
-        <a href="../aimee-ai/" class="work-card" style="text-decoration: none; color: inherit;">
+        <article class="work-card">
+          <div class="work-card-image" style="background: #E8E4DE;">
+            <div class="work-card-image-inner"><a href="../work/brix/" aria-hidden="true" tabindex="-1"><img src="/images/brix-card.webp" alt="Brix — this portfolio's conversational homepage, with starter cards and role-lens chips" loading="lazy" width="2400" height="1800"></a></div>
+          </div>
+          <div class="work-card-body">
+            <div class="work-card-tags">
+              <span class="work-tag">This site</span>
+              <span class="work-tag">Solo Build</span>
+              <span class="work-tag">Vanilla JS</span>
+            </div>
+            <h2 class="work-card-title"><a href="../work/brix/">Brix — This Site</a></h2>
+            <p class="work-card-desc">The portfolio as the proof: a conversational site whose answer engine runs on-device — no framework, no backend, no API key. WCAG AA in both themes, screen-reader-safe streaming, audited to 42/42 browser checks.</p>
+            <div class="work-card-links"><a href="../work/brix/" class="work-card-cta">View project →</a><a href="https://github.com/thebrimay-wq/bri-portfolio-2" class="work-card-ext" target="_blank" rel="noopener noreferrer">Code ↗</a></div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="work-card">
           <div class="work-card-image" style="background: #DDE2EC;">
-            <div class="work-card-image-inner"><img src="/images/aimee-card.png" alt="Aimee AI Coach — the conversational coach open on a phone" loading="lazy" width="750" height="501"></div>
+            <div class="work-card-image-inner"><a href="../aimee-ai/" aria-hidden="true" tabindex="-1"><img src="/images/aimee-card.png" alt="Aimee AI Coach — the conversational coach open on a phone" loading="lazy" width="750" height="501"></a></div>
           </div>
           <div class="work-card-body">
             <div class="work-card-tags">
@@ -326,21 +343,16 @@
               <span class="work-tag">Product Design</span>
               <span class="work-tag">Strategy</span>
             </div>
-            <h2 class="work-card-title">Aimee AI Coach</h2>
+            <h2 class="work-card-title"><a href="../aimee-ai/">Aimee AI Coach</a></h2>
             <p class="work-card-desc">Designing a conversational AI coach that turns static financial education into personalized, motivating guidance.</p>
-            <span class="work-card-cta">
-              View Project
-              <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
+            <div class="work-card-links"><a href="../aimee-ai/" class="work-card-cta">View project →</a><a href="../aimee-ai/components/" class="work-card-ext">Live ↗</a></div>
           </div>
-        </a>
+        </article>
 
-        <!-- Card 3 -->
-        <a href="../work/hub/" class="work-card" style="text-decoration: none; color: inherit;">
+        <!-- Card 4 -->
+        <article class="work-card">
           <div class="work-card-image" style="background: #E4DDF0;">
-            <div class="work-card-image-inner"><img src="/images/hub-card.png" alt="Financial Finesse Hub — the redesigned dashboard open on a laptop" loading="lazy" width="750" height="501"></div>
+            <div class="work-card-image-inner"><a href="../work/hub/" aria-hidden="true" tabindex="-1"><img src="/images/hub-card.png" alt="Financial Finesse Hub — the redesigned dashboard open on a laptop" loading="lazy" width="750" height="501"></a></div>
           </div>
           <div class="work-card-body">
             <div class="work-card-tags">
@@ -348,38 +360,11 @@
               <span class="work-tag">UX Strategy</span>
               <span class="work-tag">Behavioral Design</span>
             </div>
-            <h2 class="work-card-title">Financial Finesse Hub</h2>
+            <h2 class="work-card-title"><a href="../work/hub/">Financial Finesse Hub</a></h2>
             <p class="work-card-desc">Reimagining a financial wellness platform to improve onboarding, engagement, and clarity across complex user journeys.</p>
-            <span class="work-card-cta">
-              View Project
-              <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
+            <div class="work-card-links"><a href="../work/hub/" class="work-card-cta">View project →</a></div>
           </div>
-        </a>
-
-        <!-- Card 4 -->
-        <a href="../work/brix/" class="work-card" style="text-decoration: none; color: inherit;">
-          <div class="work-card-image" style="background: #E8E4DE;">
-            <div class="work-card-image-inner"><img src="/images/brix-card.webp" alt="Brix — this portfolio's conversational homepage, with starter cards and role-lens chips" loading="lazy" width="2400" height="1800"></div>
-          </div>
-          <div class="work-card-body">
-            <div class="work-card-tags">
-              <span class="work-tag">Design Engineering</span>
-              <span class="work-tag">Solo Build</span>
-              <span class="work-tag">Vanilla JS</span>
-            </div>
-            <h2 class="work-card-title">Brix — This Site</h2>
-            <p class="work-card-desc">The portfolio as the proof: a conversational site whose answer engine runs on-device — no framework, no backend, no API key. WCAG AA in both themes, screen-reader-safe streaming, audited to 42/42 browser checks.</p>
-            <span class="work-card-cta">
-              View Project
-              <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
-          </div>
-        </a>
+        </article>
       </div>
     </section>
 

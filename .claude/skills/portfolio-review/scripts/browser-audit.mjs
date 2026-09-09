@@ -17,7 +17,7 @@ import { chromium, devices } from 'playwright';
 
 const BASE = process.argv[2] || 'http://127.0.0.1:8899';
 const EXE = process.argv[3] || process.env.CHROMIUM_PATH || undefined;
-const PAGES = ['/', '/work/', '/about/', '/resume/', '/contact/',
+const PAGES = ['/', '/work/', '/about/', '/resume/', '/contact/', '/code/',
   '/work/global-content-studio/', '/work/hub/', '/work/brix/', '/aimee-ai/'];
 
 const b = await chromium.launch(EXE ? { executablePath: EXE } : {});
@@ -160,7 +160,8 @@ console.log('\n══ 7. BRIX FEATURES: chat, lens, code exhibit, deep links');
   await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(600);
   log('4 starter cards', await p.locator('.home-card').count() === 4);
-  log('2 lens chips', await p.locator('.lens-chip').count() === 2);
+  log('no lens chips (one audience)', await p.locator('.lens-chip').count() === 0);
+  log('hero: name, title, second line', (await p.locator('.hero-intro .hero-name').count()) === 1 && (await p.locator('.hero-intro .hero-line').textContent()).includes('then I ship the code'));
   await p.goto(BASE + '/?q=' + encodeURIComponent('does she actually code?'), { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(8000);
   log('?q= deep link auto-asks', await p.locator('.bubble--user').count() === 1);

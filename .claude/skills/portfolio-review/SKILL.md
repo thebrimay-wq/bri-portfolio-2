@@ -36,8 +36,8 @@ npm install --no-save playwright
 node .claude/skills/portfolio-review/scripts/probe-engine.mjs
 ```
 
-Extracts the live retrieval engine out of `index.html` and runs 38 real
-recruiter screening questions plus the known-regression set (greeting
+Extracts the live retrieval engine out of `index.html` and runs 50 real
+recruiter and engineer questions plus the known-regression set (greeting
 substring bug, "study"→education, "teams"→MS Teams). Exits non-zero below
 90% confident answers or on any regression. **Run this after any edit to the
 `KB`, `matchIntent`, `retrieve`, `STOP`, or `SYN` in index.html** — it is the
@@ -90,10 +90,13 @@ tree with nothing to diff, apply these checks to the whole site at HEAD.
 Read anything in scope and ask:
 
 - **New KB answers**: is every number consistent with the canonical set in
-  CLAUDE.md (25 countries · ~$2.42M net avoided · +200% · $12M · 1M+ ·
-  FF 2016–present)? GCS also deliberately cites **$2.44M** — that's the
-  gross by-hand counterfactual, not a stale $2.42M; don't flag it.
-  A stale number in one answer contradicts another page.
+  `facts.md` (8,118 localized variants · 28 locales · 25 live · 3,512 pieces in
+  the June 1–4 run · 4,154 published · 975 approved · 2,772 in review · built in
+  four weeks · 221 tests · +200% · $12M · 1M+ · FF 2016–present · 32 / 80 / 27
+  commits into benehub / blue / ff.workers)? The by-hand comparison (~$2.44M,
+  25 localizers, ~9.4 months) appears only as a footnote on the Studio impact
+  section. "$2.42M net avoided", "25 days", "one country a day", "16,250",
+  and "~650 pieces" are retired: flag any reappearance.
 - **New pages**: on the case-study template? (hero → at-a-glance + jump nav →
   What I Owned → Problem → Solution → Experiences ≤4 → Process → Impact →
   Takeaway → bottom-cta). Is the bottom-cta loop still a loop?
