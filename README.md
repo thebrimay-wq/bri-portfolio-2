@@ -2,72 +2,76 @@
 
 [![Deploy to GitHub Pages](https://github.com/thebrimay-wq/bri-portfolio-2/actions/workflows/deploy.yml/badge.svg)](https://github.com/thebrimay-wq/bri-portfolio-2/actions/workflows/deploy.yml)
 
-Portfolio of **Bri May** — AI-Native Lead Product Designer & Design Engineer.
-The homepage is **Brix**, a conversational concierge whose answer engine runs
-entirely in the visitor's browser: **no framework, no build step, no backend,
-no API key.**
+Portfolio of **Bri May**, AI-Native Senior Product Designer. I design the product, then I ship the code.
 
-**Live: [imbrimay.com](https://imbrimay.com)** · Ask it anything — or try a
-deep link like
-[`/?q=how does this work`](https://imbrimay.com/?q=how%20does%20this%20work)
-and it will explain (and show you) its own engine.
+The homepage is **Brix**, a conversational site whose answer engine runs entirely in the visitor's browser: plain HTML, CSS, and JavaScript, no build step, no backend, no API key. Ask it anything, or open a deep link such as [`/?q=what broke`](https://imbrimay.com/?q=what%20broke) and it answers from a hand-written knowledge base and shows its own source when asked.
 
-![Brix answering "How does this work — are you a real AI?" with its own source code rendered inside the chat answer](images/brix-case-study/hero-answer.webp)
+**Live: [imbrimay.com](https://imbrimay.com)** · **What is public and where the rest lives: [imbrimay.com/code](https://imbrimay.com/code/)**
 
-## Why it's built this way
+![Brix answering "How does this work, are you a real AI?" with its own source code rendered inside the answer](images/brix-case-study/hero-answer.webp)
 
-A portfolio's claims should be checkable. Instead of writing "design engineer"
-on a static page, the page is the evidence — and every engineering decision
-optimizes for the person who will actually poke at it:
+## The engine
 
-- **On-device retrieval instead of an LLM API.** Questions are normalized,
-  stop-worded, synonym-expanded, and fuzzy-matched (Levenshtein ≤ 1) against a
-  hand-written knowledge base, scored for confidence, then streamed
-  token-by-token. Zero latency floor, zero run cost, works offline, nothing
-  leaves the browser — and the site says exactly what it is when asked.
-- **Honest LLM ergonomics.** Streaming with punctuation-aware pacing, a
-  thinking state, stop-to-finish, one-turn memory, contextual follow-ups, a
-  graceful fallback that offers the nearest topics it *does* know, and
-  shareable `?q=` deep links to any answer.
-- **Accessibility as architecture, not a pass.** WCAG AA contrast in both
-  themes (worst-case measured against page *and* card surfaces), streaming
-  that announces once to screen readers instead of ~90 times, skip links,
-  keyboard-complete flows, intrinsic image dimensions (CLS ≈ 0), and a full
-  `<noscript>` homepage.
-- **Audited like a product.** A scripted browser drives every page — network,
-  layout at 320–1440px, contrast, live-region behavior, downloads — and a
-  38-question recruiter-screening probe runs against the live engine.
-  Current state: **probe 37/38 confident · 42/42 browser checks · both
-  themes AA**. The QA pass is codified in
-  [`.claude/skills/portfolio-review/`](.claude/skills/portfolio-review/) so
-  it runs identically every time.
+Everything the chat does lives in `index.html`. There is no model behind it.
 
-The full story is a case study on the site itself:
-**[imbrimay.com/work/brix](https://imbrimay.com/work/brix/)**.
+1. `norm()` lowercases and strips punctuation; `toks()` drops stopwords and expands a small synonym map (`coding` → `code`, `gcs` → `global`, and so on).
+2. `retrieve()` scores every knowledge-base entry: a multi-word key found verbatim in the question scores 3 plus 2 per extra word; a single word scores 1 when it fuzzy-matches a query token (exact, shared 5-character prefix, or Levenshtein ≤ 1). An entry's `not` list vetoes it outright, which is how "case study" stops matching the education entry through the word "study".
+3. `route()` decides what to do with the score: a confident hit (≥ 2) is answered; otherwise a navigation intent (greeting, case studies, résumé, contact) is tried; a weak hit (1) is answered with the runner-up offered as an alternative; and an engineering question with no match (`broke`, `fix`, `tradeoff`, `architecture`, `test`, `why`) is routed to the what-broke entry rather than a fallback. The fallback itself lists the three nearest topics the engine does know.
+4. `streamInto()` types the answer out token by token with a stop control. One-turn memory resolves "tell me more" and "the second one" after a list.
 
-## Architecture
+The code excerpt Brix renders in chat is the real `retrieve()`, copied verbatim into a `text/plain` block; the Code page shows the same function.
+
+## Accessibility decisions
+
+- **Streaming that announces once.** Token streaming mutates the DOM about ninety times per answer. The thread is `aria-live="off"`; a separate polite live region announces the finished answer exactly once. The audit measures the mutation count.
+- **Tokens, three times.** Every color is a custom property defined for light, system dark, and a manual toggle persisted to `localStorage` and applied in `<head>`, so there is no flash of the wrong theme. Worst-case contrast is measured against both the page and the card surface in both modes; the floor is 4.5:1.
+- **No JavaScript, no problem.** Reveal animations are scoped to an `html.js` class, images declare intrinsic dimensions, and the homepage ships a full `<noscript>` version with the same hero copy.
+- **Keyboard first.** The first tab stop on every page is a skip link; on the homepage it moves focus into the composer. The side panel manages focus in and back out, and Esc closes it.
+
+## Running the checks
+
+Three scripts under `.claude/skills/portfolio-review/scripts/` encode every defect class that has actually shipped here. Run them after any change to `index.html`, `styles/site.css`, a case study, or images.
+
+```bash
+# 1. Engine probe: 50 recruiter and engineer questions plus the regression set. Seconds, no browser.
+node .claude/skills/portfolio-review/scripts/probe-engine.mjs
+
+# 2. Browser audit: 44 checks (404s and broken images after a full scroll, sideways scroll at
+#    320/375/768px, contrast in both themes, head hygiene, no-JS render, skip links, the live-region
+#    count, Brix features, core flows). Audits the built site, the way the deploy merges public/images/.
+npm install --no-save playwright && npx playwright install chromium
+bash .claude/skills/portfolio-review/scripts/build-site.sh /tmp/portfolio-review/_site
+(cd /tmp/portfolio-review/_site && python3 -m http.server 8899 &)
+node .claude/skills/portfolio-review/scripts/browser-audit.mjs http://127.0.0.1:8899
+
+# 3. Asset audit: unreferenced files, dead weight, rasters over 600 KB, total deployed image weight.
+python3 .claude/skills/portfolio-review/scripts/asset-audit.py
+
+# Résumé PDF, printed from the résumé page's @media print stylesheet (real text, single column).
+node .claude/skills/portfolio-review/scripts/print-resume.mjs http://127.0.0.1:8899 resume/BriMay_Resume.pdf
+```
+
+The full pass, including the judgment checklist the scripts cannot cover, is in [`.claude/skills/portfolio-review/SKILL.md`](.claude/skills/portfolio-review/SKILL.md).
+
+## Layout
 
 ```
-index.html            The homepage — a three-column LLM-app shell (rail / chat / side panel).
-                      All chat logic is self-contained vanilla JS in this file: the KB,
-                      the retrieval engine, streaming, and the UI.
-styles/site.css       Single shared stylesheet: design tokens (light + dark + manual
-                      toggle), reset, nav, footer, buttons, scroll reveal.
+index.html            The homepage: a three-column app shell (rail / chat / side panel). The knowledge
+                      base, the retrieval engine, streaming, and the UI are all in this one file.
+styles/site.css       The shared stylesheet: design tokens (light, dark, manual toggle), reset, nav,
+                      footer, buttons, scroll reveal.
 scripts/nav.js        Inner-page nav: mobile menu, theme toggle, skip link, footer year.
-scripts/embed.js      Pages opened in the homepage's side panel (?embed=1 / iframe) hide
-                      their own chrome; the saved theme is applied before first paint.
-work/ about/ resume/  Static pages. Page <style> blocks hold only page-specific CSS.
-contact/ aimee-ai/    Case studies: Global Content Studio, FF Hub, Aimee, and Brix itself.
-src/                  A React 18 + Vite mirror — a development sandbox, not deployed.
-.claude/skills/       The portfolio-review QA skill: engine probe, browser audit,
-                      asset audit, and the judgment checklist.
+scripts/main.js       Scroll reveal for inner pages.
+scripts/embed.js      Pages opened inside the homepage's side panel hide their own chrome; the saved
+                      theme is applied before first paint.
+work/ aimee-ai/       Case studies: Global Content Studio, Brix, Aimee, the Financial Finesse Hub.
+code/                 What is public and where the rest lives, with the engine excerpt.
+about/ resume/        Static pages. Page <style> blocks hold only page-specific CSS.
+contact/
+facts.md              The facts the copy is built from, with sources, and what is still TODO(bri).
+src/                  A React + Vite mirror. A development sandbox, not deployed.
 .github/workflows/    Deploy: static files copied to GitHub Pages on push to main.
 ```
-
-Design tokens are defined three times in `site.css` — light `:root`,
-`prefers-color-scheme: dark`, and a manual `[data-theme]` override persisted
-to `localStorage` — so the whole site re-themes with no flash and no
-per-component color code.
 
 ## Running locally
 
@@ -76,18 +80,3 @@ The deployed site needs no install:
 ```bash
 python3 -m http.server 8000    # then open http://localhost:8000
 ```
-
-React mirror (optional): `npm install && npm run dev`
-
-## Running the QA pass
-
-```bash
-node .claude/skills/portfolio-review/scripts/probe-engine.mjs     # engine probe, seconds
-python3 .claude/skills/portfolio-review/scripts/asset-audit.py    # asset report, seconds
-# full browser audit: see .claude/skills/portfolio-review/SKILL.md
-```
-
-## Rights
-
-Code is public to read as a work sample. The content — case studies, copy,
-images, and the résumé — is © Bri May, all rights reserved.

@@ -41,6 +41,7 @@ jobs:
           cp -r work _site/ 2>/dev/null || true
           cp -r contact _site/ 2>/dev/null || true
           cp -r aimee-ai _site/ 2>/dev/null || true
+          cp -r code _site/ 2>/dev/null || true
 
       - uses: actions/configure-pages@v5
 

@@ -47,6 +47,19 @@ function classify(q) {
 
 // ── the screening questions. Add new ones here as recruiters surprise us. ──
 const QUESTIONS = [
+  'What broke on Global Content Studio?',
+  'How did she fix it?',
+  'What tradeoffs did she make?',
+  "What's the architecture of the Studio?",
+  'Why no framework on this site?',
+  'What would she do differently?',
+  'Is she a design engineer?',
+  'Can I see her GitHub?',
+  'Show me some of her code',
+  'What is her title?',
+  'What does she build with?',
+  'Does she work with APIs?',
+  'Does she actually code?',
   'Has she managed or mentored designers?',
   'What is her design process?',
   'Does she have experience with accessibility?',
@@ -81,7 +94,7 @@ const QUESTIONS = [
   'Did she build this chatbot?',
   'What model are you running on?',
   'Is this a real LLM?',
-  'Show me some of her code',
+
   'Does she write tests?',
   "What's her TypeScript experience?",
   'How does she think about performance?',
@@ -90,6 +103,10 @@ const QUESTIONS = [
 // Regressions that once shipped — greetings must not swallow real questions,
 // and generic words must not hijack specific ones.
 const REGRESSIONS = [
+  { q: 'What broke?', expect: r => r.how !== 'FALLBACK', label: '"broke" never falls back to a joke' },
+  { q: 'Any tradeoffs?', expect: r => r.how !== 'FALLBACK', label: '"tradeoff" never falls back' },
+  { q: 'Tell me about the architecture', expect: r => r.how !== 'FALLBACK', label: '"architecture" never falls back' },
+  { q: 'Is she a design engineer?', expect: r => /design engineer/.test(r.detail), label: 'design-engineer question hits the code answer' },
   { q: 'hi', expect: r => r.how === 'nav' && r.detail === 'greet', label: 'bare greeting greets' },
   { q: 'hey there', expect: r => r.how === 'nav' && r.detail === 'greet', label: 'casual greeting greets' },
   { q: 'How was this website built?', expect: r => r.detail !== 'greet', label: '"this" does not trigger greet' },
