@@ -670,15 +670,23 @@ function retrieve(query) {
 
     /* three tiles, Apple product-grid style: image, name, one line, Learn more */
     .home-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: clamp(28px, 4vw, 40px) auto 0; text-align: left; }
+    /* the doors are controls, so they take the same glass as the rail and the capsule;
+       the product shot inside stays opaque (content) */
     .home-tile {
       display: flex; flex-direction: column; gap: 12px; padding: 10px 10px 14px;
-      border-radius: 18px; background: var(--bg); color: inherit; text-decoration: none;
-      box-shadow: 0 0 0 1px var(--glass-edge), 0 1px 2px rgba(0,0,0,0.04), 0 10px 28px rgba(0,0,0,0.06);
+      border-radius: 18px; color: inherit; text-decoration: none;
+      background: var(--glass-fill);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+      backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+      box-shadow: inset 0 1px 0 var(--glass-shine), 0 0 0 1px var(--glass-edge), var(--glass-shadow);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-    .home-tile:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px var(--glass-edge), 0 2px 4px rgba(0,0,0,0.04), 0 18px 40px rgba(0,0,0,0.10); }
+    .home-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: inset 0 1px 0 var(--glass-shine), 0 0 0 1px var(--glass-edge), 0 2px 4px rgba(0,0,0,0.04), 0 22px 48px rgba(0,0,0,0.12);
+    }
     .home-tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .home-tile-img { aspect-ratio: 3 / 2; border-radius: 11px; overflow: hidden; background: var(--surface); }
+    .home-tile-img { aspect-ratio: 3 / 2; border-radius: 11px; overflow: hidden; background: var(--surface); box-shadow: 0 0 0 1px var(--frame-ring); }
     .home-tile-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .home-tile-text { display: flex; flex-direction: column; gap: 3px; padding: 0 6px; }
     .home-tile-title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
