@@ -422,7 +422,7 @@
     @media print {
       @page { size: Letter; margin: 0.45in 0.55in 0.4in; }
       html, body { background: #fff !important; color: #141414 !important; font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 9.4pt; line-height: 1.3; }
-      #site-nav, footer, .hero-actions, .eyebrow, .dot, .company-context { display: none !important; }
+      #site-nav, footer, .ambient, .hero-actions, .eyebrow, .dot, .company-context { display: none !important; }
       * { letter-spacing: 0 !important; text-transform: none !important; box-shadow: none !important; }
       .reveal, .reveal-children > *, .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
       .page { max-width: none; padding: 0; }
@@ -496,6 +496,7 @@
 <body>
 
   <!-- Navigation -->
+  <div class="ambient" aria-hidden="true"></div>
   <nav id="site-nav" aria-label="Site navigation">
     <div class="nav-inner">
       <a href="../" class="nav-logo">Bri May</a>
