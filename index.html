@@ -274,7 +274,25 @@ function retrieve(query) {
     .hero-intro .hero-name { font-size: clamp(34px, 8cqw, 52px); font-weight: 650; letter-spacing: -0.035em; line-height: 1; color: var(--ink); margin: 0; }
     .hero-intro .hero-title { font-size: clamp(17px, 3.4cqw, 21px); font-weight: 500; color: var(--ink); margin: 12px 0 0; }
     .hero-intro .hero-line { font-size: clamp(17px, 3.4cqw, 21px); color: var(--ink-2); margin: 4px 0 0; }
-    .hero-intro .hero-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 22px; }
+    .hero-intro .hero-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
+    /* proof line: one monochrome line of tabular figures, every figure a link */
+    .hero-intro .hero-proof {
+      margin: 18px auto 0; max-width: 640px;
+      font-size: 13.5px; line-height: 1.7; color: var(--ink-3);
+      font-variant-numeric: tabular-nums; text-wrap: balance;
+    }
+    .hero-intro .hero-proof b { font-weight: 600; color: var(--ink); }
+    .hero-intro .hero-proof a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s ease, color 0.15s ease; }
+    .hero-intro .hero-proof a:hover { color: var(--ink); border-bottom-color: var(--ink-3); }
+    .hero-intro .hero-proof a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+    .hero-intro .hero-proof > span { margin: 0 4px; opacity: 0.6; }
+    .hero-code {
+      display: inline-flex; align-items: center; min-height: 34px; padding: 0 10px;
+      font-size: 14px; font-weight: 500; color: var(--ink-2); text-decoration: none; border-radius: 999px;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+    .hero-code:hover { color: var(--ink); background: var(--hover-soft); }
+    .hero-code:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     @media (max-width: 900px) { .hero-intro .hero-links { justify-content: flex-start; } }
     .agent-kicker {
       display: inline-flex; align-items: center; gap: 8px;
@@ -694,6 +712,13 @@ function retrieve(query) {
       .stage { background: var(--bg); }
     }
 
+    /* one entrance on the first screen: the name settles, the tray rises. Then nothing moves. */
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .chat-pane.is-empty .hero-intro { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+    .chat-pane.is-empty .composer-inner { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.12s both; }
+    @media (prefers-reduced-motion: reduce) {
+      .chat-pane.is-empty .hero-intro, .chat-pane.is-empty .composer-inner { animation: none; }
+    }
     /* hero: display scale from the reference, weight held at 700 (no light weights) */
     .hero-intro .hero-name { font-size: clamp(40px, 9.5cqw, 68px); font-weight: 700; letter-spacing: -0.045em; }
     .hero-intro .hero-title { color: var(--ink-2); }
@@ -881,10 +906,20 @@ function retrieve(query) {
               <h1 class="hero-name">Bri May</h1>
               <p class="hero-title">AI-Native Senior Product Designer</p>
               <p class="hero-line">I design the product, then I ship the code.</p>
+              <!-- Receipts. Every figure is DERIVED in facts.md §1; each links to the section that backs it. -->
+              <p class="hero-proof">
+                <a href="/work/global-content-studio/" data-panel-title="Global Content Studio">Global Content Studio</a>
+                <span aria-hidden="true">·</span>
+                <a href="/work/global-content-studio/#impact" data-panel-title="Global Content Studio"><b>8,118</b> localized variants live in <b>28</b> locales</a>
+                <span aria-hidden="true">·</span>
+                <a href="/work/global-content-studio/#proof" data-panel-title="Global Content Studio"><b>221</b> tests</a>
+                <span aria-hidden="true">·</span>
+                <a href="/work/global-content-studio/#proof" data-panel-title="Global Content Studio"><b>493</b> of 524 commits</a>
+                <span aria-hidden="true">·</span>
+                <a href="/work/global-content-studio/#process" data-panel-title="Global Content Studio">shipped solo in <b>4</b> weeks</a>
+              </p>
               <div class="hero-links">
-                <a class="link-btn link-btn--primary" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">View the code ↗</a>
-                <a class="link-btn link-btn--secondary" href="/work/global-content-studio/" data-panel-title="Global Content Studio">Global Content Studio →</a>
-                <a class="link-btn link-btn--secondary" href="/resume/BriMay_Resume.pdf" download>Résumé ↓</a>
+                <a class="hero-code" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">View the code ↗</a>
               </div>
             </div>
             <div id="starter-mount"></div>
@@ -1048,12 +1083,21 @@ function retrieve(query) {
         markEmbedded();
         depth += 1;
         syncHeader();
+        // The browser's own hash jump runs before fonts and media settle and overshoots;
+        // re-anchor once layout is stable.
+        try {
+          const h = frame.contentWindow.location.hash;
+          if (h) {
+            const jump = () => { const el = frame.contentDocument.querySelector(h); if (el) el.scrollIntoView({ block: 'start', behavior: 'instant' }); };
+            setTimeout(jump, 60); setTimeout(jump, 450);
+          }
+        } catch (e) {}
         frame.classList.add('loaded');
         loading.classList.add('hidden');
       });
       backBtn.addEventListener('click', () => { depth = Math.max(0, depth - 2); frame.contentWindow.history.back(); });
 
-      function open(path, title, fullHref, opener) {
+      function open(path, title, fullHref, opener, quiet) {
         lastOpener = opener || null;
         depth = 0;
         backBtn.hidden = true;
@@ -1062,11 +1106,15 @@ function retrieve(query) {
         loading.classList.remove('hidden');
         frame.classList.remove('loaded');
         // Add embed flag so the page hides its chrome even before the load handler runs.
-        frame.src = path + (path.indexOf('?') === -1 ? '?' : '&') + 'embed=1';
+        // Keep the flag in the query, ahead of any #anchor, so the frame still jumps to the section.
+        const hashAt = path.indexOf('#');
+        const base = hashAt === -1 ? path : path.slice(0, hashAt);
+        const hash = hashAt === -1 ? '' : path.slice(hashAt);
+        frame.src = base + (base.indexOf('?') === -1 ? '?' : '&') + 'embed=1' + hash;
         wrap.classList.add('panel-open');
         panel.setAttribute('aria-hidden', 'false');
         panel.removeAttribute('inert');
-        closeBtn.focus({ preventScroll: true });
+        if (!quiet) closeBtn.focus({ preventScroll: true });
       }
 
       function close() {
@@ -1279,7 +1327,31 @@ function retrieve(query) {
           </a>`).join('') + '</div>';
       }
 
+      // Turn a KB entry into a deliverable response (same shape serveEntry builds).
+      function entryRes(key, extra) {
+        const e = KB.find(x => x.keys.includes(key));
+        if (!e) return RESPONSES.fallback();
+        const parts = [];
+        if (e.code) {
+          const src = document.getElementById('engine-excerpt');
+          if (src) { const lines = src.textContent.trim().split('\n');
+            parts.push('<pre class="code-chat"><span class="code-caption">' + esc(lines[0].replace(/^\/\/\s*/, '')) + '</span>' + esc(lines.slice(1).join('\n')) + '</pre>'); }
+        }
+        if (e.href) parts.push(linkRow(e));
+        if (e.block) parts.push(e.block);
+        return Object.assign({ text: e.text, block: parts.length ? parts.join('') : null, followups: followupsFor(e) }, extra || {});
+      }
+
       const RESPONSES = {
+        // The briefing: one click fills both panes. Every figure is DERIVED in facts.md.
+        pitch30: () => ({
+          text: "**Role.** AI-Native Senior Product Designer at Financial Finesse, ten years in product, designing since 2011.\n\n**Shipped.** Global Content Studio, an AI content and localization studio, designed and built solo in four weeks: TypeScript and Lit, a Cloudflare Worker in front of the Anthropic API and Azure Blob, 221 tests, 493 of the repo's 524 commits.\n\n**Numbers.** 8,118 localized variants live across 28 locales. One four-day run localized 3,512 pieces.\n\n**The caveat she'd tell you herself.** The pipeline's confidence score is the model grading its own output; it routes work. What gates publishing is an independent verify pass and a human localizer.\n\n**Judgment.** The Hub redesign: +200% engagement, $12M in revenue.",
+          block: '<div class="link-row"><a class="link-btn link-btn--secondary" href="/work/global-content-studio/#impact" data-panel-title="Global Content Studio">Read the case study →</a><a class="link-btn link-btn--secondary" href="/resume/BriMay_Resume.pdf" download>Résumé PDF ↓</a></div>',
+          followups: [{ label: 'What broke in production', intent: 'broke' }, { label: 'How this site works', intent: 'howsite' }, { label: 'Why hire her', q: 'why hire bri' }, { label: 'Get in touch', intent: 'contact' }],
+          open: { path: '/work/global-content-studio/#impact', title: 'Global Content Studio' }
+        }),
+        broke: () => entryRes('what broke', { open: { path: '/work/global-content-studio/#what-broke', title: 'Global Content Studio' } }),
+        howsite: () => entryRes('how does this work', { open: { path: '/work/brix/', title: 'Brix — This Site' } }),
         casestudies: () => ({
           text: "Here's Bri's selected work. I'd start with the featured one — Global Content Studio, an AI content studio she designed and built solo, end to end. Tap any card to open it here. (And a fourth: this site itself — ask me how I work.)",
           block: caseCardsHtml(),
@@ -1396,14 +1468,16 @@ function retrieve(query) {
 
       // First-time explore list — a scannable menu of where to start.
       const STARTER = [
-        { kind: 'page', id: 'gcs', featured: true, href: '/work/global-content-studio/', panel: 'Global Content Studio', title: 'See Bri’s latest project.', sub: 'Global Content Studio — an AI content studio she built solo',
-          thumb: '/images/gcs-card.png' },
-        { kind: 'page', id: 'code', href: '/code/', panel: 'Code', title: 'See the code she ships.', sub: 'The engine behind this site, its test harness, and what is public',
-          svg: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>' },
-        { kind: 'page', id: 'resume', href: '/resume/', panel: 'Résumé', title: 'See Bri’s resume.', sub: 'Experience, skills, and a downloadable PDF',
+        { kind: 'intent', id: 'pitch30', featured: true, title: 'Give me the 30-second version.', sub: 'Role, what shipped, the numbers, and the caveat she’d tell you herself',
+          svg: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M12 9v4l2.5 2M9 2h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' },
+        { kind: 'intent', id: 'broke', title: 'What broke in production.', sub: 'Four failures, what caught them, what changed',
+          svg: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3 2.5 19.5h19L12 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 9v5M12 16.5v.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>' },
+        { kind: 'intent', id: 'howsite', title: 'How does this site work?', sub: 'No framework, keyless on-device retrieval, the real engine code',
+          svg: '<svg viewBox="0 0 24 24" fill="none"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' },
+        { kind: 'page', id: 'resume', href: '/resume/', panel: 'Résumé', title: 'See Bri’s résumé.', sub: 'Experience, skills, and a downloadable PDF',
           svg: '<svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' },
         { kind: 'intent', id: 'contact', title: 'How do I contact Bri?', sub: 'Open to AI-Native Senior Product Designer roles — email, text, or LinkedIn',
-          svg: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' }
+          svg: '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' },
       ];
 
       function buildStarter() {
@@ -1427,7 +1501,7 @@ function retrieve(query) {
           el.innerHTML =
             iconInner +
             `<span class="home-card-text"><span class="home-card-title">${esc(it.title)}</span><span class="home-card-sub">${esc(it.sub)}</span></span>` +
-            (it.featured ? '<span class="home-card-featured">Featured</span>' : '');
+            (it.featured ? '<span class="home-card-featured">Start here</span>' : '');
           wrap.appendChild(el);
         });
         const holder = document.createElement('div');
@@ -1533,6 +1607,7 @@ function retrieve(query) {
         setComposerState(true);
         thread.setAttribute('aria-busy', 'true');
         const typing = showTyping();
+        if (res.open && window.matchMedia('(min-width: 900px)').matches) Panel.open(res.open.path, res.open.title, res.open.path, null, true);
         const len = (res.text || '').length;
         const thinkMs = 120; // one beat, not a fake think (brief §3)
         let started = false;
