@@ -145,6 +145,8 @@ function retrieve(query) {
       transition: background 0.14s ease, color 0.14s ease;
     }
     .rail-item:hover { background: var(--hover-soft); color: var(--ink); }
+    .rail-item.is-current { background: var(--hover-soft); color: var(--ink); font-weight: 600; }
+    .rail-item.is-current .rail-ic { color: var(--ink); }
     .rail-ic { width: 18px; height: 18px; flex-shrink: 0; color: var(--ink-3); }
     .rail-item:hover .rail-ic { color: var(--accent); }
     .rail-recent { margin-top: 20px; min-height: 0; overflow-y: auto; }
@@ -902,6 +904,9 @@ function retrieve(query) {
         <span class="panel-eyebrow" aria-hidden="true">Preview</span>
         <span class="panel-title" id="panel-title">&nbsp;</span>
         <div class="panel-actions">
+          <button class="panel-btn" id="panel-back" type="button" title="Back" aria-label="Back" hidden>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
           <a class="panel-btn" id="panel-open-full" href="#" target="_blank" rel="noopener" title="Open full page in a new tab" aria-label="Open full page in a new tab">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -994,7 +999,27 @@ function retrieve(query) {
       const openFull = document.getElementById('panel-open-full');
       const loading = document.getElementById('panel-loading');
       const closeBtn = document.getElementById('panel-close');
+      const backBtn = document.getElementById('panel-back');
       let lastOpener = null;
+      let depth = 0; // loads since open — >1 means the frame has somewhere to go back to
+
+      // Keep the header honest: title + full-page link follow the frame,
+      // and the rail marks the page that is open.
+      function syncHeader() {
+        try {
+          const doc = frame.contentDocument;
+          const path = frame.contentWindow.location.pathname;
+          const t = (doc.title || '').split(/\s+[—–|]\s+/)[0].trim(); // 'GCS — Case Study | Bri May' → 'GCS'
+          if (t) titleEl.textContent = t;
+          openFull.href = frame.contentWindow.location.origin + path;
+          document.querySelectorAll('.rail-item').forEach(a => {
+            const on = path.startsWith(new URL(a.href).pathname);
+            a.classList.toggle('is-current', on);
+            if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+          });
+        } catch (e) {}
+        backBtn.hidden = depth < 2;
+      }
 
       function markEmbedded() {
         // Same-origin: hide the loaded page's own nav/footer for a clean preview.
@@ -1003,12 +1028,17 @@ function retrieve(query) {
 
       frame.addEventListener('load', () => {
         markEmbedded();
+        depth += 1;
+        syncHeader();
         frame.classList.add('loaded');
         loading.classList.add('hidden');
       });
+      backBtn.addEventListener('click', () => { depth = Math.max(0, depth - 2); frame.contentWindow.history.back(); });
 
       function open(path, title, fullHref, opener) {
         lastOpener = opener || null;
+        depth = 0;
+        backBtn.hidden = true;
         titleEl.textContent = title || 'Preview';
         openFull.href = fullHref || path;
         loading.classList.remove('hidden');
@@ -1029,6 +1059,7 @@ function retrieve(query) {
         // Free the iframe after the close transition.
         setTimeout(() => { if (!wrap.classList.contains('panel-open')) frame.src = 'about:blank'; }, 450);
         if (lastOpener && document.contains(lastOpener)) lastOpener.focus({ preventScroll: true });
+        document.querySelectorAll('.rail-item.is-current').forEach(a => { a.classList.remove('is-current'); a.removeAttribute('aria-current'); });
       }
 
       closeBtn.addEventListener('click', close);

@@ -595,7 +595,16 @@ footer {
  * so it reads as a focused preview, not a nested full site.
  */
 html.embedded #site-nav,
-html.embedded footer { display: none !important; }
+html.embedded footer,
+html.embedded .ambient { display: none !important; }
+
+/* Panel tier: the same page at ~54% width is a reader, not a landing page.
+   Tighter gutters, no landing-page air above the hero, display type one
+   step down. !important because each page sets its own hero rules. */
+html.embedded { --px: clamp(20px, 4vw, 40px); }
+html.embedded .hero { padding-top: clamp(28px, 5vw, 48px) !important; padding-bottom: clamp(24px, 4vw, 44px) !important; }
+html.embedded h1 { font-size: clamp(26px, 5.4vw, 40px) !important; max-width: 640px; }
+html.embedded [id="owned"], html.embedded [id="process"], html.embedded [id="impact"], html.embedded [id$="-solution"] { scroll-margin-top: 16px; }
 
 
 /* ── Case-study jump nav (anchor chips) ──────────────────── */
