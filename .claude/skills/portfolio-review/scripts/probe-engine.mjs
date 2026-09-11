@@ -47,6 +47,18 @@ function classify(q) {
 
 // ── the screening questions. Add new ones here as recruiters surprise us. ──
 const QUESTIONS = [
+  'What is her email address?',
+  'How does she give feedback?',
+  'Does she do motion design?',
+  'Does she write UX copy?',
+  'B2B or B2C?',
+  'Has she won any awards?',
+  'Does she have kids?',
+  'What are her pronouns?',
+  'Do you have references?',
+  'What is the confidence score?',
+  'What is Atlas?',
+  'Who else worked on GCS?',
   'What broke on Global Content Studio?',
   'How did she fix it?',
   'What tradeoffs did she make?',
@@ -103,6 +115,17 @@ const QUESTIONS = [
 // Regressions that once shipped — greetings must not swallow real questions,
 // and generic words must not hijack specific ones.
 const REGRESSIONS = [
+  // 2026-09-10 review: the answer must name the thing asked for, not a neighbour
+  { q: 'What is her email address?', expect: r => r.how === 'KB' && r.detail === 'email', label: 'email question gets the email entry (not the phone-first contact blurb)' },
+  { q: "What's her LinkedIn?", expect: r => r.how === 'KB' && r.detail === 'linkedin', label: 'linkedin question gets the URL' },
+  { q: 'Why should we hire her?', expect: r => r.detail === 'why hire', label: '"hire" no longer hijacks why-hire into contact' },
+  { q: 'Has she used the Anthropic API?', expect: r => r.detail === 'ai ', label: '"used" is not "user research"' },
+  { q: 'Has she worked in fintech?', expect: r => r.detail === 'industry', label: '"tech" does not match inside "fintech"' },
+  { q: 'How many people use Aimee?', expect: r => r.detail === 'aimee', label: '"ai" does not match inside "Aimee"' },
+  { q: 'What languages does she speak?', expect: r => r.detail === 'speak', label: 'spoken languages are not TypeScript' },
+  { q: 'Does she know Rust?', expect: r => r.detail === 'rust', label: 'a language she does not use gets an honest no' },
+  { q: 'Can I see her portfolio?', expect: r => r.how === 'nav' && r.detail === 'casestudies', label: 'portfolio goes to case studies, not design process' },
+  { q: 'thanks', expect: r => r.how === 'nav' && r.detail === 'thanks', label: 'thanks gets a closer, not a joke' },
   { q: 'What broke?', expect: r => r.how !== 'FALLBACK', label: '"broke" never falls back to a joke' },
   { q: 'Any tradeoffs?', expect: r => r.how !== 'FALLBACK', label: '"tradeoff" never falls back' },
   { q: 'Tell me about the architecture', expect: r => r.how !== 'FALLBACK', label: '"architecture" never falls back' },

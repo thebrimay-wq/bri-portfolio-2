@@ -12,6 +12,11 @@
   <!-- A real excerpt of the retrieval engine on this page — rendered into the
        chat when someone asks whether Bri codes. Kept as text/plain so it never executes. -->
   <script type="text/plain" id="engine-excerpt">// index.html — the engine answering you right now (verbatim)
+function keyHits(nq, kl) {
+  if (kl.includes(' ')) return nq.includes(kl);
+  const k = kl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp('(^|\\s)' + k + (kl.length <= 4 ? 's?(\\s|$)' : '')).test(nq);
+}
 function retrieve(query) {
   const nq = norm(query);
   const qt = toks(query);
@@ -22,14 +27,18 @@ function retrieve(query) {
     // scoring against the education entry via the word "study".
     if (e.not && e.not.some(n => nq.includes(n))) continue;
     let sc = 0;
+    const used = new Set(); // a query word can score once per entry, however many keys share it
     for (const key of e.keys) {
       const kl = key.toLowerCase().trim();
       // A multi-word key is a much stronger signal than a single word,
       // so it outranks a generic one-word match on another entry.
-      if (kl.length >= 3 && nq.includes(kl)) { sc += 3 + (kl.split(' ').length - 1) * 2; continue; }
+      // Single words must start a word (so "tech" never matches "fintech"), and
+      // short ones must be the whole word (so "ai" never matches "Aimee").
+      if (kl.length >= 2 && keyHits(nq, kl)) { sc += 3 + (kl.split(' ').length - 1) * 2; continue; }
       for (const w of kl.split(' ')) {
         if (!w || STOP.has(w)) continue;
-        if (qt.some(t => fuzzy(t, w))) { sc += 1; break; }
+        const t = qt.find(t => fuzzy(t, w));
+        if (t && !used.has(t)) { used.add(t); sc += 1; break; }
       }
     }
     if (sc > 0) scored.push({ e, sc });
@@ -1098,7 +1107,7 @@ function retrieve(query) {
       const KB = [
         // ── Recruiter-screen questions. These sit first so a specific match
         //    outranks the broader "experience"/"skills" entries below. ──
-        { keys: ['salary', 'compensation', 'pay', 'rate', 'how much does she cost', 'expectations', 'comp range', 'budget'],
+        { keys: ['salary', 'compensation', 'comp', 'how much', 'total comp', 'tc', 'ote', 'equity', 'pay', 'rate', 'how much does she cost', 'how much does she', 'expectations', 'comp range', 'budget'],
           text: "Not something I'd speak for. Bri's compensation expectations depend on the role, scope and location — worth asking her directly at thebrimay@gmail.com or 209-601-0181. What I *can* tell you is what she'd be bringing: 200%+ engagement growth, $12M+ in revenue contributed, and an AI product shipped solo in a month.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
         { keys: ['design process', 'her process', 'how does she work', 'how she works', 'approach', 'methodology', 'workflow', 'how does she design'],
@@ -1110,21 +1119,21 @@ function retrieve(query) {
           text: "Bri leads through craft and standards rather than headcount: as Lead Product Designer and Product Creative Director she set the design standards and the quality bar and guided designers as the practice scaled. She is on the company's AI team and mentors colleagues on building with AI. She has not been a people manager by title." },
         { keys: ['accessibility', 'a11y', 'wcag', 'screen reader', 'accessible', 'aria', 'contrast'],
           text: "Accessibility is part of how Bri builds, not a pass at the end. She ships **accessible, tokenized React components** — semantic markup, keyboard-complete flows, visible focus, WCAG AA contrast baked into the design tokens, and reduced-motion respected. This site is built to the same bar: AA tokens in both light and dark, a skip link, and screen-reader-safe streaming in the chat." },
-        { keys: ['collaborate', 'collaboration', 'work with engineers', 'engineers', 'engineering team', 'work with engineering', 'cross functional', 'stakeholder', 'pm', 'product manager'],
+        { keys: ['collaborate', 'collaboration', 'work with engineers', 'engineers', 'engineering team', 'work with engineering', 'work with pms', 'work with product', 'work with data', 'cross functional', 'cross-functional', 'pm', 'pms', 'product manager', 'product managers', 'data scientist', 'data scientists', 'data science', 'ml engineer', 'researchers'],
           text: "Bri works inside engineering: she writes the components and merges them herself, 32 commits into the Aimee SDK, 80 into the Hub's Content Studio, 27 into the Python review API. Where engineering owns the build, they implement her coded prototypes 1:1. She has led cross-functional work with engineering and stakeholders from concept to launch." },
         { keys: ['0 to 1', '0-1', 'zero to one', 'greenfield', 'from scratch', 'new product', 'ambiguity', 'ambiguous', 'undefined'],
           text: "Global Content Studio did not exist as a request. Bri saw the team writing company content on unregulated AI subscriptions, defined the product, and shipped it solo in four weeks. She owns product direction and system standards from Figma tokens to shipped, accessible UI." },
-        { keys: ['typescript', 'javascript', 'react', 'next', 'tailwind', 'vite', 'framer motion', 'code stack', 'build with', 'built with', 'cloudflare', 'work with api', 'with apis', 'apis', 'api integration', 'what does she code', 'languages', 'performance', 'core web vitals', 'page speed', 'optimi'],
+        { keys: ['typescript', 'javascript', 'js', 'ts', 'css', 'html', 'react', 'next', 'lit', 'tailwind', 'vite', 'framer', 'framer motion', 'node', 'code stack', 'build with', 'built with', 'cloudflare', 'vercel', 'azure', 'deploy', 'deployment', 'work with api', 'with apis', 'apis', 'api integration', 'what does she code', 'languages', 'performance', 'core web vitals', 'page speed', 'optimi'],
           text: "Bri builds in TypeScript and JavaScript: React and Lit front-ends with Tailwind, Vite, Framer Motion and design tokens. She works in Git and CI, deploys on Vercel and Cloudflare Workers, integrates REST and the Anthropic API, and writes Python when the service needs it (the localization review API). Tests are Vitest and Playwright." },
-        { keys: ['weakness', 'weaknesses', 'not good at', 'gaps', 'downside', 'limitations', 'hardest'],
+        { keys: ['weakness', 'weaknesses', 'not good at', 'bad at', 'worst', 'gaps', 'gap', 'downside', 'limitations', 'hardest', 'struggle'],
           text: "Honest version: Bri's depth is one domain — a decade of financial wellness at Financial Finesse — so she's not arriving with a broad multi-industry résumé. She's also not a people manager by title; her leadership has been through craft, standards and mentorship. What she trades for that is unusual depth and the ability to design *and* ship a product on her own." },
-        { keys: ['why leaving', 'why is she leaving', 'leave', 'looking for', 'next role', 'what does she want', 'motivation', 'seeking'],
+        { keys: ['why leaving', 'why is she leaving', 'leave', 'why now', 'why us', 'looking for', 'next role', 'next job', 'dream job', 'ideal role', 'ideal company', 'what does she want', 'what she wants', 'motivation', 'seeking'],
           text: "After ten years at Financial Finesse, from graphic design through Lead Product Designer to AI-Native Senior Product Designer on the AI team, Bri is looking for a team building AI products seriously, where designing the product and shipping the code is one job." },
         { keys: ['level', 'senior or staff', 'staff', 'principal', 'seniority', 'title', 'what level'],
           text: "AI-Native Senior Product Designer, on Financial Finesse's AI team. She targets that title at the senior-to-staff level, and Design Engineer roles where designing the product and shipping the code is the job." },
-        { keys: ['relocat', 'remote', 'onsite', 'hybrid', 'where would she work', 'commute', 'willing to move'],
+        { keys: ['relocat', 'remote', 'onsite', 'on-site', 'in office', 'in-office', 'in person', 'hybrid', 'where would she work', 'commute', 'willing to move'],
           text: "Bri is in **Pleasanton, CA** — Bay Area — and works remotely today. She's open to remote and to hybrid roles in the Bay Area. Worth asking her directly about anything requiring a move." },
-        { keys: ['start date', 'when can she start', 'notice period', 'how soon', 'timeline to start'],
+        { keys: ['start date', 'when can she start', 'notice period', 'how soon', 'timeline to start', 'availab', 'availability'],
           not: ['startup', 'start up'],
           text: "Bri is open to new opportunities now. For a specific start date, the fastest answer is straight from her — thebrimay@gmail.com or 209-601-0181.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
@@ -1133,23 +1142,23 @@ function retrieve(query) {
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
         { keys: ['mobile', 'mobile design', 'ios', 'android', 'responsive', 'app design', 'native app', 'swift'],
           text: "Bri designs responsive, cross-surface products rather than native iOS/Android. Aimee ships to three surfaces from one system — the Hub, an embeddable widget on client sites, and Microsoft Teams — and everything she builds is responsive down to phone widths. She doesn't write Swift or Kotlin." },
-        { keys: ['measure success', 'metrics', 'kpi', 'how do you know', 'success', 'outcome', 'track'],
+        { keys: ['measure success', 'metrics', 'kpi', 'kpis', 'analytics', 'data driven', 'data-driven', 'a/b', 'ab test', 'experiment', 'experiments', 'how do you know', 'success', 'outcome', 'track'],
           text: "Bri measures in behavior and business outcomes, not screens shipped. Her headline numbers: +200% engagement growth, $12M in revenue contributed, and 8,118 localized variants in production across 28 locales from Global Content Studio. She introduced research and usability testing so activation could be measured and lifted rather than guessed at." },
-        { keys: ['big tech', 'faang', 'startup', 'company size', 'enterprise', 'agency', 'worked where'],
+        { keys: ['big tech', 'faang', 'google', 'apple', 'amazon', 'netflix', 'microsoft', 'startup', 'startups', 'company size', 'enterprise', 'agency', 'worked where'],
           text: "Bri's product career is at **Financial Finesse** — a B2B2C financial-wellness company serving Fortune 500 clients like the Federal Reserve, Meta, the NFL and JPMorgan Chase — where she's shipped enterprise-scale products to 1M+ employees. Before that she was at CKC Communications, doing branding and sites for 50+ companies. Not big tech yet; that's the move she's making." },
         { keys: ['tests', 'testing', 'unit test', 'qa', 'code quality', 'ci', 'write tests'],
           text: "Yes. Global Content Studio has 221 Vitest tests across 12 files (the gate, policy, rewrite, index, single-flight, wiki, and feedback logic). This site ships a 50-question engine probe and a 44-check Playwright audit in its public repo, run on every change. Her Content Studio work in the Hub and the Python review API both landed with tests. She ships front-end and pipeline code rather than full-stack services." },
-        { keys: ['how does this work', 'how do you work', 'how were you built', 'are you an llm', 'real llm', 'what model', 'chatgpt', 'claude', 'api', 'built this chat', 'this site built', 'this website built', 'brix', 'this portfolio', 'this site'],
+        { keys: ['how does this work', 'how do you work', 'how were you built', 'are you an llm', 'real llm', 'what model', 'chatgpt', 'claude', 'api', 'built this chat', 'this site built', 'this website built', 'brix', 'this portfolio', 'this site', 'who are you', 'what are you', 'are you a bot', 'are you human', 'are you real', 'is this real', 'are you ai', 'are you an ai', 'who made you', 'who built you', 'who wrote you'],
           not: ['work with api', 'with apis', 'anthropic api', 'api integration'],
           code: true,
           text: "Fair question — and the honest answer is a design decision. I'm **not** an LLM. I'm a small retrieval engine that runs entirely in your browser: no backend, no API key, no per-message cost, and nothing leaves your device. Your question gets normalized, stopworded, synonym-expanded and fuzzy-matched against a hand-written knowledge base about Bri, scored for confidence, then streamed back. Bri designed and built the whole thing — and wrote it up as a case study.",
           href: '/work/brix/', title: 'Brix — This Site', label: 'Read how this site was built →' },
-        { keys: ['github', 'git hub', 'repo', 'repository', 'source code', 'open source', 'code sample', 'see her code'],
+        { keys: ['github', 'git hub', 'repo', 'repository', 'source code', 'open source', 'code sample', 'code samples', 'see her code', 'her code', 'some code', 'show me code', 'show code', 'look at her code', 'read her code'],
           not: ['case study', 'case studies'],
           code: true,
           text: "Yes. This site's source is public — the engine you're talking to is in index.html, and the screening-question probe and browser audit are in the repo under .claude/skills/portfolio-review/. Global Content Studio and Aimee are Financial Finesse's private codebases, so their code isn't public; those case studies show the architecture and the pipeline instead.",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Open the repo on GitHub ↗</a><a class="link-btn link-btn--secondary" href="/work/brix/" data-panel-title="Brix — This Site">How this site works →</a></div>' },
-        { keys: ['what broke', 'broke', 'broken', 'went wrong', 'failure', 'failed', 'incident', 'bug', 'bugs', 'outage', 'what failed'],
+        { keys: ['what broke', 'broke', 'broken', 'went wrong', 'failure', 'failures', 'failed', 'mistake', 'mistakes', 'incident', 'bug', 'bugs', 'outage', 'what failed'],
           text: "Plenty, and it is written up. On Global Content Studio: 5,455 published variants carried English titles and slugs on localized bodies; US-only links were invisible to every automated check until an independent verifier stage was added; the 5-worker pool derived five different locale briefs in parallel until a single-flight lock fixed it; a swallowed JSON parse error left jobs stuck at running; and a batch overwrote localizer-approved articles, which is why approved variants are skipped by default now. On this site: the first engine pass answered 20 of 38 screening questions and routed \"strongest case study\" to her college degree.",
           href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read what broke and what changed →' },
         { keys: ['how did she fix', 'fixed it', 'the fix', 'debug', 'debugging', 'root cause', 'how was it fixed'],
@@ -1164,20 +1173,21 @@ function retrieve(query) {
         { keys: ['why no framework', 'no framework', 'vanilla', 'why not react', 'why vanilla', 'why not use react', 'why plain'],
           text: "For this site, a framework would add a build step, a bundle, and a dependency tree to a page whose whole point is being inspectable in DevTools. Plain HTML, CSS, and JavaScript keep every claim one tab from proof, work with JavaScript off, and load with no server. Her production work is React and Lit; the choice is per product, not a preference.",
           href: '/work/brix/', title: 'Brix — This Site', label: 'How this site is built →' },
-        { keys: ['do differently', 'differently', 'regret', 'in hindsight', 'started over', 'lessons', 'learned', 'lesson'],
+        { keys: ['do differently', 'differently', 'learn', 'learned', 'lesson', 'lessons', 'change about', 'would she change', 'regret', 'in hindsight', 'started over', 'lessons', 'learned', 'lesson'],
           text: "Three things, from her own logs: start with the verify pass instead of adding it after US-only links slipped through; version the locale briefs from day one, since a cached brief with the wrong register shipped before that existed; and measure cost per article before scaling from one pass to five. On this site: build the screening-question harness before the engine, not after it answered 20 of 38.",
           href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read what changed →' },
         { keys: ['who is', "who's bri", 'about bri', 'what does she do', 'what does bri do', 'what do you do', 'overview', 'summary', 'elevator', 'introduce'],
+          not: ['for fun', 'outside work', 'hobb'],
           text: "Bri May is an AI-Native Senior Product Designer at Financial Finesse, on the company's AI team. She designs the product, then she ships the code: this year she built Global Content Studio solo (TypeScript, Lit, a Cloudflare Worker, the Anthropic API), merged production code into the Aimee SDK and the Hub's Content Studio, and earlier led the Hub redesign that drove +200% engagement. About ten years in product." },
-        { keys: ['design engineer', 'do you code', 'does she code', 'can she code', 'she code', 'build it', 'builds', 'engineering', 'react', 'front-end', 'front end', 'frontend', 'developer', 'technical', 'hands on', 'hands-on'],
+        { keys: ['design engineer', 'do you code', 'does she code', 'can she code', 'she code', 'actually code', 'really code', 'write code', 'writes code', 'ship code', 'ships code', 'can code', 'coding', 'build it', 'build this', 'built this', 'builds', 'chatbot', 'engineering', 'react', 'front-end', 'front end', 'frontend', 'developer', 'technical', 'hands on', 'hands-on'],
           code: true,
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Open the source on GitHub ↗</a><a class="link-btn link-btn--secondary" href="/code/" data-panel-title="Code">What is public →</a></div>',
           text: "Yes. Her title is AI-Native Senior Product Designer, and the second half of the job is shipping the code: Global Content Studio built solo (TypeScript, Lit, a Cloudflare Worker, the Anthropic API, 221 tests), 32 commits into the production Aimee SDK, 80 into the Hub's Content Studio, 27 into the Python review API. The excerpt below is the engine answering you right now; the full source is on GitHub." },
-        { keys: ['global content studio', 'content studio', 'margin', 'federal reserve', 'content team', 'localization', 'localiz'],
+        { keys: ['global content studio', 'content studio', 'gcs', 'the studio', 'studio', 'margin', 'federal reserve', 'content team', 'localization', 'localiz', 'translation', 'translations', 'translate', 'i18n', 'l10n'],
           not: ['broke', 'broken', 'went wrong', 'failed', 'failure', 'fix', 'tradeoff', 'trade-off', 'architecture', 'differently', 'lesson'],
           text: "Global Content Studio is the AI content and localization studio Bri built solo in four weeks: TypeScript and Lit, a Cloudflare Worker fronting the Anthropic API and Azure Blob Storage, and Atlas, an 8-step pipeline with a suitability gate, an independent verify pass, and human review before anything publishes. In production: 8,118 localized variants across 28 locales, 25 live; one four-day run shipped 3,512 pieces and brought ten locales live. By hand that run would have meant 25 in-country localizers and roughly $2.44M.",
           href: '/work/global-content-studio/', title: 'Global Content Studio', label: 'Open the case study →' },
-        { keys: ['aimee', 'coach', 'conversational', 'design system', 'component library', 'three surfaces', '3 surfaces', 'microsoft teams', 'widget', 'sdk'],
+        { keys: ['aimee', 'coach', 'conversational', 'design system', 'component library', 'three surfaces', '3 surfaces', 'microsoft teams', 'widget', 'sdk', 'use aimee', 'aimee users', 'people use', 'how many users'],
           not: ['size team', 'size teams', 'how big', 'team size'],
           text: "Aimee is Financial Finesse's AI financial coach, shipping to the Hub, an embeddable client widget, and Microsoft Teams. Engineering built the Aimee SDK in React and A2UI from Bri's coded prototypes and spec. She then merged the design-system layer and the empty-state, conversations, icon, and card-shell components into the production SDK herself (32 commits, July–August 2026).",
           href: '/aimee-ai/', title: 'Aimee AI Coach', label: 'Open the case study →' },
@@ -1187,32 +1197,96 @@ function retrieve(query) {
         { keys: ['smart benefits', 'open enrollment', 'enrollment', 'recordkeeper', 'embed mode'],
           not: ['relocat', 'start date', 'when can she', 'notice period'],
           text: "Smart Benefits is an AI-powered open-enrollment experience Bri designed with three white-label embed modes, adopted by one of the largest U.S. retirement recordkeepers. It's part of her work history — there's no dedicated case study for it on the site." },
-        { keys: ['impact', 'results', 'metrics', 'numbers', 'revenue', 'engagement', 'outcomes', 'how much', 'roi'],
+        { keys: ['impact', 'results', 'metrics', 'numbers', 'revenue', 'engagement', 'outcomes', 'roi', 'users', 'user base', 'scale', 'at scale', 'reach'],
           text: "The headline numbers: +200% engagement growth and $12M in revenue contributed after the Hub redesign, products in production for a platform serving 1M+ employees, and Global Content Studio, built solo: 8,118 localized variants across 28 locales, 3,512 of them in one four-day run." },
-        { keys: ['clients', 'companies', 'worked with', 'brands', 'customers', 'fortune 500', 'fortune500'],
+        { keys: ['clients', 'companies', 'worked with', 'brands', 'customers', 'fortune 500', 'fortune500', 'meta', 'facebook', 'nfl', 'jpmorgan', 'jp morgan', 'chase', 'cvs', 'patagonia', 'mckinsey', 'nestle', 'nestlé', 'comcast', 'general mills'],
           text: "Bri's work reaches Fortune 500 clients including the Federal Reserve, Meta, the NFL, JPMorgan Chase, CVS Health, Patagonia, McKinsey, Nestlé, Comcast, and General Mills." },
-        { keys: ['skills', 'tech', 'stack', 'tools', 'figma', 'capabilities', 'expertise', 'proficient', 'good at', 'visual design', 'craft', 'typography', 'visual ability'],
+        { keys: ['skills', 'tech', 'stack', 'tools', 'figma', 'sketch', 'adobe', 'photoshop', 'design tokens', 'tokens', 'web', 'websites', 'capabilities', 'expertise', 'proficient', 'craft', 'visual ability'],
           text: "Engineering: TypeScript, JavaScript, React, Lit, HTML/CSS, Tailwind, Vite, design tokens, accessible UI, Cloudflare Workers, Azure Blob Storage, Python, Vitest and Playwright, Git, CI. AI: the Anthropic API, RAG and grounding on per-locale wikis, evals and human-in-the-loop QA, multi-pass LLM pipelines, conversational UX. Design: product design from zero, design systems, prototyping in code, user research, interaction and motion, Figma." },
-        { keys: ['ai ', 'ai-native', 'ai native', 'artificial intelligence', 'llm', 'machine learning', 'generative', 'use ai', 'ai in her', 'ai workflow', 'ai tools'],
+        { keys: ['ai ', 'ai-native', 'ai native', 'artificial intelligence', 'llm', 'llms', 'large language', 'anthropic', 'anthropic api', 'claude api', 'openai', 'gpt', 'prompt', 'prompts', 'prompt engineering', 'machine learning', 'generative', 'use ai', 'ai in her', 'ai workflow', 'ai tools', 'ai products'],
           text: "AI is the through-line of Bri's recent work: Global Content Studio (the Anthropic API, an 8-step localization pipeline, per-locale wikis the model is grounded on instead of the open web), the Aimee AI coach across three surfaces, and the evals and human-in-the-loop QA that decide what ships." },
-        { keys: ['experience', 'years', 'how long', 'tenure', 'senior'],
+        { keys: ['experience', 'years', 'yrs', 'exp', 'yoe', 'years of experience', 'how long', 'tenure', 'senior', 'start designing', 'started designing', 'since when', 'designing since', 'how long designing', 'get started', 'get into design'],
           text: "About ten years in product design (designing since 2011), most of it at Financial Finesse, where she has grown from graphic design to product design to shipping the code herself." },
-        { keys: ['work history', 'financial finesse', 'current role', 'where does she work', 'employer', 'career', 'ckc', 'history'],
+        { keys: ['work history', 'financial finesse', 'ff', 'current role', 'current job', 'where does she work', 'employer', 'career', 'ckc', 'history', 'before ff', 'before financial', 'previous job', 'previous role', 'prior role', 'earlier'],
           text: "Bri has been at Financial Finesse since 2016 — now AI-Native Senior Product Designer (since 2025), previously Lead Product Designer · Product Creative Director and Sr. Graphic Designer. Before that she was a graphic designer at CKC Communications (2012–2015), doing branding and websites for 50+ companies." },
-        { keys: ['education', 'school', 'college', 'university', 'degree', 'studied', 'asu', 'chico', 'arizona state', 'graduate'],
+        { keys: ['education', 'study', 'studied', 'major', 'bachelor', 'school', 'college', 'university', 'degree', 'studied', 'asu', 'chico', 'arizona state', 'graduate'],
           not: ['case study', 'case studies', 'study of', 'strongest', 'best work'],
           text: "Bri earned a B.S. in Business (Marketing) from Cal State Chico on a full-ride soccer scholarship, after two years playing Division I soccer at Arizona State — also on a full-ride athletic scholarship." },
-        { keys: ['soccer', 'sports', 'athlete', 'division 1', 'division i'],
+        { keys: ['soccer', 'sports', 'athlete', 'athletic', 'division 1', 'division i', 'd1', 'ncaa', 'scholarship'],
           text: "Bri grew up on the soccer field — she played D1 on a full-ride scholarship and still laces up on weekends. That competitive streak carries into how she works." },
-        { keys: ['hobbies', 'hobby', 'personal', 'outside', 'free time', 'interests', 'family', 'photograph', 'scuba', 'dirtbike', 'wakeboard', 'sourdough', 'travel'],
+        { keys: ['hobbies', 'hobby', 'personal', 'for fun', 'kids', 'son', 'family', 'photography', 'photographer', 'photos', 'take photos', 'takes photos', 'camera', 'food', 'cooking', 'baking', 'outside', 'free time', 'interests', 'family', 'photograph', 'scuba', 'dirtbike', 'wakeboard', 'sourdough', 'travel'],
           text: "Outside work, Bri is family-first (she has a son), plays soccer, and shoots photography — mostly families and newborns. She's also into travel and food, warm-water scuba, dirtbikes, wakeboarding, and three-day sourdough." },
-        { keys: ['location', 'where does she live', 'based', 'remote', 'pleasanton', 'bay area'],
+        { keys: ['location', 'where does she live', 'where is she', 'where in', 'city', 'based', 'remote', 'pleasanton', 'bay area', 'sf', 'san francisco', 'oakland', 'east bay', 'california', 'ca'],
           text: "Bri is based in Pleasanton, CA — in the Bay Area." },
         { keys: ['phone', 'number', 'call', 'text', 'cell', 'reach her', 'get in touch', 'how to contact'],
           text: "The fastest way to reach Bri is email — thebrimay@gmail.com — or call/text her at 209-601-0181. She's also on LinkedIn.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
-        { keys: ['why hire', 'what makes', 'different', 'stand out', 'unique', 'strength', 'pitch', 'special', 'value'],
+        { keys: ['why hire', 'should we hire', 'should i hire', 'hire her', 'hire bri', 'what makes', 'different', 'stand out', 'unique', 'strength', 'strengths', 'strongest', 'best at', 'superpower', 'biggest achievement', 'achievement', 'proud of', 'most proud', 'pitch', 'special', 'value'],
           text: "She designs the product, then she ships the code, so nothing is lost between the two. Proof: Global Content Studio, built solo, with 8,118 localized variants in production across 28 locales; 32 commits into the production Aimee SDK; 80 commits into the Hub's Content Studio, with tests; and this site. The product judgment is the Hub redesign: +200% engagement and $12M in revenue." },
+        // ── contact details, each in its own words ──
+        { keys: ['email', 'e-mail', 'email address', 'her email', 'gmail', 'mail'],
+          text: "**thebrimay@gmail.com**. She also answers texts at 209-601-0181, and she's on LinkedIn at linkedin.com/in/brimay.",
+          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="mailto:thebrimay@gmail.com">Email Bri</a><a class="link-btn link-btn--secondary" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>' },
+        { keys: ['linkedin', 'linked in', 'socials', 'social media', 'twitter', 'instagram', 'x.com', 'profile'],
+          text: "LinkedIn: linkedin.com/in/brimay. GitHub: github.com/thebrimay-wq. Email: thebrimay@gmail.com. No other socials are listed on the site.",
+          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="link-btn link-btn--secondary" href="https://github.com/thebrimay-wq" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>' },
+        { keys: ['time zone', 'timezone', 'pacific', 'pst', 'pdt', 'working hours', 'what time'],
+          text: "Pacific time. Bri is in Pleasanton, CA, in the Bay Area, and works remotely today." },
+        { keys: ['contract', 'contractor', 'contracting', 'freelance', 'freelancing', 'consulting', 'consultant', 'fractional', 'part time', 'part-time', 'gig'],
+          text: "She's targeting full-time AI-Native Senior Product Designer and Design Engineer roles. For contract or fractional work, ask her directly: thebrimay@gmail.com. Her earlier agency years were at CKC Communications, not freelance." },
+        { keys: ['references', 'reference', 'former manager', 'previous manager', 'recommendation', 'recommendations', 'vouch', 'referral'],
+          text: "Available on request. Ask her directly at thebrimay@gmail.com and she'll connect you." },
+
+        // ── the work, at the level of detail an engineer asks ──
+        { keys: ['python', 'backend language', 'server side', 'server-side'],
+          text: "Working-level. Her primary languages are TypeScript and JavaScript; she writes Python when the service needs it, and shipped 27 commits into Financial Finesse's Python review API. The Cloudflare Worker behind Global Content Studio is TypeScript." },
+        { keys: ['prototype', 'prototypes', 'prototyping', 'proto', 'high fidelity', 'hi-fi', 'wireframe', 'wireframes', 'mockup', 'mockups'],
+          text: "Coded prototypes are her default: real components, real data, in the stack that ships, so the prototype becomes the product instead of a handoff. Figma for exploration and alignment. On Global Content Studio the prototype and the product were the same repo." },
+        { keys: ['confidence score', 'confidence', 'score', 'scored', 'threshold', 'how accurate', 'accuracy', 'accurate', 'quality gate', 'verify pass', 'human review', 'hallucinat'],
+          text: "The honest version, in her words: the pipeline's confidence score is the model grading its own output, and it's treated as a routing signal, not a gate. What gates publishing is an independent native-reader verify pass (a separate model call with typed failure reasons and a redo loop), deterministic checks for US-only terms, figures and links, and then a human localizer. Nothing publishes without the human.",
+          href: '/work/global-content-studio/#decisions', title: 'Global Content Studio', label: 'Read the decisions →' },
+        { keys: ['atlas', 'localization pipeline', 'the pipeline', 'pipeline', 'eight step', '8-step', '8 step', 'how does localization', 'how does gcs work', 'how does the studio'],
+          text: "Atlas is the localization pipeline inside Global Content Studio: an eight-step run per article, grounded on a per-locale wiki instead of the open web. Gate (keep, rewrite, or drop), research, draft, an independent verify pass with a redo loop, then deterministic post-passes (US-term sweep, figure checks, link check) and a packager. A 5-worker pool per locale, a serialized save queue so writers can't race, and every variant lands in review for a human.",
+          href: '/work/global-content-studio/#atlas', title: 'Global Content Studio', label: 'See the pipeline →' },
+        { keys: ['how long did', 'how long to build', 'four weeks', '4 weeks', 'how fast', 'build time', 'time to build', 'how quickly', 'who else', 'who worked on', 'team on', 'by herself', 'alone', 'solo', 'commits', 'how many commits', 'contributors', 'contributor'],
+          text: "Global Content Studio was solo: first commit to launch QA in under four weeks. Of the repo's 524 commits, 493 are hers; one engineer contributed 20. Aimee and the Hub were team products where she owned the design and merged her own front-end code.",
+          href: '/work/global-content-studio/#process', title: 'Global Content Studio', label: 'Read the process →' },
+        { keys: ['locales', 'how many locales', 'how many languages', 'markets', 'countries', 'which locales', 'which languages', 'which markets'],
+          text: "28 locales in production, 25 of them with published or approved content: 8,118 localized variants in total, 3,512 of those from one four-day run. The set covers the company's international employer clients, and the count is read from the live index, not estimated.",
+          href: '/work/global-content-studio/#impact', title: 'Global Content Studio', label: 'See the numbers →' },
+
+        // ── how she works, grounded in what's written down ──
+        { keys: ['feedback', 'critique', 'disagree', 'disagreement', 'conflict', 'pushback', 'push back', 'prioritize', 'prioritization', 'priorities', 'deadline', 'deadlines', 'under pressure', 'stakeholders', 'stakeholder'],
+          text: "Those are interview questions, so here's the written evidence rather than a story I'd be making up. On Global Content Studio she made the contested policy explicit in code (nothing auto-publishes; every variant lands in review for a human) instead of relitigating it per case. When the pipeline's confidence score turned out to be the model grading itself, she said so in the case study instead of defending it. And she wrote up four production failures with the fix for each. Ask her for the stories; she'll have them.",
+          href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read what broke →' },
+        { keys: ['ux copy', 'ux writing', 'copywriting', 'copy', 'write', 'writes', 'writing', 'writer', 'content design', 'microcopy', 'blog', 'articles', 'newsletter', 'publish'],
+          text: "Yes. The case studies on this site are hers, and Global Content Studio exists because she encoded the company's voice pillars and compliance rules into the tool that writes and localizes its content. No blog or newsletter is listed on the site." },
+        { keys: ['branding', 'brand', 'logo', 'logos', 'illustration', 'illustrate', 'illustrator', 'graphic design', 'graphic designer', 'visual design', 'visual', 'typography', 'art direction', 'good at'],
+          text: "Yes, and she started there: Sr. Graphic Designer at Financial Finesse before moving into product, and before that branding and websites for 50+ companies at CKC Communications. Illustration isn't a focus; product, systems, and the code that ships them are." },
+        { keys: ['industry', 'industries', 'fintech', 'financial services', 'finance', 'healthcare', 'health', 'b2b', 'b2c', 'b2b2c', 'consumer', 'consumers', 'vertical', 'domain'],
+          text: "Fintech, specifically financial wellness, and B2B2C: Financial Finesse sells to employers (Meta, the NFL, JPMorgan Chase, the Federal Reserve) and the product is used by 1M+ of their employees, so she designs consumer experiences inside enterprise contracts. Not healthcare. Earlier, agency work across 50+ companies at CKC Communications." },
+        { keys: ['award', 'awards', 'recognition', 'conference', 'conferences', 'speak at', 'speaking', 'talks', 'podcast', 'press', 'featured in'],
+          text: "Nothing is listed on the site, so I won't invent one. Ask her: thebrimay@gmail.com." },
+        { keys: ['open source', 'open-source', 'side project', 'side projects', 'personal project', 'personal projects', 'passion project'],
+          text: "This site is the public one: github.com/thebrimay-wq/bri-portfolio-2, the engine you're talking to, with its screening-question probe and browser audit in the repo. Her product code is Financial Finesse's and private.",
+          block: '<div class="link-row"><a class="link-btn link-btn--primary" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Open the repo ↗</a></div>' },
+
+        // ── personal: answer what's on the site, deflect what isn't ──
+        { keys: ['married', 'husband', 'wife', 'partner', 'spouse', 'relationship', 'dating', 'single'],
+          text: "That's hers to share. What's on the site: she's family-first and has a son." },
+        { keys: ['pronouns', 'pronoun', 'she/her', 'gender'],
+          text: "She/her." },
+        { keys: ['how old', 'age', 'born', 'birthday', 'birth year'],
+          text: "Not something the site lists. What it does: designing since 2011, about ten years in product." },
+        { keys: ['speak', 'speaks', 'spoken', 'fluent', 'bilingual', 'spanish', 'french', 'german', 'native language'],
+          text: "Spoken languages aren't listed on the site, so ask her. If you meant the product: Global Content Studio ships in 28 locales." },
+        { keys: ['motion', 'motion design', 'animation', 'animations', 'micro-interactions', 'microinteractions', 'interaction design', 'transitions'],
+          text: "Yes, with restraint. Interaction and motion are part of her product work (Framer Motion in React, hand-built reveal and streaming motion in vanilla JS on this site), and every animation here has a reduced-motion fallback. She treats motion as feedback, not decoration." },
+        { keys: ['rust', 'golang', 'java', 'c++', 'c#', 'kotlin', 'docker', 'kubernetes', 'k8s', 'aws', 'gcp', 'sql', 'postgres', 'graphql', 'terraform'],
+          text: "Not in her stack, and she wouldn't claim it. What is: TypeScript and JavaScript, React and Lit, Tailwind, Vite, Cloudflare Workers, Azure Blob Storage, Python when a service needs it, Vitest and Playwright. She learns what the product needs; the Worker's hand-written Azure client exists because the SDK couldn't run there." },
+        { keys: ['rag', 'retrieval', 'grounding', 'grounded', 'evals', 'eval', 'evaluation', 'evaluations', 'agent', 'agents', 'agentic', 'subagents', 'mcp', 'fine tuning', 'fine-tuning', 'finetune', 'finetuning', 'embeddings', 'vector', 'vectors'],
+          text: "What she has shipped: grounding the model on a per-locale wiki instead of open-web search (retrieval in practice), multi-pass pipelines with an independent verify pass and a redo loop, evals plus human-in-the-loop QA deciding what publishes, and a Claude Code workflow that fans out Sonnet subagents per article. Fine-tuning isn't part of it; everything runs on the Anthropic API against production models, which was a deliberate tradeoff.",
+          href: '/work/global-content-studio/#architecture', title: 'Global Content Studio', label: 'See the architecture →' },
       ];
 
       const CASE_STUDIES = [
@@ -1259,11 +1333,14 @@ function retrieve(query) {
           chips: ['casestudies', 'about', 'contact']
         }),
         contact: () => ({
-          text: "Bri is open to AI-Native Senior Product Designer roles, Bay Area or remote. The fastest way to reach her — email or text at 209-601-0181:",
+          text: "Bri is open to AI-Native Senior Product Designer roles, Bay Area or remote. The fastest way to reach her is email, **thebrimay@gmail.com**, or a text to 209-601-0181:",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="mailto:thebrimay@gmail.com">Email Bri</a><a class="link-btn link-btn--secondary" href="tel:+12096010181">Call / text ↗</a><a class="link-btn link-btn--secondary" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="link-btn link-btn--secondary" href="/contact/" data-panel-title="Contact">Contact page →</a></div>',
           chips: ['casestudies', 'about', 'resume']
         }),
         greet: () => ({ text: "Hey! Here's what I can help you explore:", block: null, chips: ['casestudies', 'about', 'resume', 'contact'] }),
+        thanks: () => ({ text: "Anytime. If you're running a hiring loop, the résumé is one click, and Bri answers email the same day.", block: null, chips: ['resume', 'contact'] }),
+        bye: () => ({ text: "Thanks for stopping by. If anything comes up later: thebrimay@gmail.com.", block: null, chips: ['resume', 'contact'] }),
+        help: () => ({ text: "Ask me anything about Bri: her work (Global Content Studio, Aimee, the Hub, this site), how she works with engineers, what she builds with, what broke in production and what she fixed, her level, availability, and how to reach her. If I don't know something, I'll say so and point you to her.", block: null, chips: ['casestudies', 'about', 'resume', 'contact'] }),
         fallback: () => ({ text: funny(), block: null, chips: ['casestudies', 'about', 'resume', 'contact'] })
       };
 
@@ -1279,7 +1356,10 @@ function retrieve(query) {
         // A bare greeting only — not a question that happens to contain one.
         if (/^\s*(hi|hello|hey|yo|sup|howdy|hiya|good (morning|afternoon|evening))\b([\s,]+(there|brix|bri))?[\s!.,?]*$/i.test(q.trim())) return 'greet';
         if (has(['resume', 'résumé', 'resumé', 'cv', 'curriculum'])) return 'resume';
-        if (has(['contact', 'email', 'hire', 'reach', 'linkedin', 'touch', 'available', 'connect', 'message'])) return 'contact';
+        if (/^\s*(thanks|thank you|thx|ty|cheers|appreciate it|great, thanks|perfect)[\s!.]*$/i.test(q.trim())) return 'thanks';
+        if (/^\s*(bye|goodbye|see ya|see you|later|cya|good night)[\s!.]*$/i.test(q.trim())) return 'bye';
+        if (/^\s*(help|what can you do|what do you know|what can i ask|what should i ask|options|menu)[\s?!.]*$/i.test(q.trim())) return 'help';
+        if (has(['contact', 'reach', 'touch', 'available', 'connect', 'message'])) return 'contact';
         if (has(['case', 'cases', 'work', 'projects', 'portfolio', 'studies', 'case study', 'global content', 'content studio', 'aimee', 'hub', 'featured'])) return 'casestudies';
         if (has(['about', 'background', 'bio', 'story', 'career'])) return 'about';
         return 'fallback';
@@ -1531,7 +1611,7 @@ function retrieve(query) {
 
       // ── Retrieval: normalize, fuzzy-match, score with confidence ──
       const STOP = new Set(['the','a','an','of','is','are','am','to','and','or','for','with','on','in','at','about','what','whats','who','whos','how','why','when','where','which','does','do','did','she','her','hers','bri','bris','you','your','yours','me','my','tell','show','give','can','could','would','was','were','be','been','has','have','had','i','it','its','that','this','these','those','they','their','them','please','just','also','some','any','much','many','a','lot','really','so','then','get','got'].filter(Boolean));
-      const SYN = { coding:'code', coder:'code', codes:'code', develop:'code', developer:'code', developers:'code', dev:'code', programming:'code', program:'code', money:'revenue', earned:'revenue', earns:'revenue', earn:'revenue', made:'revenue', dollars:'revenue', jobs:'work', job:'work', projects:'work', project:'work', portfolio:'work', tools:'skills', tool:'skills', tech:'skills', stack:'skills', technologies:'skills', technology:'skills', capabilities:'skills', reach:'contact', phone:'phone', cell:'phone', llm:'ai', located:'location', live:'location', lives:'location', living:'location', based:'location', hiring:'hire', school:'education', degree:'education', studied:'education', college:'education', university:'education', coach:'aimee', gcs:'global', history:'history' };
+      const SYN = { coding:'code', coder:'code', codes:'code', develop:'code', developer:'code', developers:'code', dev:'code', programming:'code', program:'code', money:'revenue', earned:'revenue', earns:'revenue', earn:'revenue', made:'revenue', dollars:'revenue', jobs:'work', job:'work', projects:'work', project:'work', portfolio:'work', tools:'skills', tool:'skills', tech:'skills', stack:'skills', technologies:'skills', technology:'skills', capabilities:'skills', reach:'contact', phone:'phone', cell:'phone', llm:'ai', located:'location', live:'location', lives:'location', living:'location', based:'location', hiring:'hire', school:'education', degree:'education', studied:'education', college:'education', university:'education', coach:'aimee', gcs:'global', history:'history', coded:'code', codebase:'code', photos:'photography', photo:'photography', pictures:'photography', kids:'son', children:'son', child:'son', pm:'product', pms:'product' };
 
       function norm(s) { return s.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim(); }
       function toks(s) { return norm(s).split(' ').map(w => SYN[w] || w).filter(w => w && !STOP.has(w)); }
@@ -1543,10 +1623,16 @@ function retrieve(query) {
           d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
         return d[m][n];
       }
+      function keyHits(nq, kl) {
+        if (kl.includes(' ')) return nq.includes(kl);
+        const k = kl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return new RegExp('(^|\\s)' + k + (kl.length <= 4 ? 's?(\\s|$)' : '')).test(nq);
+      }
       function fuzzy(a, b) {
         if (a === b) return true;
-        if (a.length < 4 || b.length < 4) return false;
-        if (a.length >= 5 && b.length >= 5 && (a.startsWith(b) || b.startsWith(a))) return true;
+        if (a === b + 's' || b === a + 's') return true;           // plural
+        if (a.length < 6 || b.length < 6) return false;            // short words must match exactly ("used" is not "user")
+        if (a.startsWith(b) || b.startsWith(a)) return true;       // designing / design, managed / manage
         return lev(a, b) <= 1;
       }
       function retrieve(query) {
@@ -1559,14 +1645,18 @@ function retrieve(query) {
           // scoring against the education entry via the word "study".
           if (e.not && e.not.some(n => nq.includes(n))) continue;
           let sc = 0;
+          const used = new Set(); // a query word can score once per entry, however many keys share it
           for (const key of e.keys) {
             const kl = key.toLowerCase().trim();
             // A multi-word key is a much stronger signal than a single word,
             // so it outranks a generic one-word match on another entry.
-            if (kl.length >= 3 && nq.includes(kl)) { sc += 3 + (kl.split(' ').length - 1) * 2; continue; }
+            // Single words must start a word (so "tech" never matches "fintech"), and
+            // short ones must be the whole word (so "ai" never matches "Aimee").
+            if (kl.length >= 2 && keyHits(nq, kl)) { sc += 3 + (kl.split(' ').length - 1) * 2; continue; }
             for (const w of kl.split(' ')) {
               if (!w || STOP.has(w)) continue;
-              if (qt.some(t => fuzzy(t, w))) { sc += 1; break; }
+              const t = qt.find(t => fuzzy(t, w));
+              if (t && !used.has(t)) { used.add(t); sc += 1; break; }
             }
           }
           if (sc > 0) scored.push({ e, sc });
