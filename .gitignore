@@ -16,3 +16,16 @@ Thumbs.db
 .env
 .env.*
 .claire/
+
+# Local agent worktrees and sync backups
+.claude/worktrees/
+.claire/
+.pre-sync-backup/
+
+# Local-only scratch: superseded drafts and unreferenced source assets
+_local/
+archive/
+dist/
+
+# Raw source media for case studies — hundreds of MB, kept locally only
+docs/case-studies/media/
