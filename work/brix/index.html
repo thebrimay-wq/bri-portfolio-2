@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/site.css" />
-  <meta name="description" content="Case study: this portfolio itself — an AI-style concierge with an on-device retrieval engine, built with no framework, no backend, and no API key, audited to 44/44 checks." />
+  <meta name="description" content="Case study: this portfolio itself — an AI-style concierge with an on-device retrieval engine, built with no framework, no backend, and no API key, audited to 49 browser checks and a 62-question engine probe with answer-content checks (October 2026)." />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta property="og:type" content="article" />
@@ -264,7 +264,7 @@
             <div class="hero-stat-label">Backend &amp; per-answer cost</div>
           </div>
           <div>
-            <div class="hero-stat-val">49/50</div>
+            <div class="hero-stat-val">61/62</div>
             <div class="hero-stat-label">Screening questions answered</div>
           </div>
           <div>
@@ -286,7 +286,7 @@
       <div class="wrap fade-up">
         <span class="eyebrow">At a glance</span>
         <div class="glance">
-          <p class="glance-summary">A portfolio should prove its claims. So instead of saying I ship code on a static page, I built the page and put the source next to it: a three-column LLM-app shell with a chat concierge whose answer engine — tokenization, synonym expansion, fuzzy matching, confidence scoring — runs on-device in plain JavaScript. No framework, no build step, no server, no key. Then I audited it like a product: 38 real screening questions, 42 browser-verified checks, WCAG AA in both themes.</p>
+          <p class="glance-summary">A portfolio should prove its claims. So instead of saying I ship code on a static page, I built the page and put the source next to it: a three-column LLM-app shell with a chat concierge whose answer engine — tokenization, synonym expansion, fuzzy matching, confidence scoring — runs on-device in plain JavaScript. No framework, no build step, no server, no key. Then I audited it like a product: a 62-question screening probe with 40 regression and answer-content checks, 49 browser-verified checks, WCAG AA in both themes (October 13, 2026).</p>
           <dl class="glance-facts">
             <div><dt>Role</dt><dd>Designer &amp; Engineer — everything</dd></div>
             <div><dt>Timeline</dt><dd>2026 · evenings and weekends</dd></div>
@@ -317,11 +317,11 @@
           </div>
           <div class="owned-item">
             <div class="owned-label">UX &amp; UI</div>
-            <p class="owned-text">The full app shell — floating rail, chat pane with streaming and stop, side panel with focus management, mobile drawer, first-run action cards, and a role lens for the two audiences that hire me.</p>
+            <p class="owned-text">The full app shell — floating rail, chat pane with streaming and stop, side panel with focus management and a labeled "Read full case study" action, mobile drawer, and three case-study doors that open the full page rather than a preview.</p>
           </div>
           <div class="owned-item">
             <div class="owned-label">The engine</div>
-            <p class="owned-text">A keyless retrieval engine: normalize → stopwords → synonyms → fuzzy match (Levenshtein ≤ 1) → confidence score, with negative keys and multi-word weighting. Hand-written, tested against 38 real screening questions.</p>
+            <p class="owned-text">A keyless retrieval engine: normalize → stopwords → synonyms → fuzzy match (Levenshtein ≤ 1) → confidence score, with negative keys and multi-word weighting. Hand-written, tested against 62 real screening questions plus 40 regression and answer-content checks.</p>
           </div>
           <div class="owned-item">
             <div class="owned-label">Accessibility</div>
@@ -329,7 +329,7 @@
           </div>
           <div class="owned-item">
             <div class="owned-label">The audit</div>
-            <p class="owned-text">Drove every page and feature in a scripted browser — network, layout at 320–1440px, contrast, live-region behavior, downloads — and fixed every one of the 12 defects it surfaced. 42/42 green.</p>
+            <p class="owned-text">Drove every page and feature in a scripted browser — network, layout at 320–1440px, contrast, live-region behavior, downloads — and fixed every one of the 12 defects it surfaced in August 2026. 49/49 green on October 13, 2026.</p>
           </div>
         </div>
       </div>
@@ -367,7 +367,7 @@
           </div>
           <div class="numbered-item">
             <span class="numbered-item-n">02</span>
-            <p class="numbered-item-text"><strong>The LLM feel, honestly earned.</strong> Token streaming with punctuation-aware pacing, a variable thinking delay, stop-to-finish, one-turn memory for follow-ups, and a graceful fallback that offers the three nearest topics it does know instead of a dead end.</p>
+            <p class="numbered-item-text"><strong>The LLM feel, honestly earned.</strong> Token streaming with punctuation-aware pacing, stop-to-finish, one-turn memory for follow-ups, and a graceful fallback that offers the three nearest topics it does know instead of a dead end. No simulated thinking delay: the engine is synchronous, so the answer starts the moment you send.</p>
           </div>
           <div class="numbered-item">
             <span class="numbered-item-n">03</span>
@@ -402,7 +402,7 @@
         </div>
         <div class="fade-up" style="transition-delay:90ms;">
           <img class="cs-image" src="/images/brix-case-study/dark-mode.webp"
-            alt="The homepage in dark mode — same layout, tokens swapped: cards, lens chips, rail, and composer all re-themed with WCAG AA contrast maintained"
+            alt="The homepage in dark mode — same layout, tokens swapped: doors, rail, and composer all re-themed with WCAG AA contrast maintained"
             loading="lazy" width="2400" height="1500">
         </div>
       </div>
@@ -449,9 +449,14 @@
           The build loop was design-in-code: ship a slice, then attack it. I extracted the retrieval engine
           into a test harness and ran 38 questions a FAANG screener actually asks — the first pass answered 20
           and routed "show me her strongest case study" to my college degree. Word-boundary matching, negative
-          keys, and 19 new knowledge entries later it answered 37, and the last one routed correctly. The harness has since grown to 50 questions, including what-broke and architecture questions, and answers 49. Then a
-          scripted browser drove every page: network, overflow at four widths, contrast in both themes,
-          keyboard order, live-region mutation counts, downloads.
+          keys, and 19 new knowledge entries later it answered 37, and the last one routed correctly. The harness grew to 50 questions in September and answered 49. Then an October live review found
+          six questions that streamed a confident answer to the wrong question: which research changed a
+          design, a disagreement with a PM, how the Hub's engagement figure was measured, how many people use
+          Aimee, the strongest case study, remote work. The fix was not more keywords. It was entries that say
+          plainly what the portfolio does not document, and a probe that now checks the answer text, not just
+          which entry was routed: 62 questions, 61 confident, 40 regression and answer checks, October 13, 2026.
+          Alongside it, a scripted browser drives every page: network, overflow at four widths, contrast in
+          both themes, keyboard order, live-region mutation counts, panel deep links, downloads.
         </p>
 
         <div class="transform-table fade-up" style="transition-delay:130ms;">
@@ -468,7 +473,7 @@
           <div class="transform-row">
             <span class="transform-from">20/38 screening questions answered</span>
             <span class="transform-arrow">→</span>
-            <span class="transform-to">49/50, verified by an automated probe</span>
+            <span class="transform-to">61/62, with the answer text checked, not just the route (Oct 2026)</span>
           </div>
           <div class="transform-row">
             <span class="transform-from">87 live-region announcements per answer</span>
@@ -491,8 +496,8 @@
 
         <div class="impact-grid fade-up" style="transition-delay:90ms;">
           <div class="impact-cell">
-            <div class="impact-val">44/44</div>
-            <p class="impact-label">Browser-verified checks green — network, layout, a11y, engine, downloads</p>
+            <div class="impact-val">49/49</div>
+            <p class="impact-label">Browser-verified checks green on October 13, 2026: network, layout, a11y, engine, panel flows, downloads</p>
           </div>
           <div class="impact-cell">
             <div class="impact-val">61%</div>
@@ -523,7 +528,7 @@
       <div class="wrap fade-up">
         <nav class="cta-links" aria-label="Case study navigation">
           <a href="/work/" class="btn-secondary">← Back to Work</a>
-          <a href="/aimee-ai/" class="btn-secondary">Next: Aimee AI Coach →</a>
+          <a href="/work/global-content-studio/" class="btn-secondary">Next: Global Content Studio →</a>
           <a href="/contact/" class="btn-secondary">Contact ↗</a>
         </nav>
       </div>

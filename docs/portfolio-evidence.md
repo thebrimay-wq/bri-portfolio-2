@@ -100,3 +100,18 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 5. **Aimee validation.** Is the SDK with your components live to users today, on which surfaces? Any usage or validation findings? Any public-safe failure-state screenshots (insufficient context, retry, interruption)?
 6. **Leadership and availability.** Mentoring or standards work that changed team behavior (even qualitative). Is remote mandatory or preferred? Is $200k base or total (targeting only, never public)?
 7. **Names.** May the contributing engineer (20 commits) and the localizers be named publicly? Currently "one engineer" and "localizers".
+
+## Validation log
+
+| Date | Check | Result |
+|---|---|---|
+| 2026-10-13 | Engine probe (`probe-engine.mjs`): 62 questions, 20 routing regressions, 20 answer-content checks | 61/62 confident, 0 failing |
+| 2026-10-13 | Browser audit (`browser-audit.mjs`) on the deploy-merged build: 404s, overflow at 320/375/768, contrast both themes, head hygiene, no-JS, a11y, Brix features, panel flows, deep link, résumé download | 49/49 |
+| 2026-10-13 | Flow checks (`.scratch/flows.mjs`, session-only): door navigation, Back with recents, Cmd-click new tab, panel label, Esc focus restoration, `#ai-assisted` deep link, reduced motion, tab order, no-JS content, 320px shortcut row | 13/13 after the hash fix |
+| 2026-10-13 | Résumé PDF: pypdf plain + layout, pdfminer.six | one page; headings → roles → bullets in order; "·" separators present |
+| 2026-10-13 | Screenshots: home, Studio, Aimee, Hub, About, Work, Résumé, Contact, Code, Brix at 1440 and 390, light and dark | no overflow, no broken images, only the aborted test-video request logged |
+
+## Public claims narrowed or removed this pass
+
+- Removed: `$21,287` run cost; `$2.44M` / `$2.42M` as savings; the "helped us win the Federal Reserve" pull quote; `$12M` as a headline stat (résumé, Hub hero, Brix answers, homepage cards); "Fortune 500 clients won"; "shipping to the Hub, widget, and Teams"; "implemented 1:1"; "under two minutes" onboarding; "variable thinking delay"; "role lens"; "An AI coach for 1M+ employees".
+- Narrowed: `+200%` → "per internal reporting; definition not published"; Aimee deployment → "merged into the production SDK"; usage → "reach, not usage"; manual cost → a labeled model with stated assumptions (37,000 h, ≈$2.2M at $60/h); research → "the research is not published here"; remote only.

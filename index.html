@@ -1087,7 +1087,7 @@ function retrieve(query) {
         (a.querySelector('.cs-card-title') && a.querySelector('.cs-card-title').textContent) ||
         a.textContent.trim().replace(/\s+→$|\s+↗$|\s+↓$/, '') ||
         'Preview';
-      Panel.open(url.pathname + url.search, title, url.href, a);
+      Panel.open(url.pathname + url.search + url.hash, title, url.href, a); // keep the #section so answers can deep-link
     });
 
     // ── Portfolio Agent ──────────────────────────────────────
@@ -1159,7 +1159,7 @@ function retrieve(query) {
         { keys: ['big tech', 'faang', 'google', 'apple', 'amazon', 'netflix', 'microsoft', 'startup', 'startups', 'company size', 'enterprise', 'agency', 'worked where'],
           text: "Bri's product career is at **Financial Finesse** — a B2B2C financial-wellness company serving Fortune 500 clients like the Federal Reserve, Meta, the NFL and JPMorgan Chase — where she's shipped enterprise-scale products to 1M+ employees. Before that she was at CKC Communications, doing branding and sites for 50+ companies. Not big tech yet; that's the move she's making." },
         { keys: ['tests', 'testing', 'unit test', 'qa', 'code quality', 'ci', 'write tests'],
-          text: "Yes. Global Content Studio has 221 Vitest tests across 12 files (the gate, policy, rewrite, index, single-flight, wiki, and feedback logic). This site ships a 50-question engine probe and a 44-check Playwright audit in its public repo, run on every change. Her Content Studio work in the Hub and the Python review API both landed with tests. She ships front-end and pipeline code rather than full-stack services." },
+          text: "Yes. Global Content Studio has 221 Vitest tests across 12 files (the gate, policy, rewrite, index, single-flight, wiki, and feedback logic). This site ships a 62-question engine probe that checks the answer text, plus a 49-check Playwright audit, in its public repo, run on every change (October 2026). Her Content Studio work in the Hub and the Python review API both landed with tests. She ships front-end and pipeline code rather than full-stack services." },
         { keys: ['how does this work', 'how do you work', 'how were you built', 'are you an llm', 'real llm', 'what model', 'chatgpt', 'claude', 'api', 'built this chat', 'this site built', 'this website built', 'brix', 'this portfolio', 'this site', 'who are you', 'what are you', 'are you a bot', 'are you human', 'are you real', 'is this real', 'are you ai', 'are you an ai', 'who made you', 'who built you', 'who wrote you'],
           not: ['work with api', 'with apis', 'anthropic api', 'api integration'],
           code: true,
