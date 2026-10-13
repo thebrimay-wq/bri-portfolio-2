@@ -29,3 +29,6 @@ dist/
 
 # Raw source media for case studies — hundreds of MB, kept locally only
 docs/case-studies/media/
+
+# Session scratch scripts (never deployed)
+.scratch/
