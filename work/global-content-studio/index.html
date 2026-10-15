@@ -316,16 +316,16 @@
 
         <div class="hero-image fade-up" style="transition-delay:170ms;">
           <div class="cs-video-slot">
-            <!-- Screen recording in the hero: localizing an article, 2× (set in JS). -->
+            <!-- Hero clip: 21 s of the production Studio at native speed, cropped to the editor and the accuracy-check panel. -->
             <video class="cs-video" autoplay muted loop playsinline preload="metadata"
-                   poster="../../images/Global Content Studio Case Study/gcs-localize-article-compatible-poster.jpg"
-              aria-label="Localizing an article in Global Content Studio, sped up 2×"
+                   poster="../../images/Global Content Studio Case Study/gcs-accuracy-check-poster.jpg"
+              aria-label="The Studio's accuracy check flagging seven claims on a Canadian draft while an Italian draft streams"
               onloadstart="this.closest('.cs-video-slot').classList.add('loaded')">
-              <source src="../../images/Global Content Studio Case Study/gcs-localize-article-compatible.mp4" type="video/mp4" />
+              <source src="../../images/Global Content Studio Case Study/gcs-accuracy-check.mp4" type="video/mp4" />
             </video>
-            <div class="img-placeholder cs-video-ph">Screen recording — localizing an article (2× speed)</div>
+            <div class="img-placeholder cs-video-ph">Screen recording — the accuracy check catching a claim</div>
           </div>
-          <p class="shot-caption">Screen recording of the production Studio localizing one article, played at 2×. The article is the author's; the locale brief, the draft, and the flags are the pipeline's.</p>
+          <p class="shot-caption">The production Studio, native speed. The accuracy check has just run on a Canadian draft: seven claims the model could not tie to a source it consulted, each listed with the figure to confirm and the authority to check it against, while the next draft streams beside them.</p>
         </div>
       </div>
     </section>
@@ -359,8 +359,8 @@
         <div class="jump-nav">
           <span class="jump-label">Jump to</span>
           <a class="jump-chip" href="#owned">What I owned</a>
-          <a class="jump-chip" href="#gcs-solution">The workflow</a>
           <a class="jump-chip" href="#decisions">Decisions</a>
+          <a class="jump-chip" href="#gcs-solution">The workflow</a>
           <a class="jump-chip" href="#ai-assisted">Building with AI</a>
           <a class="jump-chip" href="#what-broke">What broke</a>
           <a class="jump-chip" href="#architecture">Architecture</a>
@@ -419,21 +419,13 @@
           </div>
           <div class="problem-bullet">
             <span class="bullet-dot"></span>
-            <span>Financial advice <strong>changes by country</strong>: tax structures, retirement systems, and regulations are all different.</span>
-          </div>
-          <div class="problem-bullet">
-            <span class="bullet-dot"></span>
-            <span>Tone, customs, and ways of life shape how money is discussed. A literal translation would be technically correct and <strong>wrong for the reader</strong>.</span>
-          </div>
-          <div class="problem-bullet">
-            <span class="bullet-dot"></span>
-            <span>Getting it wrong in a financial context is not a typo. <strong>It is a liability.</strong></span>
+            <span>Financial advice <strong>changes by country</strong>, and so does how people talk about money. A literal translation is technically correct, <strong>wrong for the reader</strong>, and in a financial context a liability.</span>
           </div>
         </div>
 
         <div style="margin-top: 40px;">
-          <a class="skip-link" onclick="document.getElementById('gcs-solution').scrollIntoView({behavior:'smooth'})" href="#gcs-solution">
-            Jump to the workflow →
+          <a class="skip-link" onclick="document.getElementById('decisions').scrollIntoView({behavior:'smooth'})" href="#decisions">
+            Jump to the decisions →
             <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -442,7 +434,37 @@
       </div>
     </section>
 
-    <!-- ════ 4. THE WORKFLOW (author · localizer · status) ════ -->
+    <!-- ════ 4. DECISIONS ════ -->
+    <section id="decisions" class="cs-section">
+      <div class="wrap fade-up">
+        <span class="eyebrow">Decisions and tradeoffs</span>
+        <h2 class="solution-h2">Four calls I would make again</h2>
+        <div class="decision-list">
+          <div class="decision">
+            <h3>A per-locale wiki instead of open-web search</h3>
+            <p><strong>Not taken:</strong> letting the model research each market live on the web at draft time.</p>
+            <p><strong>Why:</strong> financial facts have to be ours. A curated wiki is slower to build, one locale at a time, but every retirement system and tax authority the model cites is something a person vetted. Web search still runs in the research stage; it feeds the wiki, it does not bypass it.</p>
+          </div>
+          <div class="decision">
+            <h3>Five model calls per article, not one</h3>
+            <p><strong>Not taken:</strong> the original one-pass pipeline, which cost about a fifth as much.</p>
+            <p><strong>Why:</strong> one-pass output kept US framing and US-only links that no automated check could see. Splitting into gate, research, draft, independent verify, and save took an article to roughly 335k tokens. That cost is what forced the skip-approved default and targeted re-runs instead of full-corpus rewrites.</p>
+          </div>
+          <div class="decision">
+            <h3>The score routes; it does not gate</h3>
+            <p><strong>Not taken:</strong> publishing anything above a confidence threshold.</p>
+            <p><strong>Why:</strong> the confidence number is the model grading its own output. It is useful for deciding what a reviewer sees first and useless as a guarantee. The gate is a separate verify pass with typed failure reasons and a redo loop, deterministic checks, and a person. There is no threshold in the code, on purpose.</p>
+          </div>
+          <div class="decision">
+            <h3>One Worker holds every secret</h3>
+            <p><strong>Not taken:</strong> calling the Anthropic API and Azure from the browser, which is faster to build and one less deploy.</p>
+            <p><strong>Why:</strong> ordinary practice, but it shaped the product: with one write path, there is one place to enforce the status rules in the workflow below. The cost is a second deploy target and a hand-written Azure client, since the SDK cannot run in Workers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ 5. THE WORKFLOW (author · localizer · status) ════ -->
     <section id="gcs-solution" class="cs-section">
       <div class="wrap fade-up">
         <span class="eyebrow">The Workflow</span>
@@ -483,7 +505,7 @@
       </div>
     </section>
 
-    <!-- ════ 5. THE PIPELINE — Atlas ════ -->
+    <!-- ════ 6. THE PIPELINE — Atlas ════ -->
     <section class="cs-section">
       <div class="wrap">
         <div class="exp-header fade-up">
@@ -491,9 +513,8 @@
           <h2 class="exp-h2">Inside Atlas: what happens to every article</h2>
           <p class="exp-body">
             Every article, new or localized, moves through Atlas: a fit check decides whether the piece belongs in
-            that market at all, then eight controlled steps run. The model's confidence is a routing signal, never a
-            guarantee. What decides whether anything publishes is the fit check, a separate verify pass,
-            deterministic checks for US-only terms and links, and the localizer.
+            that market, then eight controlled steps run. The model's confidence only routes work to reviewers.
+            The fit check, a separate verify pass, deterministic checks, and the localizer decide what publishes.
           </p>
         </div>
 
@@ -593,36 +614,6 @@
           <img class="cs-image" src="../../images/Global Content Studio Case Study/localization.png" alt="Three localized Life Event articles side by side: Starting a Family in English for Ireland, the same Life Event in Simplified Chinese, and Caring for Parents in Czech, each written with local facts and voice rather than translated" loading="lazy" width="1836" height="740">
           <figcaption>What a rewrite looks like next to a translation. The Irish version of Starting a Family opens on the HSE Maternity and Infant Care Scheme, a program that exists only there; the Chinese version opens on urban employee medical insurance. The Czech panel is a different Life Event, caring for parents, in the same voice.</figcaption>
         </figure>
-      </div>
-    </section>
-
-    <!-- ════ 6. DECISIONS ════ -->
-    <section id="decisions" class="cs-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow">Decisions and tradeoffs</span>
-        <h2 class="solution-h2">Four calls I would make again</h2>
-        <div class="decision-list">
-          <div class="decision">
-            <h3>A per-locale wiki instead of open-web search</h3>
-            <p><strong>Not taken:</strong> letting the model research each market live on the web at draft time.</p>
-            <p><strong>Why:</strong> financial facts have to be ours. A curated wiki is slower to build, one locale at a time, but every retirement system and tax authority the model cites is something a person vetted. Web search still runs in the research stage; it feeds the wiki, it does not bypass it.</p>
-          </div>
-          <div class="decision">
-            <h3>Five model calls per article, not one</h3>
-            <p><strong>Not taken:</strong> the original one-pass pipeline, which cost about a fifth as much.</p>
-            <p><strong>Why:</strong> one-pass output kept US framing and US-only links that no automated check could see. Splitting into gate, research, draft, independent verify, and save took an article to roughly 335k tokens. That cost is what forced the skip-approved default and targeted re-runs instead of full-corpus rewrites.</p>
-          </div>
-          <div class="decision">
-            <h3>The score routes; it does not gate</h3>
-            <p><strong>Not taken:</strong> publishing anything above a confidence threshold.</p>
-            <p><strong>Why:</strong> the confidence number is the model grading its own output. It is useful for deciding what a reviewer sees first and useless as a guarantee. The gate is a separate verify pass with typed failure reasons and a redo loop, deterministic checks, and a person. There is no threshold in the code, on purpose.</p>
-          </div>
-          <div class="decision">
-            <h3>One Worker holds every secret</h3>
-            <p><strong>Not taken:</strong> calling the Anthropic API and Azure from the browser, which is faster to build and one less deploy.</p>
-            <p><strong>Why:</strong> ordinary practice, but it shaped the product: with one write path, there is one place to enforce the status rules above. The cost is a second deploy target and a hand-written Azure client, since the SDK cannot run in Workers.</p>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -738,7 +729,7 @@
       </div>
     </section>
 
-    <!-- ════ 12. IMPACT ════ -->
+    <!-- ════ 10. IMPACT ════ -->
     <section id="impact" class="cs-section impact-section">
       <span id="proof" class="anchor-alias" aria-hidden="true"></span>
       <div class="wrap">
@@ -836,14 +827,10 @@
       nav.classList.toggle('scrolled', window.scrollY > 8);
     }, { passive: true });
 
-    // Demo videos play at 2×. Respect reduced-motion: pause + expose controls.
+    // The hero clip plays at native speed. Respect reduced-motion: pause + expose controls.
     (function () {
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       document.querySelectorAll('video.cs-video').forEach(function (v) {
-        const setRate = function () { try { v.playbackRate = 2; } catch (e) {} };
-        setRate();
-        v.addEventListener('loadedmetadata', setRate);
-        v.addEventListener('play', setRate);
         if (reduce) { v.removeAttribute('autoplay'); v.setAttribute('controls', ''); v.pause(); }
       });
     })();
