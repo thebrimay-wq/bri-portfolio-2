@@ -46,6 +46,26 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 | 1M+ employees | Platform reach / eligibility, not Studio or Aimee usage | résumé context line | "a platform whose customers employ 1M+ people"; never as users of a feature |
 | Read routes (`GET /api/entries`) not behind the bearer gate | CONFIRMED finding, private | `facts.md` §1 | not published |
 
+## Global Content Studio, v2 and v3 (surveyed 2026-10-15, read-only, three private org repos)
+
+| Claim | Status | Source | Public wording |
+|---|---|---|---|
+| v2 = the localizer review console and review API on the company's Python pipeline platform; engineering rebuilt the pipeline and ported v1's quality gates file by file | CONFIRMED | pipeline-platform repo: gate docstrings, `design/REVIEW_CONSOLE.md` ("The previous version (ff-content-writer) failed on these four") | "the pipeline platform"; never the repo or product name |
+| Bri: 113 of 717 commits on main (Aug 13–14: 20 commits incl. spec, prototype, review API, React console; Oct 9–13: batch generation, 42 commits on Oct 13) | CONFIRMED | `git shortlog`, `git log --author` | keep as commit counts |
+| Engineers on v2: two (not Parth); console roles → platform tokens 2026-09-02 by engineering | CONFIRMED | git log | "two engineers", unnamed |
+| Four v1 failures → v2 fixes (reviewer copy separate field, etag/409, 50-entry revision log, resolution block shared with heal stage, plain-label flag rail with Apply/Fix myself/Dismiss+reason, stored flag counts, 50-row queries) | CONFIRMED | `core/review.py`, `FlagCard.tsx`, `docs/review_console.md` | keep |
+| 43 locale grounding files; 22 batch-generation markets; ~2,190 pytest + 90 vitest repo-wide | CONFIRMED, SNAPSHOT 2026-10-15 | `resources/locales/`, `core/batchgen/markets.py` | tests are repo-wide, not Bri's alone |
+| bg-bg sample: 445 staged docs, 630 flags, 78% freshness | CONFIRMED | `docs/review_console.md` | keep without locale name if preferred |
+| No review-time / throughput metric exists in any version (Tracker never built) | CONFIRMED | pipeline-platform docs | state as a limitation |
+| v3 = Global Content Review inside the admin platform (Lit 3, TipTap, Entra + token bridge); Bri 81 non-merge commits on the 2026 branch, 109 across branches | CONFIRMED | admin-platform repo git | "the admin platform"; never the product name |
+| WYSIWYG round-trip gate tested over 887 real bodies; inline flag decorations; server drafts with etag + merge base + conflict panel; admin matrix; view-as seat; server-side scopes | CONFIRMED | `contentStudioArticle.ts`, `contentStudioDocEditor.ts`, `reviewQueue.ts`, commits 55d6aac, 6590475 | keep |
+| Engineers on v3: one wired the always-gated review model + publish flow (f21f96d); one built scopes/regional grants | CONFIRMED | git | "two engineers", unnamed |
+| Article generation / gap planner: MAX_BATCH_ARTICLES = 200, 3 in flight per locale, guardrails panel; runs on demo data; `/generate/plan` and `/generate/batch` are a proposed contract; single-article generate exists on the pipeline platform | CONFIRMED (design), UNSHIPPED (batch backend) | local `article-generation` branch, `docs/article-generation-api.md` | always labeled "designed, demo data, backend proposed" |
+| Image engine: v1 branch `feature/locale-image-engine` (2026-06-25 → 07-07): Claude cultural analysis + brief + Vision PASS/REVIEW/FAIL; Flux Pro then Gemini. v2: Getty-first, Gemini generate, Gemini judge suitable true/false, human verdict outranks machine | CONFIRMED | `src/lib/imageEngine.ts` (v1 branch), `jobs/content/images.py` | keep; the PASS/REVIEW/FAIL rubric is v1, not v3 |
+| 680+ commits of Bri's across three repos (≈493 + 113 + 81) | DERIVED 2026-10-15 | sums above | "680+ commits across three repos" |
+| "Helped win the Federal Reserve and opened new prospects" | STATED BY BRI 2026-10-15; no evidence in any repo; business attribution needs company clearance | this session | if used: "Per the company, …" and flagged for clearance before deploy |
+| Prototype screenshots (v2 review console, v3 workspace, admin matrix, gap planner) | Bri's own HTML prototypes / demo-data previews, rendered 2026-10-15; demo content, no real data | `design/*.html`, `Prototypes/prototype.html`, `Claude outputs/*.png` | captions must say "prototype, demo content" |
+
 ## Aimee
 
 | Claim | Status | Source | Public wording |
