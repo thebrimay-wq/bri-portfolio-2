@@ -420,8 +420,8 @@
 
     /* ─── Print: one Letter page, single column, real text, no tracked caps ─── */
     @media print {
-      @page { size: Letter; margin: 0.45in 0.55in 0.4in; }
-      html, body { background: #fff !important; color: #141414 !important; font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 9.4pt; line-height: 1.3; }
+      @page { size: Letter; margin: 0.38in 0.5in 0.3in; }
+      html, body { background: #fff !important; color: #141414 !important; font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 9.2pt; line-height: 1.28; }
       #site-nav, footer, .ambient, .hero-actions, .eyebrow, .dot, .company-context { display: none !important; }
       * { letter-spacing: 0 !important; text-transform: none !important; box-shadow: none !important; }
       .reveal, .reveal-children > *, .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -430,28 +430,24 @@
       a[href]::after { content: none; }
 
       /* header */
-      .hero { padding: 0; margin: 0; }
-      .hero-name { font-size: 24pt; font-weight: 650; line-height: 1; margin: 0 0 3pt; }
+      .hero { padding: 0; margin: 0; }      .hero-name { font-size: 22pt; font-weight: 650; line-height: 1; margin: 0 0 2pt; }
       .hero-title { font-size: 11pt; font-weight: 500; color: #141414; margin: 0; }
       .hero-tagline { font-size: 10pt; color: #5a5a5a; margin: 1pt 0 0; }
       .hero-location-row { display: flex !important; flex-wrap: wrap; gap: 0 9pt; font-size: 8.5pt; max-width: none !important; color: #5a5a5a; margin: 6pt 0 0; }
       .hero-location-row a, .hero-location-row span { color: #5a5a5a !important; }
-      .hero-summary { margin: 6pt 0 0; padding: 6pt 0 0; border-top: 1px solid #e2e2e2; }
-      .hero-summary p { font-size: 9.4pt; line-height: 1.34; margin: 0; max-width: none; color: #141414; }
+      .hero-location-row > :not(.dot):not(:last-child)::after { content: "  ·  "; white-space: pre; color: #9a9a9a; }
+      .hero-summary { margin: 6pt 0 0; padding: 6pt 0 0; border-top: 1px solid #e2e2e2; }      .hero-summary p { font-size: 9.2pt; line-height: 1.3; margin: 0; max-width: none; color: #141414; }
 
-      /* impact strip */
-      .stats-row { display: flex; gap: 20pt; margin: 6pt 0 0; padding: 5pt 0; border-top: 1px solid #e2e2e2; border-bottom: 1px solid #e2e2e2; }
+      /* impact strip */      .stats-row { display: flex; gap: 20pt; margin: 5pt 0 0; padding: 4pt 0; border-top: 1px solid #e2e2e2; border-bottom: 1px solid #e2e2e2; }
       .stat { flex: 1; padding: 0; margin: 0; }
       .stat-number { font-size: 14pt; font-weight: 650; line-height: 1.1; margin: 0; }
       .stat-label { font-size: 8.2pt; line-height: 1.25; color: #5a5a5a; margin: 2pt 0 0; }
 
-      /* sections */
-      .resume-section { padding: 0; margin: 7pt 0 0; }
+      /* sections */      .resume-section { padding: 0; margin: 5pt 0 0; }
       .section-header { margin: 0 0 4pt; }
       .section-title { font-size: 8.8pt; font-weight: 650; color: #141414; margin: 0; padding: 0 0 3pt; border-bottom: 1px solid #141414; }
 
-      /* experience */
-      .company-block { margin: 0 0 4pt; padding: 0; border: 0; }
+      /* experience */      .company-block { margin: 0 0 3pt; padding: 0; border: 0; }
       .company-header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8pt; margin: 3pt 0 2pt; }
       .company-name { font-size: 10.5pt; font-weight: 650; }
       .company-period { font-size: 8.8pt; color: #5a5a5a; margin-left: auto; }
@@ -463,9 +459,8 @@
       .role-left { display: flex; align-items: baseline; gap: 8pt; margin: 0 0 1.5pt; }
       .role-title { font-size: 9.8pt; font-weight: 600; color: #141414; margin: 0; }
       .role-period { font-size: 8.6pt; color: #5a5a5a; margin: 0 0 0 auto; white-space: nowrap; }
-      .role-bullets { margin: 0; padding: 0 0 0 9pt; list-style: none; }
-      .role-bullets li { font-size: 9.05pt; line-height: 1.3; margin: 0 0 1.3pt; padding: 0 0 0 0; display: block; position: relative; color: #202020; }
-      .role-bullets li::before { content: "–" !important; display: block !important; position: absolute; left: -9pt; top: 0; color: #9a9a9a; font-weight: 400; background: none; width: auto; height: auto; }
+      .role-bullets { margin: 0; padding: 0 0 0 9pt; list-style: none; }      .role-bullets li { font-size: 8.9pt; line-height: 1.28; margin: 0 0 1.1pt; padding: 0; display: block; position: static; text-indent: -9pt; color: #202020; }
+      .role-bullets li::before { content: "– " !important; display: inline !important; position: static; color: #9a9a9a; font-weight: 400; background: none; width: auto; height: auto; }
       .role-bullets a { color: #5a5a5a !important; }
       .highlight-bullet { background: none; border: 0; padding: 0; }
       .metric, strong { font-weight: 600; color: #141414; }
@@ -488,8 +483,8 @@
       /* education */
       .education-block { margin: 0 0 1.5pt !important; display: flex !important; gap: 8pt; align-items: baseline; }
       .education-block .role-period { font-size: 8.6pt !important; color: #5a5a5a !important; min-width: 58pt; margin: 0; }
-      .edu-school { font-size: 9.05pt; font-weight: 600; display: inline; }
-      .edu-degree { font-size: 9.05pt; display: inline; margin-left: 6pt; color: #202020; }
+      .edu-school { font-size: 9.05pt; font-weight: 600; display: inline; }      .edu-degree { font-size: 9.05pt; display: inline; margin-left: 6pt; color: #202020; }
+      .edu-school::after { content: " ·"; color: #9a9a9a; }
     }
   </style>
 </head>
@@ -536,7 +531,7 @@
           </div>
 
           <div class="hero-summary">
-            <p>Senior product designer who designs the product and ships the code. Built an AI localization studio solo (TypeScript, Lit, Cloudflare Workers, Anthropic API) that took Financial Finesse's content library into 25 live markets; designed the Aimee AI coach across three surfaces; led the Hub redesign that drove +200% engagement.</p>
+            <p>Senior product designer who designs the product, then ships the code, using AI in both halves. Built an AI content and localization studio solo with Claude Code (TypeScript, Lit, Cloudflare Workers, the Anthropic API) that took Financial Finesse's library into 25 live markets; designed the Aimee AI coach for three surfaces and merged its token layer into the production SDK; led the 2024 Hub redesign from research through launch.</p>
           </div>
 
           <div class="hero-actions">
@@ -552,14 +547,13 @@
             <div class="stat-label">Localized pieces shipped in one four-day run · 10 new locales · 1 designer</div>
           </div>
           <div class="stat">
-            <div class="stat-number">+200%</div>
-            <div class="stat-label">Engagement after the Hub redesign I led</div>
+            <div class="stat-number">28 locales</div>
+            <div class="stat-label">Global Content Studio in production · 8,118 localized variants · 221 tests</div>
           </div>
           <div class="stat">
-            <div class="stat-number">$12M</div>
-            <div class="stat-label">Revenue contributed by the redesigned platform</div>
+            <div class="stat-number">+200%</div>
+            <div class="stat-label">Engagement after the 2024 Hub redesign I led · internal reporting</div>
           </div>
-          <!-- TODO(bri): definitions for +200% (metric, window) and $12M (bookings/ARR/attributed, period) — facts.md §6 -->
         </div>
       </section>
 
@@ -598,11 +592,11 @@
               </div>
               <div class="role-right">
                 <ul class="role-bullets">
-                  <li class="highlight-bullet">Built and shipped <strong>Global Content Studio</strong> solo in four weeks: TypeScript + Lit on Vercel, a Cloudflare Worker proxying the Anthropic API and fronting Azure Blob Storage, and an 8-step localization pipeline with a suitability gate, an independent verify pass, and human review before anything publishes (221 tests). One four-day run shipped <span class="metric">3,512 localized pieces</span> and brought 10 locales live; <span class="metric">8,118 variants</span> across 28 locales are in production, 25 live. <a href="https://imbrimay.com/work/global-content-studio/">imbrimay.com/work/global-content-studio</a></li>
-                  <!-- TODO(bri): AI Champion bullet goes third once the numbers in facts.md §10 exist -->
-                  <li>Designed <strong>Aimee</strong>, the AI financial coach, for the Hub, an embeddable client widget, and Microsoft Teams: coded prototypes, the design-system spec, and a locked component contract that engineering implemented 1:1 in React + A2UI; then merged the token layer and four components into the production SDK myself (32 commits). <a href="https://imbrimay.com/aimee-ai/">imbrimay.com/aimee-ai</a></li>
+                  <li class="highlight-bullet">Owned <strong>Global Content Studio</strong> end to end: saw writers drafting company content on unregulated AI tools, defined the product, designed the author and localizer workflows, and built it solo with Claude Code (TypeScript + Lit, a Cloudflare Worker proxying the Anthropic API and fronting Azure Blob Storage, 221 tests). First commit to launch QA in four weeks; one four-day run localized <span class="metric">3,512 pieces</span> and brought 10 locales live; <span class="metric">8,118 variants</span> across 28 locales in the live index (Sep 2026). <a href="https://imbrimay.com/work/global-content-studio/">imbrimay.com/work/global-content-studio</a></li>
+                  <li>Designed the Studio's review model: the model's self-score only routes, a separate verify pass with typed failures and deterministic checks gate, and a localizer approves before anything publishes. After a batch run overwrote approved work, made approved a state automation cannot cross.</li>
+                  <li>Designed <strong>Aimee</strong>, the AI financial coach, for the Hub, an embeddable client widget, and Microsoft Teams: coded prototypes with real streaming and state, the design-system spec, and the component library engineering built the React + A2UI SDK from; then merged the token layer and four components into that production SDK myself (32 commits). <a href="https://imbrimay.com/aimee-ai/">imbrimay.com/aimee-ai</a></li>
                   <li>Own the design system as code: tokens as CSS custom properties and WCAG AA components in light and dark, running in the Aimee SDK, the Studio, and the Hub's Content Studio.</li>
-                  <li>Ship production code in the company's core repos: the Hub's Content Studio and localizer review queue (TypeScript + Lit, 80 commits, with tests) and the localization review API and console (Python + React, 27 commits, with tests).</li>
+                  <li>Ship production code in the company's core repos: the Hub's Content Studio and localizer review queue (TypeScript + Lit, 80 commits) and the localization review API and console (Python + React, 27 commits), both with tests.</li>
                 </ul>
               </div>
             </div>
@@ -615,7 +609,7 @@
               </div>
               <div class="role-right">
                 <ul class="role-bullets">
-                  <li>Led the Hub redesign from research through launch, turning a static content library into a personalized, guided platform: <span class="metric">+200% engagement</span>, <span class="metric">$12M</span> in revenue contributed, enterprise clients including Meta and the Federal Reserve. <a href="https://imbrimay.com/work/hub/">imbrimay.com/work/hub</a></li>
+                  <li>Led the 2024 Hub redesign from research through launch, turning a static content library into a guided plan (assessment, action plan, recommended content, coach access) across web and mobile; internal reporting credited it with <span class="metric">+200% engagement</span>. Served employer customers including Meta and the Federal Reserve. <a href="https://imbrimay.com/work/hub/">imbrimay.com/work/hub</a></li>
                   <li>Moved the organization from marketing-led to product-led design; owned UX and UI for dashboards, onboarding, and the content ecosystem across web and mobile.</li>
                   <li>Introduced user research and usability testing; set the design standards and quality bar as the practice scaled.</li>
                 </ul>
@@ -687,6 +681,7 @@
           <div class="skill-group">
             <div class="skill-group-label">AI</div>
             <div class="skill-tags">
+              <span class="skill-tag">Claude Code</span>
               <span class="skill-tag">Anthropic API</span>
               <span class="skill-tag">RAG and grounding (per-locale wiki)</span>
               <span class="skill-tag">Evals and human-in-the-loop QA</span>

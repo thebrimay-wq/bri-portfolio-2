@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/site.css" />
-  <meta name="description" content="Case study: Global Content Studio, the AI content and localization studio Bri May designed and shipped solo in four weeks. TypeScript, Lit, a Cloudflare Worker, the Anthropic API. 8,118 localized variants across 28 locales in production, with the architecture, the tradeoffs, and what broke." />
+  <meta name="description" content="Case study: Global Content Studio, the AI content and localization studio Bri May designed and shipped solo. TypeScript, Lit, a Cloudflare Worker, the Anthropic API. 8,118 localized variants across 28 locales in the live index, with the decisions, what broke, and one feature traced from problem to production." />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta property="og:type" content="article" />
@@ -20,8 +20,8 @@
   <link rel="canonical" href="https://imbrimay.com/work/global-content-studio/" />
   <meta property="og:title" content="Global Content Studio — Case Study | Bri May" />
   <meta name="twitter:title" content="Global Content Studio — Case Study | Bri May" />
-  <meta property="og:description" content="The AI localization studio Bri May designed and shipped solo in four weeks. 8,118 localized variants across 28 locales in production. Architecture, tradeoffs, and what broke." />
-  <meta name="twitter:description" content="The AI localization studio Bri May designed and shipped solo in four weeks. 8,118 localized variants across 28 locales in production. Architecture, tradeoffs, and what broke." />
+  <meta property="og:description" content="The AI content and localization studio Bri May designed and shipped solo. 8,118 localized variants across 28 locales in the live index. The workflow, the decisions, what broke, and how she builds with AI." />
+  <meta name="twitter:description" content="The AI content and localization studio Bri May designed and shipped solo. 8,118 localized variants across 28 locales in the live index. The workflow, the decisions, what broke, and how she builds with AI." />
   <script src="/scripts/embed.js"></script>
   <style>
 
@@ -29,7 +29,7 @@
     .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); }
 
     /* ── section base ── */
-    .cs-section { padding: clamp(80px, 10vw, 128px) 0; border-top: 1px solid var(--border); }
+    .cs-section { padding: clamp(64px, 8vw, 104px) 0; border-top: 1px solid var(--border); }
     .eyebrow { margin-bottom: 20px; }
 
     /* ── skip-to-solution link ── */
@@ -137,12 +137,12 @@
     .glance-facts dd { font-size: 14px; color: var(--ink); font-weight: 500; text-align: right; margin: 0; line-height: 1.45; }
 
     /* ════ 1. HERO ════ */
-    .hero { padding: clamp(80px, 10vw, 130px) 0 clamp(64px, 8vw, 108px); overflow: visible; }
+    .hero { padding: clamp(64px, 8vw, 104px) 0 clamp(56px, 7vw, 88px); overflow: visible; }
     .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 24px; }
     .hero h1 { font-size: clamp(30px, 4vw, 58px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; max-width: 880px; margin-bottom: 28px; color: var(--ink); }
     .hero h1 span { color: var(--ink-3); }
     .hero-lead { font-size: clamp(16px, 1.3vw, 19px); color: var(--ink-2); line-height: 1.72; max-width: 640px; margin-bottom: 52px; }
-    .hero-stats { display: flex; gap: 52px; flex-wrap: wrap; margin-bottom: clamp(52px, 7vw, 96px); }
+    .hero-stats { display: flex; gap: clamp(28px, 3.5vw, 52px); flex-wrap: wrap; margin-bottom: clamp(40px, 5vw, 64px); }
     .hero-stat-val { font-size: clamp(22px, 2.5vw, 34px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 7px; color: var(--ink); }
     .hero-stat-label { font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
     .hero-image { width: 100%; }
@@ -237,12 +237,33 @@
     @media (max-width: 760px) { .decision > p, .broke > p { grid-column: 1; } }
     .decision > p + p { margin-top: 8px; }
     .decision p strong, .broke p strong { color: var(--ink); font-weight: 600; }
-    .proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: clamp(28px,4vw,40px); }
-    @media (max-width: 640px) { .proof-grid { grid-template-columns: repeat(2, 1fr); } }
-    .proof-cell { border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 16px; background: var(--surface); }
-    .proof-val { font-size: clamp(24px,2.6vw,32px); font-weight: 650; letter-spacing: -0.02em; color: var(--ink); line-height: 1; }
-    .proof-label { font-size: 13px; color: var(--ink-3); margin-top: 8px; line-height: 1.45; }
+    /* ── at-a-glance capability row (hiring-manager scan) ── */
+    .signal-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 22px; }
+    .signal-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
+    .signal-chip {
+      display: inline-flex; align-items: center; min-height: 36px; padding: 0 13px; border-radius: 999px;
+      background: var(--accent-tint); color: var(--ink); font-size: 13px; font-weight: 500; line-height: 1;
+      text-decoration: none; transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .signal-chip:hover { background: var(--surface-2); transform: translateY(-1px); }
+    .signal-chip:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { .signal-chip, .signal-chip:hover { transform: none; transition: none; } }
+    .anchor-alias { display: block; height: 0; }
     .impact-footnote { font-size: 14px; color: var(--ink-3); line-height: 1.65; max-width: 720px; margin: clamp(28px,4vw,40px) auto 0; text-align: center; }
+    .client-note { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); text-align: center; margin: clamp(40px,5vw,56px) 0 14px; }
+    /* Figures that teach: every product shot carries a caption saying what to notice */
+    figure.shot { margin: 0; }
+    figure.shot figcaption, .shot-caption { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin: 14px 0 0; max-width: 720px; }
+    .numbered-item-text code, .incident code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86em; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--ink); }
+    /* The incident block: one failure developed as a design story */
+    .incident { margin-top: clamp(28px,4vw,40px); padding: clamp(24px,3vw,36px); border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+    .incident-kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+    .incident > h3 { font-size: clamp(20px, 2vw, 26px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; color: var(--ink); margin: 0 0 22px; max-width: 640px; }
+    .incident-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 36px; }
+    @media (max-width: 700px) { .incident-grid { grid-template-columns: 1fr; } }
+    .incident-grid h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 6px; }
+    .incident-grid p { font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0; }
+    .broke-list { margin-top: clamp(28px,4vw,36px); }
   </style>
 </head>
 <body>
@@ -266,46 +287,45 @@
     <!-- ════ 1. HERO ════ -->
     <section class="hero">
       <div class="wrap">
-        <p class="hero-eyebrow fade-up">AI-Native Senior Product Designer · Designed and shipped solo · Financial Finesse · 2026</p>
+        <p class="hero-eyebrow fade-up">AI-Native Senior Product Designer · Financial Finesse · 2026 · Designed and shipped solo</p>
 
         <h1 class="fade-up" style="transition-delay:50ms;">
-          I designed and shipped the AI studio that took our content library into 28 locales —
-          <span>solo, in four weeks, with the architecture, the tradeoffs, and what broke written down.</span>
+          Designing and shipping an AI studio for global financial content.
         </h1>
 
         <p class="hero-lead fade-up" style="transition-delay:90ms;">
-          Financial Finesse's people were quietly using their own unregulated AI subscriptions to write company
-          content. I built one tool, grounded in our voice pillars and compliance rules, that replaced all of it,
-          then turned it into a localization engine that rewrites an article for any market. TypeScript and Lit,
-          a Cloudflare Worker, the Anthropic API, 221 tests. In production today.
+          Financial Finesse's writers were drafting on personal AI subscriptions, and the company was about to go
+          global. I designed and shipped the studio that replaced both: retrieval-grounded drafting, a multi-stage
+          localization pipeline, and a human localizer with the final say on every variant.
         </p>
 
         <div class="hero-stats fade-up" style="transition-delay:130ms;">
           <div>
             <div class="hero-stat-val">8,118</div>
-            <div class="hero-stat-label">Localized variants in production, 28 locales</div>
+            <div class="hero-stat-label">Localized variants · 28 locales · live index, Sep 2026</div>
           </div>
           <div>
             <div class="hero-stat-val">3,512</div>
-            <div class="hero-stat-label">Pieces localized in one four-day run</div>
+            <div class="hero-stat-label">Localized in one four-day run</div>
           </div>
           <div>
-            <div class="hero-stat-val">25</div>
-            <div class="hero-stat-label">Locales with published or approved content</div>
+            <div class="hero-stat-val">4 weeks</div>
+            <div class="hero-stat-label">First commit to launch QA · solo build</div>
           </div>
         </div>
 
         <div class="hero-image fade-up" style="transition-delay:170ms;">
           <div class="cs-video-slot">
-            <!-- Live demo in the hero: localizing an article, 2× (set in JS). -->
+            <!-- Hero clip: 21 s of the production Studio at native speed, cropped to the editor and the accuracy-check panel. -->
             <video class="cs-video" autoplay muted loop playsinline preload="metadata"
-                   poster="../../images/Global Content Studio Case Study/gcs-localize-article-compatible-poster.jpg"
-              aria-label="Localizing an article in Global Content Studio, sped up 2×"
+                   poster="../../images/Global Content Studio Case Study/gcs-accuracy-check-poster.jpg"
+              aria-label="The Studio's accuracy check flagging seven claims on a Canadian draft while an Italian draft streams"
               onloadstart="this.closest('.cs-video-slot').classList.add('loaded')">
-              <source src="../../images/Global Content Studio Case Study/gcs-localize-article-compatible.mp4" type="video/mp4" />
+              <source src="../../images/Global Content Studio Case Study/gcs-accuracy-check.mp4" type="video/mp4" />
             </video>
-            <div class="img-placeholder cs-video-ph">Live demo — localizing an article (2× speed)</div>
+            <div class="img-placeholder cs-video-ph">Screen recording — the accuracy check catching a claim</div>
           </div>
+          <p class="shot-caption">The production Studio, native speed. The accuracy check has just run on a Canadian draft: seven claims the model could not tie to a source it consulted, each listed with the figure to confirm and the authority to check it against, while the next draft streams beside them.</p>
         </div>
       </div>
     </section>
@@ -315,21 +335,35 @@
       <div class="wrap fade-up">
         <span class="eyebrow">At a glance</span>
         <div class="glance">
-          <p class="glance-summary">The team was writing company content on scattered, unregulated AI subscriptions, and the company had decided to go global. I designed and shipped Global Content Studio: one grounded AI studio with an 8-step localization pipeline, Atlas, and a human localizer between the model and the member. Solo, first commit to launch QA in four weeks. It holds 8,118 localized variants across 28 locales today; one four-day run localized 3,512 pieces and brought ten locales live.</p>
+          <div>
+            <p class="glance-summary">One authoring studio grounded on the company's voice and compliance rules, and Atlas, a localization pipeline that ends in a human review queue. I owned the problem, the product decisions, and the code. It is in production, and every number on this page is read from its live index.</p>
+            <div class="signal-row" aria-label="What this case study demonstrates">
+              <span class="signal-label">Shows</span>
+              <a class="signal-chip" href="#gcs-solution">Human-in-the-loop by design</a>
+              <a class="signal-chip" href="#decisions">Retrieval-grounded generation</a>
+              <a class="signal-chip" href="#decisions">Designing for uncertainty</a>
+              <a class="signal-chip" href="#atlas">Multi-stage agent pipeline</a>
+              <a class="signal-chip" href="#ai-assisted">Evaluated on production data</a>
+              <a class="signal-chip" href="#architecture">Production code, shipped solo</a>
+              <a class="signal-chip" href="#impact">0 → 1 in four weeks</a>
+            </div>
+          </div>
           <dl class="glance-facts">
-            <div><dt>Role</dt><dd>AI-Native Senior Product Designer · designed &amp; built solo</dd></div>
+            <div><dt>Role</dt><dd>AI-Native Senior Product Designer · product, design, and build</dd></div>
+            <div><dt>Team</dt><dd>Solo build · one engineer (20 of 524 commits) · two localizers reviewing output</dd></div>
+            <div><dt>Stack</dt><dd>TypeScript · Lit · Cloudflare Worker · Azure Blob · Anthropic API · built with Claude Code</dd></div>
             <div><dt>Timeline</dt><dd>First commit Apr 28, 2026 · launch QA May 22 · first ten-locale run Jun 1–4</dd></div>
-            <div><dt>Team</dt><dd>Solo (493 of 524 commits); one engineer, 20 commits</dd></div>
-            <div><dt>Scope</dt><dd>Strategy · UX/UI · Grounding and guardrails · Build · Pipeline</dd></div>
+            <div><dt>Status</dt><dd>In production · 8,118 localized variants across 28 locales as of Sep 8, 2026</dd></div>
           </dl>
         </div>
         <div class="jump-nav">
           <span class="jump-label">Jump to</span>
           <a class="jump-chip" href="#owned">What I owned</a>
-          <a class="jump-chip" href="#architecture">Architecture</a>
           <a class="jump-chip" href="#decisions">Decisions</a>
+          <a class="jump-chip" href="#gcs-solution">The workflow</a>
+          <a class="jump-chip" href="#ai-assisted">Building with AI</a>
           <a class="jump-chip" href="#what-broke">What broke</a>
-          <a class="jump-chip" href="#proof">Proof</a>
+          <a class="jump-chip" href="#architecture">Architecture</a>
           <a class="jump-chip" href="#impact">Impact</a>
         </div>
       </div>
@@ -339,38 +373,35 @@
     <section id="owned" class="cs-section owned-section">
       <div class="wrap fade-up">
         <span class="eyebrow">My Role</span>
-        <h2 class="owned-h2">Strategy, design, grounding, and the build — end to end</h2>
+        <h2 class="owned-h2">Strategy, design, grounding, and the build</h2>
 
         <div class="owned-list">
           <div class="owned-item">
             <div class="owned-label">Strategy</div>
-            <p class="owned-text">Spotted the risk in the team's scattered, unregulated AI and defined the product — then saw where the company was headed and pivoted it from a writing tool into a localization engine.</p>
+            <p class="owned-text">Named the risk in the team's scattered AI use and defined the product. When the company committed to new markets, pivoted it into a localization engine instead of starting a second product.</p>
           </div>
           <div class="owned-item">
             <div class="owned-label">Product design</div>
-            <p class="owned-text">UX, UI, and the authoring workflow — from a single prompt to a compliance-checked, localized asset, one country at a time or in bulk.</p>
+            <p class="owned-text">The author's workflow from prompt to checked draft, the localizer's review queue, and the status model that decides what a run may touch.</p>
           </div>
           <div class="owned-item">
             <div class="owned-label">Grounding and guardrails</div>
-            <p class="owned-text">Wrote the voice pillars, compliance rules, and the per-country wiki the model is grounded on — the source-of-truth layer that keeps a general model inside Financial Finesse's facts. Nothing is trained; everything is prompted, retrieved, and checked.</p>
+            <p class="owned-text">Wrote the voice pillars, the compliance rules, and the per-locale wiki the model reads from. Nothing is trained; everything is prompted, retrieved, and checked.</p>
           </div>
           <div class="owned-item">
-            <div class="owned-label">Build — coded by me</div>
-            <p class="owned-text">The whole app: the TypeScript and Lit front end, the Cloudflare Worker and its Azure Blob client, the pipeline, the CLI workflow, and 221 Vitest tests. 493 of the repo's 524 commits are mine. First working version in about two weeks; launch QA at week four.</p>
+            <div class="owned-label">Build, coded by me</div>
+            <p class="owned-text">The TypeScript and Lit front end, the Cloudflare Worker and its Azure client, the pipeline, the CLI workflow, and 221 Vitest tests (September 2026). 493 of the repo's 524 commits.</p>
           </div>
           <div class="owned-item">
-            <div class="owned-label">Built by engineering</div>
-            <p class="owned-text">Nothing in the Studio itself. One engineer contributed 20 commits of integration and review. The localizer review console that reads the Studio's output lives in a sibling repo, where I also ship the Python review API and the React console.</p>
-          </div>
-          <div class="owned-item">
-            <div class="owned-label">Ship</div>
-            <p class="owned-text">Designed Atlas and the human-in-the-loop review that lets it run at scale. In production: 8,118 localized variants across 28 locales, 4,154 published, 975 approved, 2,772 in review.</p>
+            <div class="owned-label">With engineering</div>
+            <p class="owned-text">One engineer contributed 20 commits of integration and review. The localizer's review console lives in a sibling repo, where I also ship the Python review API and the React console.</p>
           </div>
         </div>
 
-        <div class="fade-up" style="margin-top:clamp(44px,6vw,64px);">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/library.webp" alt="The content library — every piece across content types and locales, with status, audience filter, and localization queue" loading="lazy" width="2400" height="1390">
-        </div>
+        <figure class="shot fade-up" style="margin-top:clamp(40px,5vw,56px);">
+          <img class="cs-image" src="../../images/Global Content Studio Case Study/library.webp" alt="The Studio's Library view: 8,077 variants across 27 locales, each row showing the localized title, a link back to its English source, content type, locale, dates, status, and topic tags" loading="lazy" width="2400" height="1390">
+          <figcaption>The library, mid-run. Notice three things: every localized row links back to its English source, so provenance is one click; the status column (here, In QA) is what a batch run reads before it is allowed to touch a row; and the locale filter carries live counts, so a localizer can see a backlog before opening it.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -378,40 +409,23 @@
     <section class="cs-section">
       <div class="wrap fade-up">
         <span class="eyebrow">The Problem</span>
-        <h2 class="solution-h2">Everyone had an AI tool. None of them sounded like us — and then we decided to go global.</h2>
-        <p class="problem-body">Last year, AI went from novelty to daily habit across the company. Most of the team reached for it to write and edit content — each on their own paid subscription, each with no guardrails. The output was fast, but it didn't sound like Financial Finesse, and we had no way to regulate what any of it said. In a business built on financial trust, that's a real risk.</p>
-        <p class="problem-body">Then the company set its sights on every market. Localizing our library the traditional way would have meant hiring one in-country specialist per market, then having each of them translate, culturally adapt, and QA every single item — slow, expensive, and impossible to scale.</p>
+        <h2 class="solution-h2">Everyone had an AI tool. None of them sounded like us. Then we decided to go global.</h2>
+        <p class="problem-body">Last year AI became a daily habit across the content team, each writer on a personal subscription with no shared rules. The drafts were fast, did not sound like Financial Finesse, and nothing recorded which claims had been checked. I chose to solve control before speed: one place to write, with voice and compliance rules applied by default and a record of what was checked. Then the company set its sights on every market, and the same tool had to localize the library.</p>
 
         <div class="problem-bullets">
           <div class="problem-bullet">
             <span class="bullet-dot"></span>
-            <span><strong>592 English source pieces × 25 target markets ≈ 14,800</strong> localized outputs to produce — and 25 in-country localizers to recruit and manage.</span>
+            <span><strong>592 English source pieces × 25 target markets ≈ 14,800</strong> localized outputs, and one in-country localizer per market to recruit and manage.</span>
           </div>
           <div class="problem-bullet">
             <span class="bullet-dot"></span>
-            <span>Financial advice <strong>changes by country</strong>: tax structures, retirement systems, and regulations are all different.</span>
-          </div>
-          <div class="problem-bullet">
-            <span class="bullet-dot"></span>
-            <span>Tone, customs, religion, and ways of life all shape how money is discussed — a literal translation would be technically correct and <strong>completely wrong for the reader</strong>.</span>
-          </div>
-          <div class="problem-bullet">
-            <span class="bullet-dot"></span>
-            <span>Getting it wrong in a financial context isn't a typo — <strong>it's a liability</strong>.</span>
+            <span>Financial advice <strong>changes by country</strong>, and so does how people talk about money. A literal translation is technically correct, <strong>wrong for the reader</strong>, and in a financial context a liability.</span>
           </div>
         </div>
 
-        <div class="cs-video-slot" style="margin-top:clamp(44px,6vw,64px);">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/the-problem.webp"
-            alt="Localize QA — 1,816 pieces awaiting review across 26 locales, with per-locale need-review, approved, and flagged counts"
-            loading="lazy"
-            onload="this.closest('.cs-video-slot').classList.add('loaded')" width="2400" height="1479">
-          <div class="img-placeholder cs-video-ph"><span class="img-placeholder-label">Localize QA</span>1,816 pieces awaiting review across 26 locales</div>
-        </div>
-
-        <div style="margin-top: 48px;">
-          <a class="skip-link" onclick="document.getElementById('gcs-solution').scrollIntoView({behavior:'smooth'})" href="#gcs-solution">
-            Jump to solution →
+        <div style="margin-top: 40px;">
+          <a class="skip-link" onclick="document.getElementById('decisions').scrollIntoView({behavior:'smooth'})" href="#decisions">
+            Jump to the decisions →
             <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -420,67 +434,73 @@
       </div>
     </section>
 
-    <!-- ════ 5. THE SOLUTION ════ -->
-    <section id="gcs-solution" class="cs-section">
+    <!-- ════ 4. DECISIONS ════ -->
+    <section id="decisions" class="cs-section">
       <div class="wrap fade-up">
-        <span class="eyebrow">The Solution</span>
-        <h2 class="solution-h2">From a writing tool to a localization engine</h2>
-        <p class="solution-body">
-          I pivoted the studio from writing content to writing <em>and</em> localizing it. It can take an existing
-          article or write a brand-new one, then adapt it for any country in the world — one at a time or in bulk.
-          Not a translation. A rewrite in the correct tone, financial structure, customs, and culture.
-        </p>
-        <div class="numbered-list">
-          <div class="numbered-item">
-            <span class="numbered-item-n">01</span>
-            <p class="numbered-item-text"><strong>Grounded, not trained.</strong> Every request carries Financial Finesse's voice pillars, compliance rules, and content schemas, and runs through the Anthropic API behind a Worker. Drafts come back sounding like us because the prompt and the retrieved facts say so, not because a model was fine-tuned.</p>
+        <span class="eyebrow">Decisions and tradeoffs</span>
+        <h2 class="solution-h2">Four calls I would make again</h2>
+        <div class="decision-list">
+          <div class="decision">
+            <h3>A per-locale wiki instead of open-web search</h3>
+            <p><strong>Not taken:</strong> letting the model research each market live on the web at draft time.</p>
+            <p><strong>Why:</strong> financial facts have to be ours. A curated wiki is slower to build, one locale at a time, but every retirement system and tax authority the model cites is something a person vetted. Web search still runs in the research stage; it feeds the wiki, it does not bypass it.</p>
           </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">02</span>
-            <p class="numbered-item-text"><strong>A per-locale wiki as the source of truth.</strong> For each market, a curated knowledge base the model reads from instead of the open web: the tax authority, the retirement system, the programs a reader can actually use. That is what makes a localization accurate instead of a guess.</p>
+          <div class="decision">
+            <h3>Five model calls per article, not one</h3>
+            <p><strong>Not taken:</strong> the original one-pass pipeline, which cost about a fifth as much.</p>
+            <p><strong>Why:</strong> one-pass output kept US framing and US-only links that no automated check could see. Splitting into gate, research, draft, independent verify, and save took an article to roughly 335k tokens. That cost is what forced the skip-approved default and targeted re-runs instead of full-corpus rewrites.</p>
           </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">03</span>
-            <p class="numbered-item-text"><strong>True localization, checked, not just scored.</strong> Each output is rewritten for tone, financial structure, customs, and culture. The model rates its own confidence per pass and tags every local fact high, medium, or low; anything below high is flagged for the reviewer. Then an independent verify pass reads the draft the way a native reader would and returns pass or fail with typed problems, and a redo loop runs before a human ever sees it. The score is a routing signal. The verify pass and the localizer are the gate.</p>
+          <div class="decision">
+            <h3>The score routes; it does not gate</h3>
+            <p><strong>Not taken:</strong> publishing anything above a confidence threshold.</p>
+            <p><strong>Why:</strong> the confidence number is the model grading its own output. It is useful for deciding what a reviewer sees first and useless as a guarantee. The gate is a separate verify pass with typed failure reasons and a redo loop, deterministic checks, and a person. There is no threshold in the code, on purpose.</p>
           </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">04</span>
-            <p class="numbered-item-text"><strong>Human in the loop, always.</strong> Nothing auto-publishes; the policy is in the code. Every variant lands in review, a localizer approves it, and approved articles are never overwritten by a later run unless someone asks.</p>
+          <div class="decision">
+            <h3>One Worker holds every secret</h3>
+            <p><strong>Not taken:</strong> calling the Anthropic API and Azure from the browser, which is faster to build and one less deploy.</p>
+            <p><strong>Why:</strong> ordinary practice, but it shaped the product: with one write path, there is one place to enforce the status rules in the workflow below. The cost is a second deploy target and a hand-written Azure client, since the SDK cannot run in Workers.</p>
           </div>
-        </div>
-
-        <div class="fade-up" style="margin-top:clamp(44px,6vw,64px);">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/gcs-korean.webp" alt="The authoring studio — prompt sidebar with content type, locale, and audience; the editor drafting a quiz in Korean; and the accuracy-check panel flagging high-stakes claims for review" loading="lazy" width="2400" height="1483">
         </div>
       </div>
     </section>
 
-    <!-- ════ ARCHITECTURE ════ -->
-    <section id="architecture" class="cs-section">
+    <!-- ════ 5. THE WORKFLOW (author · localizer · status) ════ -->
+    <section id="gcs-solution" class="cs-section">
       <div class="wrap fade-up">
-        <span class="eyebrow">Architecture</span>
-        <h2 class="solution-h2">Four parts, one secret-holder</h2>
+        <span class="eyebrow">The Workflow</span>
+        <h2 class="solution-h2">Two people, one tool: the author and the localizer</h2>
         <p class="solution-body">
-          The browser never sees a key. A static TypeScript and Lit app on Vercel talks to one Cloudflare Worker, and
-          the Worker is the only thing that holds the Anthropic key and the Azure connection string. It proxies
-          model calls and exposes a small REST surface over Azure Blob Storage, where every entry, localized variant,
-          per-locale wiki page, and QA flag lives. Bulk localization runs from a CLI workflow that fans out one model
-          call per stage per article and writes back through the same Worker, so the app and the pipeline share one
-          source of truth and one write path.
+          Two jobs, one tool. The author sees, while drafting, which claims the model could not source. The
+          localizer works a per-locale queue with source and localized text side by side, and nothing reaches a
+          member until that person approves it.
         </p>
-        <figure class="arch-figure">
-          <svg class="arch-svg" viewBox="0 0 880 330" role="img" aria-labelledby="arch-title arch-desc">
-            <title id="arch-title">Global Content Studio architecture</title>
-            <desc id="arch-desc">The Studio app in the browser and the CLI localization workflow both call one Cloudflare Worker. The Worker proxies the Anthropic API and reads and writes Azure Blob Storage, which holds entries, localized variants, the per-locale wiki, and QA flags.</desc>
-            <g class="arch-box"><rect x="20" y="40" width="230" height="96" rx="12"/><text x="36" y="70" class="arch-h">Studio app · browser</text><text x="36" y="92" class="arch-t">TypeScript + Lit + Vite, on Vercel</text><text x="36" y="112" class="arch-t">Dexie for local job state · 221 Vitest tests</text></g>
-            <g class="arch-box"><rect x="20" y="196" width="230" height="96" rx="12"/><text x="36" y="226" class="arch-h">CLI localization workflow</text><text x="36" y="248" class="arch-t">gate → research → draft → verify → save</text><text x="36" y="268" class="arch-t">one Sonnet call per stage, 5 workers per locale</text></g>
-            <g class="arch-box arch-box--key"><rect x="330" y="118" width="230" height="96" rx="12"/><text x="346" y="148" class="arch-h">Cloudflare Worker</text><text x="346" y="170" class="arch-t">holds the secrets · CORS allowlist</text><text x="346" y="190" class="arch-t">bearer gate on writes · save queue</text></g>
-            <g class="arch-box"><rect x="640" y="40" width="220" height="80" rx="12"/><text x="656" y="70" class="arch-h">Anthropic API</text><text x="656" y="92" class="arch-t">claude-sonnet-4-6</text></g>
-            <g class="arch-box"><rect x="640" y="196" width="220" height="96" rx="12"/><text x="656" y="226" class="arch-h">Azure Blob Storage</text><text x="656" y="248" class="arch-t">entries · variants · wiki · flags</text><text x="656" y="268" class="arch-t">source of truth, nothing auto-publishes</text></g>
-            <g class="arch-line"><path d="M250 88 C 300 88, 300 166, 330 166"/><path d="M250 244 C 300 244, 300 166, 330 166"/><path d="M560 150 C 600 150, 600 80, 640 80"/><path d="M560 182 C 600 182, 600 244, 640 244"/></g>
-            <g class="arch-label"><text x="262" y="60">/v1/messages · /api/*</text><text x="262" y="300">bearer token</text><text x="572" y="66">proxied, key never client-side</text><text x="572" y="286">SharedKey REST client</text></g>
-          </svg>
-          <figcaption>The Worker's Azure client is hand-written REST with SharedKey HMAC, because the Azure SDK cannot run in Workers. Reads and writes from the app and the CLI go through the same routes.</figcaption>
+        <div class="numbered-list">
+          <div class="numbered-item">
+            <span class="numbered-item-n">01</span>
+            <p class="numbered-item-text"><strong>The author picks a content type, a locale, and an audience, then writes a topic.</strong> Every request carries the voice pillars, the compliance rules, and the schema for that content type through the Anthropic API behind a Worker. The draft comes back as a quiz, an article, or a checklist.</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">02</span>
+            <p class="numbered-item-text"><strong>Uncertainty is shown, not hidden.</strong> The model must cite a source it consulted or flag the claim. Flagged claims appear in an accuracy-check panel beside the editor, each with the figure to confirm and where to confirm it, and the author resolves them before saving.</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">03</span>
+            <p class="numbered-item-text"><strong>The localizer gets a queue, not a firehose.</strong> Localize QA shows each locale's need-review, approved, and flagged counts, so the person decides where to spend the day. Inside a piece, source and localized text sit side by side with the verify pass's typed problems attached.</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">04</span>
+            <p class="numbered-item-text"><strong>Status is the contract between people and automation.</strong> Draft, in review, approved, published. Nothing auto-publishes; the policy is in the code. A batch run may create and update variants in review. It may not touch an approved one unless a person asks (that rule has a history, below).</p>
+          </div>
+        </div>
+
+        <figure class="shot fade-up" style="margin-top:clamp(40px,5vw,56px);">
+          <img class="cs-image" src="../../images/Global Content Studio Case Study/gcs-korean.webp" alt="The authoring studio drafting a Korean quiz about saving for a home: content type, locale, and audience on the left; the quiz questions in the editor; and an Accuracy Check panel on the right listing five claims to confirm, each with the figure in question and the official source to check" loading="lazy" width="2400" height="1483">
+          <figcaption>Authoring a Korean quiz. The panel on the right is the design decision that matters: the model drafted five claims it could not tie to a source it consulted, so each one is listed with the exact figure to confirm and the government page to check, instead of being quietly published. "5 to review" is the author's to-do, not a score.</figcaption>
+        </figure>
+
+        <figure class="shot fade-up" style="margin-top:clamp(32px,4vw,44px);">
+          <img class="cs-image" src="../../images/Global Content Studio Case Study/the-problem.webp" alt="Localize QA: 1,816 pieces awaiting review across 26 locales, shown as one card per locale with its need-review count, a progress bar, and approved and flagged counts" loading="lazy" width="2400" height="1479">
+          <figcaption>The localizer's front door, captured mid-run with 1,816 pieces waiting. Each locale card shows how much is left, how much is approved, and how much the pipeline flagged, so a reviewer can prioritize a market (India at 506, Ireland at 462) instead of opening pieces one by one.</figcaption>
         </figure>
       </div>
     </section>
@@ -490,13 +510,11 @@
       <div class="wrap">
         <div class="exp-header fade-up">
           <span class="eyebrow">The Pipeline</span>
-          <h2 class="exp-h2">Inside Atlas — what happens to every article</h2>
+          <h2 class="exp-h2">Inside Atlas: what happens to every article</h2>
           <p class="exp-body">
-            Every article moves through Atlas, an 8-step pipeline — whether it's brand-new or being localized. It
-            starts with a fit check that decides whether the piece even belongs in that market (if it's built around
-            something that doesn't exist there, we don't localize it), then runs eight controlled steps. The model's
-            confidence is carried through every step as a routing signal, never as a guarantee: the fit check, the
-            independent verify pass, and a human localizer are what decide whether anything publishes.
+            Every article, new or localized, moves through Atlas: a fit check decides whether the piece belongs in
+            that market, then eight controlled steps run. The model's confidence only routes work to reviewers.
+            The fit check, a separate verify pass, deterministic checks, and the localizer decide what publishes.
           </p>
         </div>
 
@@ -592,43 +610,77 @@
           })();
         </script>
 
-        <div class="fade-up" style="margin-top:clamp(44px,6vw,64px);">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/localization.png" alt="One Life Event article — Starting a Family — localized side-by-side across three markets: English for Ireland, Simplified Chinese, and Czech, each rewritten with local facts and voice rather than translated" loading="lazy" width="1836" height="740">
-        </div>
+        <figure class="shot fade-up" style="margin-top:clamp(40px,5vw,56px);">
+          <img class="cs-image" src="../../images/Global Content Studio Case Study/localization.png" alt="Three localized Life Event articles side by side: Starting a Family in English for Ireland, the same Life Event in Simplified Chinese, and Caring for Parents in Czech, each written with local facts and voice rather than translated" loading="lazy" width="1836" height="740">
+          <figcaption>What a rewrite looks like next to a translation. The Irish version of Starting a Family opens on the HSE Maternity and Infant Care Scheme, a program that exists only there; the Chinese version opens on urban employee medical insurance. The Czech panel is a different Life Event, caring for parents, in the same voice.</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- ════ 7. PROCESS — solo build + the counterfactual ════ -->
-    <!-- ════ DECISIONS ════ -->
-    <section id="decisions" class="cs-section">
+    <!-- ════ 7. BUILDING WITH AI ════ -->
+    <section id="ai-assisted" class="cs-section opportunity-section">
+      <span id="process" class="anchor-alias" aria-hidden="true"></span>
       <div class="wrap fade-up">
-        <span class="eyebrow">Decisions and tradeoffs</span>
-        <h2 class="solution-h2">Three calls I would make again</h2>
-        <div class="decision-list">
-          <div class="decision">
-            <h3>One Worker holds every secret</h3>
-            <p><strong>Not taken:</strong> calling the Anthropic API and Azure from the browser, which is faster to build and one less deploy.</p>
-            <p><strong>Why:</strong> a shared key in client code is a leak waiting to happen, and there would be no single place to gate writes. The cost is a second deploy target and a hand-written Azure client, since the SDK cannot run in Workers.</p>
+        <span class="eyebrow">Building with AI</span>
+        <h2 class="solution-h2">One feature, start to finish: the verify stage</h2>
+        <p class="solution-body">
+          AI sits in both halves of the work: Claude Code as the pair for the app and the workflow, the Anthropic
+          API inside the product. One feature traced through, using only what the repo and its logs record.
+        </p>
+        <div class="numbered-list">
+          <div class="numbered-item">
+            <span class="numbered-item-n">01</span>
+            <p class="numbered-item-text"><strong>The problem.</strong> Localized articles kept first-party links to US-only content (HSAs, 401(k)s) and US framing, and every automated check passed them. A reader in Ireland would follow a link to advice that does not apply. The fix could not add a person to every article; the queue was already 1,800 deep.</p>
           </div>
-          <div class="decision">
-            <h3>A per-locale wiki instead of open-web search</h3>
-            <p><strong>Not taken:</strong> letting the model research each market live on the web at draft time.</p>
-            <p><strong>Why:</strong> financial facts have to be ours. A curated wiki is slower to build, one locale at a time, but every retirement system and tax authority the model cites is something a person vetted. Web search still runs in the research stage; it feeds the wiki, it does not bypass it.</p>
+          <div class="numbered-item">
+            <span class="numbered-item-n">02</span>
+            <p class="numbered-item-text"><strong>The options.</strong> Tighten the draft prompt and hope; add a deterministic link check; add a second model pass that reads the draft the way a native reader would. I rejected the first as unmeasurable and took both of the others, because they fail differently: the link check cannot miss a URL, and the verify pass sees framing a regex cannot.</p>
           </div>
-          <div class="decision">
-            <h3>Five model calls per article, not one</h3>
-            <p><strong>Not taken:</strong> the original one-pass pipeline, which was a fifth of the cost.</p>
-            <p><strong>Why:</strong> one-pass output kept US framing and US-only links that no automated check could see. Splitting into gate, research, draft, independent verify, and save took an article to roughly 335k tokens, and that cost is what forced the skip-approved default and targeted re-runs instead of full-corpus rewrites.</p>
+          <div class="numbered-item">
+            <span class="numbered-item-n">03</span>
+            <p class="numbered-item-text"><strong>Where AI did the work, and where I said no.</strong> The verify stage is a model call with a typed vocabulary of failures (<code>us-comparison</code>, <code>us-institution</code>, <code>literal-idiom</code>, <code>us-currency-or-format</code>, <code>us-only-framing</code>, <code>terminology-violation</code>, <code>register-slip</code>) and a pass-or-fail verdict that triggers a redo. The stage, its schema, and the fan-out workflow were written with Claude Code. What I did not accept: the model's own confidence score as a quality signal, since it is self-grading, so it routes and never gates; and fluent one-pass drafts that still carried US assumptions, which are exactly what the stage exists to fail.</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">04</span>
+            <p class="numbered-item-text"><strong>How it was checked.</strong> Vitest covers the gate, the policy, the rewrite, and the index logic (221 tests, September 2026). The link check ran against real data first: 51 dangling call-to-action phrases across 27 locales and 8,120 variants. The fit check was measured the same way: of 75 UK articles it dropped, 13 had a UK analogue and were rewritten; 62 could not honestly exist there. Then the localizers reviewed the output, which is the check that counts.</p>
+          </div>
+          <div class="numbered-item">
+            <span class="numbered-item-n">05</span>
+            <p class="numbered-item-text"><strong>What shipped, and its limits.</strong> The verify stage with its redo loop, plus a link check that wraps, aligns, or strips a link and rewrites the sentence it left dangling; the localizer sees each typed problem as a label to act on, not a number. US-only links stopped reaching review. Cost per article rose about five times, so approved work is skipped by default and re-runs are targeted. The localizers still catch what no pass does: a figure tied only to a secondary source, a slug left in English.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ════ WHAT BROKE ════ -->
+    <!-- ════ 8. WHAT BROKE ════ -->
     <section id="what-broke" class="cs-section">
       <div class="wrap fade-up">
         <span class="eyebrow">What broke and what changed</span>
         <h2 class="solution-h2">Five production failures, and the fix for each</h2>
+
+        <div class="incident" id="overwrite">
+          <p class="incident-kicker">The one that changed the product</p>
+          <h3>A batch run erased a localizer's approved work</h3>
+          <div class="incident-grid">
+            <div>
+              <h4>What happened</h4>
+              <p>A 25-article es-MX batch reported "25 written, 0 errors." It had consumed variants a localizer had already reviewed and approved, and replaced them with fresh model output. Measured on three reviewed articles, none of the reviewed sentences survived: 26 of 26, 32 of 32, 32 of 32 were gone.</p>
+            </div>
+            <div>
+              <h4>What people lost</h4>
+              <p>Hours of a native speaker's judgment, silently. The run looked like a success in the log and in the library. The only signal was a localizer recognizing text she had already corrected.</p>
+            </div>
+            <div>
+              <h4>What changed in the workflow</h4>
+              <p>Approved became a state automation cannot cross. A run skips approved variants by default and reports them as skipped, so the count a person reads matches what the run was allowed to touch. Re-localizing an approved piece is an explicit, named request (<code>includeApproved</code>), made by a person, on purpose.</p>
+            </div>
+            <div>
+              <h4>What validates it</h4>
+              <p>The rule is code, not convention: it lives with the pipeline's policy logic, which carries its own tests, and it is enforced on the one write path every run uses. The decision is dated August 5, 2026, and it is mine.</p>
+            </div>
+          </div>
+        </div>
+
         <div class="broke-list">
           <div class="broke">
             <h3>5,455 published variants carried English titles and slugs on localized bodies</h3>
@@ -636,7 +688,7 @@
           </div>
           <div class="broke">
             <h3>US-only links were invisible to every automated check</h3>
-            <p>Localized articles kept first-party links to US-only content: HSAs, 401(k)s. The fix was a new independent verifier stage (a fail on a US-only link forces a redo) plus a deterministic link check that wraps, aligns, or strips links and rewrites the dangling call-to-action sentence. The first full scan found 51 of those across 27 locales and 8,120 variants.</p>
+            <p>The verify stage and the link check above. The first full scan found 51 dangling call-to-action phrases across 27 locales and 8,120 variants.</p>
           </div>
           <div class="broke">
             <h3>Five different locale briefs for the first five articles of every batch</h3>
@@ -646,98 +698,48 @@
             <h3>A pass failed silently and the job sat at "running" forever</h3>
             <p>The cultural pass threw a JSON parse error that was swallowed. Unparseable model output now fails the job with a retry, and a count check throws rather than saving a partial article.</p>
           </div>
-          <div class="broke">
-            <h3>A batch overwrote articles a localizer had already approved</h3>
-            <p>A 25-article run reported "25 written, 0 errors" while discarding human edits: measured on three reviewed articles, none of the reviewed sentences survived the re-run. Approved variants are now skipped by default; re-localizing one is an explicit flag.</p>
-          </div>
         </div>
-        <p class="solution-body" style="margin-top:32px;">
-          And the fit check, on real data: of 75 en-GB articles the gate dropped, 13 had a genuine UK analogue and were
-          rewritten as UK-native pieces; 62 could not honestly exist there, 26 of them about the US healthcare system.
-        </p>
       </div>
     </section>
 
-    <!-- ════ PROOF ════ -->
-    <section id="proof" class="cs-section">
+    <!-- ════ 9. ARCHITECTURE (the deeper layer) ════ -->
+    <section id="architecture" class="cs-section">
       <div class="wrap fade-up">
-        <span class="eyebrow">Proof</span>
-        <h2 class="solution-h2">Real counts from the live index</h2>
+        <span class="eyebrow">Architecture</span>
+        <h2 class="solution-h2">Four parts, one write path</h2>
         <p class="solution-body">
-          The Studio's code is Financial Finesse's, so it is private. What can be shown is the production data it
-          runs on. These are read from the live content index on September 8, 2026.
+          A static TypeScript and Lit app on Vercel and a CLI localization workflow both talk to one Cloudflare
+          Worker. The Worker holds the secrets, proxies the model calls, and fronts Azure Blob Storage, where every
+          entry, variant, wiki page, and QA flag lives. One write path means one place to enforce the status rules.
         </p>
-        <div class="proof-grid">
-          <div class="proof-cell"><div class="proof-val">8,729</div><div class="proof-label">entries in the index</div></div>
-          <div class="proof-cell"><div class="proof-val">592</div><div class="proof-label">English source pieces</div></div>
-          <div class="proof-cell"><div class="proof-val">8,118</div><div class="proof-label">localized variants, 28 locales</div></div>
-          <div class="proof-cell"><div class="proof-val">4,154</div><div class="proof-label">published</div></div>
-          <div class="proof-cell"><div class="proof-val">975</div><div class="proof-label">approved by a localizer</div></div>
-          <div class="proof-cell"><div class="proof-val">2,772</div><div class="proof-label">in human review</div></div>
-        </div>
-        <div class="cs-video-slot fade-up" style="margin-top:clamp(44px,6vw,64px);transition-delay:110ms;">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/gcs-impact.webp"
-            alt="A localized article — The £100 Rule and Your Child's Tax-Free Allowance — published and live in the Financial Finesse member product for the UK market"
-            loading="lazy"
-            onload="this.closest('.cs-video-slot').classList.add('loaded')" width="2400" height="1386">
-          <div class="img-placeholder cs-video-ph">A localized article, published and live in the member product</div>
-        </div>
-        <p class="solution-body" style="margin-top:32px;">
-          The Localize QA screenshot above (1,816 pieces awaiting review across 26 locales) and the library view are
-          also production, captured mid-run. The engine behind this site, its test harness, and the rest of what is
-          public are on the <a href="../../code/">Code page</a>.
-        </p>
+        <figure class="arch-figure">
+          <svg class="arch-svg" viewBox="0 0 880 330" role="img" aria-labelledby="arch-title arch-desc">
+            <title id="arch-title">Global Content Studio architecture</title>
+            <desc id="arch-desc">The Studio app in the browser and the CLI localization workflow both call one Cloudflare Worker. The Worker proxies the Anthropic API and reads and writes Azure Blob Storage, which holds entries, localized variants, the per-locale wiki, and QA flags.</desc>
+            <g class="arch-box"><rect x="20" y="40" width="230" height="96" rx="12"/><text x="36" y="70" class="arch-h">Studio app · browser</text><text x="36" y="92" class="arch-t">TypeScript + Lit + Vite, on Vercel</text><text x="36" y="112" class="arch-t">Dexie for local job state · 221 Vitest tests</text></g>
+            <g class="arch-box"><rect x="20" y="196" width="230" height="96" rx="12"/><text x="36" y="226" class="arch-h">CLI localization workflow</text><text x="36" y="248" class="arch-t">gate → research → draft → verify → save</text><text x="36" y="268" class="arch-t">one Sonnet call per stage, 5 workers per locale</text></g>
+            <g class="arch-box arch-box--key"><rect x="330" y="118" width="230" height="96" rx="12"/><text x="346" y="148" class="arch-h">Cloudflare Worker</text><text x="346" y="170" class="arch-t">holds the secrets · CORS allowlist</text><text x="346" y="190" class="arch-t">bearer gate on writes · save queue</text></g>
+            <g class="arch-box"><rect x="640" y="40" width="220" height="80" rx="12"/><text x="656" y="70" class="arch-h">Anthropic API</text><text x="656" y="92" class="arch-t">claude-sonnet-4-6</text></g>
+            <g class="arch-box"><rect x="640" y="196" width="220" height="96" rx="12"/><text x="656" y="226" class="arch-h">Azure Blob Storage</text><text x="656" y="248" class="arch-t">entries · variants · wiki · flags</text><text x="656" y="268" class="arch-t">source of truth, nothing auto-publishes</text></g>
+            <g class="arch-line"><path d="M250 88 C 300 88, 300 166, 330 166"/><path d="M250 244 C 300 244, 300 166, 330 166"/><path d="M560 150 C 600 150, 600 80, 640 80"/><path d="M560 182 C 600 182, 600 244, 640 244"/></g>
+            <g class="arch-label"><text x="262" y="60">/v1/messages · /api/*</text><text x="262" y="300">bearer token</text><text x="656" y="140">proxied · key never client-side</text><text x="656" y="314">SharedKey REST client</text></g>
+          </svg>
+          <figcaption>The Worker's Azure client is hand-written REST with SharedKey HMAC, because the Azure SDK cannot run in Workers. Reads and writes from the app and the CLI go through the same routes, which is where the status rules are enforced.</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- ════ TIMELINE ════ -->
-    <section id="process" class="cs-section opportunity-section">
-      <div class="wrap">
-        <span class="eyebrow fade-up">Timeline</span>
-        <h2 class="solution-h2 fade-up" style="transition-delay:60ms;">First commit to a ten-locale run in five weeks</h2>
-        <div class="transform-table fade-up" style="transition-delay:130ms;">
-          <div class="transform-row">
-            <span class="transform-from">April 28, 2026</span>
-            <span class="transform-arrow">→</span>
-            <span class="transform-to">First commit: the writing studio</span>
-          </div>
-          <div class="transform-row">
-            <span class="transform-from">May 5–7</span>
-            <span class="transform-arrow">→</span>
-            <span class="transform-to">Cloudflare Worker live, Vercel deploy, localization tabs</span>
-          </div>
-          <div class="transform-row">
-            <span class="transform-from">May 22</span>
-            <span class="transform-arrow">→</span>
-            <span class="transform-to">Launch QA: Azure persistence end to end, batch and localize flows</span>
-          </div>
-          <div class="transform-row">
-            <span class="transform-from">June 1–4</span>
-            <span class="transform-arrow">→</span>
-            <span class="transform-to">3,512 pieces localized, ten locales live, peak day 1,575</span>
-          </div>
-          <div class="transform-row">
-            <span class="transform-from">August</span>
-            <span class="transform-arrow">→</span>
-            <span class="transform-to">Verifier, single-flight, skip-approved: the fixes above, with tests</span>
-          </div>
-        </div>
-        <p class="process-pullquote fade-up" style="transition-delay:170ms;">
-          "A tool one designer built in two weeks changed what our company thought it could go after — and helped us win the Federal Reserve."
-        </p>
-      </div>
-    </section>
-
-    <!-- ════ 8. IMPACT ════ -->
+    <!-- ════ 10. IMPACT ════ -->
     <section id="impact" class="cs-section impact-section">
+      <span id="proof" class="anchor-alias" aria-hidden="true"></span>
       <div class="wrap">
         <p class="eyebrow fade-up" style="text-align:center;">Impact</p>
-        <h2 class="impact-h2 fade-up" style="transition-delay:60ms;">In production for 28 locales, five weeks after the first commit.</h2>
+        <h2 class="impact-h2 fade-up" style="transition-delay:60ms;">In production, with a person between the model and the member.</h2>
 
         <div class="impact-grid fade-up" style="transition-delay:90ms;">
           <div class="impact-cell">
             <div class="impact-val">8,118</div>
-            <p class="impact-label">Localized variants in production across 28 locales; 25 with published or approved content (live index, Sep 8, 2026)</p>
+            <p class="impact-label">Localized variants across 28 locales; 25 with published or approved content (live index, Sep 8, 2026)</p>
           </div>
           <div class="impact-cell">
             <div class="impact-val">3,512</div>
@@ -745,17 +747,27 @@
           </div>
           <div class="impact-cell">
             <div class="impact-val">4 weeks</div>
-            <p class="impact-label">First commit to launch QA, one designer, 221 tests; in production for a platform serving 1M+ employees</p>
+            <p class="impact-label">First commit to launch QA, one designer; the first ten-locale run at week five</p>
           </div>
         </div>
 
         <p class="impact-footnote fade-up" style="transition-delay:120ms;">
-          For scale: doing the same 25-market run by hand would have meant 25 in-country localizers, roughly 9.4 months even in parallel,
-          and about $2.44M in labor. The Studio's run cost $21,287 all in.
-          <!-- TODO(bri): confirm $21,287 against the Anthropic console and name the window (facts.md §4) -->
+          Counts are read from the live content index (September 8, 2026); the code is Financial Finesse's and private.
+          For scale only: one in-country localizer per market, at about 2.5 hours per item and a $60 blended rate, puts
+          the same 25-market library near 37,000 hours, or roughly $2.2M. Stated assumptions, not a measured saving.
         </p>
 
-        <div class="client-pills fade-up" style="margin-top:clamp(44px,6vw,64px);transition-delay:150ms;">
+        <figure class="shot cs-video-slot fade-up" style="margin:clamp(40px,5vw,56px) 0;transition-delay:130ms;">
+          <img class="cs-image" src="../../images/Global Content Studio Case Study/gcs-impact.webp"
+            alt="A localized article, The £100 Rule and Your Child's Tax-Free Allowance, published and live in the Financial Finesse member product for the UK market"
+            loading="lazy"
+            onload="this.closest('.cs-video-slot').classList.add('loaded')" width="2400" height="1386">
+          <div class="img-placeholder cs-video-ph">A localized article, published and live in the member product</div>
+          <figcaption>Where the pipeline ends: a UK article, live in the member product. The £100 rule is HMRC's, not a translated IRS figure, which is the whole point of the wiki.</figcaption>
+        </figure>
+
+        <p class="client-note fade-up" style="transition-delay:140ms;">Financial Finesse customers whose employees the platform serves</p>
+        <div class="client-pills fade-up" style="transition-delay:150ms;">
           <span class="client-pill">Meta</span>
           <span class="client-pill">NFL</span>
           <span class="client-pill">JPMorgan Chase</span>
@@ -775,9 +787,9 @@
       <div class="wrap fade-up">
         <span class="eyebrow" style="margin-bottom:36px; display:block;">Final Takeaway</span>
         <p class="takeaway-text">
-          Global Content Studio writes in the company's voice and carries it into 28 locales, with an independent
-          check and a human localizer between the model and the member.
-          <strong>One designer built it, and it is in production.</strong>
+          A model drafts in the company's voice, a second pass and a set of deterministic checks catch what reads
+          fluently and is still wrong, and a localizer has the final say.
+          <strong>One designer owned the problem, the decisions, and the code.</strong>
         </p>
       </div>
     </section>
@@ -787,7 +799,7 @@
       <div class="wrap fade-up">
         <nav class="cta-links" aria-label="Case study navigation">
           <a href="../../work/" class="btn-secondary">← Back to Work</a>
-          <a href="../../work/brix/" class="btn-secondary">Next: Brix — This Site →</a>
+          <a href="../../aimee-ai/" class="btn-secondary">Next: Aimee AI Coach →</a>
           <a href="../../contact/" class="btn-secondary">Contact ↗</a>
         </nav>
       </div>
@@ -815,14 +827,10 @@
       nav.classList.toggle('scrolled', window.scrollY > 8);
     }, { passive: true });
 
-    // Demo videos play at 2×. Respect reduced-motion: pause + expose controls.
+    // The hero clip plays at native speed. Respect reduced-motion: pause + expose controls.
     (function () {
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       document.querySelectorAll('video.cs-video').forEach(function (v) {
-        const setRate = function () { try { v.playbackRate = 2; } catch (e) {} };
-        setRate();
-        v.addEventListener('loadedmetadata', setRate);
-        v.addEventListener('play', setRate);
         if (reduce) { v.removeAttribute('autoplay'); v.setAttribute('controls', ''); v.pause(); }
       });
     })();
