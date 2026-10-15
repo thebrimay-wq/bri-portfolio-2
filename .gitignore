@@ -32,3 +32,6 @@ docs/case-studies/media/
 
 # Session scratch scripts (never deployed)
 .scratch/
+
+# Personal Claude Code permission overrides
+.claude/settings.local.json
