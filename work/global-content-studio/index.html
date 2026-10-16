@@ -23,47 +23,162 @@
   <meta property="og:description" content="From a studio one designer built alone to the content system behind 25 markets. Three versions, what broke between them, and the decisions that carried it into production." />
   <meta name="twitter:description" content="From a studio one designer built alone to the content system behind 25 markets. Three versions, what broke between them, and the decisions that carried it into production." />
   <script src="/scripts/embed.js"></script>
+  <script>
+    try { var _t = localStorage.getItem('theme'); if (_t === 'dark' || _t === 'light') document.documentElement.setAttribute('data-theme', _t); } catch (e) {}
+  </script>
   <style>
-
-    /* ── wrapper ── */
+    /* ============================================================
+       "Reader" layout: a long-form feature with a reading rail.
+       Chapters are numbered because the story is chronological.
+       One accent moment: the current-chapter marker in the rail.
+       Everything else is ink, rules, and type weight.
+       ============================================================ */
     .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); }
 
-    /* ── section base ── */
-    .cs-section { padding: clamp(64px, 8vw, 104px) 0; border-top: 1px solid var(--border); }
-    .eyebrow { margin-bottom: 20px; }
-    .eyebrow-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
-    .eyebrow-row .eyebrow { margin-bottom: 0; }
+    /* ── Hero ── */
+    .hero { padding: clamp(72px, 10vw, 136px) 0 clamp(40px, 5vw, 64px); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 0 14px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: clamp(28px, 4vw, 44px); }
+    .hero-meta span + span::before { content: "·"; margin-right: 14px; color: var(--border); }
+    .hero h1 { font-size: clamp(40px, 6.4vw, 92px); font-weight: 350; letter-spacing: -0.035em; line-height: 0.98; max-width: 1080px; color: var(--ink); text-wrap: balance; }
+    .hero-lead { font-size: clamp(18px, 1.5vw, 22px); line-height: 1.6; color: var(--ink-2); max-width: 640px; margin-top: clamp(28px, 4vw, 44px); font-weight: 400; }
 
-    /* ── version chips: the thread that runs through every section ── */
-    .ver { display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: var(--accent-tint); white-space: nowrap; }
-    .ver--muted { background: var(--surface-2); color: var(--ink-2); }
-
-    /* ── cs images / placeholders ── */
-    .cs-image { width: 100%; height: auto; display: block; border-radius: 16px; transition: transform 0.5s ease; }
-    .cs-image:hover { transform: scale(1.01); }
-
-    /* ── inline demo video ── */
-    .cs-video-slot { position: relative; }
-    .cs-video { width: 100%; height: auto; display: block; border-radius: 16px; box-shadow: 0 1px 0 rgba(0,0,0,0.02); }
-    .cs-video-slot:not(.loaded) .cs-video,
-    .cs-video-slot:not(.loaded) .cs-image { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-    .cs-video-slot.loaded .cs-video-ph { display: none; }
-    .hero-image .cs-video-slot {
-      overflow: hidden; border-radius: 16px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03), 0 12px 30px rgba(0, 0, 0, 0.07), 0 28px 60px rgba(0, 0, 0, 0.06);
-    }
-    .hero-image .cs-video-slot::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.07); pointer-events: none; z-index: 2; }
-    .hero-image .cs-video { border-radius: 0; transform: scale(1.012); transform-origin: center; }
-    .img-placeholder {
-      width: 100%; aspect-ratio: 16 / 9; background: var(--surface); border: 1px dashed var(--border); border-radius: 16px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--ink-3);
-      font-size: 13px; font-weight: 500; letter-spacing: 0.04em; text-align: center; padding: 24px;
+    .hero-facts { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(48px, 6vw, 80px); border-top: 1px solid var(--border); }
+    .hero-fact { padding: 22px 24px 22px 0; border-right: 1px solid var(--border); }
+    .hero-fact + .hero-fact { padding-left: 24px; }
+    .hero-fact:last-child { border-right: 0; }
+    .hero-fact-val { font-size: clamp(28px, 3vw, 44px); font-weight: 400; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--ink); }
+    .hero-fact-label { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-top: 10px; line-height: 1.5; }
+    @media (max-width: 760px) {
+      .hero-facts { grid-template-columns: 1fr 1fr; }
+      .hero-fact:nth-child(2) { border-right: 0; }
+      .hero-fact:nth-child(3) { padding-left: 0; border-top: 1px solid var(--border); }
+      .hero-fact:nth-child(4) { border-top: 1px solid var(--border); }
     }
 
-    /* ── Atlas interactive pipeline (v1) ── */
-    .atlas { --navy: #063853; --teal: #00507C; --teal-2: #007CAB; --line: #D6DCEA; }
+    .hero-media { margin-top: clamp(40px, 5vw, 64px); }
+    .frame { position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.03), 0 12px 30px rgba(0,0,0,0.07), 0 28px 60px rgba(0,0,0,0.06); }
+    .frame::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--frame-ring); pointer-events: none; }
+    .frame video, .frame img { display: block; width: 100%; height: auto; }
+    .frame video { transform: scale(1.012); }
+    .caption { font-size: 14px; line-height: 1.6; color: var(--ink-2); margin-top: 16px; max-width: 640px; }
+
+    /* ── Body grid: rail + measure ── */
+    .body { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(40px, 6vw, 96px); padding-top: clamp(56px, 7vw, 96px); }
+    .rail { position: sticky; top: 96px; align-self: start; }
+    .rail-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+    .rail ol { list-style: none; display: flex; flex-direction: column; }
+    .rail a { display: grid; grid-template-columns: 26px 1fr; align-items: baseline; gap: 8px; padding: 6px 0; font-size: 14px; color: var(--ink-3); transition: color 0.2s; position: relative; }
+    .rail a .n { font-size: 11px; font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+    .rail a:hover { color: var(--ink); }
+    .rail a.is-current { color: var(--ink); font-weight: 500; }
+    .rail a.is-current::before { content: ""; position: absolute; left: -18px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%; background: var(--accent); }
+    .rail-meta { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-3); line-height: 1.7; }
+    .rail-meta b { display: block; color: var(--ink); font-weight: 500; }
+    @media (max-width: 960px) { .body { grid-template-columns: 1fr; } .rail { display: none; } }
+
+    .measure { max-width: 720px; min-width: 0; }
+    .chapter { padding-bottom: clamp(64px, 9vw, 128px); }
+    .chapter-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+    .chapter-n { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+    .chapter-head .eyebrow { font-weight: 500; margin-bottom: 0; }
+    .chapter h2 { font-size: clamp(28px, 3.2vw, 44px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; color: var(--ink); max-width: 760px; margin-bottom: 24px; text-wrap: balance; }
+    .chapter h3.sub { font-size: clamp(20px, 2vw, 26px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; color: var(--ink); margin-top: clamp(56px, 7vw, 80px); margin-bottom: 16px; text-wrap: balance; }
+    .lead { font-size: clamp(18px, 1.4vw, 21px); line-height: 1.65; color: var(--ink-2); max-width: 680px; }
+    .prose p { font-size: clamp(16px, 1.2vw, 18px); line-height: 1.75; color: var(--ink-2); margin-top: 20px; max-width: 680px; }
+    .prose p strong { color: var(--ink); font-weight: 600; }
+    .note { font-size: 14px; line-height: 1.65; color: var(--ink-3); margin-top: 16px; max-width: 680px; }
+
+    /* Version tag: the v1/v2/v3 thread, quiet and in ink */
+    .ver { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border: 1px solid var(--border); border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); line-height: 1; }
+
+    /* Chips that say what the study demonstrates */
+    .signal-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .signal-chip { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--border); font-size: 13px; font-weight: 500; color: var(--ink); transition: border-color 0.2s, background 0.2s; }
+    .signal-chip:hover { border-color: var(--ink-3); background: var(--surface); }
+    .signal-chip:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+    /* Three versions as a ruled row, same language as the hero facts */
+    .versions { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 36px; border-top: 1px solid var(--ink); }
+    .version { display: flex; flex-direction: column; gap: 10px; padding: 22px 20px 22px 0; border-right: 1px solid var(--border); color: inherit; transition: background 0.2s; }
+    .version + .version { padding-left: 20px; }
+    .version .ver { align-self: flex-start; }
+    .version:last-child { border-right: 0; }
+    .version:hover h4 { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    .version-when { font-size: 12px; color: var(--ink-3); }
+    .version h4 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; color: var(--ink); }
+    .version p { font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+    .version-meta { font-size: 12px; line-height: 1.5; color: var(--ink-3); margin-top: auto; padding-top: 6px; }
+    @media (max-width: 760px) { .versions { grid-template-columns: 1fr; } .version, .version + .version { padding: 20px 0; border-right: 0; border-bottom: 1px solid var(--border); } }
+
+    /* Definition rows */
+    .rows { margin-top: 36px; border-top: 1px solid var(--border); }
+    .row { display: grid; grid-template-columns: 200px 1fr; gap: 12px 32px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+    .row h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); line-height: 1.4; }
+    .row h3 small { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+    .row p { font-size: 16px; line-height: 1.7; color: var(--ink-2); margin: 0; grid-column: 2; }
+    .row p + p { margin-top: 8px; }
+    .row p strong { color: var(--ink); font-weight: 600; }
+    @media (max-width: 640px) { .row { grid-template-columns: 1fr; gap: 6px; } .row p { grid-column: 1; } }
+
+    /* Numbered steps */
+    .steps { counter-reset: step; margin-top: 36px; border-top: 1px solid var(--border); }
+    .step { counter-increment: step; display: grid; grid-template-columns: 44px 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--border); }
+    .step::before { content: counter(step, decimal-leading-zero); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; color: var(--ink-3); padding-top: 5px; font-variant-numeric: tabular-nums; }
+    .step p { font-size: clamp(16px, 1.2vw, 17.5px); line-height: 1.72; color: var(--ink-2); margin: 0; }
+    .step p strong { color: var(--ink); font-weight: 600; }
+    @media (max-width: 640px) { .step { grid-template-columns: 32px 1fr; gap: 14px; } }
+
+    /* The "what if" questions: a ruled pull-question, light type, no box */
+    .question { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--ink); }
+    .question-kicker { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+    .question-text { font-size: clamp(24px, 2.6vw, 36px); font-weight: 350; letter-spacing: -0.025em; line-height: 1.2; color: var(--ink); text-wrap: balance; }
+    .question-sub { font-size: 16px; line-height: 1.7; color: var(--ink-2); margin-top: 16px; max-width: 640px; }
+
+    /* Terminology table */
+    .terms { width: 100%; margin-top: 36px; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
+    .terms th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding: 0 16px 12px 0; border-bottom: 1px solid var(--ink); }
+    .terms td { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--border); color: var(--ink-2); vertical-align: top; }
+    .terms td:first-child { color: var(--ink); font-weight: 500; }
+    .terms strong { color: var(--ink); font-weight: 600; }
+    @media (max-width: 640px) {
+      .terms thead { display: none; }
+      .terms, .terms tbody, .terms tr, .terms td { display: block; width: 100%; }
+      .terms tr { padding: 14px 0; border-bottom: 1px solid var(--border); }
+      .terms td { border: 0; padding: 2px 0; }
+      .terms td[data-l]::before { content: attr(data-l) ": "; color: var(--ink-3); font-size: 13px; }
+    }
+
+    /* Small stat row inside the measure */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+    .stat-val { font-size: clamp(32px, 3.6vw, 52px); font-weight: 300; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--ink); }
+    .stat-label { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+    @media (max-width: 640px) { .stats { grid-template-columns: 1fr; gap: 28px; } }
+
+    /* Figures */
+    .figure { margin-top: clamp(40px, 5vw, 56px); }
+
+    /* Diagrams: token-colored SVG so they survive dark mode */
+    .diagram { margin-top: clamp(40px, 5vw, 56px); }
+    .diagram svg { width: 100%; height: auto; display: block; }
+    .d-box rect { fill: var(--surface); stroke: var(--border); stroke-width: 1.2; }
+    .d-box--key rect { stroke: var(--ink); }
+    .d-h { font: 600 14px/1 Inter, sans-serif; fill: var(--ink); }
+    .d-t { font: 400 12px/1 Inter, sans-serif; fill: var(--ink-2); }
+    .d-l text { font: 500 11px/1 Inter, sans-serif; fill: var(--ink-3); }
+    .d-line path { fill: none; stroke: var(--ink-3); stroke-width: 1.2; }
+    .d-line--strong path { stroke: var(--ink); }
+    @media (max-width: 640px) { .diagram .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; } .diagram svg { min-width: 680px; } }
+
+    /* Status note: says plainly what is designed vs. shipped */
+    .status { margin-top: 20px; padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+    .status b { color: var(--ink); font-weight: 600; }
+
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86em; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--ink); }
+
+    /* ── Atlas interactive pipeline (rebuilt from the product artifact) ── */
+    .atlas { --navy: #063853; --teal: #00507C; --teal-2: #007CAB; --line: #D6DCEA; margin-top: 36px; }
     .atlas-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; padding-bottom: 6px; }
-    .atlas-inner { min-width: 680px; }
+    .atlas-inner { min-width: 660px; }
     .atlas-groups { display: flex; padding: 0 8px; margin-bottom: 14px; }
     .atlas-group { font-size: 11px; letter-spacing: 0.08em; color: #8A93A6; font-weight: 700; text-transform: uppercase; text-align: center; }
     .atlas-track { display: flex; align-items: flex-start; padding: 8px 8px 4px; }
@@ -72,15 +187,14 @@
     .atlas-step:first-child::before { display: none; }
     .atlas-dot { position: relative; z-index: 1; width: 44px; height: 44px; border-radius: 50%; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; transition: transform .15s ease, box-shadow .15s ease; }
     .atlas-step[data-guardrail="1"] .atlas-dot { background: #fff; color: var(--teal); border: 2px solid var(--teal-2); }
-    .atlas-step-title { font-size: 12.5px; font-weight: 700; color: var(--navy); text-align: center; line-height: 1.3; max-width: 96px; }
+    .atlas-step-title { font-size: 12px; font-weight: 700; color: var(--navy); text-align: center; line-height: 1.3; max-width: 84px; }
     .atlas-step.is-active .atlas-dot, .atlas-step:hover .atlas-dot { transform: scale(1.08); box-shadow: 0 4px 12px rgba(6, 56, 83, .35); }
-    .atlas-step[data-guardrail="1"].is-active .atlas-dot, .atlas-step[data-guardrail="1"]:hover .atlas-dot { box-shadow: 0 4px 12px rgba(0, 124, 171, .35); }
     .atlas-step:focus-visible { outline: none; }
     .atlas-step:focus-visible .atlas-dot { outline: 2px solid var(--teal-2); outline-offset: 3px; }
-    .atlas-detail { margin-top: 24px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; min-height: 132px; box-shadow: 0 2px 4px rgba(0, 0, 0, .03), 0 12px 30px rgba(0, 0, 0, .05); }
+    .atlas-detail { margin-top: 24px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; min-height: 132px; }
     .atlas-detail-step { font-size: 11px; letter-spacing: 0.06em; color: var(--teal); font-weight: 700; text-transform: uppercase; margin-bottom: 7px; }
     .atlas-detail-title { font-size: clamp(17px, 1.6vw, 20px); font-weight: 700; color: var(--navy); margin-bottom: 8px; letter-spacing: -0.01em; }
-    .atlas-detail-desc { font-size: clamp(14px, 1.1vw, 15.5px); color: #383838; line-height: 1.55; }
+    .atlas-detail-desc { font-size: 15px; color: #383838; line-height: 1.55; }
     .atlas-detail-why { margin-top: 13px; padding-top: 13px; border-top: 1px solid var(--line); }
     .atlas-detail-why-label { font-size: 10.5px; letter-spacing: 0.05em; color: var(--teal-2); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
     .atlas-detail-why-text { font-size: 13.5px; color: #565656; line-height: 1.45; }
@@ -93,896 +207,453 @@
       :root:not([data-theme="light"]) .atlas-hint { color: #8A93A6; }
     }
 
-    /* ════ AT A GLANCE ════ */
-    .glance { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; margin-top: 8px; }
-    @media (max-width: 768px) { .glance { grid-template-columns: 1fr; gap: 32px; } }
-    .glance-summary { font-size: clamp(18px, 1.6vw, 23px); line-height: 1.6; color: var(--ink); font-weight: 500; max-width: 640px; }
-    .glance-facts { display: flex; flex-direction: column; }
-    .glance-facts > div { display: flex; justify-content: space-between; gap: 20px; padding: 14px 0; border-top: 1px solid var(--border); }
-    .glance-facts > div:last-child { border-bottom: 1px solid var(--border); }
-    .glance-facts dt { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); flex-shrink: 0; }
-    .glance-facts dd { font-size: 14px; color: var(--ink); font-weight: 500; text-align: right; margin: 0; line-height: 1.45; }
+    /* Impact: full width, outside the measure */
+    .impact { padding: clamp(72px, 10vw, 128px) 0; border-top: 1px solid var(--border); }
+    .impact h2 { font-size: clamp(30px, 4vw, 56px); font-weight: 350; letter-spacing: -0.035em; line-height: 1.04; max-width: 860px; text-wrap: balance; }
+    .impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(24px, 3.5vw, 56px); margin-top: clamp(48px, 6vw, 80px); }
+    .impact-val { font-size: clamp(40px, 4.6vw, 72px); font-weight: 300; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--ink); }
+    .impact-label { font-size: 14px; line-height: 1.6; color: var(--ink-2); margin-top: 14px; max-width: 260px; padding-top: 14px; border-top: 1px solid var(--border); }
+    @media (max-width: 900px) { .impact-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 520px) { .impact-grid { grid-template-columns: 1fr; gap: 36px; } }
+    .impact-claim { font-size: clamp(18px, 1.5vw, 22px); line-height: 1.6; color: var(--ink); max-width: 720px; margin-top: clamp(48px, 6vw, 72px); }
+    .impact-note { font-size: 14px; color: var(--ink-3); line-height: 1.65; max-width: 680px; margin-top: 20px; }
+    .impact .figure { max-width: 1016px; }
+    .clients { margin-top: clamp(40px, 5vw, 56px); font-size: 14px; color: var(--ink-3); line-height: 2; max-width: 860px; }
+    .clients b { color: var(--ink-2); font-weight: 500; }
 
-    /* ── the three-version strip: the whole story in ten seconds ── */
-    .ver-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: clamp(36px, 5vw, 56px); }
-    @media (max-width: 760px) { .ver-strip { grid-template-columns: 1fr; } }
-    .ver-cell { background: var(--bg); padding: clamp(22px, 2.6vw, 30px) clamp(20px, 2.4vw, 28px); display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: inherit; transition: background 0.2s ease; }
-    .ver-cell:hover { background: var(--surface); }
-    .ver-cell-head { display: flex; align-items: center; gap: 10px; }
-    .ver-cell-when { font-size: 12px; color: var(--ink-3); font-weight: 500; }
-    .ver-cell h3 { font-size: clamp(16px, 1.3vw, 18px); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--ink); margin: 0; }
-    .ver-cell p { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin: 0; }
-    .ver-cell-meta { font-size: 12px; color: var(--ink-3); line-height: 1.5; margin-top: auto; padding-top: 8px; }
+    /* Takeaway */
+    .takeaway { padding: clamp(96px, 14vw, 200px) 0; border-top: 1px solid var(--border); }
+    .takeaway p { font-size: clamp(28px, 4.2vw, 60px); font-weight: 350; letter-spacing: -0.035em; line-height: 1.08; max-width: 1000px; color: var(--ink); text-wrap: balance; }
+    .takeaway p strong { font-weight: 500; }
 
-    /* ════ 1. HERO ════ */
-    .hero { padding: clamp(64px, 8vw, 104px) 0 clamp(56px, 7vw, 88px); overflow: visible; }
-    .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 24px; }
-    .hero h1 { font-size: clamp(30px, 4vw, 58px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; max-width: 900px; margin-bottom: 28px; color: var(--ink); }
-    .hero h1 span { color: var(--ink-3); }
-    .hero-lead { font-size: clamp(16px, 1.3vw, 19px); color: var(--ink-2); line-height: 1.72; max-width: 680px; margin-bottom: 52px; }
-    .hero-stats { display: flex; gap: clamp(28px, 3.5vw, 52px); flex-wrap: wrap; margin-bottom: clamp(40px, 5vw, 64px); }
-    .hero-stat-val { font-size: clamp(22px, 2.5vw, 34px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 7px; color: var(--ink); }
-    .hero-stat-label { font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-    .hero-image { width: 100%; }
-    .hero-image img, .hero-image .img-placeholder { width: 100%; height: auto; display: block; border-radius: 16px 16px 0 0; aspect-ratio: 16 / 9; }
+    .bottom-nav { padding: clamp(40px, 5vw, 64px) 0; border-top: 1px solid var(--border); }
+    .bottom-nav .wrap { display: flex; flex-wrap: wrap; gap: 12px; }
 
-    /* ════ 2. WHAT I OWNED ════ */
-    .owned-section { background: var(--surface); }
-    .owned-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: clamp(40px, 5vw, 56px); max-width: 760px; }
-    .owned-list { display: flex; flex-direction: column; max-width: 860px; }
-    .owned-item { display: grid; grid-template-columns: 220px 1fr; gap: clamp(16px, 3vw, 40px); padding: clamp(22px, 3vw, 30px) 0; border-top: 1px solid var(--border); align-items: start; }
-    .owned-item:last-child { border-bottom: 1px solid var(--border); }
-    @media (max-width: 700px) { .owned-item { grid-template-columns: 1fr; gap: 8px; } }
-    .owned-label { font-size: clamp(15px, 1.2vw, 17px); font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
-    .owned-text { font-size: clamp(15px, 1.15vw, 17px); color: var(--ink-2); line-height: 1.7; margin: 0; }
-
-    /* ════ 3. PROBLEM / WHAT IF ════ */
-    .problem-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin: 0 0 24px; }
-    .whatif { max-width: 760px; margin: clamp(32px, 4vw, 44px) 0 0; padding: clamp(22px, 3vw, 30px) clamp(22px, 3vw, 32px); border: 1px solid var(--border); border-left: 2px solid var(--accent); border-radius: 0 16px 16px 0; background: var(--surface); }
-    .whatif-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
-    .whatif p:not(.whatif-label) { font-size: clamp(19px, 1.8vw, 26px); font-weight: 500; letter-spacing: -0.015em; line-height: 1.35; color: var(--ink); margin: 0; }
-    .whatif small { display: block; margin-top: 12px; font-size: 14px; color: var(--ink-2); line-height: 1.6; font-weight: 400; }
-    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: clamp(32px, 4vw, 44px); max-width: 860px; }
-    @media (max-width: 640px) { .before-after { grid-template-columns: 1fr; } }
-    .ba-card { padding: clamp(20px, 2.5vw, 28px); border: 1px solid var(--border); border-radius: 16px; background: var(--bg); }
-    .ba-card h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px; }
-    .ba-card p { font-size: 15.5px; line-height: 1.6; color: var(--ink-2); margin: 0; }
-    .ba-card--after { border-color: var(--ink); }
-    .ba-card--after h4 { color: var(--ink); }
-
-    /* ── terminology table (what localizing means) ── */
-    .terms { margin-top: clamp(32px, 4vw, 44px); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: 860px; }
-    .terms-row { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 0; border-top: 1px solid var(--border); }
-    .terms-row:first-child { border-top: 0; background: var(--surface); }
-    .terms-row > div { padding: 14px 18px; font-size: 14.5px; line-height: 1.5; color: var(--ink-2); border-left: 1px solid var(--border); }
-    .terms-row > div:first-child { border-left: 0; color: var(--ink); font-weight: 500; }
-    .terms-row:first-child > div { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
-    .terms-row strong { color: var(--ink); font-weight: 600; }
-    @media (max-width: 640px) { .terms-row { grid-template-columns: 1fr; } .terms-row > div { border-left: 0; border-top: 1px solid var(--border); } .terms-row > div:first-child { border-top: 0; } .terms-row:first-child { display: none; } }
-
-    /* ════ SOLUTION / numbered ════ */
-    .solution-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 32px; max-width: 760px; }
-    .solution-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin-bottom: 40px; }
-    .numbered-list { display: flex; flex-direction: column; margin-bottom: 0; max-width: 860px; }
-    .numbered-item { display: grid; grid-template-columns: 48px 1fr; gap: clamp(16px, 2.5vw, 32px); padding: clamp(20px, 2.5vw, 28px) 0; border-top: 1px solid var(--border); align-items: start; }
-    .numbered-item:last-child { border-bottom: 1px solid var(--border); }
-    .numbered-item-n { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-3); padding-top: 4px; }
-    .numbered-item-text { font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.72; margin: 0; }
-    .numbered-item-text strong { color: var(--ink); font-weight: 700; }
-
-    /* ════ EXPERIENCE / PIPELINE HEADERS ════ */
-    .exp-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 0; }
-    .exp-body { font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.75; max-width: 680px; margin-top: 20px; margin-bottom: 0; }
-    .exp-header { max-width: 780px; margin-bottom: clamp(40px, 5vw, 56px); }
-
-    /* ── stat row inside a section ── */
-    .stat-row { display: flex; gap: clamp(28px, 4vw, 56px); flex-wrap: wrap; margin-top: clamp(32px, 4vw, 44px); }
-    .stat-row > div { min-width: 140px; }
-    .stat-val { font-size: clamp(24px, 2.6vw, 36px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; color: var(--ink); }
-    .stat-label { font-size: 13px; color: var(--ink-2); line-height: 1.5; max-width: 220px; }
-
-    /* ════ WHAT BROKE ════ */
-    .broke-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: clamp(32px, 4vw, 44px); }
-    @media (max-width: 700px) { .broke-grid { grid-template-columns: 1fr; } }
-    .broke-card { padding: clamp(22px, 2.6vw, 30px); border: 1px solid var(--border); border-radius: 16px; background: var(--bg); display: flex; flex-direction: column; gap: 10px; }
-    .broke-card-n { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
-    .broke-card h3 { font-size: clamp(17px, 1.5vw, 20px); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--ink); margin: 0; }
-    .broke-card p { font-size: 15px; line-height: 1.65; color: var(--ink-2); margin: 0; }
-    .broke-card p strong { color: var(--ink); font-weight: 600; }
-    .broke-aside { margin-top: 16px; padding: clamp(18px, 2.2vw, 24px) clamp(20px, 2.5vw, 28px); border: 1px dashed var(--border); border-radius: 16px; font-size: 15px; line-height: 1.65; color: var(--ink-2); max-width: 860px; }
-    .broke-aside strong { color: var(--ink); font-weight: 600; }
-    .numbered-item-text code, .broke-card code, .fix code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86em; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--ink); }
-
-    /* ════ FIX MAP (failure → fix, one to one) ════ */
-    .fixmap { margin-top: clamp(32px, 4vw, 44px); border-top: 1px solid var(--border); }
-    .fix { display: grid; grid-template-columns: minmax(0, 280px) 28px 1fr; gap: 16px 20px; padding: 24px 0; border-bottom: 1px solid var(--border); align-items: start; }
-    @media (max-width: 700px) { .fix { grid-template-columns: 1fr; gap: 8px; } .fix-arrow { display: none; } }
-    .fix-from { font-size: 15px; line-height: 1.5; color: var(--ink-3); }
-    .fix-from strong { display: block; color: var(--ink-2); font-weight: 600; margin-bottom: 2px; }
-    .fix-arrow { color: var(--ink-3); padding-top: 4px; }
-    .fix-to { font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0; }
-    .fix-to strong { color: var(--ink); font-weight: 600; }
-
-    /* ════ STAGE RAIL (v2 pipeline) ════ */
-    .stage-rail { margin-top: clamp(32px, 4vw, 44px); overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
-    .stage-groups { display: grid; grid-template-columns: 1fr 1.35fr 1fr 1.25fr 0.8fr 1fr; gap: 10px; min-width: 1160px; }
-    .stage-group { border: 1px solid var(--border); border-radius: 14px; padding: 14px 14px 12px; background: var(--bg); }
-    .stage-group--human { border-color: var(--ink); }
-    .stage-group h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px; }
-    .stage-group--human h4 { color: var(--ink); }
-    .stage-group ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-    .stage-group li { font-size: 13px; line-height: 1.4; color: var(--ink-2); display: block; }
-    .stage-group li b { font-weight: 600; color: var(--ink); }
-    .stage-group li i { font-style: normal; font-size: 10.5px; color: var(--ink-3); font-weight: 600; display: inline-block; min-width: 18px; }
-    .stage-note { font-size: 13px; color: var(--ink-3); margin-top: 12px; line-height: 1.55; max-width: 760px; }
-
-    /* ════ DIAGRAMS (svg, token-colored so they survive dark mode) ════ */
-    .diagram { margin: clamp(32px, 4vw, 44px) 0 0; }
-    .diagram svg { width: 100%; height: auto; display: block; }
-    .d-box rect { fill: var(--surface); stroke: var(--border); stroke-width: 1.2; }
-    .d-box--key rect { stroke: var(--ink); }
-    .d-box--acc rect { fill: var(--accent-tint); stroke: var(--accent); }
-    .d-h { font: 600 14px/1 Inter, sans-serif; fill: var(--ink); }
-    .d-t { font: 400 12px/1 Inter, sans-serif; fill: var(--ink-2); }
-    .d-l text { font: 500 11px/1 Inter, sans-serif; fill: var(--ink-3); }
-    .d-line path { fill: none; stroke: var(--ink-3); stroke-width: 1.2; }
-    .d-line--strong path { stroke: var(--ink); }
-    .diagram figcaption { font-size: 13.5px; color: var(--ink-3); line-height: 1.6; margin-top: 14px; max-width: 680px; }
-    /* On phones the SVGs scroll sideways at a readable size instead of shrinking to a thumbnail */
-    @media (max-width: 640px) { .diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; } .diagram svg { min-width: 680px; } }
-
-    /* ════ STATUS NOTE ════ */
-    .status-note { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px; font-size: 13px; color: var(--ink-2); background: var(--surface); line-height: 1.4; }
-    .status-note::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-
-    /* ════ DECISIONS ════ */
-    .decision-list { display: grid; gap: 0; margin-top: clamp(28px,4vw,40px); border-top: 1px solid var(--border); }
-    .decision { padding: 24px 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 12px 40px; }
-    @media (max-width: 760px) { .decision { grid-template-columns: 1fr; gap: 8px; } }
-    .decision h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.35; color: var(--ink); margin: 0; }
-    .decision > p { font-size: 15.5px; line-height: 1.65; color: var(--ink-2); margin: 0; grid-column: 2; }
-    @media (max-width: 760px) { .decision > p { grid-column: 1; } }
-    .decision > p + p { margin-top: 8px; }
-    .decision p strong { color: var(--ink); font-weight: 600; }
-
-    /* ════ IMPACT ════ */
-    .impact-section { text-align: center; }
-    .impact-h2 { font-size: clamp(26px, 3.5vw, 46px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; max-width: 680px; margin: 0 auto clamp(52px, 6vw, 80px); text-align: center; }
-    .impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; text-align: left; margin-bottom: clamp(48px, 6vw, 72px); }
-    @media (max-width: 900px) { .impact-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 520px) { .impact-grid { grid-template-columns: 1fr; } }
-    .impact-cell { background: var(--bg); padding: clamp(26px, 3vw, 40px) clamp(20px, 2.5vw, 32px); }
-    .impact-val { font-size: clamp(28px, 3.2vw, 46px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-bottom: 12px; color: var(--ink); }
-    .impact-label { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
-    .impact-footnote { font-size: 14px; color: var(--ink-3); line-height: 1.65; max-width: 720px; margin: clamp(28px,4vw,40px) auto 0; text-align: center; }
-    .impact-claim { font-size: clamp(17px, 1.5vw, 21px); color: var(--ink); line-height: 1.6; max-width: 720px; margin: 0 auto clamp(40px,5vw,56px); font-weight: 500; }
-    .client-note { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); text-align: center; margin: clamp(40px,5vw,56px) 0 14px; }
-    .client-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-    .client-pill { font-size: 13px; font-weight: 500; color: var(--ink-2); background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; }
-
-    /* ════ REFLECTION ════ */
-    .reflect-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: clamp(28px,4vw,40px); }
-    @media (max-width: 760px) { .reflect-list { grid-template-columns: 1fr; } }
-    .reflect { padding: clamp(20px, 2.5vw, 28px); border: 1px solid var(--border); border-radius: 16px; background: var(--bg); }
-    .reflect h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; color: var(--ink); margin: 0 0 8px; }
-    .reflect p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); margin: 0; }
-
-    /* ════ FINAL TAKEAWAY ════ */
-    .takeaway-section { background: var(--surface); padding: clamp(88px, 12vw, 160px) 0; border-top: 1px solid var(--border); }
-    .takeaway-text { font-size: clamp(24px, 3.5vw, 48px); font-weight: 700; letter-spacing: -0.035em; line-height: 1.12; max-width: 920px; color: var(--ink); }
-    .takeaway-text strong { color: var(--ink); }
-
-    /* ════ BOTTOM NAV ════ */
-    .bottom-cta { padding: clamp(40px, 5vw, 64px) 0; border-top: 1px solid var(--border); }
-    .cta-links { display: flex; gap: 32px; flex-wrap: wrap; align-items: center; }
-
-    /* ── at-a-glance capability row ── */
-    .signal-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 22px; }
-    .signal-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
-    .signal-chip { display: inline-flex; align-items: center; min-height: 36px; padding: 0 13px; border-radius: 999px; background: var(--accent-tint); color: var(--ink); font-size: 13px; font-weight: 500; line-height: 1; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; }
-    .signal-chip:hover { background: var(--surface-2); transform: translateY(-1px); }
-    .signal-chip:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-    @media (prefers-reduced-motion: reduce) { .signal-chip, .signal-chip:hover { transform: none; transition: none; } }
     .anchor-alias { display: block; height: 0; }
-
-    /* Figures that teach: every product shot carries a caption saying what to notice */
-    figure.shot { margin: 0; }
-    figure.shot figcaption, .shot-caption { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin: 14px 0 0; max-width: 720px; }
-    .shot-pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 32px); margin-top: clamp(40px,5vw,56px); align-items: start; }
-    @media (max-width: 760px) { .shot-pair { grid-template-columns: 1fr; } }
-
-    /* ════ RESPONSIVE ════ */
-    @media (max-width: 768px) {
-      .cs-section { padding: 72px 0; }
-      .hero { padding-top: 72px; }
-      .hero-stats { gap: 32px; }
-    }
-    [id="gap"], [id="v1"], [id="turn"], [id="decisions"], [id="what-broke"], [id="v2"], [id="v3"], [id="ai"], [id="reflection"] { scroll-margin-top: 92px; }
+    .chapter, .anchor-alias, #impact { scroll-margin-top: 92px; }
   </style>
 </head>
 <body>
-
-  <!-- NAV -->
   <div class="ambient" aria-hidden="true"></div>
   <nav id="site-nav">
     <div class="nav-inner">
-      <a href="../../" class="nav-logo">Bri May</a>
+      <a href="/" class="nav-logo">Bri May</a>
       <ul class="nav-links">
-        <li><a href="../../work/">Work</a></li>
-        <li><a href="../../about/">About</a></li>
-        <li><a href="../../resume/">Résumé</a></li>
-        <li><a href="../../contact/">Contact</a></li>
+        <li><a href="/work/">Work</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/resume/">Résumé</a></li>
+        <li><a href="/contact/">Contact</a></li>
       </ul>
     </div>
   </nav>
 
   <main>
-
-    <!-- ════ 1. HERO ════ -->
+    <!-- ════ HERO ════ -->
     <section class="hero">
       <div class="wrap">
-        <p class="hero-eyebrow fade-up">AI-Native Senior Product Designer · Financial Finesse · 2026 · v1 built solo, v2 and v3 shipped with engineering</p>
+        <p class="hero-meta fade-up"><span>Case study</span><span>Financial Finesse</span><span>2026</span><span>v1 built solo · v2 and v3 with engineering</span></p>
+        <h1 class="fade-up" style="transition-delay:50ms">From a studio I built alone to the content system behind 25 markets.</h1>
+        <p class="hero-lead fade-up" style="transition-delay:90ms">Financial Finesse's writers were drafting on personal AI subscriptions, and the company was about to go global. I asked one question: what if the tool already knew what our content looked like? I built the answer in four weeks, then rebuilt it twice with engineering as it moved into the company's production stack.</p>
 
-        <h1 class="fade-up" style="transition-delay:50ms;">
-          From a studio I built alone <span>to the content system behind 25 markets.</span>
-        </h1>
-
-        <p class="hero-lead fade-up" style="transition-delay:90ms;">
-          Financial Finesse's writers were drafting on personal AI subscriptions, and the company was about to go
-          global. I asked one question: what if the tool already knew what our content looked like? I built the
-          answer in four weeks, ran the first ten markets five weeks later, and then rebuilt it twice with
-          engineering as it moved into the company's production stack.
-        </p>
-
-        <div class="hero-stats fade-up" style="transition-delay:130ms;">
-          <div>
-            <div class="hero-stat-val">25</div>
-            <div class="hero-stat-label">Markets with published or approved content · Sep 2026</div>
-          </div>
-          <div>
-            <div class="hero-stat-val">8,118</div>
-            <div class="hero-stat-label">Localized variants · 28 locales · live index</div>
-          </div>
-          <div>
-            <div class="hero-stat-val">3</div>
-            <div class="hero-stat-label">Versions · 680+ commits of mine across three repos</div>
-          </div>
+        <div class="hero-facts fade-up" style="transition-delay:130ms">
+          <div class="hero-fact"><div class="hero-fact-val">25</div><div class="hero-fact-label">Markets with published or approved content</div></div>
+          <div class="hero-fact"><div class="hero-fact-val">8,118</div><div class="hero-fact-label">Localized variants, live index, Sep 2026</div></div>
+          <div class="hero-fact"><div class="hero-fact-val">3</div><div class="hero-fact-label">Versions, 680+ commits of mine</div></div>
+          <div class="hero-fact"><div class="hero-fact-val">4 wk</div><div class="hero-fact-label">First commit to launch QA, solo</div></div>
         </div>
 
-        <div class="hero-image fade-up" style="transition-delay:170ms;">
-          <div class="cs-video-slot">
-            <video class="cs-video" autoplay muted loop playsinline preload="metadata"
-                   poster="../../images/Global Content Studio Case Study/gcs-accuracy-check-poster.jpg"
-              aria-label="The Studio's accuracy check flagging seven claims on a Canadian draft while an Italian draft streams"
-              onloadstart="this.closest('.cs-video-slot').classList.add('loaded')">
-              <source src="../../images/Global Content Studio Case Study/gcs-accuracy-check.mp4" type="video/mp4" />
+        <div class="hero-media fade-up" style="transition-delay:170ms">
+          <div class="frame">
+            <video autoplay muted loop playsinline preload="metadata" poster="/images/Global Content Studio Case Study/gcs-accuracy-check-poster.jpg" aria-label="The Studio's accuracy check flagging seven claims on a Canadian draft while an Italian draft streams">
+              <source src="/images/Global Content Studio Case Study/gcs-accuracy-check.mp4" type="video/mp4" />
             </video>
-            <div class="img-placeholder cs-video-ph">Screen recording — the accuracy check catching a claim</div>
           </div>
-          <p class="shot-caption">v1 in production, native speed. The accuracy check has just run on a Canadian draft: seven claims the model could not tie to a source it consulted, each listed with the figure to confirm and the authority to check it against, while the next draft streams beside them.</p>
+          <p class="caption">v1 in production, native speed. The accuracy check has just run on a Canadian draft: seven claims the model could not tie to a source, each listed with the figure to confirm and the authority to check it against, while the next draft streams beside them.</p>
         </div>
       </div>
     </section>
 
-    <!-- ════ AT A GLANCE ════ -->
-    <section class="cs-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow">At a glance</span>
-        <div class="glance">
-          <div>
-            <p class="glance-summary">Nobody asked for this. I saw the gap, built the first version myself, and then carried it through two rebuilds as the company made it part of its production platform. Every number on this page is read from the live index or the repos.</p>
-            <div class="signal-row" aria-label="What this case study demonstrates">
-              <span class="signal-label">Shows</span>
-              <a class="signal-chip" href="#gap">Saw the gap, defined the product</a>
-              <a class="signal-chip" href="#v1">0 → 1 in four weeks, solo</a>
-              <a class="signal-chip" href="#turn">Multi-stage agent pipeline</a>
-              <a class="signal-chip" href="#what-broke">Diagnosed my own failures</a>
-              <a class="signal-chip" href="#v2">Shipped into a production stack with engineers</a>
-              <a class="signal-chip" href="#v3">Security, roles, and scale</a>
-              <a class="signal-chip" href="#ai">Designing the AI, not just the screens</a>
-            </div>
-          </div>
-          <dl class="glance-facts">
-            <div><dt>Role</dt><dd>AI-Native Senior Product Designer · product, design, and code</dd></div>
-            <div><dt>Team</dt><dd>v1 solo · v2 and v3 with two engineers · localizers reviewing output</dd></div>
-            <div><dt>Stack</dt><dd>TypeScript · Lit · React · Python · Cloudflare Worker · Azure · Anthropic and Gemini APIs · built with Claude Code</dd></div>
-            <div><dt>Timeline</dt><dd>First commit Apr 28, 2026 · first ten-locale run Jun 1 · v2 console Aug 13 · v3 workspace Sep 1</dd></div>
-            <div><dt>Status</dt><dd>In production · 8,118 localized variants across 28 locales as of Sep 8, 2026</dd></div>
-          </dl>
+    <div class="wrap body">
+      <aside class="rail" aria-label="Chapters">
+        <div class="rail-label">Chapters</div>
+        <ol>
+          <li><a href="#glance"><span class="n">01</span>At a glance</a></li>
+          <li><a href="#owned"><span class="n">02</span>What I owned</a></li>
+          <li><a href="#gap"><span class="n">03</span>The gap</a></li>
+          <li><a href="#v1"><span class="n">04</span>v1 · Built alone</a></li>
+          <li><a href="#turn"><span class="n">05</span>Going global</a></li>
+          <li><a href="#decisions"><span class="n">06</span>Decisions</a></li>
+          <li><a href="#what-broke"><span class="n">07</span>What broke</a></li>
+          <li><a href="#v2"><span class="n">08</span>v2 · The console</a></li>
+          <li><a href="#v3"><span class="n">09</span>v3 · The platform</a></li>
+          <li><a href="#ai"><span class="n">10</span>Designing the AI</a></li>
+          <li><a href="#impact"><span class="n">11</span>Impact</a></li>
+          <li><a href="#reflection"><span class="n">12</span>Reflection</a></li>
+        </ol>
+        <div class="rail-meta">
+          <b>AI-Native Senior Product Designer</b>
+          Product, design, and the code
         </div>
+      </aside>
 
-        <!-- the whole story in ten seconds -->
-        <div class="ver-strip" aria-label="The three versions">
-          <a class="ver-cell" href="#v1">
-            <div class="ver-cell-head"><span class="ver">v1</span><span class="ver-cell-when">Apr – Aug 2026 · solo</span></div>
-            <h3>Global Content Studio</h3>
-            <p>One studio that writes in the company's voice, then localizes the library through a multi-stage pipeline that ends with a person.</p>
-            <div class="ver-cell-meta">TypeScript, Lit, Cloudflare Worker, Azure Blob, Anthropic API · 493 of 524 commits · 221 tests</div>
-          </a>
-          <a class="ver-cell" href="#v2">
-            <div class="ver-cell-head"><span class="ver">v2</span><span class="ver-cell-when">Aug – Oct 2026 · with engineering</span></div>
-            <h3>The review console on the pipeline platform</h3>
-            <p>Engineering rebuilt the pipeline in Python on Azure. I wrote the spec from v1's failures and built the console and API the localizers work in.</p>
-            <div class="ver-cell-meta">Python review API, React console, locale-locked roles, two sign-offs · 113 commits</div>
-          </a>
-          <a class="ver-cell" href="#v3">
-            <div class="ver-cell-head"><span class="ver">v3</span><span class="ver-cell-when">Aug – Oct 2026 · with engineering</span></div>
-            <h3>Global Content Review in the admin platform</h3>
-            <p>The same review, inside the platform localizers already use, with an editor for people who do not write markup and a generation workflow that proposes what to write next.</p>
-            <div class="ver-cell-meta">Lit 3, TipTap, single sign-on, server-side drafts and audit trail · 81 commits</div>
-          </a>
-        </div>
+      <div class="measure">
 
-        <div class="jump-nav">
-          <span class="jump-label">Jump to</span>
-          <a class="jump-chip" href="#gap">The gap</a>
-          <a class="jump-chip" href="#v1">v1</a>
-          <a class="jump-chip" href="#turn">Going global</a>
-          <a class="jump-chip" href="#decisions">Decisions</a>
-          <a class="jump-chip" href="#what-broke">What broke</a>
-          <a class="jump-chip" href="#v2">v2</a>
-          <a class="jump-chip" href="#v3">v3</a>
-          <a class="jump-chip" href="#ai">Designing the AI</a>
-          <a class="jump-chip" href="#impact">Impact</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ 2. WHAT I OWNED ════ -->
-    <section id="owned" class="cs-section owned-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow">My role</span>
-        <h2 class="owned-h2">The idea, the product, the first codebase, and the parts of the next two that people touch</h2>
-        <div class="owned-list">
-          <div class="owned-item">
-            <div class="owned-label">Initiative</div>
-            <p class="owned-text">Named the risk in the team's scattered AI use, defined the product, and built it without a brief. When the company committed to new markets, pivoted the same tool into a localization engine instead of starting a second product.</p>
+        <!-- 01 · AT A GLANCE -->
+        <section class="chapter" id="glance">
+          <div class="chapter-head fade-up"><span class="chapter-n">01</span><span class="eyebrow">At a glance</span></div>
+          <p class="lead fade-up">Nobody asked for this. I saw the gap, built the first version myself, and then carried it through two rebuilds as the company made it part of its production platform. Every number on this page is read from the live index or the repos.</p>
+          <div class="signal-row fade-up" aria-label="What this case study demonstrates">
+            <a class="signal-chip" href="#gap">Saw the gap, defined the product</a>
+            <a class="signal-chip" href="#v1">0 → 1 in four weeks, solo</a>
+            <a class="signal-chip" href="#turn">Multi-stage agent pipeline</a>
+            <a class="signal-chip" href="#what-broke">Diagnosed my own failures</a>
+            <a class="signal-chip" href="#v2">Shipped into a production stack</a>
+            <a class="signal-chip" href="#v3">Security, roles, and scale</a>
+            <a class="signal-chip" href="#ai">Designing the AI</a>
           </div>
-          <div class="owned-item">
-            <div class="owned-label">v1, coded by me</div>
-            <p class="owned-text">The TypeScript and Lit app, the Cloudflare Worker and its Azure client, the localization pipeline and its CLI workflow, the voice pillars, compliance rules, and per-locale wiki the model reads from, and 221 Vitest tests. 493 of the repo's 524 commits; one engineer contributed 21.</p>
+
+          <div class="versions fade-up" aria-label="The three versions">
+            <a class="version" href="#v1">
+              <span class="ver">v1</span>
+              <span class="version-when">Apr – Aug 2026 · solo</span>
+              <h4>Global Content Studio</h4>
+              <p>One studio that writes in the company's voice, then localizes the library through a pipeline that ends with a person.</p>
+              <span class="version-meta">493 of 524 commits · 221 tests</span>
+            </a>
+            <a class="version" href="#v2">
+              <span class="ver">v2</span>
+              <span class="version-when">Aug – Oct 2026 · with engineering</span>
+              <h4>The review console</h4>
+              <p>Engineering rebuilt the pipeline in Python. I wrote the spec from v1's failures and built the console the localizers use.</p>
+              <span class="version-meta">Python review API · React console · 113 commits</span>
+            </a>
+            <a class="version" href="#v3">
+              <span class="ver">v3</span>
+              <span class="version-when">Aug – Oct 2026 · with engineering</span>
+              <h4>Inside the admin platform</h4>
+              <p>The same review behind the company's sign-in, with an editor for people who do not write markup.</p>
+              <span class="version-meta">Lit · TipTap · server-side drafts · 81 commits</span>
+            </a>
           </div>
-          <div class="owned-item">
-            <div class="owned-label">v2, with engineering</div>
-            <p class="owned-text">Engineering rebuilt the pipeline in Python on Azure, porting v1's quality gates file by file. I wrote the review-console spec from v1's four failures, prototyped it, then built the Python review API and the React console: roles, publish gate, flag rail, autosave, revisions. 113 of the repo's 717 commits.</p>
+
+          <div class="rows fade-up">
+            <div class="row"><h3>Role</h3><p>AI-Native Senior Product Designer · product, design, and code</p></div>
+            <div class="row"><h3>Team</h3><p>v1 solo · v2 and v3 with two engineers · localizers reviewing output</p></div>
+            <div class="row"><h3>Stack</h3><p>TypeScript · Lit · React · Python · Cloudflare Worker · Azure · Anthropic and Gemini APIs · built with Claude Code</p></div>
+            <div class="row"><h3>Timeline</h3><p>First commit Apr 28, 2026 · first ten-locale run Jun 1 · v2 console Aug 13 · v3 workspace Sep 1</p></div>
+            <div class="row"><h3>Status</h3><p>In production · 8,118 localized variants across 28 locales as of Sep 8, 2026</p></div>
           </div>
-          <div class="owned-item">
-            <div class="owned-label">v3, with engineering</div>
-            <p class="owned-text">Inside the company's admin platform: the WYSIWYG editor and its round-trip gate, inline flag decorations, the localizer workspace, the admin overview matrix, view-as, server-side drafts with conflict handling, and the content-generation workflow. Engineers wired the always-gated publish flow and the scope model. 81 commits.</p>
+        </section>
+
+        <!-- 02 · WHAT I OWNED -->
+        <section class="chapter" id="owned">
+          <div class="chapter-head fade-up"><span class="chapter-n">02</span><span class="eyebrow">My role</span></div>
+          <h2 class="fade-up">The idea, the product, the first codebase, and the parts of the next two that people touch</h2>
+          <div class="rows fade-up">
+            <div class="row"><h3>Initiative</h3><p>Named the risk in the team's scattered AI use, defined the product, and built it without a brief. When the company committed to new markets, I pivoted the same tool into a localization engine instead of starting a second product.</p></div>
+            <div class="row"><h3><small>v1</small>Coded by me</h3><p>The TypeScript and Lit app, the Cloudflare Worker and its Azure client, the pipeline and its CLI workflow, and 221 Vitest tests. 493 of the repo's 524 commits; one engineer contributed 21.</p></div>
+            <div class="row"><h3><small>v2</small>With engineering</h3><p>Engineering rebuilt the pipeline in Python on Azure, porting v1's quality gates file by file. I wrote the review-console spec from v1's four failures, prototyped it, then built the review API and the React console. 113 of the repo's 717 commits.</p></div>
+            <div class="row"><h3><small>v3</small>With engineering</h3><p>The WYSIWYG editor and its round-trip gate, inline flags, the localizer workspace, the admin overview, view-as, server-side drafts, and the content-generation workflow. Engineers wired the always-gated publish flow and the scope model. 81 commits.</p></div>
+            <div class="row"><h3>Grounding and guardrails</h3><p>Nothing is trained. Everything is prompted, retrieved from a per-locale knowledge base, verified by a separate pass, and approved by a person. The voice, compliance, and imagery rubrics are mine.</p></div>
           </div>
-          <div class="owned-item">
-            <div class="owned-label">Grounding and guardrails</div>
-            <p class="owned-text">Nothing is trained. Everything is prompted, retrieved from a per-locale knowledge base, verified by a separate pass, and approved by a person. The rubrics for voice, compliance, and locale-appropriate imagery are mine.</p>
+        </section>
+
+        <!-- 03 · THE GAP -->
+        <section class="chapter" id="gap">
+          <div class="chapter-head fade-up"><span class="chapter-n">03</span><span class="eyebrow">Where it started</span></div>
+          <h2 class="fade-up">Everyone had an AI tool. None of them sounded like us.</h2>
+          <div class="prose fade-up">
+            <p>AI became a daily habit across the content team, each writer on a personal subscription with no shared rules. The drafts came fast, drifted from the company's voice, and nothing recorded which claims had been checked. In a business built on financial trust, that is a liability, and nobody owned it.</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ 3. THE GAP ════ -->
-    <section id="gap" class="cs-section">
-      <div class="wrap fade-up">
-        <div class="eyebrow-row"><span class="eyebrow">Where it started</span><span class="ver ver--muted">Early 2026</span></div>
-        <h2 class="solution-h2">Everyone had an AI tool. None of them sounded like us.</h2>
-        <p class="problem-body">AI became a daily habit across the content team, each writer on a personal subscription with no shared rules. The drafts came fast, drifted from the company's voice, and nothing recorded which claims had been checked. In a business built on financial trust, that is a liability, and I could see nobody owned it.</p>
-
-        <div class="whatif">
-          <p class="whatif-label">The question I asked</p>
-          <p>What if the tool already knew what our content looked like, instead of a blank page with a model bolted on?</p>
-          <small>Voice pillars, compliance rules, and the schema for every content type applied by default, so every draft comes back sounding like the company. People stop reaching for tools we cannot control because the sanctioned one is better.</small>
-        </div>
-
-        <div class="before-after">
-          <div class="ba-card">
-            <h4>Before</h4>
-            <p>Personal subscriptions. Off-brand drafts. No record of what was checked. One more review round for every piece.</p>
+          <div class="question fade-up">
+            <p class="question-kicker">The question I asked</p>
+            <p class="question-text">What if the tool already knew what our content looked like, instead of a blank page with a model bolted on?</p>
+            <p class="question-sub">Voice pillars, compliance rules, and the schema for every content type, applied by default. People stop reaching for tools we cannot control because the sanctioned one is better.</p>
           </div>
-          <div class="ba-card ba-card--after">
-            <h4>After v1</h4>
-            <p>One studio. Company voice and compliance by default. Unsourced claims flagged beside the editor. Drafts in minutes, with a publish-readiness checklist.</p>
+          <div class="rows fade-up">
+            <div class="row"><h3>Before</h3><p>Personal subscriptions. Off-brand drafts. No record of what was checked. One more review round for every piece.</p></div>
+            <div class="row"><h3>After v1</h3><p>One studio. Company voice and compliance by default. Unsourced claims flagged beside the editor. Drafts in minutes, with a publish-readiness checklist.</p></div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- ════ 4. v1 ════ -->
-    <section id="v1" class="cs-section">
-      <div class="wrap fade-up">
-        <div class="eyebrow-row"><span class="ver">v1</span><span class="eyebrow">Global Content Studio · built solo · Apr – May 2026</span></div>
-        <h2 class="solution-h2">Four weeks from first commit to launch QA, one designer, no engineering.</h2>
-        <p class="solution-body">
-          I built it with Claude Code as the pair and the Anthropic API inside the product. The first working version took two weeks. The rest was tuning until every piece held up on real content.
-        </p>
-        <div class="numbered-list">
-          <div class="numbered-item">
-            <span class="numbered-item-n">01</span>
-            <p class="numbered-item-text"><strong>The author picks a content type, a locale, and an audience, then writes a topic.</strong> Every request carries the voice pillars, the compliance rules, and the schema for that content type. Thirteen content types, from articles and quizzes to life events and calculators.</p>
+        <!-- 04 · v1 -->
+        <section class="chapter" id="v1">
+          <span id="architecture" class="anchor-alias" aria-hidden="true"></span>
+          <div class="chapter-head fade-up"><span class="chapter-n">04</span><span class="ver">v1</span><span class="eyebrow">Built alone · Apr – May 2026</span></div>
+          <h2 class="fade-up">Four weeks from first commit to launch QA, one designer, no engineering.</h2>
+          <p class="lead fade-up">I built it with Claude Code as the pair and the Anthropic API inside the product. The first working version took two weeks. The rest was tuning until every piece held up on real content.</p>
+          <div class="steps fade-up">
+            <div class="step"><p><strong>The author picks a content type, a locale, and an audience, then writes a topic.</strong> Every request carries the voice pillars, the compliance rules, and the schema for that type. Thirteen content types, from articles and quizzes to life events and calculators.</p></div>
+            <div class="step"><p><strong>Uncertainty is shown, not hidden.</strong> The model must cite a source it consulted or flag the claim. Flagged claims appear beside the editor, each with the figure to confirm and where to confirm it.</p></div>
+            <div class="step"><p><strong>One Worker holds every secret.</strong> The browser never sees the API key. A Cloudflare Worker proxies the model and fronts Azure Blob Storage, the source of truth for every entry, variant, and flag. One write path means one place to enforce the rules.</p></div>
           </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">02</span>
-            <p class="numbered-item-text"><strong>Uncertainty is shown, not hidden.</strong> The model must cite a source it consulted or flag the claim. Flagged claims appear in an accuracy-check panel beside the editor, each with the figure to confirm and where to confirm it.</p>
+          <figure class="figure fade-up">
+            <div class="frame"><img src="/images/Global Content Studio Case Study/gcs-korean.webp" alt="The authoring studio drafting a Korean quiz about saving for a home, with an Accuracy Check panel listing five claims to confirm, each with the figure in question and the official source to check" loading="lazy" width="2400" height="1483"></div>
+            <figcaption class="caption">Authoring a Korean quiz. The panel on the right is the design decision that matters: five claims the model could not tie to a source, each listed with the exact figure to confirm and the government page to check. "5 to review" is a to-do, not a score.</figcaption>
+          </figure>
+        </section>
+
+        <!-- 05 · GOING GLOBAL -->
+        <section class="chapter" id="turn">
+          <div class="chapter-head fade-up"><span class="chapter-n">05</span><span class="ver">v1</span><span class="eyebrow">Going global · May – Jun 2026</span></div>
+          <h2 class="fade-up">"Contribute to your 401(k)" in French is still wrong when every word is correct.</h2>
+          <div class="prose fade-up">
+            <p>Then the company set its sights on every market. The library assumed a US reader on every page: 401(k)s, HSAs, the IRS. Vendor translation runs weeks per asset and gives you a literal rendering of advice that does not apply. The traditional path was one in-country localizer per market, for a 592-piece library.</p>
           </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">03</span>
-            <p class="numbered-item-text"><strong>One Worker holds every secret.</strong> The browser never sees the API key. A Cloudflare Worker proxies the model and fronts Azure Blob Storage, which is the source of truth for every entry, variant, and flag. One write path means one place to enforce the rules.</p>
+          <div class="question fade-up">
+            <p class="question-kicker">The second question</p>
+            <p class="question-text">What if localizing meant re-authoring the piece for that market, with a person signing off, instead of translating it?</p>
+            <p class="question-sub">Swap the retirement system, the tax authority, the register, and the examples. Keep the coach's voice. Flag anything the model cannot source, and let a native localizer have the final say.</p>
           </div>
-        </div>
 
-        <figure class="shot fade-up" style="margin-top:clamp(40px,5vw,56px);">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/gcs-korean.webp" alt="The authoring studio drafting a Korean quiz about saving for a home: content type, locale, and audience on the left; the quiz questions in the editor; and an Accuracy Check panel on the right listing five claims to confirm, each with the figure in question and the official source to check" loading="lazy" width="2400" height="1483">
-          <figcaption>Authoring a Korean quiz. The panel on the right is the design decision that matters: the model drafted five claims it could not tie to a source, so each one is listed with the exact figure to confirm and the government page to check, instead of being quietly published. "5 to review" is the author's to-do, not a score.</figcaption>
-        </figure>
-      </div>
-    </section>
+          <table class="terms fade-up" aria-label="How the same US term is rewritten per market">
+            <thead><tr><th>US source</th><th>Canada</th><th>United Kingdom</th></tr></thead>
+            <tbody>
+              <tr><td>401(k)</td><td data-l="Canada"><strong>RRSP</strong>, with Group RRSP vs. RPP handled separately</td><td data-l="UK"><strong>Workplace pension</strong></td></tr>
+              <tr><td>Roth IRA</td><td data-l="Canada"><strong>TFSA</strong></td><td data-l="UK"><strong>ISA</strong></td></tr>
+              <tr><td>IRS · FDIC</td><td data-l="Canada"><strong>CRA</strong>; in Québec, <strong>Revenu Québec</strong> and QPP</td><td data-l="UK"><strong>HMRC · FSCS</strong></td></tr>
+              <tr><td>The coach's "you"</td><td data-l="Mexico">Informal <strong>tú</strong> in Mexico</td><td data-l="Colombia">Formal <strong>usted</strong> in Colombia</td></tr>
+            </tbody>
+          </table>
+          <p class="note fade-up">Nineteen locales carry a terminology map like this. A term with no local equivalent maps to null, which means rewrite or flag, never translate.</p>
 
-    <!-- ════ 5. THE TURN: GOING GLOBAL ════ -->
-    <section id="turn" class="cs-section">
-      <div class="wrap fade-up">
-        <div class="eyebrow-row"><span class="ver">v1</span><span class="eyebrow">The turn · May 2026</span></div>
-        <h2 class="solution-h2">"Contribute to your 401(k)" in French is still wrong when every word is correct.</h2>
-        <p class="problem-body">Then the company set its sights on every market. The library assumed a US reader on every page: 401(k)s, HSAs, the IRS. Vendor translation runs weeks per asset and gives you a literal rendering of advice that does not apply. The traditional path was one in-country localizer per market, recruited and managed, for a 592-piece library.</p>
+          <h3 class="sub fade-up">Inside Atlas: what happens to every article</h3>
+          <p class="lead fade-up">A fit check decides whether the piece belongs in that market at all, then controlled passes run. The model's confidence only routes work to reviewers. The fit check, a separate verify pass, deterministic checks, and the localizer decide what publishes.</p>
 
-        <div class="whatif">
-          <p class="whatif-label">The second question</p>
-          <p>What if localizing meant re-authoring the piece for that market, with a person signing off, instead of translating it?</p>
-          <small>Swap the retirement system, the tax authority, the register, and the examples. Keep the coach's voice. Flag anything the model cannot source, and let a native localizer have the final say.</small>
-        </div>
-
-        <div class="terms" role="table" aria-label="How the same US term is rewritten per market">
-          <div class="terms-row" role="row"><div role="columnheader">US source</div><div role="columnheader">Canada</div><div role="columnheader">United Kingdom</div></div>
-          <div class="terms-row" role="row"><div role="cell">401(k)</div><div role="cell"><strong>RRSP</strong>, with Group RRSP vs. RPP handled separately</div><div role="cell"><strong>Workplace pension</strong></div></div>
-          <div class="terms-row" role="row"><div role="cell">Roth IRA</div><div role="cell"><strong>TFSA</strong></div><div role="cell"><strong>ISA</strong></div></div>
-          <div class="terms-row" role="row"><div role="cell">IRS · FDIC</div><div role="cell"><strong>CRA</strong>, and in Québec <strong>Revenu Québec</strong> with QPP in place of CPP</div><div role="cell"><strong>HMRC · FSCS</strong></div></div>
-          <div class="terms-row" role="row"><div role="cell">"You", the coach's register</div><div role="cell">Mexico: informal <strong>tú</strong></div><div role="cell">Colombia: formal <strong>usted</strong></div></div>
-        </div>
-        <p class="stage-note">Nineteen locales carry a terminology map like this. Terms with no local equivalent map to null, which means rewrite or flag, never translate.</p>
-
-        <div class="exp-header fade-up" style="margin-top:clamp(56px,7vw,80px);">
-          <h3 class="exp-h2" style="font-size:clamp(22px,2.4vw,30px);">Inside Atlas: what happens to every article</h3>
-          <p class="exp-body">
-            Every piece moves through Atlas: a fit check decides whether it belongs in that market at all, then controlled passes run. The model's confidence only routes work to reviewers. The fit check, a separate verify pass, deterministic checks, and the localizer decide what publishes.
-          </p>
-        </div>
-
-        <div class="atlas fade-up" id="atlas" style="transition-delay:90ms;">
-          <div class="atlas-scroll">
-            <div class="atlas-inner">
-              <div class="atlas-groups">
-                <span class="atlas-group" style="flex:6">Get it right</span>
-                <span class="atlas-group" style="flex:1">Guarantee it</span>
-                <span class="atlas-group" style="flex:2">Approve &amp; ship</span>
+          <div class="atlas fade-up" id="atlas">
+            <div class="atlas-scroll">
+              <div class="atlas-inner">
+                <div class="atlas-groups">
+                  <span class="atlas-group" style="flex:6">Get it right</span>
+                  <span class="atlas-group" style="flex:1">Guarantee it</span>
+                  <span class="atlas-group" style="flex:2">Approve &amp; ship</span>
+                </div>
+                <div class="atlas-track" role="tablist" aria-label="Atlas pipeline steps"></div>
               </div>
-              <div class="atlas-track" role="tablist" aria-label="Atlas pipeline steps"></div>
             </div>
-          </div>
-          <div class="atlas-detail" aria-live="polite">
-            <div class="atlas-detail-step"></div>
-            <div class="atlas-detail-title"></div>
-            <p class="atlas-detail-desc"></p>
-            <div class="atlas-detail-why">
-              <div class="atlas-detail-why-label">Why it matters</div>
-              <div class="atlas-detail-why-text"></div>
+            <div class="atlas-detail" aria-live="polite">
+              <div class="atlas-detail-step"></div>
+              <div class="atlas-detail-title"></div>
+              <p class="atlas-detail-desc"></p>
+              <div class="atlas-detail-why">
+                <div class="atlas-detail-why-label">Why it matters</div>
+                <div class="atlas-detail-why-text"></div>
+              </div>
             </div>
+            <p class="atlas-hint">Hover or tap a step to see what happens and why it matters.</p>
           </div>
-          <p class="atlas-hint">Hover or tap a step to see what happens and why it matters.</p>
-        </div>
 
-        <script>
-          (function () {
-            var A = document.getElementById('atlas');
-            if (!A) return;
-            var STEPS = [
-              { n: 0, t: 'Fit check', d: "First we ask whether the topic even applies in this market. If an article is built around something that does not exist there, we do not localize it.", w: "We never publish advice that does not fit the reader's country. Of 75 UK articles the gate dropped, 13 had a UK analogue and were rewritten; 62 could not honestly exist there." },
-              { n: 1, t: 'Triage', d: "We size up what the article needs and how much has to change to work in the new market.", w: "Effort goes where it is needed, so simple pieces move quickly." },
-              { n: 2, t: 'Research the local facts', d: "We gather the real facts for that country from the per-locale wiki and an allowlist of government and regulator sources.", w: "The numbers are accurate for that market, not carried over from the US. Web search feeds the wiki; it does not bypass it." },
-              { n: 3, t: 'Rewrite for the market', d: "We rewrite the article in the local language and our coach voice. For English-speaking markets, we swap the regional facts rather than translate.", w: "It reads as if it were written locally, never like a machine translation." },
-              { n: 4, t: 'Cultural review', d: "We check that the tone, examples, and expressions fit the culture of the market.", w: "Nothing reads as foreign, tone-deaf, or off-brand." },
-              { n: 5, t: 'Numbers & compliance', d: "We verify every figure, rate, and legal statement against the market and flag anything that needs a closer look.", w: "Financial accuracy and regulatory safety in each country." },
-              { n: 6, t: 'The guardrail', d: "A separate model pass reads the draft as a skeptical native reader, with typed failures (US comparison, US institution, literal idiom, register slip) and a redo loop. A deterministic check then strips US links and US-only terms.", w: "No US reference reaches a finished article, no matter who runs the process. The two checks fail differently, which is why both exist." },
-              { n: 7, t: 'Human review', d: "A localizer reviews what the system flagged and approves the article. Nothing publishes without this.", w: "A person always has the final say. The policy is in the code: approved is a state automation cannot cross." },
-              { n: 8, t: 'Publish', d: "Once approved, the article is released to the shared library for that market.", w: "A controlled, consistent release across every market we serve." }
-            ];
-            var track = A.querySelector('.atlas-track');
-            var dStep = A.querySelector('.atlas-detail-step');
-            var dTitle = A.querySelector('.atlas-detail-title');
-            var dDesc = A.querySelector('.atlas-detail-desc');
-            var dWhy = A.querySelector('.atlas-detail-why-text');
-            var btns = [];
-            function show(i) {
-              var s = STEPS[i];
-              for (var j = 0; j < btns.length; j++) {
-                var on = j === i;
-                btns[j].classList.toggle('is-active', on);
-                btns[j].setAttribute('aria-selected', on ? 'true' : 'false');
-              }
-              dStep.textContent = 'Step ' + s.n;
-              dTitle.textContent = s.t;
-              dDesc.textContent = s.d;
-              dWhy.textContent = s.w;
-            }
-            STEPS.forEach(function (s, i) {
-              var b = document.createElement('button');
-              b.className = 'atlas-step';
-              b.type = 'button';
-              b.setAttribute('role', 'tab');
-              b.setAttribute('aria-label', 'Step ' + s.n + ': ' + s.t);
-              if (s.n === 6) b.setAttribute('data-guardrail', '1');
-              var dot = document.createElement('span');
-              dot.className = 'atlas-dot';
-              dot.textContent = s.n;
-              var title = document.createElement('span');
-              title.className = 'atlas-step-title';
-              title.textContent = s.t;
-              b.appendChild(dot);
-              b.appendChild(title);
-              b.addEventListener('mouseenter', function () { show(i); });
-              b.addEventListener('focus', function () { show(i); });
-              b.addEventListener('click', function () { show(i); });
-              track.appendChild(b);
-              btns.push(b);
-            });
-            show(0);
-          })();
-        </script>
-
-        <figure class="shot fade-up" style="margin-top:clamp(40px,5vw,56px);">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/localization.png" alt="Three localized Life Event articles side by side: Starting a Family in English for Ireland, the same Life Event in Simplified Chinese, and Caring for Parents in Czech, each written with local facts and voice rather than translated" loading="lazy" width="1836" height="740">
-          <figcaption>What a rewrite looks like next to a translation. The Irish version of Starting a Family opens on the HSE Maternity and Infant Care Scheme, a program that exists only there; the Chinese version opens on urban employee medical insurance. The Czech panel is a different Life Event, caring for parents, in the same voice.</figcaption>
-        </figure>
-
-        <div class="stat-row fade-up">
-          <div><div class="stat-val">3,512</div><div class="stat-label">Variants localized in one four-day run, June 1 to 4, bringing ten locales live</div></div>
-          <div><div class="stat-val">1,575</div><div class="stat-label">Peak day, June 3, 2026</div></div>
-          <div><div class="stat-val">27</div><div class="stat-label">Locales with live content by August, from Bulgaria to Vietnam</div></div>
-        </div>
-
-        <figure class="shot fade-up" style="margin-top:clamp(40px,5vw,56px);">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/the-problem.webp" alt="Localize QA: 1,816 pieces awaiting review across 26 locales, shown as one card per locale with its need-review count, a progress bar, and approved and flagged counts" loading="lazy" width="2400" height="1479">
-          <figcaption>The localizer's front door in v1, captured mid-run with 1,816 pieces waiting. Each locale card shows how much is left, how much is approved, and how much the pipeline flagged, so a reviewer can prioritize a market (India at 506, Ireland at 462) instead of opening pieces one by one.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ════ 6. DECISIONS ════ -->
-    <section id="decisions" class="cs-section" style="background:var(--surface);">
-      <div class="wrap fade-up">
-        <span class="eyebrow">Decisions and tradeoffs</span>
-        <h2 class="solution-h2">Four calls I would make again</h2>
-        <div class="decision-list">
-          <div class="decision">
-            <h3>A per-locale wiki instead of open-web search</h3>
-            <p><strong>Not taken:</strong> letting the model research each market live on the web at draft time.</p>
-            <p><strong>Why:</strong> financial facts have to be ours. A curated wiki is slower to build, one locale at a time, but every retirement system and tax authority the model cites is something a person vetted. Web search still runs in the research stage; it feeds the wiki, it does not bypass it.</p>
-          </div>
-          <div class="decision">
-            <h3>Five model calls per article, not one</h3>
-            <p><strong>Not taken:</strong> the original one-pass pipeline, which cost about a fifth as much.</p>
-            <p><strong>Why:</strong> one-pass output kept US framing and US-only links that no automated check could see. Splitting into gate, research, draft, independent verify, and save took an article to roughly 335k tokens. That cost is what forced the skip-approved default and targeted re-runs instead of full-corpus rewrites.</p>
-          </div>
-          <div class="decision">
-            <h3>The score routes; it does not gate</h3>
-            <p><strong>Not taken:</strong> publishing anything above a confidence threshold.</p>
-            <p><strong>Why:</strong> the confidence number is the model grading its own output. It is useful for deciding what a reviewer sees first and useless as a guarantee. The gate is a separate verify pass with typed failure reasons, deterministic checks, and a person. There is no threshold in the code, on purpose.</p>
-          </div>
-          <div class="decision">
-            <h3>Approved is a state automation cannot cross</h3>
-            <p><strong>Not taken:</strong> letting a batch run refresh every variant in its scope, which is simpler and what the first version did.</p>
-            <p><strong>Why:</strong> a run once consumed articles a localizer had already approved and reported "25 written, 0 errors". A person's judgment is the most expensive thing in the system. Runs now skip approved work by default, and re-localizing an approved piece is a named, explicit request. That decision is dated August 5, 2026, and it is mine.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ 7. WHAT BROKE ════ -->
-    <section id="what-broke" class="cs-section">
-      <div class="wrap fade-up">
-        <div class="eyebrow-row"><span class="eyebrow">The turning point · Jun – Aug 2026</span></div>
-        <h2 class="solution-h2">It worked. Then it hit the limits of a tool one person built.</h2>
-        <p class="problem-body">By August the library held more than eight thousand localized variants and two localizers were working through them. The tool that got us there could not carry the next stage, and I wrote down why. These four failures open the spec for the next version, in my words: the previous version failed on these four.</p>
-
-        <div class="broke-grid">
-          <div class="broke-card">
-            <span class="broke-card-n">01 · Lost edits</span>
-            <h3>A re-run was a rewrite, not an edit</h3>
-            <p>A 25-article Mexico batch replaced variants a localizer had already corrected. <strong>Measured on three reviewed articles, none of the reviewed sentences survived: 26 of 26, 32 of 32, 32 of 32.</strong> The log said success. The only signal was a localizer recognizing text she had already fixed.</p>
-          </div>
-          <div class="broke-card">
-            <span class="broke-card-n">02 · Flags hard to act on</span>
-            <h3>Reviewers did not know what to look at</h3>
-            <p>Flags lived in a separate tab, carried machine names, and offered no action. <strong>A single Bulgarian run produced 630 flags on 445 articles, 78% of them "check this number".</strong> Counting flags as a negative would have told us the worse pipeline was better.</p>
-          </div>
-          <div class="broke-card">
-            <span class="broke-card-n">03 · No audit trail</span>
-            <h3>No identity, no history</h3>
-            <p>A first-visit name prompt stored in the browser stood in for sign-in. <strong>Nobody could say who approved a variant, who dismissed a flag, or why.</strong> An append-only review log came late and covered only part of it.</p>
-          </div>
-          <div class="broke-card">
-            <span class="broke-card-n">04 · Slow at scale</span>
-            <h3>Every request parsed a 3.5 MB index</h3>
-            <p>The Worker hit its CPU limit reading the whole library index on every call. <strong>Post-passes touched the entire corpus on every batch, and a setup step emitted all 560 articles for a 3-article run.</strong> The CLI and in-app pipelines had also drifted into two implementations.</p>
-          </div>
-        </div>
-
-        <div class="broke-aside">
-          <strong>Also found and fixed in v1 before the hand-off:</strong> 5,455 published variants carried English titles and slugs on localized bodies, caught in an August audit of the live data; US-only links were invisible to every automated check until the verify stage and a deterministic link check landed (51 dangling calls to action across 27 locales and 8,120 variants on the first scan); the 5-worker pool derived five different locale briefs per batch until a keyed single-flight lock fixed it; and a swallowed parse error left jobs at "running" forever until unparseable model output failed loudly with a retry.
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ 8. v2 ════ -->
-    <section id="v2" class="cs-section">
-      <div class="wrap fade-up">
-        <div class="eyebrow-row"><span class="ver">v2</span><span class="eyebrow">The review console on the pipeline platform · Aug – Oct 2026</span></div>
-        <h2 class="solution-h2">Engineering rebuilt the pipeline in Python. I designed and built the console the localizers work in.</h2>
-        <p class="solution-body">
-          The company moved localization onto its workflow platform: Python workers on Azure, a queue-driven orchestrator, a document store for state, a vector store for search. The engineers ported v1's quality gates file by file. My part was everything a person touches: the spec written from the four failures, an HTML prototype, then the review API and the React console, twenty commits in the first two days.
-        </p>
-
-        <div class="fixmap" aria-label="Each v1 failure mapped to its v2 fix">
-          <div class="fix">
-            <div class="fix-from"><strong>01 · Lost edits on re-run</strong>A re-run overwrote human work and reported success.</div>
-            <div class="fix-arrow" aria-hidden="true">→</div>
-            <p class="fix-to"><strong>The reviewer's copy is its own field, and only Approve writes the body that publishes.</strong> Every save carries a version check; a stale save is refused instead of winning. Full versions are kept for a year, with Restore. Autosave fires 1.5 seconds after typing stops and each draft is tagged to its article, after a bug where one article's text landed on another.</p>
-          </div>
-          <div class="fix">
-            <div class="fix-from"><strong>02 · Flags hard to act on</strong>Machine names in a separate tab, no action to take.</div>
-            <div class="fix-arrow" aria-hidden="true">→</div>
-            <p class="fix-to"><strong>A flag rail in the margin, split into "Needs your call" and "Already handled", with plain labels.</strong> <code>verification:freshness</code> became "Check this number". Three actions: Apply when a suggestion exists, Fix myself, Dismiss with a reason. Apply is refused for flags that point at the English source, because the fix belongs upstream.</p>
-          </div>
-          <div class="fix">
-            <div class="fix-from"><strong>03 · No audit trail</strong>A name in a browser prompt stood in for identity.</div>
-            <div class="fix-arrow" aria-hidden="true">→</div>
-            <p class="fix-to"><strong>Roles on the company identity provider, enforced on the server for every route.</strong> A localizer is locked to their locale; only a publisher can release. Each article carries a review block (assignee, last editor, edit count, approver) and a 50-entry revision log, and every flag carries a resolution block in the same shape the self-heal stage writes, so a human fix and a machine fix read the same way. The dismiss reason is the audit trail.</p>
-          </div>
-          <div class="fix">
-            <div class="fix-from"><strong>04 · Slow at scale</strong>Whole-index reads, whole-corpus post-passes.</div>
-            <div class="fix-arrow" aria-hidden="true">→</div>
-            <p class="fix-to"><strong>Stored flag counts, queue queries that load only the listed fields, 50 per page.</strong> Batch calls for heavy work, single calls for cheap judgments. Re-runs skip unchanged work and reuse market-level verdicts. A paging bug that made articles past the first 50 unreachable (24 in one locale, 111 in another) is fixed and tested.</p>
-          </div>
-        </div>
-
-        <figure class="shot fade-up" style="margin-top:clamp(48px,6vw,64px);">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/v2-review-console-flags.webp" alt="The v2 review console prototype: a Spanish article for Mexico in an editor with a toggle between Spanish (publishing text) and English (what it says), and a flag rail on the right with cards labeled Must fix and Check, each with a suggested fix and Apply, Fix myself, and Dismiss buttons. Approve is disabled with five flags open." loading="lazy" width="2880" height="1800">
-          <figcaption>The design prototype the v2 console was built from (August 2026, demo content). Three things to notice: the toggle between the Spanish text that publishes and the English it was written from; the flag rail that turns "401(k)" into a must-fix with the local equivalent ready to apply; and the Approve button, disabled while five flags are open. A localizer cannot approve around a flag.</figcaption>
-        </figure>
-
-        <figure class="diagram fade-up" style="margin-top:clamp(48px,6vw,64px);">
-          <svg viewBox="0 0 880 250" role="img" aria-labelledby="roles-title roles-desc">
-            <title id="roles-title">Two sign-offs, one-way publishing</title>
-            <desc id="roles-desc">The pipeline stages an article for review. A localizer, locked to one locale, resolves flags and approves. A publisher, a separate role, releases the approved set with an expected-count guard. Publishing is one way; nothing in the interface can unpublish.</desc>
-            <g class="d-box"><rect x="16" y="70" width="190" height="96" rx="12"/><text x="32" y="100" class="d-h">Pipeline stages it</text><text x="32" y="122" class="d-t">status: for-review</text><text x="32" y="142" class="d-t">flags attached, counts stored</text></g>
-            <g class="d-box d-box--key"><rect x="266" y="70" width="190" height="96" rx="12"/><text x="282" y="100" class="d-h">Localizer approves</text><text x="282" y="122" class="d-t">locked to one locale, server-side</text><text x="282" y="142" class="d-t">zero open flags, or refused</text></g>
-            <g class="d-box d-box--key"><rect x="516" y="70" width="190" height="96" rx="12"/><text x="532" y="100" class="d-h">Publisher releases</text><text x="532" y="122" class="d-t">a separate role</text><text x="532" y="142" class="d-t">expected count checked first</text></g>
-            <g class="d-box d-box--acc"><rect x="766" y="86" width="100" height="64" rx="12"/><text x="782" y="112" class="d-h">Live</text><text x="782" y="132" class="d-t">one way</text></g>
-            <g class="d-line"><path d="M206 118 L266 118"/><path d="M456 118 L516 118"/></g>
-            <g class="d-line d-line--strong"><path d="M706 118 L766 118"/></g>
-            <g class="d-l"><text x="212" y="108">claim</text><text x="462" y="108">approved</text><text x="712" y="108">publish</text></g>
-            <g class="d-line"><path d="M361 166 C 361 210, 150 210, 111 166" stroke-dasharray="3 4"/></g>
-            <g class="d-l"><text x="150" y="222">Needs rerun: the localizer's note becomes the next run's prompt</text></g>
-          </svg>
-          <figcaption>The contract between people and automation. Approve requires zero open flags, publishing is a separate role with a count guard, and nothing in the interface can unpublish. The engineers later moved the roles to scoped platform tokens; the boundaries stayed where I drew them.</figcaption>
-        </figure>
-
-        <div class="exp-header fade-up" style="margin-top:clamp(56px,7vw,80px);">
-          <h3 class="exp-h2" style="font-size:clamp(22px,2.4vw,30px);">The pipeline, rebuilt: eighteen stages, one human gate</h3>
-          <p class="exp-body">Atlas's passes became a state machine on Azure. Workers advance the next stage as soon as they finish; a scheduled sweep retries stale stages with backoff and never dispatches a stage twice. The human review stage is the only one the run does not wait for.</p>
-        </div>
-        <div class="stage-rail" aria-label="The v2 pipeline stages, grouped">
-          <div class="stage-groups">
-            <div class="stage-group"><h4>Judge</h4><ol><li><i>1</i><b>Rework scan</b> turns reviewer verdicts into a work list</li><li><i>2</i><b>Evaluate</b> suitability per market; skips what a reviewer touched</li></ol></div>
-            <div class="stage-group"><h4>Author</h4><ol><li><i>3</i><b>Localize</b> re-authors into local English with web search</li><li><i>4</i><b>Gap scan</b> finds action items with no article</li><li><i>5</i><b>Author</b> writes the missing pieces</li><li><i>6</i><b>Translate</b> renders the target language; English kept beside it</li><li><i>7</i><b>Pair sync</b> carries edits between languages, flags conflicts</li></ol></div>
-            <div class="stage-group"><h4>Picture</h4><ol><li><i>8</i><b>Image evaluate</b> judges the existing header image</li><li><i>9</i><b>Images</b> picks a licensed photo or generates one</li></ol></div>
-            <div class="stage-group"><h4>Gate</h4><ol><li><i>10</i><b>Stage</b> runs the deterministic gates, writes for-review docs and flags</li><li><i>11</i><b>Proposals</b> give every action item a resource or a reason</li><li><i>12</i><b>Heal</b> fixes what is mechanical; never approves</li><li><i>13</i><b>Link localize</b></li></ol></div>
-            <div class="stage-group stage-group--human"><h4>People</h4><ol><li><i>14</i><b>Localizer review</b> in the console</li><li><i>15</i><b>Publisher release</b></li></ol></div>
-            <div class="stage-group"><h4>Serve</h4><ol><li><i>16</i><b>Embed</b> published articles for search</li><li><i>17</i><b>Enable</b> routing for the locale</li><li><i>18</i><b>Q&amp;A and life-event tracks</b> run in parallel</li></ol></div>
-          </div>
-        </div>
-        <p class="stage-note">Forty-three locale grounding files, 22 markets configured for batch generation, and a self-heal stage that writes the same resolution block a human does. Engineering owns the pipeline; the console, the review API, and the batch-generation modes added in October are mine.</p>
-      </div>
-    </section>
-
-    <!-- ════ 9. v3 ════ -->
-    <section id="v3" class="cs-section">
-      <div class="wrap fade-up">
-        <div class="eyebrow-row"><span class="ver">v3</span><span class="eyebrow">Global Content Review in the admin platform · Aug – Oct 2026</span></div>
-        <h2 class="solution-h2">Then it moved into the platform localizers already use, with an editor for people who do not write markup.</h2>
-        <p class="solution-body">
-          The review console proved the model. The company wanted it where every other admin task lives, behind the same sign-in, with the same roles. I started that build the day after the v2 console merged, and it became the surface the localizers work in.
-        </p>
-        <div class="numbered-list">
-          <div class="numbered-item">
-            <span class="numbered-item-n">01</span>
-            <p class="numbered-item-text"><strong>One text box, WYSIWYG, with a round-trip gate.</strong> The rich editor opens only if it can reproduce the article byte for byte; otherwise the page falls back to a plain source view rather than silently reformatting a localizer's work. The gate is tested against 887 real article bodies.</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">02</span>
-            <p class="numbered-item-text"><strong>Flags live in the text.</strong> Inline decorations link both ways with the cards in the rail, so "find in text" is one click. The English companion sits beside the localized pane, and a third pane compares to the US source on demand.</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">03</span>
-            <p class="numbered-item-text"><strong>Drafts live on the server, and a conflict keeps your edits.</strong> Every save carries a version check and a merge base. On a conflict the page shows the other writer's version beside yours instead of discarding either. An unsaved-edits guard stops accidental navigation.</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">04</span>
-            <p class="numbered-item-text"><strong>Routing is the locale, not a person.</strong> A localizer covers exactly one market and sees only it; an admin sees every staged locale as a matrix and can view the product as any localizer's seat, with publishing kept out of that seat. Editing presence is a label for coordination, never a lock.</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">05</span>
-            <p class="numbered-item-text"><strong>Enforcement moved to the server.</strong> Single sign-on through the company identity provider, scopes resolved server-side, and a review API that filters locales and checks the role on every request. The interface only ever hides; the server enforces. Publishing and deletion are publisher-gated with a count guard and a version check.</p>
-          </div>
-        </div>
-
-        <div class="shot-pair fade-up">
-          <figure class="shot">
-            <img class="cs-image" src="../../images/Global Content Studio Case Study/v3-review-wysiwyg.webp" alt="The v3 review workspace prototype: a Spanish article for Mexico in a WYSIWYG editor with inline highlighted flags, a toggle to the English version and a Compare to US source button, a featured-image card with the vision check's verdict and Looks right / Flag for redo buttons, and a blocking flag card explaining that a high-yield savings account is not a product category in Mexico, with a suggested fix" loading="lazy" width="2314" height="2340">
-            <figcaption>The v3 workspace prototype (demo content). Flags are highlighted in the text itself. The blocking one explains why "high-yield savings account" is not a product category in Mexico and offers the local phrasing. Below the image, the vision check's verdict sits next to the two buttons a person uses to overrule it.</figcaption>
+          <figure class="figure fade-up">
+            <div class="frame"><img src="/images/Global Content Studio Case Study/localization.png" alt="Three localized Life Event articles side by side: Starting a Family in English for Ireland, the same Life Event in Simplified Chinese, and Caring for Parents in Czech" loading="lazy" width="1836" height="740"></div>
+            <figcaption class="caption">What a rewrite looks like next to a translation. The Irish version of Starting a Family opens on the HSE Maternity and Infant Care Scheme, a program that exists only there; the Chinese version opens on urban employee medical insurance.</figcaption>
           </figure>
-          <figure class="shot">
-            <img class="cs-image" src="../../images/Global Content Studio Case Study/v3-admin-locales-matrix.webp" alt="The admin's all-locales overview prototype: a table of markets with pipeline stage pips, workflow status, locale progress, open flags, stale items, assigned localizer, and last update, with stat cards for live hubs, in flight, waiting on localizer, open flags, stale items, and unassigned" loading="lazy" width="2314" height="2700">
-            <figcaption>The admin's view, every market on one screen: pipeline stage pips, the human workflow state that gates publishing, open flags, stale items, and who owns the locale. The status column is deliberately not the pipeline column; a run finishing is not the same as a market being ready.</figcaption>
+
+          <div class="stats fade-up">
+            <div><div class="stat-val">3,512</div><p class="stat-label">Variants localized in one four-day run, June 1–4, bringing ten locales live</p></div>
+            <div><div class="stat-val">1,575</div><p class="stat-label">On the peak day, June 3, 2026</p></div>
+            <div><div class="stat-val">27</div><p class="stat-label">Locales with live content by August, from Bulgaria to Vietnam</p></div>
+          </div>
+
+          <figure class="figure fade-up">
+            <div class="frame"><img src="/images/Global Content Studio Case Study/the-problem.webp" alt="Localize QA: 1,816 pieces awaiting review across 26 locales, one card per locale with need-review, approved, and flagged counts" loading="lazy" width="2400" height="1479"></div>
+            <figcaption class="caption">The localizer's front door in v1, mid-run with 1,816 pieces waiting. Each locale shows how much is left, approved, and flagged, so a reviewer can pick a market instead of opening pieces one by one.</figcaption>
           </figure>
-        </div>
+        </section>
 
-        <div class="exp-header fade-up" style="margin-top:clamp(56px,7vw,80px);">
-          <h3 class="exp-h2" style="font-size:clamp(22px,2.4vw,30px);">Next: the system proposes what to write</h3>
-          <p class="exp-body">Localizing the US library only gets a market so far. The generation workflow reads a locale's library against a prompt, reports where coverage is thin, proposes articles, lists what already exists in English to localize instead, and writes the chosen set through the same pipeline so every piece lands in review. Up to 200 in one batch, three in flight per locale, with the guardrails printed on the page: financial wellness only, written as a coach, compliant by default, true in this market, and a person always reviews it.</p>
-          <span class="status-note">Status: designed and running on demo data in the admin platform; the batch backend is a proposed contract, and the single-article generator is live on the pipeline platform.</span>
-        </div>
-        <figure class="shot fade-up">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/v3-create-content-gaps.webp" alt="The Create content gap planner on demo data for Quebec French: the AI read 155 articles, reports the thinnest categories, lists twelve proposed articles with priority and the closest existing piece, a bar to write all twelve, and a guardrails panel titled Every article is held to this" loading="lazy" width="1180" height="1090">
-          <figcaption>The gap planner on demo data for Québec French. What the AI found, where the library is thin, twelve proposals with the closest existing piece beside each, and six pieces that already exist in English and should be localized instead of written. The guardrails panel on the right is not settings; nobody can turn them off.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ════ 10. DESIGNING THE AI ════ -->
-    <section id="ai" class="cs-section" style="background:var(--surface);">
-      <span id="process" class="anchor-alias" aria-hidden="true"></span>
-      <span id="ai-assisted" class="anchor-alias" aria-hidden="true"></span>
-      <div class="wrap fade-up">
-        <span class="eyebrow">Designing the AI, not just the screens</span>
-        <h2 class="solution-h2">The image engine: a rubric I wrote in v1, and a human verdict that outranks the model in v2</h2>
-        <p class="solution-body">
-          A localized article with a US-coded photo undoes the text. So the header image gets the same treatment as the words: a cultural read, a brief, a check, and a person.
-        </p>
-
-        <figure class="diagram">
-          <svg viewBox="0 0 880 300" role="img" aria-labelledby="eng-title eng-desc">
-            <title id="eng-title">The locale image engine</title>
-            <desc id="eng-desc">Three model steps: a cultural analysis of the article for its market, an image brief that never includes flags, currency, or locale-specific brands, and a vision validation returning PASS, REVIEW, or FAIL. In v2 the generated or licensed image is judged suitable or not, and a human verdict in the review workspace outranks the machine judge.</desc>
-            <g class="d-box"><rect x="16" y="24" width="250" height="104" rx="12"/><text x="32" y="54" class="d-h">1 · Cultural analysis</text><text x="32" y="76" class="d-t">who the reader is, what the setting</text><text x="32" y="94" class="d-t">looks like in this market, what to avoid</text></g>
-            <g class="d-box"><rect x="316" y="24" width="250" height="104" rx="12"/><text x="332" y="54" class="d-h">2 · Image brief</text><text x="332" y="76" class="d-t">"Never include flags, currency,</text><text x="332" y="94" class="d-t">or locale-specific brands."</text></g>
-            <g class="d-box"><rect x="616" y="24" width="250" height="104" rx="12"/><text x="632" y="54" class="d-h">3 · Vision validation</text><text x="632" y="76" class="d-t">PASS · REVIEW · FAIL, with reasons</text><text x="632" y="94" class="d-t">unparseable output defaults to REVIEW</text></g>
-            <g class="d-line"><path d="M266 76 L316 76"/><path d="M566 76 L616 76"/></g>
-            <g class="d-box d-box--key"><rect x="616" y="180" width="250" height="96" rx="12"/><text x="632" y="210" class="d-h">4 · A person decides</text><text x="632" y="232" class="d-t">"Looks right" or "Flag for redo"</text><text x="632" y="250" class="d-t">with a note that drives the re-pick</text></g>
-            <g class="d-line d-line--strong"><path d="M741 128 L741 180"/></g>
-            <g class="d-l"><text x="754" y="160">outranks the model</text></g>
-            <g class="d-l"><text x="16" y="200">v1, June 2026: Claude for the analysis, the brief, and the check;</text><text x="16" y="218">generation on Flux Pro, then Gemini.</text><text x="16" y="248">v2, August: a licensed photo first, generation second; a Gemini judge</text><text x="16" y="266">returns suitable or not. The human verdict outranks it, and one image</text><text x="16" y="284">serves every language of a market.</text></g>
-          </svg>
-          <figcaption>Three model steps and one human one. The rubric is from the v1 branch. In v2 the engineers simplified the machine verdict to a binary and I kept the human one above it: a localizer's "Flag for redo" beats any score.</figcaption>
-        </figure>
-
-        <div class="numbered-list" style="margin-top:clamp(40px,5vw,56px);">
-          <div class="numbered-item">
-            <span class="numbered-item-n">01</span>
-            <p class="numbered-item-text"><strong>Where AI did the work, and where I said no.</strong> The verify stage is a model call with a typed vocabulary of failures and a pass-or-fail verdict that triggers a redo. The stage, its schema, and the fan-out workflow were written with Claude Code. What I did not accept: the model's own confidence as a quality signal, since it is self-grading; and fluent one-pass drafts that still carried US assumptions, which are exactly what the stage exists to fail.</p>
+        <!-- 06 · DECISIONS -->
+        <section class="chapter" id="decisions">
+          <div class="chapter-head fade-up"><span class="chapter-n">06</span><span class="eyebrow">Decisions and tradeoffs</span></div>
+          <h2 class="fade-up">Four calls I would make again</h2>
+          <div class="rows fade-up">
+            <div class="row"><h3>A per-locale wiki instead of open-web search</h3><p><strong>Not taken:</strong> letting the model research each market live on the web at draft time.</p><p><strong>Why:</strong> financial facts have to be ours. A curated wiki is slower to build, but every retirement system and tax authority the model cites is something a person vetted. Web search feeds the wiki; it does not bypass it.</p></div>
+            <div class="row"><h3>Five model calls per article, not one</h3><p><strong>Not taken:</strong> the original one-pass pipeline, which cost about a fifth as much.</p><p><strong>Why:</strong> one-pass output kept US framing and US-only links that no automated check could see. Gate, research, draft, verify, and save took an article to roughly 335k tokens, which forced targeted re-runs instead of full rewrites.</p></div>
+            <div class="row"><h3>The score routes; it does not gate</h3><p><strong>Not taken:</strong> publishing anything above a confidence threshold.</p><p><strong>Why:</strong> the confidence number is the model grading its own output. Useful for deciding what a reviewer sees first, useless as a guarantee. There is no threshold in the code, on purpose.</p></div>
+            <div class="row"><h3>Approved is a state automation cannot cross</h3><p><strong>Not taken:</strong> letting a batch run refresh every variant in its scope, which is simpler and what the first version did.</p><p><strong>Why:</strong> a person's judgment is the most expensive thing in the system. Runs skip approved work by default, and re-localizing an approved piece is a named, explicit request. My call, dated August 5, 2026.</p></div>
           </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">02</span>
-            <p class="numbered-item-text"><strong>How it was checked.</strong> Vitest covers the gate, the policy, the rewrite, and the index logic (221 tests, September 2026). The link check ran against real data first: 51 dangling calls to action across 27 locales and 8,120 variants. The fit check was measured the same way: of 75 UK articles it dropped, 13 had a UK analogue and were rewritten; 62 could not honestly exist there. The v3 editor's round-trip gate runs against 887 real bodies. Then the localizers reviewed the output, which is the check that counts.</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">03</span>
-            <p class="numbered-item-text"><strong>What the humans still catch.</strong> A figure tied only to a secondary source. A slug left in English. A register slip from <em>usted</em> to <em>tú</em>. The system exists to put those in front of the right person with the context to decide, not to decide for them.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- ════ 11. IMPACT ════ -->
-    <section id="impact" class="cs-section impact-section">
-      <span id="proof" class="anchor-alias" aria-hidden="true"></span>
-      <div class="wrap">
-        <p class="eyebrow fade-up" style="text-align:center;">Impact</p>
-        <h2 class="impact-h2 fade-up" style="transition-delay:60ms;">In production, in 25 markets, with a person between the model and the member.</h2>
-
-        <div class="impact-grid fade-up" style="transition-delay:90ms;">
-          <div class="impact-cell">
-            <div class="impact-val">25</div>
-            <p class="impact-label">Markets with published or approved localized content, out of 28 locales in the index (September 8, 2026)</p>
+        <!-- 07 · WHAT BROKE -->
+        <section class="chapter" id="what-broke">
+          <div class="chapter-head fade-up"><span class="chapter-n">07</span><span class="eyebrow">The turning point · Jun – Aug 2026</span></div>
+          <h2 class="fade-up">It worked. Then it hit the limits of a tool one person built.</h2>
+          <p class="lead fade-up">By August the library held more than eight thousand localized variants and two localizers were working through them. The tool that got us there could not carry the next stage, and I wrote down why. These four failures open the spec for the next version.</p>
+          <div class="rows fade-up">
+            <div class="row"><h3><small>01 · Lost edits</small>A re-run was a rewrite, not an edit</h3><p>A 25-article Mexico batch replaced variants a localizer had already corrected, and the log said success. <strong>On three reviewed articles, none of the reviewed sentences survived: 26 of 26, 32 of 32, 32 of 32.</strong> The only signal was a localizer recognizing text she had already fixed.</p></div>
+            <div class="row"><h3><small>02 · Flags hard to act on</small>Reviewers did not know what to look at</h3><p>Flags lived in a separate tab, carried machine names, and offered no action. <strong>One Bulgarian run produced 630 flags on 445 articles, 78% of them "check this number".</strong> Counting flags as a negative would have told us the worse pipeline was better.</p></div>
+            <div class="row"><h3><small>03 · No audit trail</small>No identity, no history</h3><p>A first-visit name prompt stored in the browser stood in for sign-in. <strong>Nobody could say who approved a variant, who dismissed a flag, or why.</strong> An append-only review log came late and covered only part of it.</p></div>
+            <div class="row"><h3><small>04 · Slow at scale</small>Every request parsed a 3.5 MB index</h3><p>The Worker hit its CPU limit reading the whole library index on every call. <strong>Post-passes touched the entire corpus on every batch.</strong> The CLI and in-app pipelines had also drifted into two implementations.</p></div>
           </div>
-          <div class="impact-cell">
-            <div class="impact-val">8,118</div>
-            <p class="impact-label">Localized variants in the live index, from 592 English source pieces</p>
+          <p class="note fade-up">Also found and fixed in v1: 5,455 published variants carried English titles and slugs on localized bodies; US-only links were invisible to every automated check until a verify stage and a link check landed (51 dangling calls to action across 27 locales on the first scan); a worker pool derived five different locale briefs per batch until a single-flight lock fixed it; and a swallowed parse error left jobs at "running" forever.</p>
+        </section>
+
+        <!-- 08 · v2 -->
+        <section class="chapter" id="v2">
+          <div class="chapter-head fade-up"><span class="chapter-n">08</span><span class="ver">v2</span><span class="eyebrow">The review console · Aug – Oct 2026</span></div>
+          <h2 class="fade-up">Engineering rebuilt the pipeline in Python. I designed and built the console the localizers work in.</h2>
+          <p class="lead fade-up">The company moved localization onto its workflow platform: Python workers on Azure, a queue-driven orchestrator, a document store for state. The engineers ported v1's quality gates file by file. My part was everything a person touches: the spec, an HTML prototype, then the review API and the React console, twenty commits in the first two days.</p>
+
+          <div class="rows fade-up" aria-label="Each v1 failure mapped to its v2 fix">
+            <div class="row"><h3><small>Lost edits</small>The reviewer's copy is its own field</h3><p>Only Approve writes the body that publishes. Every save carries a version check, so a stale save is refused instead of winning. Full versions are kept for a year, with Restore, and autosave fires 1.5 seconds after typing stops.</p></div>
+            <div class="row"><h3><small>Flags hard to act on</small>A flag rail in the margin</h3><p>"Needs your call" and "Already handled", with plain labels: <code>verification:freshness</code> became "Check this number". Three actions: Apply when a suggestion exists, Fix myself, Dismiss with a reason. Apply is refused for flags that point at the English source, because that fix belongs upstream.</p></div>
+            <div class="row"><h3><small>No audit trail</small>Roles enforced on the server</h3><p>A localizer is locked to their locale; only a publisher can release. Each article carries a 50-entry revision log, and every flag carries a resolution block in the same shape the self-heal stage writes, so a human fix and a machine fix read the same way.</p></div>
+            <div class="row"><h3><small>Slow at scale</small>Load only what is on screen</h3><p>Stored flag counts, queue queries that load only the listed fields, 50 per page. Batch calls for heavy work, single calls for cheap judgments. Re-runs skip unchanged work and reuse market-level verdicts.</p></div>
           </div>
-          <div class="impact-cell">
-            <div class="impact-val">43</div>
-            <p class="impact-label">Locale grounding files the v2 pipeline runs on, and 22 markets configured for batch generation</p>
+
+          <figure class="figure fade-up">
+            <div class="frame"><img src="/images/Global Content Studio Case Study/v2-review-console-flags.webp" alt="The v2 review console prototype: a Spanish article for Mexico with a toggle between the Spanish publishing text and the English it was written from, and a flag rail with Must fix and Check cards, each with Apply, Fix myself, and Dismiss. Approve is disabled with five flags open." loading="lazy" width="2880" height="1800"></div>
+            <figcaption class="caption">The prototype the v2 console was built from (August 2026, demo content). The toggle between the Spanish that publishes and the English it came from; "401(k)" turned into a must-fix with the local equivalent ready to apply; and Approve, disabled while five flags are open. A localizer cannot approve around a flag.</figcaption>
+          </figure>
+
+          <figure class="diagram fade-up">
+            <div class="scroll">
+              <svg viewBox="0 0 880 250" role="img" aria-labelledby="roles-title roles-desc">
+                <title id="roles-title">Two sign-offs, one-way publishing</title>
+                <desc id="roles-desc">The pipeline stages an article for review. A localizer, locked to one locale, resolves flags and approves. A publisher, a separate role, releases the approved set with an expected-count guard. Publishing is one way.</desc>
+                <g class="d-box"><rect x="16" y="70" width="190" height="96" rx="12"/><text x="32" y="100" class="d-h">Pipeline stages it</text><text x="32" y="122" class="d-t">status: for-review</text><text x="32" y="142" class="d-t">flags attached, counts stored</text></g>
+                <g class="d-box d-box--key"><rect x="266" y="70" width="190" height="96" rx="12"/><text x="282" y="100" class="d-h">Localizer approves</text><text x="282" y="122" class="d-t">locked to one locale</text><text x="282" y="142" class="d-t">zero open flags, or refused</text></g>
+                <g class="d-box d-box--key"><rect x="516" y="70" width="190" height="96" rx="12"/><text x="532" y="100" class="d-h">Publisher releases</text><text x="532" y="122" class="d-t">a separate role</text><text x="532" y="142" class="d-t">expected count checked first</text></g>
+                <g class="d-box d-box--key"><rect x="766" y="86" width="100" height="64" rx="12"/><text x="782" y="112" class="d-h">Live</text><text x="782" y="132" class="d-t">one way</text></g>
+                <g class="d-line"><path d="M206 118 L266 118"/><path d="M456 118 L516 118"/></g>
+                <g class="d-line d-line--strong"><path d="M706 118 L766 118"/></g>
+                <g class="d-l"><text x="214" y="108">claim</text><text x="460" y="108">approved</text><text x="712" y="108">publish</text></g>
+                <g class="d-line"><path d="M361 166 C 361 210, 150 210, 111 166" stroke-dasharray="3 4"/></g>
+                <g class="d-l"><text x="150" y="222">Needs rerun: the localizer's note becomes the next run's prompt</text></g>
+              </svg>
+            </div>
+            <figcaption class="caption">The contract between people and automation. Approve requires zero open flags, publishing is a separate role with a count guard, and nothing in the interface can unpublish. The engineers later moved roles to scoped platform tokens; the boundaries stayed where I drew them.</figcaption>
+          </figure>
+
+          <h3 class="sub fade-up">The pipeline, rebuilt: eighteen stages, one human gate</h3>
+          <p class="lead fade-up">Atlas's passes became a state machine. Workers advance the next stage as soon as they finish; a scheduled sweep retries stale stages and never dispatches one twice. Engineering owns the pipeline; the console and the review API are mine.</p>
+          <div class="rows fade-up" aria-label="The v2 pipeline stages, grouped">
+            <div class="row"><h3><small>1–2</small>Judge</h3><p>Turn reviewer verdicts into a work list. Judge each article's fit per market, and skip anything a reviewer already touched.</p></div>
+            <div class="row"><h3><small>3–7</small>Author</h3><p>Re-author into local English with web search, find action items with no article and write them, translate with the English kept beside it, and sync edits between languages.</p></div>
+            <div class="row"><h3><small>8–9</small>Picture</h3><p>Judge the existing header image for the market, then pick a licensed photo or generate one.</p></div>
+            <div class="row"><h3><small>10–13</small>Gate</h3><p>Run the deterministic gates and stage for review with flags attached. A self-heal stage fixes what is mechanical and never approves.</p></div>
+            <div class="row"><h3><small>14–15</small>People</h3><p><strong>Localizer review, then publisher release.</strong> The only stages the run does not wait for.</p></div>
+            <div class="row"><h3><small>16–18</small>Serve</h3><p>Embed published articles for search, turn on routing for the locale, and run the Q&amp;A and life-event tracks in parallel.</p></div>
           </div>
-          <div class="impact-cell">
-            <div class="impact-val">680+</div>
-            <p class="impact-label">Commits of mine across the three repos, April to October 2026, with tests in each</p>
+          <p class="note fade-up">Forty-three locale grounding files and 22 markets configured for batch generation.</p>
+        </section>
+
+        <!-- 09 · v3 -->
+        <section class="chapter" id="v3">
+          <div class="chapter-head fade-up"><span class="chapter-n">09</span><span class="ver">v3</span><span class="eyebrow">Inside the admin platform · Aug – Oct 2026</span></div>
+          <h2 class="fade-up">Then it moved into the platform localizers already use, with an editor for people who do not write markup.</h2>
+          <p class="lead fade-up">The console proved the model. The company wanted it where every other admin task lives, behind the same sign-in, with the same roles. I started that build the day after the v2 console merged.</p>
+          <div class="steps fade-up">
+            <div class="step"><p><strong>One text box, WYSIWYG, with a round-trip gate.</strong> The rich editor opens only if it can reproduce the article byte for byte; otherwise the page falls back to a plain source view rather than silently reformatting a localizer's work. Tested against 887 real article bodies.</p></div>
+            <div class="step"><p><strong>Flags live in the text.</strong> Inline highlights link both ways with the cards in the rail. The English companion sits beside the localized pane, and a third pane compares to the US source on demand.</p></div>
+            <div class="step"><p><strong>Drafts live on the server, and a conflict keeps your edits.</strong> On a conflict the page shows the other writer's version beside yours instead of discarding either.</p></div>
+            <div class="step"><p><strong>Routing is the locale, not a person.</strong> A localizer covers one market and sees only it. An admin sees every market as a matrix and can view the product as any localizer's seat, with publishing kept out of that seat.</p></div>
+            <div class="step"><p><strong>The interface hides; the server enforces.</strong> Single sign-on, scopes resolved server-side, and a review API that checks the role on every request. Publishing and deletion are publisher-gated with a count guard.</p></div>
           </div>
-        </div>
 
-        <p class="impact-claim fade-up" style="transition-delay:110ms;">
-          Going global stopped being a budget line and a hiring plan. Per the company, that capability helped win the Federal Reserve as a customer and opened new prospects.
-        </p>
+          <figure class="figure fade-up">
+            <div class="frame"><img src="/images/Global Content Studio Case Study/v3-review-wysiwyg.webp" alt="The v3 review workspace prototype: a Spanish article for Mexico in a WYSIWYG editor with inline highlighted flags, a featured-image card with the vision check's verdict and Looks right / Flag for redo buttons, and a blocking flag explaining that a high-yield savings account is not a product category in Mexico" loading="lazy" width="2314" height="2340"></div>
+            <figcaption class="caption">The v3 workspace prototype (demo content). The blocking flag explains why "high-yield savings account" is not a product category in Mexico and offers the local phrasing. Below the image, the vision check's verdict sits next to the two buttons a person uses to overrule it.</figcaption>
+          </figure>
+          <figure class="figure fade-up">
+            <div class="frame"><img src="/images/Global Content Studio Case Study/v3-admin-locales-matrix.webp" alt="The admin's all-locales overview prototype: a table of markets with pipeline stage pips, workflow status, progress, open flags, stale items, assigned localizer, and last update" loading="lazy" width="2314" height="2700"></div>
+            <figcaption class="caption">The admin's view, every market on one screen. The status column is deliberately not the pipeline column: a run finishing is not the same as a market being ready.</figcaption>
+          </figure>
 
-        <p class="impact-footnote fade-up" style="transition-delay:120ms;">
-          Counts are read from the live content index and the repos; the code is Financial Finesse's and private.
-          For scale only: one in-country localizer per market, at about 2.5 hours per item and a $60 blended rate, puts
-          the same 25-market library near 37,000 hours, or roughly $2.2M. Stated assumptions, not a measured saving.
-        </p>
+          <h3 class="sub fade-up">Next: the system proposes what to write</h3>
+          <p class="lead fade-up">Localizing the US library only gets a market so far. The generation workflow reads a locale's library against a prompt, shows where coverage is thin, proposes articles, lists what already exists in English to localize instead, and writes the chosen set through the same pipeline. Up to 200 in one batch, every piece landing in review.</p>
+          <p class="status fade-up"><b>Status:</b> designed and running on demo data in the admin platform. The batch backend is a proposed contract; the single-article generator is live on the pipeline platform.</p>
+          <figure class="figure fade-up">
+            <div class="frame"><img src="/images/Global Content Studio Case Study/v3-create-content-gaps.webp" alt="The Create content gap planner on demo data for Quebec French: the thinnest categories, twelve proposed articles with priority and the closest existing piece, and a guardrails panel titled Every article is held to this" loading="lazy" width="1180" height="1090"></div>
+            <figcaption class="caption">The gap planner on demo data for Québec French. The guardrails on the right are not settings: financial wellness only, written as a coach, compliant by default, true in this market, and a person always reviews it.</figcaption>
+          </figure>
+        </section>
 
-        <figure class="shot cs-video-slot fade-up" style="margin:clamp(40px,5vw,56px) 0;transition-delay:130ms;">
-          <img class="cs-image" src="../../images/Global Content Studio Case Study/gcs-impact.webp"
-            alt="A localized article, The £100 Rule and Your Child's Tax-Free Allowance, published and live in the Financial Finesse member product for the UK market"
-            loading="lazy"
-            onload="this.closest('.cs-video-slot').classList.add('loaded')" width="2400" height="1386">
-          <div class="img-placeholder cs-video-ph">A localized article, published and live in the member product</div>
-          <figcaption>Where the pipeline ends: a UK article, live in the member product. The £100 rule is HMRC's, not a translated IRS figure, which is the whole point of the wiki.</figcaption>
-        </figure>
+        <!-- 10 · DESIGNING THE AI -->
+        <section class="chapter" id="ai">
+          <span id="process" class="anchor-alias" aria-hidden="true"></span>
+          <span id="ai-assisted" class="anchor-alias" aria-hidden="true"></span>
+          <div class="chapter-head fade-up"><span class="chapter-n">10</span><span class="eyebrow">Designing the AI, not just the screens</span></div>
+          <h2 class="fade-up">A rubric I wrote in v1, and a human verdict that outranks the model in v2</h2>
+          <p class="lead fade-up">A localized article with a US-coded photo undoes the text. So the header image gets the same treatment as the words: a cultural read, a brief, a check, and a person.</p>
 
-        <p class="client-note fade-up" style="transition-delay:140ms;">Financial Finesse customers whose employees the platform serves</p>
-        <div class="client-pills fade-up" style="transition-delay:150ms;">
-          <span class="client-pill">Meta</span>
-          <span class="client-pill">NFL</span>
-          <span class="client-pill">JPMorgan Chase</span>
-          <span class="client-pill">CVS Health</span>
-          <span class="client-pill">Federal Reserve</span>
-          <span class="client-pill">Patagonia</span>
-          <span class="client-pill">McKinsey</span>
-          <span class="client-pill">Nestlé</span>
-          <span class="client-pill">Comcast</span>
-          <span class="client-pill">General Mills</span>
-        </div>
-      </div>
-    </section>
+          <figure class="diagram fade-up">
+            <div class="scroll">
+              <svg viewBox="0 0 880 300" role="img" aria-labelledby="eng-title eng-desc">
+                <title id="eng-title">The locale image engine</title>
+                <desc id="eng-desc">Three model steps: a cultural analysis of the article for its market, an image brief that never includes flags, currency, or locale-specific brands, and a vision validation returning PASS, REVIEW, or FAIL. A person's verdict in the review workspace outranks the model.</desc>
+                <g class="d-box"><rect x="16" y="24" width="250" height="104" rx="12"/><text x="32" y="54" class="d-h">1 · Cultural analysis</text><text x="32" y="76" class="d-t">who the reader is, what the setting</text><text x="32" y="94" class="d-t">looks like here, what to avoid</text></g>
+                <g class="d-box"><rect x="316" y="24" width="250" height="104" rx="12"/><text x="332" y="54" class="d-h">2 · Image brief</text><text x="332" y="76" class="d-t">"Never include flags, currency,</text><text x="332" y="94" class="d-t">or locale-specific brands."</text></g>
+                <g class="d-box"><rect x="616" y="24" width="250" height="104" rx="12"/><text x="632" y="54" class="d-h">3 · Vision validation</text><text x="632" y="76" class="d-t">PASS · REVIEW · FAIL, with reasons</text><text x="632" y="94" class="d-t">unparseable output → REVIEW</text></g>
+                <g class="d-line"><path d="M266 76 L316 76"/><path d="M566 76 L616 76"/></g>
+                <g class="d-box d-box--key"><rect x="616" y="180" width="250" height="96" rx="12"/><text x="632" y="210" class="d-h">4 · A person decides</text><text x="632" y="232" class="d-t">"Looks right" or "Flag for redo"</text><text x="632" y="250" class="d-t">with a note that drives the re-pick</text></g>
+                <g class="d-line d-line--strong"><path d="M741 128 L741 180"/></g>
+                <g class="d-l"><text x="754" y="160">outranks the model</text></g>
+                <g class="d-l"><text x="16" y="200">v1, June 2026: Claude for the analysis, the brief, and the check;</text><text x="16" y="218">generation on Flux Pro, then Gemini.</text><text x="16" y="248">v2, August: a licensed photo first, generation second; a Gemini</text><text x="16" y="266">judge returns suitable or not. The human verdict outranks it,</text><text x="16" y="284">and one image serves every language of a market.</text></g>
+              </svg>
+            </div>
+            <figcaption class="caption">Three model steps and one human one. In v2 the engineers simplified the machine verdict to a binary, and I kept the human one above it: a localizer's "Flag for redo" beats any score.</figcaption>
+          </figure>
 
-    <!-- ════ 12. REFLECTION ════ -->
-    <section id="reflection" class="cs-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow">What I would do differently</span>
-        <h2 class="solution-h2">Three things, each of which I have since done or scoped</h2>
-        <div class="reflect-list">
-          <div class="reflect">
-            <h3>Measure review time from day one</h3>
-            <p>No version has a review-time or throughput metric. The Tracker that would have measured it was designed for v2 and never built. It is the first thing I would ship next, because "slow at scale" should have been a number, not a feeling.</p>
+          <div class="steps fade-up">
+            <div class="step"><p><strong>Where AI did the work, and where I said no.</strong> The verify stage is a model call with a typed vocabulary of failures and a pass-or-fail verdict that triggers a redo, written with Claude Code. What I did not accept: the model's own confidence as a quality signal, and fluent one-pass drafts that still carried US assumptions.</p></div>
+            <div class="step"><p><strong>How it was checked.</strong> 221 Vitest tests cover the gate, the policy, the rewrite, and the index logic. The link check ran against 8,120 real variants first. Of 75 UK articles the fit check dropped, 13 had a UK analogue and were rewritten; 62 could not honestly exist there.</p></div>
+            <div class="step"><p><strong>What the humans still catch.</strong> A figure tied only to a secondary source. A slug left in English. A register slip from <em>usted</em> to <em>tú</em>. The system puts those in front of the right person with the context to decide.</p></div>
           </div>
-          <div class="reflect">
-            <h3>One implementation, not two</h3>
-            <p>v1 grew a CLI pipeline and an in-app pipeline that drifted apart. v2 fixed it by making the pipeline someone else's single codebase, which is the right answer and one I should have reached before the hand-off.</p>
-          </div>
-          <div class="reflect">
-            <h3>Identity before scale</h3>
-            <p>A browser name prompt was fine for two localizers and wrong for twenty-five markets. v2 put roles on the identity provider on its first day; v3 moved every check to the server. Next time the audit trail ships with the first approve button.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- ════ FINAL TAKEAWAY ════ -->
-    <section class="takeaway-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow" style="margin-bottom:36px; display:block;">Final takeaway</span>
-        <p class="takeaway-text">
-          I saw a gap nobody owned, built the first answer alone, and then did the harder thing: wrote down where it failed and rebuilt it twice with engineers until it was part of the company's platform.
-          <strong>The product proves what AI unlocks for a content team. The way it was built proves the same thing for design.</strong>
-        </p>
-      </div>
-    </section>
-
-    <!-- ════ BOTTOM NAV ════ -->
-    <div class="bottom-cta">
-      <div class="wrap fade-up">
-        <nav class="cta-links" aria-label="Case study navigation">
-          <a href="../../work/" class="btn-secondary">← Back to Work</a>
-          <a href="../../aimee-ai/" class="btn-secondary">Next: Aimee AI Coach →</a>
-          <a href="../../contact/" class="btn-secondary">Contact ↗</a>
-        </nav>
       </div>
     </div>
 
+    <!-- 11 · IMPACT (full width) -->
+    <section class="impact" id="impact">
+      <span id="proof" class="anchor-alias" aria-hidden="true"></span>
+      <div class="wrap">
+        <div class="chapter-head fade-up"><span class="chapter-n">11</span><span class="eyebrow">Impact</span></div>
+        <h2 class="fade-up">In production, in 25 markets, with a person between the model and the member.</h2>
+        <div class="impact-grid fade-up">
+          <div><div class="impact-val">25</div><p class="impact-label">Markets with published or approved content, of 28 locales in the index. Sep 8, 2026.</p></div>
+          <div><div class="impact-val">8,118</div><p class="impact-label">Localized variants in the live index, from 592 English source pieces.</p></div>
+          <div><div class="impact-val">43</div><p class="impact-label">Locale grounding files the v2 pipeline runs on.</p></div>
+          <div><div class="impact-val">680+</div><p class="impact-label">Commits of mine across three repos, April to October 2026, with tests in each.</p></div>
+        </div>
+        <p class="impact-claim fade-up">Going global stopped being a budget line and a hiring plan. Per the company, that capability helped win the Federal Reserve as a customer and opened new prospects.</p>
+        <p class="impact-note fade-up">Counts are read from the live content index and the repos; the code is Financial Finesse's and private. For scale only: one in-country localizer per market, at about 2.5 hours per item and a $60 blended rate, puts the same 25-market library near 37,000 hours, or roughly $2.2M. Stated assumptions, not a measured saving.</p>
+        <figure class="figure fade-up">
+          <div class="frame"><img src="/images/Global Content Studio Case Study/gcs-impact.webp" alt="A localized article, The £100 Rule and Your Child's Tax-Free Allowance, published and live in the Financial Finesse member product for the UK market" loading="lazy" width="2400" height="1386"></div>
+          <figcaption class="caption">Where the pipeline ends: a UK article, live in the member product. The £100 rule is HMRC's, not a translated IRS figure, which is the whole point of the wiki.</figcaption>
+        </figure>
+        <p class="clients fade-up">Financial Finesse customers whose employees the platform serves: <b>Meta</b>, <b>NFL</b>, <b>JPMorgan Chase</b>, <b>CVS Health</b>, <b>Federal Reserve</b>, <b>Patagonia</b>, <b>McKinsey</b>, <b>Nestlé</b>, <b>Comcast</b>, and <b>General Mills</b>.</p>
+      </div>
+    </section>
+
+    <!-- 12 · REFLECTION -->
+    <div class="wrap body" style="padding-top:clamp(72px,10vw,128px)">
+      <div aria-hidden="true"></div>
+      <div class="measure">
+        <section class="chapter" id="reflection" style="padding-bottom:clamp(48px,6vw,80px)">
+          <div class="chapter-head fade-up"><span class="chapter-n">12</span><span class="eyebrow">What I would do differently</span></div>
+          <h2 class="fade-up">Three things I have since done or scoped</h2>
+          <div class="rows fade-up">
+            <div class="row"><h3>Measure review time from day one</h3><p>No version has a review-time or throughput metric. The tracker that would have measured it was designed and never built. "Slow at scale" should have been a number, not a feeling.</p></div>
+            <div class="row"><h3>One implementation, not two</h3><p>v1 grew a CLI pipeline and an in-app pipeline that drifted apart. v2 fixed it by making the pipeline one codebase owned by engineering, which I should have pushed for before the hand-off.</p></div>
+            <div class="row"><h3>Identity before scale</h3><p>A browser name prompt was fine for two localizers and wrong for twenty-five markets. Next time the audit trail ships with the first Approve button.</p></div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <section class="takeaway">
+      <div class="wrap fade-up">
+        <p>I saw a gap nobody owned, built the first answer alone, then wrote down where it failed and rebuilt it twice with engineers until it was part of the company's platform. <strong>The product shows what AI unlocks for a content team. The way it was built shows the same for design.</strong></p>
+      </div>
+    </section>
+
+    <div class="bottom-nav">
+      <nav class="wrap" aria-label="Case study navigation">
+        <a href="/work/" class="btn-secondary">← Back to Work</a>
+        <a href="/aimee-ai/" class="btn-secondary">Next: Aimee AI Coach →</a>
+        <a href="/contact/" class="btn-ghost">Contact ↗</a>
+      </nav>
+    </div>
   </main>
 
   <footer>
@@ -996,23 +667,68 @@
     </div>
   </footer>
 
-  <script src="/scripts/main.js"></script>
   <script>
-    // Sticky-nav border on scroll (matches site pattern).
-    const nav = document.getElementById('site-nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 8);
-    }, { passive: true });
-
-    // The hero clip plays at native speed. Respect reduced-motion: pause + expose controls.
+    // Atlas step walker
     (function () {
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      document.querySelectorAll('video.cs-video').forEach(function (v) {
-        if (reduce) { v.removeAttribute('autoplay'); v.setAttribute('controls', ''); v.pause(); }
+      var A = document.getElementById('atlas');
+      if (!A) return;
+      var STEPS = [
+        { n: 0, t: 'Fit check', d: "First we ask whether the topic even applies in this market. If an article is built around something that does not exist there, we do not localize it.", w: "Of 75 UK articles the gate dropped, 13 had a UK analogue and were rewritten; 62 could not honestly exist there." },
+        { n: 1, t: 'Triage', d: "We size up what the article needs and how much has to change to work in the new market.", w: "Effort goes where it is needed, so simple pieces move quickly." },
+        { n: 2, t: 'Research', d: "We gather the real facts for that country from the per-locale wiki and an allowlist of government and regulator sources.", w: "The numbers are accurate for that market, not carried over from the US." },
+        { n: 3, t: 'Rewrite', d: "We rewrite the article in the local language and our coach voice. For English-speaking markets, we swap the regional facts rather than translate.", w: "It reads as if it were written locally, never like a machine translation." },
+        { n: 4, t: 'Cultural review', d: "We check that the tone, examples, and expressions fit the culture of the market.", w: "Nothing reads as foreign, tone-deaf, or off-brand." },
+        { n: 5, t: 'Numbers & compliance', d: "We verify every figure, rate, and legal statement against the market and flag anything that needs a closer look.", w: "Financial accuracy and regulatory safety in each country." },
+        { n: 6, t: 'The guardrail', d: "A separate model pass reads the draft as a skeptical native reader, with typed failures and a redo loop. A deterministic check then strips US links and US-only terms.", w: "The two checks fail differently, which is why both exist." },
+        { n: 7, t: 'Human review', d: "A localizer reviews what the system flagged and approves the article. Nothing publishes without this.", w: "Approved is a state automation cannot cross." },
+        { n: 8, t: 'Publish', d: "Once approved, the article is released to the shared library for that market.", w: "One controlled release across every market." }
+      ];
+      var track = A.querySelector('.atlas-track');
+      var dStep = A.querySelector('.atlas-detail-step'), dTitle = A.querySelector('.atlas-detail-title');
+      var dDesc = A.querySelector('.atlas-detail-desc'), dWhy = A.querySelector('.atlas-detail-why-text');
+      var btns = [];
+      function show(i) {
+        var s = STEPS[i];
+        btns.forEach(function (b, j) { b.classList.toggle('is-active', j === i); b.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+        dStep.textContent = 'Step ' + s.n; dTitle.textContent = s.t; dDesc.textContent = s.d; dWhy.textContent = s.w;
+      }
+      STEPS.forEach(function (s, i) {
+        var b = document.createElement('button');
+        b.className = 'atlas-step'; b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-label', 'Step ' + s.n + ': ' + s.t);
+        if (s.n === 6) b.setAttribute('data-guardrail', '1');
+        var dot = document.createElement('span'); dot.className = 'atlas-dot'; dot.textContent = s.n;
+        var title = document.createElement('span'); title.className = 'atlas-step-title'; title.textContent = s.t;
+        b.appendChild(dot); b.appendChild(title);
+        ['mouseenter', 'focus', 'click'].forEach(function (ev) { b.addEventListener(ev, function () { show(i); }); });
+        track.appendChild(b); btns.push(b);
       });
+      show(0);
     })();
   </script>
-
+  <script src="/scripts/main.js"></script>
   <script src="/scripts/nav.js"></script>
+  <script>
+    (function () {
+      var nav = document.getElementById('site-nav');
+      window.addEventListener('scroll', function () { nav.classList.toggle('scrolled', window.scrollY > 8); }, { passive: true });
+
+      // Reduced motion: the hero clip stops and exposes controls
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('video').forEach(function (v) { v.removeAttribute('autoplay'); v.setAttribute('controls', ''); v.pause(); });
+      }
+
+      // Reading rail: mark the chapter in view
+      var links = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
+      var map = {};
+      links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+      if (!('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { links.forEach(function (a) { a.classList.remove('is-current'); }); var a = map[e.target.id]; if (a) a.classList.add('is-current'); }
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+      Object.keys(map).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+    })();
+  </script>
 </body>
 </html>
