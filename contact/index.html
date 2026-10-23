@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/site.css" />
+  <link rel="stylesheet" href="/styles/site.css?v=gallery-2" />
   <meta name="description" content="Get in touch with Bri May, AI-Native Senior Product Designer. Open to remote AI-Native Senior Product Designer roles." />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -23,155 +23,6 @@
   <meta property="og:description" content="Get in touch with Bri May, AI-Native Senior Product Designer. Open to remote AI-Native Senior Product Designer roles." />
   <meta name="twitter:description" content="Get in touch with Bri May, AI-Native Senior Product Designer. Open to remote AI-Native Senior Product Designer roles." />
   <script src="/scripts/embed.js"></script>
-  <style>
-
-    /* Hero Section */
-    .hero {
-      padding-top: clamp(72px, 8vw, 112px);
-      padding-bottom: 80px;
-    }
-
-    .hero h1 {
-      font-size: clamp(40px, 5.5vw, 64px);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.05;
-      margin-top: 16px;
-      color: var(--ink);
-    }
-
-    .hero p {
-      font-size: clamp(17px, 1.4vw, 20px);
-      color: var(--ink-2);
-      max-width: 620px;
-      margin-top: 24px;
-      line-height: 1.7;
-    }
-
-    /* Contact Rows */
-    .contact-rows {
-      border-top: 1px solid var(--border);
-      padding: 96px 0;
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 80px;
-    }
-
-    .contact-rows-label {
-      padding-top: 0;
-    }
-
-    .contact-rows-list {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .contact-row {
-      padding: 26px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .contact-row:first-child {
-      padding-top: 0;
-    }
-
-    .contact-row:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .contact-row-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-    }
-
-    .contact-row-link {
-      font-size: clamp(20px, 2vw, 28px);
-      font-weight: 500;
-      letter-spacing: -0.015em;
-      color: var(--ink);
-      text-decoration: none;
-      transition: opacity 0.25s ease;
-    }
-
-    .contact-row-link:hover {
-      opacity: 0.45;
-    }
-
-    .availability-note { font-size: 15px; color: var(--ink-3); margin: 14px 0 0; line-height: 1.6; }
-
-    /* Availability */
-    .availability {
-      border-top: 1px solid var(--border);
-      padding: 96px 0;
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 80px;
-    }
-
-    .availability-label {
-      padding-top: 0;
-    }
-
-    .status-pill {
-      background: var(--surface);
-      color: var(--ink-2);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 6px 18px;
-      font-size: 13px;
-      font-weight: 500;
-      display: inline-block;
-      margin-bottom: 32px;
-    }
-
-    .availability-section {
-      margin-bottom: 28px;
-    }
-
-    .availability-section:first-child {
-      margin-bottom: 32px;
-    }
-
-    .availability-section-label {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 5px 14px;
-      font-size: 13px;
-      color: var(--ink-2);
-    }
-
-    @media (max-width: 768px) {
-      .contact-rows,
-      .availability {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-    }
-  </style>
 </head>
 <body>
   <!-- Navigation -->
@@ -188,65 +39,46 @@
     </div>
   </nav>
 
-  <main class="container">
-    <!-- Hero -->
-    <section class="hero">
-      <div class="label fade-up">Contact</div>
-      <h1 class="fade-up">Let's build something meaningful.</h1>
-      <p class="fade-up">I'm always interested in thoughtful teams, ambitious products, and opportunities to shape experiences that help people make better decisions.</p>
-    </section>
-
-    <!-- Contact Rows -->
-    <section class="contact-rows">
-      <div class="contact-rows-label">
-        <div class="label">Reach out</div>
-      </div>
-      <div class="contact-rows-list">
-        <div class="contact-row">
-          <div class="contact-row-label">Email</div>
-          <a href="mailto:thebrimay@gmail.com" class="contact-row-link">thebrimay@gmail.com →</a>
-        </div>
-        <div class="contact-row">
-          <div class="contact-row-label">Phone</div>
-          <a href="tel:+12096010181" class="contact-row-link">209-601-0181 →</a>
-        </div>
-        <div class="contact-row">
-          <div class="contact-row-label">LinkedIn</div>
-          <a href="https://www.linkedin.com/in/brimay" target="_blank" class="contact-row-link">linkedin.com/in/brimay →</a>
-        </div>
-        <div class="contact-row">
-          <div class="contact-row-label">GitHub</div>
-          <a href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener" class="contact-row-link">github.com/thebrimay-wq →</a>
-        </div>
-        <div class="contact-row">
-          <div class="contact-row-label">Résumé</div>
-          <a href="../resume/BriMay_Resume.pdf" class="contact-row-link" download>Download PDF ↓</a>
-        </div>
+  <main class="gallery gallery--site">
+    <section class="hero hero--short">
+      <div class="wrap">
+        <p class="hero-meta fade-up"><span>Contact</span><span>Pleasanton, CA · Pacific time</span></p>
+        <h1 class="fade-up" style="transition-delay:50ms">Let's build something meaningful.</h1>
+        <p class="hero-lead fade-up" style="transition-delay:90ms">I'm always interested in thoughtful teams, ambitious products, and work that helps people make better decisions.</p>
       </div>
     </section>
 
-    <!-- Availability -->
-    <section class="availability">
-      <div class="availability-label">
-        <div class="label">Availability</div>
-      </div>
-      <div>
-        <div class="status-pill">Open to remote AI-Native Senior Product Designer roles</div>
-        <p class="availability-note">Based in Pleasanton, CA (Pacific time). Also a fit for Design Engineer teams that want a designer who ships.</p>
-
-        <div class="availability-section">
-          <label class="availability-section-label">I love working on</label>
-          <div class="tags">
-            <span class="tag">AI products</span>
-            <span class="tag">Financial tools</span>
-            <span class="tag">Behavioral design</span>
-            <span class="tag">Complex platforms</span>
-            <span class="tag">Design systems</span>
-            <span class="tag">Creative direction</span>
-          </div>
+    <div class="wrap">
+      <section class="section" id="reach">
+        <div class="section-head fade-up">
+          <div><span class="section-n">01 · Reach out</span><h2>Say hi</h2></div>
         </div>
-      </div>
-    </section>
+        <div class="rows fade-up">
+          <div class="row"><h3>Email</h3><p><a class="big-link" href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a></p></div>
+          <div class="row"><h3>Phone</h3><p><a class="big-link" href="tel:+12096010181">209-601-0181</a></p></div>
+          <div class="row"><h3>LinkedIn</h3><p><a class="big-link" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">linkedin.com/in/brimay ↗</a></p></div>
+          <div class="row"><h3>GitHub</h3><p><a class="big-link" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">github.com/thebrimay-wq ↗</a></p></div>
+          <div class="row"><h3>Résumé</h3><p><a class="big-link" href="/resume/BriMay_Resume.pdf" download>Download PDF ↓</a></p></div>
+        </div>
+      </section>
+
+      <section class="section" id="availability">
+        <div class="section-head fade-up">
+          <div><span class="section-n">02 · Availability</span><h2>Open to remote AI-Native Senior Product Designer roles</h2></div>
+          <p class="section-lead">Also a fit for Design Engineer teams that want a designer who ships.</p>
+        </div>
+        <div class="rows fade-up">
+          <div class="row"><h3>I love working on</h3><p>AI products · financial tools · behavioral design · complex platforms · design systems · creative direction</p></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="bottom-nav">
+      <nav class="wrap" aria-label="More">
+        <a href="/work/" class="btn-secondary">See the work →</a>
+        <a href="/about/" class="btn-ghost">About ↗</a>
+      </nav>
+    </div>
   </main>
 
   <!-- Footer -->

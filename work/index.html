@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles/site.css" />
+  <link rel="stylesheet" href="/styles/site.css?v=gallery-2" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta property="og:type" content="website" />
@@ -24,255 +24,6 @@
   <meta name="twitter:description" content="Selected work by Bri May: an AI localization studio designed and shipped solo, the engine behind this site, an AI coach across three surfaces, and a platform redesign." />
   <script src="/scripts/embed.js"></script>
 
-  <style>
-    /* ============================================================
-       PAGE TYPOGRAPHY
-    ============================================================ */
-    h1 {
-      font-size: clamp(40px, 5.5vw, 64px);
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.05;
-      color: var(--ink);
-    }
-
-    h2 {
-      font-size: clamp(20px, 2vw, 26px);
-      font-weight: 600;
-      letter-spacing: -0.015em;
-      color: var(--ink);
-    }
-
-    p {
-      color: var(--ink-2);
-      line-height: 1.65;
-    }
-
-    .label { margin-bottom: 12px; }
-
-    /* Hero sections bypass container max-width */
-    .hero .container,
-    .hero-section .container,
-    .intro-section .container,
-    .case-hero .container,
-    .page-hero .container { max-width: none; margin-left: 0; margin-right: 0; }
-
-    /* ============================================================
-       PAGE INTRO SECTION
-    ============================================================ */
-    .intro-section {
-      padding-top: clamp(72px, 8vw, 112px);
-      padding-bottom: 96px;
-    }
-
-    .intro-section h1 {
-      margin-top: 16px;
-      margin-bottom: 24px;
-    }
-
-    .intro-section p {
-      font-size: clamp(17px, 1.4vw, 20px);
-      max-width: 560px;
-      line-height: 1.7;
-    }
-
-    /* ============================================================
-       WORK GRID
-    ============================================================ */
-    .work-grid-section {
-      border-top: 1px solid var(--border);
-      padding: clamp(64px, 8vw, 96px) var(--px);
-    }
-
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: clamp(40px, 6vw, 60px);
-    }
-
-    @media (max-width: 1024px) {
-      .work-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 640px) {
-      .work-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .work-card {
-      display: flex;
-      flex-direction: column;
-      border-radius: 14px;
-      overflow: hidden;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .work-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.08);
-    }
-
-    .work-card-image {
-      aspect-ratio: 4 / 3;
-      overflow: hidden;
-      background: var(--surface);
-      width: 100%;
-    }
-
-    .work-card-image-inner {
-      width: 100%;
-      height: 100%;
-      transition: transform 0.3s ease;
-      transform: scale(1);
-    }
-    .work-card-image-inner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .work-card:hover .work-card-image-inner {
-      transform: scale(1.04);
-    }
-
-    .work-card-body {
-      padding: 28px 28px 32px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .work-card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-
-    .work-tag {
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 4px 10px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--ink-3);
-      background: var(--bg);
-    }
-
-    .work-card-title {
-      font-size: clamp(19px, 1.8vw, 24px);
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      margin-bottom: 10px;
-      line-height: 1.15;
-      text-wrap: balance;
-    }
-
-    .work-card-desc {
-      font-size: 15px;
-      color: var(--ink-2);
-      line-height: 1.65;
-      margin-bottom: 16px;
-    }
-
-    .work-card-label { font-size: 13px; font-weight: 500; color: var(--ink-3); margin-bottom: 6px; }
-    .work-card-title a { color: inherit; text-decoration: none; }
-    .work-card-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
-    .work-card-links { display: flex; align-items: center; gap: 18px; margin-top: 18px; }
-    .work-card-ext { font-size: 14px; font-weight: 500; color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--border); }
-    .work-card-ext:hover { color: var(--ink); border-color: var(--ink); }
-    .work-card-cta {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--ink-3);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: color 0.2s ease;
-      margin-top: auto;
-    }
-
-    .work-card-cta:hover {
-      color: var(--ink);
-    }
-
-    .arrow-svg {
-      width: 14px;
-      height: 14px;
-      display: inline-block;
-      flex-shrink: 0;
-    }
-
-    /* ============================================================
-       CTA ROW
-    ============================================================ */
-    .cta-row-section {
-      border-top: 1px solid var(--border);
-      padding: 64px var(--px);
-    }
-
-    .cta-row {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .cta-row-left {
-      font-size: 18px;
-      color: var(--ink-2);
-    }
-
-    .cta-row-right {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .cta-link {
-      font-size: 14px;
-      color: var(--ink-2);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: color 0.2s ease;
-    }
-
-    .cta-link:hover {
-      color: var(--ink);
-    }
-
-    @media (max-width: 640px) {
-      .cta-row {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .cta-row-right {
-        flex-direction: column;
-        gap: 16px;
-        width: 100%;
-      }
-    }
-
-  </style>
 </head>
 <body>
   <!-- Navigation -->
@@ -290,125 +41,62 @@
   </nav>
 
   <!-- Main Content -->
-  <main>
-    <!-- Page Intro -->
-    <section class="intro-section container">
-      <span class="label fade-up">Selected Work</span>
-      <h1 class="fade-up">AI products, designed and shipped.</h1>
-      <p class="fade-up">Products I designed and shipped in code.</p>
-    </section>
-
-    <!-- Work Grid -->
-    <section class="work-grid-section container">
-      <div class="work-grid">
-        <!-- Card 1 -->
-        <article class="work-card">
-          <div class="work-card-image" style="background: #EDE6DC;">
-            <div class="work-card-image-inner"><a href="../work/global-content-studio/" aria-hidden="true" tabindex="-1"><img src="/images/gcs-card.png" alt="Global Content Studio — the authoring studio open on a laptop" loading="lazy" width="750" height="501"></a></div>
-          </div>
-          <div class="work-card-body">
-            <div class="work-card-tags">
-              <span class="work-tag">AI Product</span>
-              <span class="work-tag">Solo Build</span>
-              <span class="work-tag">Workflow Design</span>
-            </div>
-            <p class="work-card-label">Global Content Studio</p>
-            <h2 class="work-card-title"><a href="../work/global-content-studio/">Built before anyone asked. Now going global in 70 countries.</a></h2>
-            <p class="work-card-desc">From a studio I built alone to the company's content system. I saw the gap, shipped v1 solo with Claude Code, wrote down where it failed, and rebuilt it twice with engineering inside the company's production stack. 8,118 localized variants across 28 locales in the live index (Sep 2026).</p>
-            <div class="work-card-links"><a href="../work/global-content-studio/" class="work-card-cta">View project →</a></div>
-          </div>
-        </article>
-        <!-- Card: Finesse App -->
-        <article class="work-card">
-          <div class="work-card-image" style="background: #E3D8CA;">
-            <div class="work-card-image-inner"><a href="../work/finesse-app/" aria-hidden="true" tabindex="-1"><img src="/images/finesse-card.webp" alt="Finesse App — three phones on a travertine ledge showing Aimee's approval card, the Today screen, and a money-type card" loading="lazy" width="1500" height="1000"></a></div>
-          </div>
-          <div class="work-card-body">
-            <div class="work-card-tags">
-              <span class="work-tag">AI Experience</span>
-              <span class="work-tag">Mobile UX</span>
-              <span class="work-tag">Solo Build</span>
-            </div>
-            <p class="work-card-label">Finesse App</p>
-            <h2 class="work-card-title"><a href="../work/finesse-app/">A muse for your money</a></h2>
-            <p class="work-card-desc">A consumer app where Aimee learns how you think about money, prepares the next move, and waits for your yes. I designed and built the whole prototype from years of coaching conversations.</p>
-            <div class="work-card-links"><a href="../work/finesse-app/" class="work-card-cta">View project →</a></div>
-          </div>
-        </article>
-        <!-- Card 2 -->
-        <article class="work-card">
-          <div class="work-card-image" style="background: #DDE2EC;">
-            <div class="work-card-image-inner"><a href="../aimee-ai/" aria-hidden="true" tabindex="-1"><img src="/images/aimee-card.png" alt="Aimee AI Coach — the conversational coach open on a phone" loading="lazy" width="750" height="501"></a></div>
-          </div>
-          <div class="work-card-body">
-            <div class="work-card-tags">
-              <span class="work-tag">AI Experience</span>
-              <span class="work-tag">Design System</span>
-              <span class="work-tag">Production Code</span>
-            </div>
-            <p class="work-card-label">Aimee AI Coach</p>
-            <h2 class="work-card-title"><a href="../aimee-ai/">One AI coach, three places to meet her</a></h2>
-            <p class="work-card-desc">One AI financial coach designed for three surfaces, the Hub, a client-site widget, and Microsoft Teams: coded prototypes, a public component library, and four components I merged into the production SDK myself.</p>
-            <div class="work-card-links"><a href="../aimee-ai/" class="work-card-cta">View project →</a><a href="../aimee-ai/components/" class="work-card-ext">Component library ↗</a></div>
-          </div>
-        </article>
-        <!-- Card 3 -->
-        <article class="work-card">
-          <div class="work-card-image" style="background: #E4DDF0;">
-            <div class="work-card-image-inner"><a href="../work/hub/" aria-hidden="true" tabindex="-1"><img src="/images/hub-card.png" alt="Financial Finesse Hub — the redesigned dashboard open on a laptop" loading="lazy" width="750" height="501"></a></div>
-          </div>
-          <div class="work-card-body">
-            <div class="work-card-tags">
-              <span class="work-tag">Platform Design</span>
-              <span class="work-tag">UX Strategy</span>
-              <span class="work-tag">Behavioral Design</span>
-            </div>
-            <p class="work-card-label">Financial Finesse Hub</p>
-            <h2 class="work-card-title"><a href="../work/hub/">From content library to guided plan</a></h2>
-            <p class="work-card-desc">The 2024 platform redesign I led from research through launch: a static content library became a guided plan with an assessment, an action plan, and a coach within reach.</p>
-            <div class="work-card-links"><a href="../work/hub/" class="work-card-cta">View project →</a></div>
-          </div>
-        </article>
-        <!-- Card 4 -->
-        <article class="work-card">
-          <div class="work-card-image" style="background: #E8E4DE;">
-            <div class="work-card-image-inner"><a href="../work/brix/" aria-hidden="true" tabindex="-1"><img src="/images/brix-card.webp" alt="Brix — this portfolio's conversational homepage open on a laptop on a travertine block" loading="lazy" width="1600" height="1200"></a></div>
-          </div>
-          <div class="work-card-body">
-            <div class="work-card-tags">
-              <span class="work-tag">This site</span>
-              <span class="work-tag">Solo Build</span>
-              <span class="work-tag">Vanilla JS</span>
-            </div>
-            <p class="work-card-label">Brix · this site</p>
-            <h2 class="work-card-title"><a href="../work/brix/">A portfolio you can ask questions</a></h2>
-            <p class="work-card-desc">The portfolio as the proof: a conversational site whose answer engine searches a curated knowledge base on your device, with no framework, backend, or API key. WCAG AA in both themes, screen-reader-safe streaming, a public engine probe and browser audit.</p>
-            <div class="work-card-links"><a href="../work/brix/" class="work-card-cta">View project →</a><a href="https://github.com/thebrimay-wq/bri-portfolio-2" class="work-card-ext" target="_blank" rel="noopener noreferrer">Code ↗</a></div>
-          </div>
-        </article>
+  <main class="gallery gallery--site">
+    <section class="hero hero--short">
+      <div class="wrap">
+        <p class="hero-meta fade-up"><span>Work</span><span>2024 – 2026</span></p>
+        <h1 class="fade-up" style="transition-delay:50ms">AI products, designed and shipped.</h1>
+        <p class="hero-lead fade-up" style="transition-delay:90ms">Products I designed, then built in code. Each one started with a gap I saw before anyone asked.</p>
       </div>
     </section>
 
-    <!-- CTA Row -->
-    <section class="cta-row-section container">
-      <div class="cta-row">
-        <div class="cta-row-left">Want to see more?</div>
-        <div class="cta-row-right">
-          <a href="../resume/" class="cta-link">
-            View Résumé
-            <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-          <a href="../contact/" class="cta-link">
-            Get in touch
-            <svg class="arrow-svg" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-        </div>
+    <div class="wrap">
+      <div class="projects">
+        <article class="project fade-up">
+          <a class="project-img" href="/work/global-content-studio/" aria-hidden="true" tabindex="-1"><img src="/images/gcs-card.png" alt="Global Content Studio — the authoring studio open on a laptop" loading="lazy" width="750" height="501"></a>
+          <p class="project-label">Global Content Studio</p>
+          <h2><a href="/work/global-content-studio/">Built before anyone asked. Now going global in 70 countries.</a></h2>
+          <p>From a studio I built alone to the company's content system. I saw the gap, shipped v1 solo with Claude Code, wrote down where it failed, and rebuilt it twice with engineering inside the company's production stack. 8,118 localized variants across 28 locales in the live index (Sep 2026).</p>
+          <div class="project-links"><a href="/work/global-content-studio/">View project →</a></div>
+        </article>
+        <article class="project fade-up">
+          <a class="project-img" href="/work/finesse-app/" aria-hidden="true" tabindex="-1"><img src="/images/finesse-card.webp" alt="Finesse App — three phones on a travertine ledge showing Aimee's approval card, the Today screen, and a money-type card" loading="lazy" width="1500" height="1000"></a>
+          <p class="project-label">Finesse App</p>
+          <h2><a href="/work/finesse-app/">A muse for your money</a></h2>
+          <p>A consumer app where Aimee learns how you think about money, prepares the next move, and waits for your yes. I designed and built the whole prototype from years of coaching conversations.</p>
+          <div class="project-links"><a href="/work/finesse-app/">View project →</a></div>
+        </article>
+        <article class="project fade-up">
+          <a class="project-img" href="/aimee-ai/" aria-hidden="true" tabindex="-1"><img src="/images/aimee-card.png" alt="Aimee AI Coach — the conversational coach open on a phone" loading="lazy" width="750" height="501"></a>
+          <p class="project-label">Aimee AI Coach</p>
+          <h2><a href="/aimee-ai/">One AI coach, three places to meet her</a></h2>
+          <p>One AI financial coach designed for three surfaces, the Hub, a client-site widget, and Microsoft Teams: coded prototypes, a public component library, and four components I merged into the production SDK myself.</p>
+          <div class="project-links"><a href="/aimee-ai/">View project →</a><a href="/aimee-ai/components/">Component library ↗</a></div>
+        </article>
+        <article class="project fade-up">
+          <a class="project-img" href="/work/hub/" aria-hidden="true" tabindex="-1"><img src="/images/hub-card.png" alt="Financial Finesse Hub — the redesigned dashboard open on a laptop" loading="lazy" width="750" height="501"></a>
+          <p class="project-label">Financial Finesse Hub</p>
+          <h2><a href="/work/hub/">From content library to guided plan</a></h2>
+          <p>The 2024 platform redesign I led from research through launch: a static content library became a guided plan with an assessment, an action plan, and a coach within reach.</p>
+          <div class="project-links"><a href="/work/hub/">View project →</a></div>
+        </article>
+        <article class="project fade-up">
+          <a class="project-img" href="/work/brix/" aria-hidden="true" tabindex="-1"><img src="/images/brix-card.webp" alt="Brix — this portfolio's conversational homepage open on a laptop on a travertine block" loading="lazy" width="1600" height="1200"></a>
+          <p class="project-label">Brix · this site</p>
+          <h2><a href="/work/brix/">A portfolio you can ask questions</a></h2>
+          <p>The portfolio as the proof: a conversational site whose answer engine searches a curated knowledge base on your device, with no framework, backend, or API key. WCAG AA in both themes, screen-reader-safe streaming, a public engine probe and browser audit.</p>
+          <div class="project-links"><a href="/work/brix/">View project →</a><a href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Code ↗</a></div>
+        </article>
       </div>
-    </section>
+    </div>
+
+    <div class="bottom-nav">
+      <nav class="wrap" aria-label="More">
+        <a href="/resume/" class="btn-secondary">Résumé →</a>
+        <a href="/contact/" class="btn-secondary">Get in touch →</a>
+        <a href="/code/" class="btn-ghost">Code ↗</a>
+      </nav>
+    </div>
   </main>
 
   <!-- Footer -->

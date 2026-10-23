@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles/site.css" />
+  <link rel="stylesheet" href="/styles/site.css?v=gallery-2" />
   <!-- A real excerpt of the retrieval engine on this page — rendered into the
        chat when someone asks whether Bri codes. Kept as text/plain so it never executes. -->
   <script type="text/plain" id="engine-excerpt">// index.html — the engine answering you right now (verbatim)
@@ -671,8 +671,8 @@ function retrieve(query) {
     @media (prefers-reduced-motion: reduce) {
       .chat-pane.is-empty .hero-intro, .chat-pane.is-empty .composer-inner { animation: none; }
     }
-    /* hero: display scale from the reference, weight held at 700 (no light weights) */
-    .hero-intro .hero-name { font-size: clamp(40px, 9.5cqw, 68px); font-weight: 700; letter-spacing: -0.045em; }
+    /* hero: the same light display type as every other page (2026-10-23) */
+    .hero-intro .hero-name { font-size: clamp(48px, 11cqw, 88px); font-weight: 350; letter-spacing: -0.04em; line-height: 0.96; }
 
     /* three tiles, Apple product-grid style: image, name, one line, Learn more */
     .home-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: clamp(28px, 4vw, 40px) auto 0; text-align: left; }
