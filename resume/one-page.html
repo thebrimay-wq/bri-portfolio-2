@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bri May Résumé</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+  <style>
+    /* One-page print résumé. Tokens mirror styles/site.css (light theme). */
+    :root {
+      --ink:    #0A0A0A;
+      --ink-2:  #515661;
+      --ink-3:  #697282;
+      --border: #E5E7EB;
+      --surface:#F8FAFC;
+      --accent: #9B6B57;
+      --label-w: 1.02in;
+    }
+
+    @page { size: Letter; margin: 0.45in 0.55in 0.4in; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { background: #fff; }
+    body {
+      font-family: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      font-size: 8.9pt;
+      line-height: 1.37;
+      color: var(--ink-2);
+      font-optical-sizing: auto;
+      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+      -webkit-font-smoothing: antialiased;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    a { color: inherit; text-decoration: none; }
+    strong { color: var(--ink); font-weight: 600; }
+
+    /* Screen preview: show the sheet like paper */
+    @media screen {
+      body { background: #f0f2f5; padding: 32px 0; }
+      .sheet { width: 8.5in; min-height: 11in; margin: 0 auto; background: #fff;
+               padding: 0.45in 0.55in 0.4in; box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+    }
+
+    /* ── Header ─────────────────────────────── */
+    .head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 0 24pt;
+      padding-bottom: 9pt;
+      border-bottom: 1px solid var(--ink);
+    }
+    .name {
+      font-size: 30pt;
+      font-weight: 650;
+      letter-spacing: -0.035em;
+      line-height: 0.95;
+      color: var(--ink);
+    }
+    .title {
+      margin-top: 7pt;
+      font-size: 11pt;
+      font-weight: 550;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .title span { color: var(--accent); }
+    .tagline {
+      margin-top: 1pt;
+      font-size: 10pt;
+      color: var(--ink-2);
+      letter-spacing: -0.005em;
+    }
+    .contact {
+      list-style: none;
+      text-align: right;
+      font-size: 8.2pt;
+      line-height: 1.5;
+      color: var(--ink-2);
+    }
+    .contact li:first-child { color: var(--ink-3); }
+
+    /* ── Summary + impact ───────────────────── */
+    .summary {
+      margin-top: 10pt;
+      font-size: 9.4pt;
+      line-height: 1.45;
+      color: var(--ink);
+      letter-spacing: -0.003em;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 10pt;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6pt;
+    }
+    .stat { padding: 6.5pt 11pt; }
+    .stat + .stat { border-left: 1px solid var(--border); }
+    .stat-num {
+      font-size: 17pt;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-label { margin-top: 2pt; font-size: 7.9pt; line-height: 1.3; color: var(--ink-3); }
+
+    /* ── Sections: label rail + content ─────── */
+    .section {
+      display: grid;
+      grid-template-columns: var(--label-w) 1fr;
+      margin-top: 11pt;
+      padding-top: 8.5pt;
+      border-top: 1px solid var(--border);
+    }
+    .label {
+      font-size: 7.4pt;
+      font-weight: 550;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      padding-top: 1.5pt;
+    }
+
+    .org { display: flex; align-items: baseline; justify-content: space-between; }
+    .org-name { font-size: 10.6pt; font-weight: 650; letter-spacing: -0.015em; color: var(--ink); }
+    .dates { font-size: 8.2pt; color: var(--ink-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .org-note { font-size: 8pt; color: var(--ink-3); margin-top: 0.5pt; }
+    .org-role { font-style: normal; font-size: 9.3pt; font-weight: 450; color: var(--ink-3); letter-spacing: 0; }
+
+    .role { margin-top: 5pt; }
+    .org + .role { margin-top: 4pt; }
+    .org + .role ul.bullets { margin-top: 1pt; }
+    .role-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12pt; }
+    .role-title { font-size: 9.3pt; font-weight: 600; color: var(--ink); letter-spacing: -0.005em; }
+    .role-title em { font-style: normal; font-weight: 450; color: var(--ink-3); }
+
+    .org-block + .org-block { margin-top: 8pt; }
+
+    ul.bullets { list-style: none; margin-top: 2.5pt; }
+    /* Bullet dot stays in normal flow: a positioned <li> paints late and
+       scrambles the PDF's text order for ATS parsers. */
+    ul.bullets li {
+      padding-left: 10pt;
+      text-indent: -10pt;
+      margin-top: 2.3pt;
+    }
+    ul.bullets li::before {
+      content: "";
+      display: inline-block;
+      width: 3.2pt;
+      height: 3.2pt;
+      margin: 0 6.8pt 0 0.5pt;
+      vertical-align: 0.22em;
+      border-radius: 50%;
+      background: var(--accent);
+      text-indent: 0;
+    }
+    .url { color: var(--ink-3); white-space: nowrap; }
+
+    /* Skills / education rows */
+    .rows { display: grid; gap: 3.5pt; }
+    .row { display: grid; grid-template-columns: 0.88in 1fr; gap: 0 10pt; }
+    .row-key { font-weight: 600; color: var(--ink); }
+
+    .edu { display: flex; align-items: baseline; justify-content: space-between; gap: 12pt; }
+    .edu + .edu { margin-top: 2.5pt; }
+  </style>
+</head>
+<body>
+<main class="sheet">
+
+  <header class="head">
+    <div>
+      <h1 class="name">Bri May</h1>
+      <p class="title">AI-Native Senior Design Engineer</p>
+      <p class="tagline">I design the product, then I ship the code.</p>
+    </div>
+    <ul class="contact">
+      <li>Pleasanton, CA</li>
+      <li><a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a></li>
+      <li><a href="https://imbrimay.com">imbrimay.com</a></li>
+      <li><a href="https://github.com/thebrimay-wq">github.com/thebrimay-wq</a></li>
+      <li><a href="https://linkedin.com/in/brimay">linkedin.com/in/brimay</a></li>
+    </ul>
+  </header>
+
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num">3,512</div><div class="stat-label">pieces localized in one four-day production run</div></div>
+    <div class="stat"><div class="stat-num">8,118</div><div class="stat-label">variants across 28 locales in the live index</div></div>
+    <div class="stat"><div class="stat-num">+200%</div><div class="stat-label">engagement after the 2024 Hub redesign</div></div>
+  </div>
+
+  <section class="section">
+    <h2 class="label">Experience</h2>
+    <div>
+      <div class="org-block">
+        <div class="org"><span class="org-name">Financial Finesse</span><span class="dates">2016 – Present</span></div>
+
+        <div class="role">
+          <div class="role-head"><span class="role-title">AI-Native Senior Product Designer <em>· AI Team</em></span><span class="dates">2025 – Present</span></div>
+          <ul class="bullets">
+            <li><strong>Owned Global Content Studio end to end.</strong> Spotted unregulated AI use in content production, defined the product, designed author and localizer workflows, and built it solo with Claude Code (TypeScript, Lit, Cloudflare Workers, Anthropic API, Azure Blob Storage). Shipped launch QA four weeks after the first commit with 221 automated tests; 493 of 524 commits are mine. <span class="url">imbrimay.com/work/global-content-studio</span></li>
+            <li><strong>Designed quality as evals.</strong> The model’s self-score only routes; an independent verify pass with typed failures and deterministic checks gates; a localizer approves before anything publishes. On 75 real en-GB articles, the gate rewrote 13 as UK-native pieces and dropped 62</li>
+            <li><strong>Designed Aimee, the AI financial coach,</strong> for the Hub, a client widget, and Microsoft Teams. Coded prototypes with real streaming, stop control, and mid-stream recovery. Merged the token layer and four components into the production React + A2UI SDK. <span class="url">imbrimay.com/aimee-ai</span></li>
+            <li><strong>Ship production code and own the design system.</strong> Hub Content Studio and review queue in TypeScript + Lit (80 commits); localization review API and console in Python + React (27 commits). Design tokens with light and dark themes and WCAG AA rules, live on three production surfaces</li>
+          </ul>
+        </div>
+
+        <div class="role">
+          <div class="role-head"><span class="role-title">Lead Product Designer <em>· Product Creative Director</em></span><span class="dates">2017 – 2025</span></div>
+          <p class="org-note">Employer customers included Federal Reserve, Meta, NFL, JPMorgan Chase, Nestlé, Patagonia, Comcast, McKinsey</p>
+          <ul class="bullets">
+            <li><strong>Led the 2024 Hub redesign from research through launch,</strong> turning a static content library into a guided plan with assessment, action plan, recommended content, and coach access across web and mobile. Internal reporting credited it with +200% engagement. <span class="url">imbrimay.com/work/hub</span></li>
+            <li><strong>Moved the organization from marketing-led to product-led design;</strong> owned UX and UI for dashboards, onboarding, and content, and introduced user research and usability testing</li>
+          </ul>
+        </div>
+
+        <div class="role">
+          <div class="role-head"><span class="role-title">Senior Graphic Designer</span><span class="dates">2016 – 2017</span></div>
+          <ul class="bullets">
+            <li>Built the brand identity and first design systems; the role grew into product design within a year</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="org-block">
+        <div class="org"><span class="org-name">CKC Communications <em class="org-role">· Graphic Designer</em></span><span class="dates">2012 – 2015</span></div>
+        <div class="role">
+          <ul class="bullets">
+            <li>Created brands, websites, and campaigns for more than 50 companies across industries</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="label">Project</h2>
+    <div>
+      <div class="role-head"><span><strong>Brix</strong> · On-device AI assistant, designed and built end to end</span><span class="dates">imbrimay.com</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="label">Skills</h2>
+    <div class="rows">
+      <div class="row"><span class="row-key">Engineering</span><span>TypeScript, JavaScript, React, Lit, HTML &amp; CSS, Tailwind, Vite, design tokens, accessible UI (WCAG AA), Cloudflare Workers, Azure Blob Storage, Python, Vitest, Playwright, Git, CI</span></div>
+      <div class="row"><span class="row-key">AI systems</span><span>Claude Code, Anthropic API, retrieval-augmented generation and grounding, evals, <span style="white-space:nowrap">human-in-the-loop</span> QA, multi-pass LLM pipelines, conversational UX</span></div>
+      <div class="row"><span class="row-key">Design</span><span>0-to-1 product design, design systems, prototyping in code, user research, interaction and motion, Figma</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="label">Education</h2>
+    <div>
+      <div class="edu"><span><strong>California State University, Chico</strong> · B.S. Business, Marketing · D1 soccer, full scholarship</span><span class="dates">2012 – 2015</span></div>
+      <div class="edu"><span><strong>Arizona State University</strong> · D1 soccer</span><span class="dates">2 years</span></div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
