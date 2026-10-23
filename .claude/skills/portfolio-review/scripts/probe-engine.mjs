@@ -38,11 +38,11 @@ const { retrieve, matchIntent } = ctx;
 // Mirrors route()'s ordering: confident KB > nav intent > hedged KB > fallback.
 function classify(q) {
   const r = retrieve(q);
-  if (r.entry && r.score >= 2) return { how: 'KB', detail: r.entry.keys[0] };
+  if (r.entry && r.score >= 2) return { how: 'KB', detail: r.entry.keys[0], text: r.entry.text, href: r.entry.href || null };
   const i = matchIntent(q);
-  if (i !== 'fallback') return { how: 'nav', detail: i };
-  if (r.entry && r.score >= 1) return { how: 'hedged', detail: r.entry.keys[0] };
-  return { how: 'FALLBACK', detail: (r.scored || []).slice(0, 3).map(x => x.e.keys[0]).join(' | ') || '—' };
+  if (i !== 'fallback') return { how: 'nav', detail: i, text: '', href: null };
+  if (r.entry && r.score >= 1) return { how: 'hedged', detail: r.entry.keys[0], text: r.entry.text, href: r.entry.href || null };
+  return { how: 'FALLBACK', detail: (r.scored || []).slice(0, 3).map(x => x.e.keys[0]).join(' | ') || '—', text: '', href: null };
 }
 
 // ── the screening questions. Add new ones here as recruiters surprise us. ──
@@ -121,7 +121,7 @@ const REGRESSIONS = [
   { q: 'Why should we hire her?', expect: r => r.detail === 'why hire', label: '"hire" no longer hijacks why-hire into contact' },
   { q: 'Has she used the Anthropic API?', expect: r => r.detail === 'ai ', label: '"used" is not "user research"' },
   { q: 'Has she worked in fintech?', expect: r => r.detail === 'industry', label: '"tech" does not match inside "fintech"' },
-  { q: 'How many people use Aimee?', expect: r => r.detail === 'aimee', label: '"ai" does not match inside "Aimee"' },
+  { q: 'How many people use Aimee?', expect: r => r.detail === 'use aimee', label: '"ai" does not match inside "Aimee"; usage question gets the usage entry' },
   { q: 'What languages does she speak?', expect: r => r.detail === 'speak', label: 'spoken languages are not TypeScript' },
   { q: 'Does she know Rust?', expect: r => r.detail === 'rust', label: 'a language she does not use gets an honest no' },
   { q: 'Can I see her portfolio?', expect: r => r.how === 'nav' && r.detail === 'casestudies', label: 'portfolio goes to case studies, not design process' },
@@ -136,6 +136,33 @@ const REGRESSIONS = [
   { q: 'What do you think?', expect: r => r.detail !== 'greet', label: '"you" does not trigger greet' },
   { q: 'Show me her strongest case study', expect: r => !/education/.test(r.detail), label: '"study" does not hit education' },
   { q: 'What size teams has she worked on?', expect: r => !/aimee/.test(r.detail), label: '"teams" does not hit MS Teams' },
+];
+
+// 2026-10-13 live review: these six streamed a confident answer to the wrong question.
+// The check is on the ANSWER, not just the routed entry: it must say the supported
+// thing, or say plainly that the portfolio does not document it, and link where useful.
+const says = (...needles) => r => needles.every(n => (r.text || '').toLowerCase().includes(n.toLowerCase()));
+const ANSWERS = [
+  { q: 'What research changed the design?', expect: r => says('not yet document', '75')(r) && r.href, label: 'research: names the documented fit-check finding and admits no user-research example is published' },
+  { q: 'Which research finding changed a design decision?', expect: says('not yet document', '13'), label: 'research paraphrase' },
+  { q: 'Tell me about a disagreement with a product manager.', expect: says("doesn't document a specific disagreement", 'approved'), label: 'disagreement: states the limitation, offers the written incident' },
+  { q: 'Has she ever pushed back on a PM?', expect: says("doesn't document a specific disagreement"), label: 'disagreement paraphrase (pushback)' },
+  { q: 'How was the 200% engagement increase measured?', expect: says('does not document how', 'internal reporting'), label: 'engagement: says the definition is not published' },
+  { q: 'What does the $12M figure actually measure?', expect: says('what the $12m covers'), label: '$12M: same honesty' },
+  { q: 'How many people actually use Aimee?', expect: says('active-user numbers', 'eligible'), label: 'Aimee usage: usage vs eligibility, missing data acknowledged' },
+  { q: 'Is Aimee in production?', expect: says('which surfaces are live'), label: 'Aimee deployment: not asserted' },
+  { q: 'Show me her strongest case study.', expect: r => says('Global Content Studio')(r) && r.href === '/work/global-content-studio/', label: 'strongest: recommends the Studio with a direct link' },
+  { q: "What's her best project?", expect: r => r.href === '/work/global-content-studio/', label: 'strongest paraphrase (best project)' },
+  { q: 'Where should I start?', expect: r => r.href === '/work/global-content-studio/', label: 'strongest paraphrase (where to start)' },
+  { q: 'Is she available for fully remote work?', expect: r => says('remote role')(r) && !/hybrid/i.test(r.text), label: 'remote: matches the confirmed preference, no hybrid' },
+  { q: 'Would she do hybrid in SF?', expect: r => says('remote role')(r) && !/open to.*hybrid/i.test(r.text), label: 'remote paraphrase (hybrid)' },
+  { q: 'How did she use AI to build the Studio?', expect: r => says('Claude Code', 'verify pass')(r) && r.href, label: 'AI-assisted build: confirmed tools, what the AI got wrong, link' },
+  { q: 'What did the AI get wrong?', expect: says('got wrong'), label: 'AI mistakes paraphrase' },
+  { q: 'What is the capital of France?', expect: r => r.how === 'FALLBACK', label: 'unknown, off-topic question falls back instead of pretending' },
+  { q: 'How much revenue did Brix make?', expect: r => !/\$12m/i.test(r.text), label: 'ambiguous revenue question never asserts $12M without its caveat' },
+  { q: 'Does she have experience with accessibility?', expect: r => r.detail === 'accessibility', label: 'accessibility question gets the accessibility entry, not years-of-experience' },
+  { q: 'How quickly can she start?', expect: r => r.detail === 'start date', label: 'start-date question gets availability, not build time' },
+  { q: "What's her TypeScript experience?", expect: r => r.detail === 'typescript', label: 'TypeScript question gets the stack entry' },
 ];
 
 const buckets = {};
@@ -157,6 +184,16 @@ for (const t of REGRESSIONS) {
   if (!ok) regFail++;
   console.log(`  ${ok ? 'PASS' : 'FAIL'}  ${t.label}  (${JSON.stringify(t.q)} → ${r.how}:${r.detail})`);
 }
+
+console.log('\n### answer checks (2026-10-13 live review + paraphrases)');
+let ansFail = 0;
+for (const t of ANSWERS) {
+  const r = classify(t.q);
+  const ok = !!t.expect(r);
+  if (!ok) ansFail++;
+  console.log(`  ${ok ? 'PASS' : 'FAIL'}  ${t.label}  (${JSON.stringify(t.q)} → ${r.how}:${r.detail})`);
+}
+regFail += ansFail;
 
 const confident = (buckets.KB || []).length;
 const rate = confident / QUESTIONS.length;

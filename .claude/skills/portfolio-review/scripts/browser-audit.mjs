@@ -158,8 +158,10 @@ console.log('\n══ 7. BRIX FEATURES: chat, lens, code exhibit, deep links');
 {
   const p = await mk();
   await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
-  await p.waitForTimeout(600);
-  log('4 starter cards', await p.locator('.home-card').count() === 4);
+  await p.waitForTimeout(600);  log('3 case-study doors, each a full-page link', await p.locator('.home-tile[data-navigate]').count() === 3);
+  log('hero supporting line present', (await p.locator('.hero-intro .hero-sub').count()) === 1);
+  log('shortcut row: work, code, résumé PDF, contact', await p.locator('.hero-links a').count() === 4 && (await p.locator('.hero-links a[download]').count()) === 1);
+  log('no fake thinking indicator', await p.evaluate(() => { document.querySelector('#composer-input').value = 'what is atlas'; document.querySelector('#composer-form').requestSubmit(); return document.querySelectorAll('[data-typing]').length === 0 && document.querySelectorAll('.msg--agent .bubble').length === 1; }));
   log('no lens chips (one audience)', await p.locator('.lens-chip').count() === 0);
   log('hero: name, title, second line', (await p.locator('.hero-intro .hero-name').count()) === 1 && (await p.locator('.hero-intro .hero-line').textContent()).includes('then I ship the code'));
   await p.goto(BASE + '/?q=' + encodeURIComponent('does she actually code?'), { waitUntil: 'domcontentloaded' });
@@ -169,7 +171,7 @@ console.log('\n══ 7. BRIX FEATURES: chat, lens, code exhibit, deep links');
   log('copy-link action present', await p.locator('.act-btn[aria-label="Copy link to this answer"]').count() === 1);
   await p.goto(BASE + '/?q=show me her case studies', { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(8000);
-  log('4 case-study cards in chat', await p.locator('.cs-card').count() === 4);
+  log('5 case-study cards in chat', await p.locator('.cs-card').count() === 5);
   await p.close();
 }
 
@@ -179,11 +181,16 @@ console.log('\n══ 8. CORE FLOWS: panel, dark mode, drawer, résumé download
   await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(500);
   await p.locator('.rail-nav a').first().click();
-  await p.waitForTimeout(1300);
-  log('side panel opens', await p.evaluate(() => document.querySelector('#panel').getBoundingClientRect().width > 200));
-  await p.keyboard.press('Escape');
+  await p.waitForTimeout(1300);  log('side panel opens', await p.evaluate(() => document.querySelector('#panel').getBoundingClientRect().width > 200));
+  log('panel action is labeled and follows the frame', await p.evaluate(() => document.querySelector('#panel-open-label').textContent === 'Open full page' && document.querySelector('#panel-open-full').getAttribute('href').includes('/work/')));  await p.keyboard.press('Escape');
   await p.waitForTimeout(800);
   log('Esc closes panel', await p.evaluate(() => document.querySelector('#panel').getBoundingClientRect().width < 80));
+  // A chat answer's "#section" link must land on the section inside the panel (the hash was once dropped).
+  await p.evaluate(() => { const a = document.createElement('a'); a.href = '/work/global-content-studio/#what-broke'; document.body.appendChild(a); a.click(); a.remove(); });
+  await p.waitForTimeout(1500);
+  log('panel deep link lands on its section', await p.evaluate(() => { try { const f = document.querySelector('#panel-frame'); const el = f.contentDocument.querySelector('#what-broke'); return !!el && Math.abs(el.getBoundingClientRect().top) < 120; } catch (e) { return false; } }));
+  await p.keyboard.press('Escape');
+  await p.waitForTimeout(800);
   await p.locator('#rail-theme').click();
   await p.waitForTimeout(300);
   log('dark toggle sets + persists', await p.evaluate(() => document.documentElement.dataset.theme === 'dark' && localStorage.theme === 'dark'));

@@ -178,3 +178,25 @@ any measurable result. Without numbers the role line stays and the bullet is cut
   of those; the approved counts there (en-IE 476, en-GB 181, en-CA 78, es-MX 47, en-IN 37, es-CO 8 as of the
   August workflow comment) are Studio output reviewed by localizers.
 - Human localizers named in the data: Kari Cedergren (2,509 variants authored/edited), Brigham Tappana (1,006).
+
+---
+
+## 11. Finesse App (consumer prototype, Oct 2026)  (DERIVED, with Bri's statements marked)
+
+Source: `Desktop/GitHub FF/Financial-Finesse/B2C-app` = `Financial-Finesse/ff-b2c-demo` (private), read 2026-10-23.
+
+- **Commits:** 155, all by Bri (thebrimay-wq), 2026-10-19 → 2026-10-22 (44 / 64 / 32 / 15 per day). This counts the
+  local `games` branch, 12 commits ahead of origin. The repo is the v7 restart; earlier versions (v6.1 and the
+  "Aimee Home" canvases) live elsewhere, so "four days" describes this build only.
+- **Tests:** 376 `it`/`test` cases across 53 test files (Vitest + jsdom). `src/styles/tokens.test.ts` enforces
+  WCAG AA for every text pair in both themes.
+- **Stack:** React 19, TypeScript, Vite, Zustand, Motion; a Cloudflare Worker serves the app behind a password page
+  and proxies live Aimee to the Claude API, with scripted fallbacks when the key or rate limits are missing.
+- **Product facts used on the page:** six money types (Investor, Bargain Hunter, Minimalist, Planner, Giver,
+  Automator); approval cards show Now / After and "Nothing moves without your OK"; action tiers (switch when the
+  insurer connects, steps + "I did it" when it doesn't, draft a note asking them to connect); daily question streak
+  forgives one missed day a week. Persona data (Dana, Anita, Harbor Auto) is demo content.
+- **Stated by Bri (2026-10-23), not derivable from the repo:** she built the entire prototype and design alone;
+  she is working with AI engineers on the Aimee agent; the personas come from studying years of interactions
+  between FF coaches and members.
+- CLEARED (Bri, 2026-10-23): OK to show publicly, though it is an unreleased company product.

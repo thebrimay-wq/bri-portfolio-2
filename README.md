@@ -3,6 +3,8 @@
 [![Deploy to GitHub Pages](https://github.com/thebrimay-wq/bri-portfolio-2/actions/workflows/deploy.yml/badge.svg)](https://github.com/thebrimay-wq/bri-portfolio-2/actions/workflows/deploy.yml)
 
 Portfolio of **Bri May**, AI-Native Senior Product Designer. I design the product, then I ship the code.
+Every number on the site traces to a dated source in `facts.md` and `docs/portfolio-evidence.md`; what cannot be
+sourced is said to be unsourced, on the page and in Brix's answers.
 
 The homepage is **Brix**, a conversational site whose answer engine runs entirely in the visitor's browser: plain HTML, CSS, and JavaScript, no build step, no backend, no API key. Ask it anything, or open a deep link such as [`/?q=what broke`](https://imbrimay.com/?q=what%20broke) and it answers from a hand-written knowledge base and shows its own source when asked.
 
@@ -33,10 +35,11 @@ The code excerpt Brix renders in chat is the real `retrieve()`, copied verbatim 
 Three scripts under `.claude/skills/portfolio-review/scripts/` encode every defect class that has actually shipped here. Run them after any change to `index.html`, `styles/site.css`, a case study, or images.
 
 ```bash
-# 1. Engine probe: 50 recruiter and engineer questions plus the regression set. Seconds, no browser.
+# 1. Engine probe: 62 recruiter and engineer questions, 20 routing regressions, and 20 answer-content checks
+#    (the answer must say the supported thing or say plainly that the portfolio does not document it). Seconds, no browser.
 node .claude/skills/portfolio-review/scripts/probe-engine.mjs
 
-# 2. Browser audit: 44 checks (404s and broken images after a full scroll, sideways scroll at
+# 2. Browser audit: 49 checks (404s and broken images after a full scroll, sideways scroll at
 #    320/375/768px, contrast in both themes, head hygiene, no-JS render, skip links, the live-region
 #    count, Brix features, core flows). Audits the built site, the way the deploy merges public/images/.
 npm install --no-save playwright && npx playwright install chromium
@@ -69,6 +72,8 @@ code/                 What is public and where the rest lives, with the engine e
 about/ resume/        Static pages. Page <style> blocks hold only page-specific CSS.
 contact/
 facts.md              The facts the copy is built from, with sources, and what is still TODO(bri).
+docs/                 Working documents, not deployed: the evidence ledger (portfolio-evidence.md: every public
+                      claim, its source, and the approved wording), the implementation brief, and case-study source copy.
 src/                  A React + Vite mirror. A development sandbox, not deployed.
 .github/workflows/    Deploy: static files copied to GitHub Pages on push to main.
 ```

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/site.css" />
+  <link rel="stylesheet" href="/styles/site.css?v=gallery-3" />
   <meta name="description" content="What is public and where the rest lives: the engine behind imbrimay.com, its test harness and browser audit, and the company repos Bri May ships production code into." />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -24,24 +24,7 @@
   <meta name="twitter:description" content="What is public and where the rest lives: the engine behind imbrimay.com, its test harness and browser audit, and the company repos Bri May ships production code into." />
   <script src="/scripts/embed.js"></script>
   <style>
-    .hero { padding-top: clamp(72px, 8vw, 112px); padding-bottom: 56px; }
-    .hero h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; margin-top: 16px; color: var(--ink); }
-    .hero p { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); max-width: 640px; margin-top: 20px; line-height: 1.7; }
-    .code-section { border-top: 1px solid var(--border); padding: 56px 0; display: grid; grid-template-columns: 200px 1fr; gap: 56px; }
-    @media (max-width: 800px) { .code-section { grid-template-columns: 1fr; gap: 20px; } }
-    .code-section > div { min-width: 0; }
     .footer-links { flex-wrap: wrap; row-gap: 6px; }
-    .code-item { padding: 22px 0; border-bottom: 1px solid var(--border); }
-    .code-item:first-child { padding-top: 0; }
-    .code-item:last-child { border-bottom: 0; }
-    .code-item h3 { font-size: 19px; overflow-wrap: anywhere; font-weight: 600; letter-spacing: -0.015em; color: var(--ink); margin: 0; }
-    .code-item p { font-size: 16px; line-height: 1.65; color: var(--ink-2); margin: 8px 0 0; max-width: 680px; }
-    .code-meta { font-size: 13px; color: var(--ink-3); margin-top: 8px; }
-    .code-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 12px; }
-    .code-links a { font-size: 14px; font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 1px; }
-    .code-links a:hover { border-color: var(--ink); }
-    .code-private { display: inline-block; font-size: 11.5px; font-weight: 500; color: var(--ink-3); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; margin-left: 8px; vertical-align: 2px; }
-    pre.code-block { margin: 0; max-width: 100%; padding: 20px 22px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); overflow-x: auto; font: 12.5px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--ink); }
   </style>
 </head>
 <body>
@@ -59,64 +42,46 @@
     </div>
   </nav>
 
-  <main class="container">
-    <section class="hero">
-      <div class="label fade-up">Code</div>
-      <h1 class="fade-up">The code, and where the rest lives.</h1>
-      <p class="fade-up">Every shipping claim on this site sits next to the thing shipped. This page is the index: what is public, what is private by employer, and the engine that answers questions on the homepage.</p>
+  <main class="gallery gallery--site">
+    <section class="hero hero--short">
+      <div class="wrap">
+        <p class="hero-meta fade-up"><span>Code</span></p>
+        <h1 class="fade-up" style="transition-delay:50ms">The code, and where the rest lives.</h1>
+        <p class="hero-lead fade-up" style="transition-delay:90ms">Every claim on this site sits next to the thing I shipped. Here's what's public, what's private by employer, and the engine that answers questions on the homepage.</p>
+      </div>
     </section>
 
-    <section class="code-section">
-      <div><div class="label">Public</div></div>
-      <div>
-        <div class="code-item">
-          <h3>This site, including Brix</h3>
-          <p>Plain HTML, CSS, and JavaScript with no build step. The retrieval engine, the knowledge base, the accessibility architecture, and the QA tooling are all in one public repository.</p>
-          <div class="code-meta">GitHub · thebrimay-wq/bri-portfolio-2</div>
-          <div class="code-links">
-            <a href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Repository ↗</a>
-            <a href="https://github.com/thebrimay-wq/bri-portfolio-2/blob/main/index.html" target="_blank" rel="noopener noreferrer">The engine (index.html) ↗</a>
-            <a href="https://github.com/thebrimay-wq/bri-portfolio-2/blob/main/.claude/skills/portfolio-review/scripts/probe-engine.mjs" target="_blank" rel="noopener noreferrer">Screening-question probe ↗</a>
-            <a href="https://github.com/thebrimay-wq/bri-portfolio-2/blob/main/.claude/skills/portfolio-review/scripts/browser-audit.mjs" target="_blank" rel="noopener noreferrer">42-check browser audit ↗</a>
-            <a href="https://github.com/thebrimay-wq/bri-portfolio-2/blob/main/.claude/skills/portfolio-review/scripts/print-resume.mjs" target="_blank" rel="noopener noreferrer">Résumé print script ↗</a>
-            <a href="../work/brix/">Case study →</a>
-          </div>
+    <div class="wrap">
+      <section class="section" id="public">
+        <div class="section-head fade-up">
+          <div><span class="section-n">01 · Public</span><h2>This site, including Brix</h2></div>
+          <p class="section-lead">Plain HTML, CSS, and JavaScript with no build step. The answer engine, its knowledge base, and the test scripts are all in one public repository.</p>
+        </div>
+        <div class="rows fade-up">
+          <div class="row"><h3>The repository<small style="margin-top:6px;text-transform:none;letter-spacing:0">GitHub · thebrimay-wq/bri-portfolio-2</small></h3><p class="text-links"><a href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Repository ↗</a><a href="https://github.com/thebrimay-wq/bri-portfolio-2/blob/main/index.html" target="_blank" rel="noopener noreferrer">The engine (index.html) ↗</a><a href="https://github.com/thebrimay-wq/bri-portfolio-2/blob/main/.claude/skills/portfolio-review/scripts/probe-engine.mjs" target="_blank" rel="noopener noreferrer">62-question engine probe ↗</a><a href="https://github.com/thebrimay-wq/bri-portfolio-2/blob/main/.claude/skills/portfolio-review/scripts/browser-audit.mjs" target="_blank" rel="noopener noreferrer">49-check browser audit ↗</a><a href="https://github.com/thebrimay-wq/bri-portfolio-2/blob/main/.claude/skills/portfolio-review/scripts/print-resume.mjs" target="_blank" rel="noopener noreferrer">Résumé print script ↗</a><a href="/work/brix/">Case study →</a></p></div>
         </div>
         <!-- TODO(bri): add the Global Content Studio demo (thebrimay-wq/global-content-studio-demo) here once it is public — facts.md §7 -->
-      </div>
-    </section>
+      </section>
 
-    <section class="code-section">
-      <div><div class="label">Private, by employer</div></div>
-      <div>
-        <div class="code-item">
-          <h3>Global Content Studio <span class="code-private">Financial-Finesse/ff-content-writer</span></h3>
-          <p>TypeScript and Lit on Vercel, a Cloudflare Worker that proxies the Anthropic API and fronts Azure Blob Storage, and the Atlas localization pipeline. 524 commits, 493 of them mine. 221 Vitest tests across 12 files.</p>
-          <div class="code-links"><a href="../work/global-content-studio/">Case study, with architecture and what broke →</a></div>
+      <section class="section" id="private">
+        <div class="section-head fade-up">
+          <div><span class="section-n">02 · Private, by employer</span><h2>The work code lives with Financial Finesse</h2></div>
         </div>
-        <div class="code-item">
-          <h3>Hub Content Studio and localizer review queue <span class="code-private">Financial-Finesse/blue</span></h3>
-          <p>The content authoring and localization review surface inside the company's core Hub application. TypeScript and Lit, 80 commits, with tests for the markdown, metadata, adjudication, rail, and library logic.</p>
+        <div class="rows fade-up">
+          <div class="row"><h3>Global Content Studio<span class="repo">Financial-Finesse/ff-content-writer</span></h3><p>TypeScript and Lit on Vercel, a Cloudflare Worker in front of the Anthropic API and Azure storage, and the localization engine. 524 commits, 493 of them mine, and 221 tests.</p><p class="text-links"><a href="/work/global-content-studio/">Case study →</a></p></div>
+          <div class="row"><h3>Hub Content Studio and review queue<span class="repo">Financial-Finesse/blue</span></h3><p>Content writing and localization review inside the company's CMS. TypeScript and Lit, 80 commits, with tests.</p></div>
+          <div class="row"><h3>Localization review API and console<span class="repo">Financial-Finesse/ff.workers</span></h3><p>The Python review API, its tests, and the React console reviewers work in. 27 commits.</p></div>
+          <div class="row"><h3>Aimee SDK<span class="repo">Financial-Finesse/benehub</span></h3><p>Engineering built the SDK from my coded prototypes and spec. I merged the token layer and four components into it: 32 commits, July to August 2026.</p><p class="text-links"><a href="/aimee-ai/">Case study →</a></p></div>
         </div>
-        <div class="code-item">
-          <h3>Localization review API and console <span class="code-private">Financial-Finesse/ff.workers</span></h3>
-          <p>The Python review API and core, its tests, and the React review console the localizers work in. 27 commits.</p>
-        </div>
-        <div class="code-item">
-          <h3>Aimee SDK <span class="code-private">Financial-Finesse/benehub</span></h3>
-          <p>Engineering built the SDK in React and A2UI from my coded prototypes and spec. I then merged the design-token layer and the empty-state, conversations, icon, and card-shell components into it. 32 commits, July to August 2026.</p>
-          <div class="code-links"><a href="../aimee-ai/">Case study →</a></div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="code-section">
-      <div><div class="label">The engine</div></div>
-      <div>
-        <div class="code-item">
-          <h3>retrieve(), verbatim</h3>
-          <p>This is the function that answers questions on the homepage, copied from index.html. It is a keyword engine, not a model: normalize, drop stopwords, expand synonyms, fuzzy-match against a hand-written knowledge base, and score. If this and the homepage ever differ, the homepage is the truth.</p>
-          <div style="margin-top:14px;"><pre class="code-block"><code>// index.html — the engine answering you right now (verbatim)
+      <section class="section" id="engine">
+        <div class="section-head fade-up">
+          <div><span class="section-n">03 · The engine</span><h2>The function answering you on the homepage</h2></div>
+          <p class="section-lead">Copied from index.html. It's keyword matching, not an AI model: clean up the question, match it against what I wrote about my work, and score the best fit.</p>
+        </div>
+        <div class="screens fade-up">
+          <pre class="code-block"><code>// index.html — the engine answering you right now (verbatim)
 function retrieve(query) {
   const nq = norm(query);
   const qt = toks(query);
@@ -143,10 +108,17 @@ function retrieve(query) {
   }
   scored.sort((a, b) =&gt; b.sc - a.sc);
   return { entry: best, score: bestScore, second: secondScore &gt;= 2 ? second : null, scored };
-}</code></pre></div>
+}</code></pre>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
+
+    <div class="bottom-nav">
+      <nav class="wrap" aria-label="More">
+        <a href="/work/" class="btn-secondary">See the work →</a>
+        <a href="/contact/" class="btn-ghost">Contact ↗</a>
+      </nav>
+    </div>
   </main>
 
   <footer>

@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Aimee — Component Library</title>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 <style>
   :root{
     --aimee-mark:url("aimee-icon.svg");
@@ -246,6 +247,15 @@
   .coachline{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--ink-2)}
   .coachline .cd{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(139,195,95,.22)}
   .wdisc{font-size:12px;color:var(--muted);margin-top:12px;font-weight:500}
+
+  /* Page chrome in the site's type (Inter, light display); the components below stay in Lato, Aimee's own font. */
+  .ghead, .toc a, .sec > .slabel, .sec > .sdesc, .variant-tag { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11'; font-optical-sizing: auto; }
+  .ghead h1 { font-size: clamp(40px, 6vw, 80px); font-weight: 350; letter-spacing: -0.04em; line-height: 0.98; }
+  .ghead p { font-size: clamp(17px, 1.4vw, 20px); font-weight: 400; line-height: 1.6; max-width: 640px; margin-top: 20px; }
+  .toc a { font-weight: 500; }
+  .sec > .slabel { font-weight: 500; letter-spacing: 0.08em; color: var(--muted); }
+  .sec > .sdesc { font-weight: 400; }
+  .variant-tag { font-weight: 500; letter-spacing: 0.08em; }
 </style>
 </head>
 <body>
@@ -254,7 +264,7 @@
   <div class="ghead">
     <div class="mark" aria-hidden="true"></div>
     <h1>Aimee Component Library</h1>
-    <p>Every in-chat component Aimee speaks in, built to spec: the typed cards, chat primitives, data-viz blocks, and follow-up chips engineering implemented 1:1 in the production SDK.</p>
+    <p>Every in-chat component Aimee speaks in, built to spec: the typed cards, chat primitives, data-viz blocks, and follow-up chips that engineering built the production SDK from, and that I later merged tokens and four components into myself.</p>
     <div class="toc">
       <a href="#welcome">Welcome screen</a>
       <a href="#turns">Chat turns</a>
