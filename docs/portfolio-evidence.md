@@ -25,7 +25,7 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 |---|---|---|---|
 | 8,729 entries · 592 en-US source pieces · 8,118 localized variants · 28 locales | CONFIRMED, SNAPSHOT 2026-09-08 | live Azure index, read-only (`facts.md`) | "… as of September 8, 2026" wherever the figure appears |
 | 25 locales with published or approved content | CONFIRMED, SNAPSHOT 2026-09-08 | same | "25 locales with published or approved content" (never merged with 28) |
-| 70 countries by the end of 2026 | UNCONFIRMED, stated by Bri 2026-10-23 | Bri: the CEO wanted to go global, and the plan is 70 countries by year end. A target, not today's count; today is 25 markets with published or approved content (Sep 8, 2026). | GCS hero: "Built before anyone asked. Now headed to 70 countries." and a "70 · Countries planned by the end of 2026" fact beside "25 · Markets live today". Never present 70 as already live. The Work card and homepage door still read "One designer, 70 markets", which states it as present. |
+| 70 countries by the end of 2026 | UNCONFIRMED, stated by Bri 2026-10-23 | Bri: the CEO wanted to go global, and the plan is 70 countries by year end. A target, not today's count; today is 25 markets with published or approved content (Sep 8, 2026). | GCS hero: "Built before anyone asked. Now going global in 70 countries." and a "70 · Countries planned by the end of 2026" fact beside "25 · Markets live today". Never present 70 as already live. The Work card, homepage door, and Brix chat card use the same line. |
 | 4,154 published · 975 approved · 2,772 in review · 229 draft | SNAPSHOT 2026-09-08. Sums to 8,130, not 8,118; `facts.md` does not explain the 12. | same | Publish only published / approved / in review as "of the 8,118". Do not print the four-way breakdown as a sum. |
 | 3,512 variants in one run, 2026-06-01→06-04, ten locales brought live, peak day 1,575 | CONFIRMED | index `createdAt` + workflow logs | keep, dated |
 | 3,726 Studio-era variants since 2026-04-28 across 26 locales | CONFIRMED | same | optional; "Studio-era" must be labeled, legacy-locale caveat applies |
@@ -114,7 +114,7 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 
 ## Questions for Bri (batched, priority order)
 
-- (2026-10-23) Answered: 70 = countries planned by the end of 2026 (a CEO goal). Should the Work card say so instead of "One designer, 70 markets"?
+- (2026-10-23) Answered: 70 = countries planned by the end of 2026 (a CEO goal). Cards now match the headline.
 
 1. **One AI-assisted shipping example.** Pick the Studio feature that best shows your process (candidates from the logs: the skip-approved fix, the independent verify stage, the single-flight brief cache). For it: which tools (Claude Code is confirmed; anything else?), what the AI produced first, what you rejected or redirected, what shipped, and which artifacts can be shown publicly (a sanitized diff, a test, a screenshot of the review console).
 2. **Hub outcomes.** What exactly is "engagement" (event, population, baseline, window)? What does $12M measure (bookings, ARR, contract value), over what period, and what source states it? Until answered the site says "internal reporting" and drops $12M from headline stats.
