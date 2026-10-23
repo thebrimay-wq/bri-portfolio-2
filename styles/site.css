@@ -270,6 +270,13 @@ img, video {
 }
 #site-nav.scrolled::before { opacity: 0.9; }
 
+/* Page to page: the nav holds still while the page underneath crossfades,
+   so every click stays inside one site. Browsers without cross-document
+   view transitions just navigate. */
+@view-transition { navigation: auto; }
+#site-nav { view-transition-name: site-nav; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+
 .nav-inner {
   position: relative;
   width: 100%;
