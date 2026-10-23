@@ -171,7 +171,7 @@ console.log('\n══ 7. BRIX FEATURES: chat, lens, code exhibit, deep links');
   log('copy-link action present', await p.locator('.act-btn[aria-label="Copy link to this answer"]').count() === 1);
   await p.goto(BASE + '/?q=show me her case studies', { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(8000);
-  log('4 case-study cards in chat', await p.locator('.cs-card').count() === 4);
+  log('5 case-study cards in chat', await p.locator('.cs-card').count() === 5);
   await p.close();
 }
 
