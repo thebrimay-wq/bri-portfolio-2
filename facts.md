@@ -199,4 +199,4 @@ Source: `Desktop/GitHub FF/Financial-Finesse/B2C-app` = `Financial-Finesse/ff-b2
 - **Stated by Bri (2026-10-23), not derivable from the repo:** she built the entire prototype and design alone;
   she is working with AI engineers on the Aimee agent; the personas come from studying years of interactions
   between FF coaches and members.
-- TODO(bri): is this concept cleared to show publicly? It is an unreleased company product.
+- CLEARED (Bri, 2026-10-23): OK to show publicly, though it is an unreleased company product.
