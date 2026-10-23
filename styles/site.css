@@ -854,6 +854,7 @@ html.embedded .gallery .section, html.embedded .gallery .anchor-alias { scroll-m
 .gallery .takeaway p { font-size: clamp(28px, 4.2vw, 60px); font-weight: 350; letter-spacing: -0.035em; line-height: 1.08; max-width: 1000px; color: var(--ink); text-wrap: balance; }
 .gallery .takeaway p strong { font-weight: 500; }
 .gallery .bottom-nav { padding: clamp(40px, 5vw, 64px) 0; border-top: 1px solid var(--border); }
+.gallery > .wrap:has(+ .bottom-nav) { padding-bottom: clamp(88px, 11vw, 160px); }
 .gallery .bottom-nav .wrap { display: flex; flex-wrap: wrap; gap: 12px; }
 .gallery code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86em; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--ink); }
 
