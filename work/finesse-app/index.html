@@ -26,100 +26,6 @@
   <script>
     try { var _t = localStorage.getItem('theme'); if (_t === 'dark' || _t === 'light') document.documentElement.setAttribute('data-theme', _t); } catch (e) {}
   </script>
-  <style>
-    /* ============================================================
-       "Gallery" layout: the screens carry the story.
-       Each section is a headline, one sentence, and three phones.
-       One signature moment: the hero phones sit on the app's own
-       painted sky. Everything else is ink, rules, and type weight.
-       ============================================================ */
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); }
-
-    /* ── Hero ── */
-    .hero { padding: clamp(72px, 10vw, 136px) 0 0; }
-    .hero-meta { display: flex; flex-wrap: wrap; gap: 0 14px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: clamp(28px, 4vw, 44px); }
-    .hero-meta span + span::before { content: "·"; margin-right: 14px; color: var(--border); }
-    .hero h1 { font-size: clamp(44px, 7vw, 104px); font-weight: 350; letter-spacing: -0.04em; line-height: 0.96; color: var(--ink); text-wrap: balance; }
-    .hero-lead { font-size: clamp(18px, 1.5vw, 22px); line-height: 1.6; color: var(--ink-2); max-width: 620px; margin-top: clamp(28px, 4vw, 40px); }
-
-    .hero-facts { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(48px, 6vw, 72px); border-top: 1px solid var(--border); }
-    .hero-fact { padding: 22px 24px 22px 0; border-right: 1px solid var(--border); }
-    .hero-fact + .hero-fact { padding-left: 24px; }
-    .hero-fact:last-child { border-right: 0; }
-    .hero-fact-val { font-size: clamp(28px, 3vw, 44px); font-weight: 400; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--ink); }
-    .hero-fact-label { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-top: 10px; line-height: 1.5; }
-    @media (max-width: 760px) {
-      .hero-facts { grid-template-columns: 1fr 1fr; }
-      .hero-fact:nth-child(2) { border-right: 0; }
-      .hero-fact:nth-child(3) { padding-left: 0; border-top: 1px solid var(--border); }
-      .hero-fact:nth-child(4) { border-top: 1px solid var(--border); }
-    }
-
-    /* The painted sky behind the hero phones, taken from the app's world art */
-    .sky { margin-top: clamp(48px, 6vw, 80px); border-radius: 28px; padding: clamp(40px, 6vw, 88px) clamp(20px, 5vw, 80px) 0; background: linear-gradient(180deg, #E2E9EC 0%, #ECEDE6 55%, #F2ECDF 100%); overflow: hidden; }
-    .sky .phones { padding: 0; background: none; align-items: end; }
-    .sky .phone:nth-child(2) { transform: translateY(-28px); }
-    .sky .phone img { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
-
-    /* ── Phone galleries ── */
-    .phones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 3vw, 48px); margin-top: clamp(36px, 4vw, 56px); padding: clamp(24px, 4vw, 56px); border-radius: 28px; background: var(--surface); }
-    .phones--two { grid-template-columns: repeat(2, minmax(0, 300px)); justify-content: center; }
-    .phone { margin: 0; min-width: 0; }
-    .phone img { display: block; width: 100%; height: auto; border-radius: clamp(20px, 2.6vw, 36px); box-shadow: 0 2px 4px rgba(20, 30, 40, 0.04), 0 16px 40px rgba(20, 30, 40, 0.12); }
-    .phone figcaption { font-size: 14px; line-height: 1.55; color: var(--ink-2); margin-top: 16px; max-width: 300px; }
-    .phone figcaption b { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
-    @media (max-width: 760px) {
-      .phones, .phones--two { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 16px; padding: 20px; margin-left: calc(-1 * var(--px)); margin-right: calc(-1 * var(--px)); border-radius: 0; }
-      .phone { flex: 0 0 68%; scroll-snap-align: center; }
-      .sky { margin-left: calc(-1 * var(--px)); margin-right: calc(-1 * var(--px)); border-radius: 0; }
-      .sky .phones { margin: 0 calc(-1 * clamp(20px, 5vw, 80px)); padding: 0 20px; }
-      .sky .phone:nth-child(2) { transform: none; }
-    }
-
-    /* ── Sections ── */
-    .section { padding: clamp(88px, 11vw, 160px) 0 0; scroll-margin-top: 92px; }
-    .section-head { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px clamp(32px, 6vw, 96px); align-items: end; }
-    .section-n { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 18px; font-variant-numeric: tabular-nums; }
-    .section h2 { font-size: clamp(30px, 3.6vw, 52px); font-weight: 400; letter-spacing: -0.035em; line-height: 1.06; color: var(--ink); text-wrap: balance; }
-    .section-lead { font-size: clamp(17px, 1.3vw, 19px); line-height: 1.65; color: var(--ink-2); max-width: 520px; }
-    @media (max-width: 860px) { .section-head { grid-template-columns: 1fr; } }
-
-    /* At a glance: three ruled columns */
-    .glance { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: clamp(36px, 4vw, 48px); border-top: 1px solid var(--ink); }
-    .glance > div { padding: 22px 24px 22px 0; border-right: 1px solid var(--border); }
-    .glance > div + div { padding-left: 24px; }
-    .glance > div:last-child { border-right: 0; }
-    .glance h3 { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
-    .glance p { font-size: clamp(16px, 1.25vw, 18px); line-height: 1.6; color: var(--ink); }
-    @media (max-width: 760px) { .glance { grid-template-columns: 1fr; } .glance > div, .glance > div + div { padding: 20px 0; border-right: 0; border-bottom: 1px solid var(--border); } }
-
-    /* The two rules, set large */
-    .rules { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 64px); margin-top: clamp(36px, 4vw, 48px); }
-    .rule { padding-top: 24px; border-top: 1px solid var(--ink); }
-    .rule-text { font-size: clamp(28px, 3.4vw, 48px); font-weight: 350; letter-spacing: -0.035em; line-height: 1.08; color: var(--ink); }
-    .rule p:not(.rule-text) { font-size: 16px; line-height: 1.65; color: var(--ink-2); margin-top: 16px; max-width: 440px; }
-    @media (max-width: 640px) { .rules { grid-template-columns: 1fr; } }
-
-    /* Definition rows */
-    .rows { margin-top: clamp(36px, 4vw, 48px); border-top: 1px solid var(--border); }
-    .row { display: grid; grid-template-columns: 240px 1fr; gap: 8px 32px; padding: 22px 0; border-bottom: 1px solid var(--border); }
-    .row h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); line-height: 1.4; }
-    .row p { font-size: 16px; line-height: 1.65; color: var(--ink-2); max-width: 680px; }
-    .row p strong { color: var(--ink); font-weight: 600; }
-    @media (max-width: 640px) { .row { grid-template-columns: 1fr; } }
-
-    /* Takeaway */
-    .takeaway { margin-top: clamp(96px, 12vw, 176px); padding: clamp(96px, 12vw, 176px) 0; border-top: 1px solid var(--border); }
-    .takeaway p { font-size: clamp(28px, 4.2vw, 60px); font-weight: 350; letter-spacing: -0.035em; line-height: 1.08; max-width: 1000px; color: var(--ink); text-wrap: balance; }
-    .takeaway p strong { font-weight: 500; }
-
-    .bottom-nav { padding: clamp(40px, 5vw, 64px) 0; border-top: 1px solid var(--border); }
-    .bottom-nav .wrap { display: flex; flex-wrap: wrap; gap: 12px; }
-
-    /* Dark theme: the sky dims to the page surface so the phones keep their glow */
-    :root[data-theme="dark"] .sky { background: linear-gradient(180deg, #1B2228 0%, #20242A 100%); }
-    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sky { background: linear-gradient(180deg, #1B2228 0%, #20242A 100%); } }
-  </style>
 </head>
 <body>
   <div class="ambient" aria-hidden="true"></div>
@@ -135,7 +41,7 @@
     </div>
   </nav>
 
-  <main>
+  <main class="gallery gallery--finesse">
     <!-- ════ HERO ════ -->
     <section class="hero">
       <div class="wrap">

@@ -23,754 +23,165 @@
   <meta property="og:description" content="One AI coach designed for three surfaces: the Hub, an embeddable client widget, and Microsoft Teams. Coded prototypes, a component library, and production components by Bri May." />
   <meta name="twitter:description" content="One AI coach designed for three surfaces: the Hub, an embeddable client widget, and Microsoft Teams. Coded prototypes, a component library, and production components by Bri May." />
   <script src="/scripts/embed.js"></script>
-  <style>
-
-    /* ── wrapper ── */
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); }
-
-    /* ── section base ── */
-    .cs-section {
-      padding: clamp(80px, 10vw, 128px) 0;
-      border-top: 1px solid var(--border);
-    }
-    .eyebrow { margin-bottom: 20px; }
-
-    /* ── cs images ── */
-    .cs-image {
-      width: 100%; height: auto; display: block;
-      border-radius: 16px; transition: transform 0.5s ease;
-    }
-    .cs-image:hover { transform: scale(1.01); }
-    /* portrait phone screenshots — cap width + center so they read as a phone,
-       not a full-bleed wall of image */
-    .cs-image--phone { max-width: 380px; margin-inline: auto; }
-    /* a row of phone screenshots shown side by side */
-    .phone-row { display: flex; gap: clamp(16px, 3vw, 36px); justify-content: center; align-items: flex-start; flex-wrap: wrap; }
-    .phone-row .cs-image { max-width: 320px; width: 100%; margin: 0; }
-    /* framed inline video (same 2026 treatment as the hero video) */
-    .cs-video-slot--frame {
-      overflow: hidden; border-radius: 16px;
-      box-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.03),
-        0 12px 30px rgba(0, 0, 0, 0.07),
-        0 28px 60px rgba(0, 0, 0, 0.06);
-    }
-    .cs-video-slot--frame::after {
-      content: ""; position: absolute; inset: 0; border-radius: inherit;
-      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.07);
-      pointer-events: none; z-index: 2;
-    }
-    .cs-video-slot--frame .cs-video { border-radius: 0; transform: scale(1.012); transform-origin: center; }
-
-    /* ── image placeholder (used until real images are dropped in) ── */
-    .img-placeholder {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: var(--surface);
-      border: 1px dashed var(--border);
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      color: var(--ink-3);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      text-align: center;
-      padding: 24px;
-    }
-    .img-placeholder::before {
-      content: "";
-      width: 30px; height: 30px;
-      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E");
-    }
-    .img-placeholder-label {
-      display: inline-block;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 11px; font-weight: 600; color: var(--ink-2);
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 6px; padding: 3px 9px;
-    }
-    .img-placeholder--tall { aspect-ratio: 4 / 3; }
-    .img-placeholder--wide { aspect-ratio: 21 / 9; }
-
-    /* ════ 1. HERO ════ */
-    .hero { padding: clamp(80px, 10vw, 130px) 0 0; overflow: hidden; }
-    .hero-eyebrow {
-      font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--ink-3); margin-bottom: 24px;
-    }
-    .hero h1 {
-      font-size: clamp(30px, 4vw, 58px); font-weight: 700;
-      letter-spacing: -0.025em; line-height: 1.05; max-width: 820px;
-      margin-bottom: 28px; color: var(--ink);
-    }
-    .hero h1 span { color: var(--ink-3); }
-    .hero-lead {
-      font-size: clamp(16px, 1.3vw, 19px); color: var(--ink-2);
-      line-height: 1.72; max-width: 620px; margin-bottom: 52px;
-    }
-    .hero-stats { display: flex; gap: 52px; flex-wrap: wrap; margin-bottom: clamp(32px, 4vw, 48px); }
-    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: clamp(52px, 7vw, 96px); }
-    .hero-stat-val {
-      font-size: clamp(22px, 2.5vw, 34px); font-weight: 700;
-      letter-spacing: -0.03em; line-height: 1; margin-bottom: 7px; color: var(--ink);
-    }
-    .hero-stat-label {
-      font-size: 11px; color: var(--ink-3); font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-    }
-    .hero-image { width: 100%; }
-    .hero-image img, .hero-image .img-placeholder {
-      width: 100%; height: auto; display: block;
-      border-radius: 16px 16px 0 0; aspect-ratio: 16 / 9;
-    }
-    /* ── hero demo video (framed, autoplay-loop, normal speed) ── */
-    .cs-video-slot { position: relative; }
-    .cs-video { width: 100%; height: auto; display: block; }
-    .cs-video-slot:not(.loaded) .cs-video { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-    .cs-video-slot.loaded .cs-video-ph { display: none; }
-    /* rounded card on all corners, scaled a hair so encoder hairlines clip off
-       every side, with a 2026-style hairline stroke + soft layered drop shadow */
-    .hero-image .cs-video-slot {
-      overflow: hidden; border-radius: 16px;
-      box-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.03),
-        0 12px 30px rgba(0, 0, 0, 0.07),
-        0 28px 60px rgba(0, 0, 0, 0.06);
-    }
-    .hero-image .cs-video-slot::after {
-      content: ""; position: absolute; inset: 0; border-radius: inherit;
-      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.07);
-      pointer-events: none; z-index: 2;
-    }
-    .hero-image .cs-video { border-radius: 0; transform: scale(1.012); transform-origin: center; }
-    .cs-video-ph {
-      width: 100%; aspect-ratio: 1796 / 1080; background: var(--surface);
-      border: 1px solid var(--border); border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--ink-3); font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
-    }
-
-    /* ════ AT A GLANCE ════ */
-    .glance {
-      display: grid; grid-template-columns: 1.5fr 1fr;
-      gap: clamp(32px, 5vw, 72px); align-items: start; margin-top: 8px;
-    }
-    @media (max-width: 768px) { .glance { grid-template-columns: 1fr; gap: 32px; } }
-    .glance-summary {
-      font-size: clamp(18px, 1.6vw, 23px); line-height: 1.6;
-      color: var(--ink); font-weight: 500; max-width: 640px;
-    }
-    .glance-facts { display: flex; flex-direction: column; }
-    .glance-facts > div {
-      display: flex; justify-content: space-between; gap: 20px;
-      padding: 14px 0; border-top: 1px solid var(--border);
-    }
-    .glance-facts > div:last-child { border-bottom: 1px solid var(--border); }
-    .glance-facts dt {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--ink-3); flex-shrink: 0;
-    }
-    .glance-facts dd {
-      font-size: 14px; color: var(--ink); font-weight: 500;
-      text-align: right; margin: 0; line-height: 1.45;
-    }
-
-    /* ════ WHAT I OWNED ════ */
-    .owned-section { background: var(--surface); }
-    .owned-h2 {
-      font-size: clamp(26px, 3vw, 40px); font-weight: 700;
-      letter-spacing: -0.03em; line-height: 1.14;
-      margin-bottom: clamp(40px, 5vw, 56px); max-width: 720px;
-    }
-    .owned-list { display: flex; flex-direction: column; max-width: 820px; }
-    .owned-item {
-      display: grid; grid-template-columns: 220px 1fr;
-      gap: clamp(16px, 3vw, 40px); padding: clamp(24px, 3vw, 32px) 0;
-      border-top: 1px solid var(--border); align-items: start;
-    }
-    .owned-item:last-child { border-bottom: 1px solid var(--border); }
-    @media (max-width: 700px) { .owned-item { grid-template-columns: 1fr; gap: 8px; } }
-    .owned-label { font-size: clamp(15px, 1.2vw, 17px); font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
-    .owned-text { font-size: clamp(15px, 1.15vw, 17px); color: var(--ink-2); line-height: 1.7; margin: 0; }
-
-    /* ════ PROBLEM ════ */
-    .problem-bullets { display: flex; flex-direction: column; gap: 18px; max-width: 720px; margin-top: 36px; }
-    .problem-bullet {
-      display: flex; gap: 14px; align-items: flex-start;
-      font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.7;
-    }
-    .problem-bullet .bullet-dot {
-      width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3);
-      flex-shrink: 0; margin-top: 10px;
-    }
-    .problem-bullet strong { color: var(--ink); font-weight: 600; }
-    .skip-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 13px; font-weight: 500; color: var(--ink-3);
-      text-decoration: none; cursor: pointer; transition: color 0.2s ease;
-    }
-    .skip-link:hover { color: var(--ink); }
-
-    /* ════ OPPORTUNITY ════ */
-    .opportunity-section { background: var(--surface); }
-    .opportunity-pullquote {
-      font-size: clamp(32px, 5vw, 72px); font-weight: 700;
-      letter-spacing: -0.04em; line-height: 1.06; max-width: 980px;
-      margin-bottom: 32px; color: var(--ink);
-    }
-    .opportunity-sub {
-      font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2);
-      line-height: 1.72; max-width: 620px; margin-bottom: clamp(52px, 7vw, 96px);
-    }
-    .transform-table { max-width: 720px; }
-    .transform-row {
-      display: flex; align-items: center; gap: 20px;
-      padding: clamp(20px, 2.5vw, 32px) 0; border-top: 1px solid var(--border);
-    }
-    .transform-from { font-size: clamp(15px, 1.2vw, 17px); color: var(--ink-3); text-decoration: line-through; flex: 1; }
-    .transform-arrow { font-size: 12px; color: var(--ink-3); letter-spacing: 0.05em; flex-shrink: 0; }
-    .transform-to { font-size: clamp(15px, 1.2vw, 17px); font-weight: 600; color: var(--ink); flex: 1; }
-
-    /* ════ SOLUTION ════ */
-    .solution-h2 {
-      font-size: clamp(26px, 3vw, 40px); font-weight: 700;
-      letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 32px; max-width: 720px;
-    }
-    .solution-body {
-      font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2);
-      line-height: 1.78; max-width: 720px; margin-bottom: 40px;
-    }
-    .numbered-list { display: flex; flex-direction: column; margin-bottom: 48px; max-width: 760px; }
-    .numbered-item {
-      display: grid; grid-template-columns: 48px 1fr;
-      gap: clamp(16px, 2.5vw, 32px); padding: clamp(20px, 2.5vw, 28px) 0;
-      border-top: 1px solid var(--border); align-items: start;
-    }
-    .numbered-item-n { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-3); padding-top: 4px; }
-    .numbered-item-text { font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.72; margin: 0; }
-    .numbered-item-text strong { color: var(--ink); font-weight: 600; }
-    .solution-quote {
-      font-size: clamp(17px, 1.4vw, 20px); color: var(--ink); line-height: 1.65;
-      font-weight: 500; font-style: italic; border-left: 2px solid var(--border);
-      padding-left: 24px; margin: 0; max-width: 720px;
-    }
-
-    /* ════ EXPERIENCE ════ */
-    .exp-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; margin-bottom: 0; }
-    .exp-body { font-size: clamp(16px, 1.2vw, 18px); color: var(--ink-2); line-height: 1.75; max-width: 620px; margin-top: 20px; margin-bottom: 0; }
-    .exp-header { max-width: 720px; margin-bottom: clamp(44px, 6vw, 72px); }
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 7vw, 96px); align-items: center; }
-    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
-    .bullet-list { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
-    .bullet-item { display: flex; gap: 12px; align-items: flex-start; font-size: clamp(14px, 1.1vw, 16px); color: var(--ink-2); line-height: 1.6; }
-    .bullet-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); flex-shrink: 0; margin-top: 9px; }
-    .bullet-item strong { color: var(--ink); font-weight: 600; }
-
-    /* ════ PROCESS ════ */
-    .process-body { font-size: clamp(17px, 1.4vw, 20px); color: var(--ink-2); line-height: 1.78; max-width: 720px; margin-bottom: clamp(48px, 6vw, 72px); }
-    .process-pullquote {
-      font-size: clamp(17px, 1.4vw, 20px); color: var(--ink); line-height: 1.65;
-      font-weight: 500; font-style: italic; border-left: 2px solid var(--border);
-      padding-left: 24px; margin: clamp(48px, 6vw, 72px) 0 0; max-width: 720px;
-    }
-
-    /* ════ IMPACT ════ */
-    .impact-section { text-align: center; }
-    .impact-h2 {
-      font-size: clamp(26px, 3.5vw, 46px); font-weight: 700; letter-spacing: -0.03em;
-      line-height: 1.1; max-width: 620px; margin: 0 auto clamp(52px, 6vw, 80px); text-align: center;
-    }
-    .impact-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-      background: var(--border); border: 1px solid var(--border); border-radius: 16px;
-      overflow: hidden; text-align: left; margin-bottom: clamp(48px, 6vw, 72px);
-    }
-    @media (max-width: 640px) { .impact-grid { grid-template-columns: 1fr; } }
-    .impact-cell { background: var(--bg); padding: clamp(28px, 3.5vw, 48px) clamp(20px, 2.5vw, 36px); }
-    .impact-val { font-size: clamp(24px, 3vw, 44px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-bottom: 12px; color: var(--ink); }
-    .impact-label { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
-    .impact-footnote { font-size: 14px; color: var(--ink-3); line-height: 1.65; max-width: 720px; margin: clamp(24px,3vw,36px) auto 0; text-align: center; }
-    .client-note { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); text-align: center; margin: clamp(36px,5vw,52px) 0 14px; }
-    figure.shot { margin: 0; }
-    figure.shot figcaption { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin: 14px 0 0; max-width: 720px; }
-    .client-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-    .client-pill {
-      font-size: 13px; font-weight: 500; color: var(--ink-2);
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 100px; padding: 6px 16px;
-    }
-
-    /* ════ WHAT'S NEXT ════ */
-    .next-h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.14; max-width: 640px; }
-    .next-list { display: flex; flex-direction: column; }
-    .next-item {
-      display: grid; grid-template-columns: 56px 1fr; gap: clamp(20px, 3vw, 40px);
-      padding: clamp(28px, 3.5vw, 44px) 0; border-top: 1px solid var(--border); align-items: start;
-    }
-    .next-item-n { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding-top: 4px; }
-    .next-item-title { font-size: clamp(17px, 1.5vw, 20px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 14px; color: var(--ink); }
-    .next-item-body { font-size: clamp(15px, 1.1vw, 17px); color: var(--ink-2); line-height: 1.75; max-width: 680px; margin: 0; }
-
-    /* ════ FINAL TAKEAWAY ════ */
-    .takeaway-section { background: var(--surface); padding: clamp(88px, 12vw, 160px) 0; border-top: 1px solid var(--border); }
-    .takeaway-text { font-size: clamp(24px, 3.5vw, 48px); font-weight: 700; letter-spacing: -0.035em; line-height: 1.12; max-width: 900px; color: var(--ink); }
-    .takeaway-text strong { color: var(--ink); }
-
-    /* ════ BOTTOM NAV ════ */
-    .bottom-cta { padding: clamp(40px, 5vw, 64px) 0; border-top: 1px solid var(--border); }
-    .cta-links { display: flex; gap: 32px; flex-wrap: wrap; align-items: center; }
-
-    @media (max-width: 768px) {
-      .cs-section { padding: 72px 0; }
-      .hero { padding-top: 72px; }
-    }
-  </style>
 </head>
 <body>
-
-  <!-- NAV -->
   <div class="ambient" aria-hidden="true"></div>
   <nav id="site-nav">
     <div class="nav-inner">
-      <a href="../" class="nav-logo">Bri May</a>
+      <a href="/" class="nav-logo">Bri May</a>
       <ul class="nav-links">
-        <li><a href="../work/">Work</a></li>
-        <li><a href="../about/">About</a></li>
-        <li><a href="../resume/">Résumé</a></li>
-        <li><a href="../contact/">Contact</a></li>
+        <li><a href="/work/">Work</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/resume/">Résumé</a></li>
+        <li><a href="/contact/">Contact</a></li>
       </ul>
     </div>
   </nav>
 
-  <main>
-
-    <!-- ════ 1. HERO ════ -->
+  <main class="gallery gallery--aimee">
     <section class="hero">
       <div class="wrap">
-        <p class="hero-eyebrow fade-up">AI-Native Senior Product Designer · Financial Finesse · 2026</p>
-        <h1 class="fade-up" style="transition-delay:50ms;">
-          One AI financial coach, designed to feel native in three homes:
-          <span>the Hub, client sites, and Microsoft Teams.</span>
-        </h1>
-        <p class="hero-lead fade-up" style="transition-delay:90ms;">
-          Aimee is Financial Finesse's AI financial coach. I designed its front end end to end:
-          the visual language, the interaction model, a component library, and coded prototypes with
-          real streaming and state. Engineering built the production SDK in React and A2UI from those.
-          I then merged the design-token layer and four components into that SDK myself.
-        </p>
-        <div class="hero-stats fade-up" style="transition-delay:130ms;">
-          <div>
-            <div class="hero-stat-val">3 surfaces</div>
-            <div class="hero-stat-label">Designed for: Hub · client sites · Teams</div>
-          </div>
-          <div>
-            <div class="hero-stat-val">1 library</div>
-            <div class="hero-stat-label">Component library, public on this site</div>
-          </div>
-          <div>
-            <div class="hero-stat-val">32 commits</div>
-            <div class="hero-stat-label">Merged into the production SDK, Jul–Aug 2026</div>
-          </div>
+        <p class="hero-meta fade-up"><span>Case study</span><span>Financial Finesse</span><span>2026</span><span>Design, prototypes, production components</span></p>
+        <h1 class="fade-up" style="transition-delay:50ms">One AI coach, three places to meet her.</h1>
+        <p class="hero-lead fade-up" style="transition-delay:90ms">Aimee is Financial Finesse's AI financial coach. I designed her front end and coded the prototypes and component library engineering built from. Then I merged the token layer and four components into the production SDK myself.</p>
+
+        <div class="hero-facts fade-up" style="transition-delay:130ms">
+          <div class="hero-fact"><div class="hero-fact-val">3</div><div class="hero-fact-label">Surfaces: Hub, client sites, Teams</div></div>
+          <div class="hero-fact"><div class="hero-fact-val">1</div><div class="hero-fact-label">Component library, public on this site</div></div>
+          <div class="hero-fact"><div class="hero-fact-val">4</div><div class="hero-fact-label">Components I merged into the SDK</div></div>
+          <div class="hero-fact"><div class="hero-fact-val">32</div><div class="hero-fact-label">Commits in production, Jul – Aug 2026</div></div>
         </div>
-        <div class="hero-actions fade-up" style="transition-delay:150ms;">
-          <a href="/aimee-ai/components/" target="_blank" rel="noopener noreferrer" class="btn-primary">Explore the component library →</a>
-        </div>
-        <div class="hero-image fade-up" style="transition-delay:170ms;">
-          <div class="cs-video-slot">
-            <video class="cs-video" autoplay muted loop playsinline preload="metadata"
-                   poster="../images/aimee-hero-video-poster.jpg"
-              onloadstart="this.closest('.cs-video-slot').classList.add('loaded')">
-              <source src="/images/aimee-hero-video.mp4" type="video/mp4" />
-            </video>
-            <div class="cs-video-ph">Aimee — the AI coach in action</div>
+
+        <div class="sky fade-up" style="transition-delay:170ms">
+          <div class="phones">
+            <figure class="phone"><img src="/images/aimee-milestones.png" alt="Aimee on mobile: a wellness-milestones card listing the steps a member has checked off" width="840" height="1824"></figure>
+            <figure class="phone"><img src="/images/aimee-charts.png" alt="Aimee on mobile: a financial snapshot answer with an assets-versus-debt bar chart" width="842" height="1826"></figure>
+            <figure class="phone"><img src="/images/aimee-coachhandoff.png" alt="Aimee on mobile: a certified human coach joining the same conversation" width="844" height="1828"></figure>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ════ AT A GLANCE ════ -->
-    <section class="cs-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow">At a glance</span>
-        <div class="glance">
-          <p class="glance-summary">People asking an AI about their retirement need to know what they are talking to, and need a human within reach. Aimee had to deliver that in three places with different chrome and entry points. I designed the front end, coded the prototypes and the component library, and wrote the spec; the platform engineers built the SDK from it; I merged the token layer and four components into their repo. What is documented here is scope and decisions. Usage and deployment by surface are not published, and I don't claim them.</p>
-          <dl class="glance-facts">
-            <div><dt>Role</dt><dd>AI-Native Senior Product Designer · front end, prototypes, production components</dd></div>
-            <div><dt>Collaborators</dt><dd>Platform engineers (the SDK, React + A2UI) · the coaching back end and model team</dd></div>
-            <div><dt>Timeline</dt><dd>2026 · SDK from April · my components merged Jul 21–Aug 17</dd></div>
-            <div><dt>Status</dt><dd>Components merged into the production SDK · usage not published</dd></div>
-          </dl>
+    <div class="wrap">
+      <section class="section" id="owned">
+        <div class="section-head fade-up">
+          <div><span class="section-n">01 · At a glance</span><h2>People asking AI about retirement need to know what they're talking to</h2></div>
+          <p class="section-lead">And they need a human within reach. Aimee had to deliver both in three places, each with its own frame and front door.</p>
         </div>
-        <div class="jump-nav">
-          <span class="jump-label">Jump to</span>
-          <a class="jump-chip" href="#owned">What I owned</a>
-          <a class="jump-chip" href="#aimee-solution">Solution</a>
-          <a class="jump-chip" href="#trust">Trust &amp; failure states</a>
-          <a class="jump-chip" href="#collab">What collaboration changed</a>
-          <a class="jump-chip" href="#process">Process</a>
-          <a class="jump-chip" href="#impact">Scope &amp; status</a>
+        <div class="glance fade-up">
+          <div><h3>The problem</h3><p>Three homes: the logged-in Hub, client benefits sites, and Microsoft Teams. Three front ends would split the brand and triple the upkeep.</p></div>
+          <div><h3>The bet</h3><p>One system: a design-system spec, a locked library of blocks Aimee speaks in, and coded prototypes engineering builds from.</p></div>
+          <div><h3>My role</h3><p>Visual language, interaction model, the spec, coded prototypes, and production components. Platform engineers built the SDK.</p></div>
         </div>
-      </div>
-    </section>
+        <div class="rows fade-up">
+          <div class="row"><h3>Team</h3><p>Platform engineers (the SDK, React and A2UI) · the coaching back end and model team</p></div>
+          <div class="row"><h3>Built with</h3><p>HTML, CSS, and JavaScript prototypes with live streaming · a DESIGN-SYSTEM.md spec · tokens and components in the React SDK</p></div>
+          <div class="row"><h3>Status</h3><p>Components merged into the production SDK · usage not published</p></div>
+        </div>
+      </section>
 
-    <!-- ════ WHAT I OWNED ════ -->
-    <section id="owned" class="cs-section owned-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow">My Role</span>
-        <h2 class="owned-h2">Front-end design, coded prototypes, and production components</h2>
-        <div class="owned-list">
-          <div class="owned-item">
-            <div class="owned-label">Visual &amp; Interaction</div>
-            <p class="owned-text">Defined Aimee's visual language and interaction model — how she talks, streams, surfaces content, and brings in a human coach.</p>
-          </div>
-          <div class="owned-item">
-            <div class="owned-label">Design System</div>
-            <p class="owned-text">Wrote the spec (<code>DESIGN-SYSTEM.md</code>: tokens, typography, every chat and card component, chart rules, accessibility hard-rules, an anti-patterns list), then the tokens themselves as the styles layer of the production SDK.</p>
-          </div>
-          <div class="owned-item">
-            <div class="owned-label">Component Library</div>
-            <p class="owned-text">Built an approved library of reusable in-chat blocks, each with a documented anatomy, states, and CSS contract, so engineering had something to build from instead of interpret.</p>
-          </div>
-          <div class="owned-item">
-            <div class="owned-label">Prototypes</div>
-            <p class="owned-text">Designed and coded high-fidelity interactive prototypes — real HTML/CSS/JS with live streaming, animation, and state — to test flows before a line of production code.</p>
-          </div>
-          <div class="owned-item">
-            <div class="owned-label">Multi-surface</div>
-            <p class="owned-text">Designed the embeddable SDK widget for client sites and adapted the same system to Microsoft Teams — all hostable through UberAdmin.</p>
-          </div>
-          <div class="owned-item">
-            <div class="owned-label">Coded by me</div>
-            <p class="owned-text">The interactive prototypes (HTML/CSS/JS with live streaming and state), the component contract, the engineering spec (Next.js + Tailwind + A2UI), and, in the production SDK, the design-token layer plus the empty-state, conversations, icon, and card-shell components: 32 commits, July–August 2026.</p>
-          </div>
-          <div class="owned-item">
-            <div class="owned-label">Built by engineering</div>
-            <p class="owned-text">The Aimee SDK itself, in React and A2UI, built by the platform engineers from my prototypes and spec; the host provisioning through UberAdmin; the model and the coaching back end. Where their build drifted from the contract, we caught it in review (one example below).</p>
-          </div>
+      <section class="section" id="aimee-solution">
+        <div class="section-head fade-up">
+          <div><span class="section-n">02 · The system</span><h2>A vocabulary, not free-form bubbles</h2></div>
+          <p class="section-lead">Every answer is built from typed blocks. A colored rail tells you what kind of card you're reading before you read it.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- ════ THE PROBLEM ════ -->
-    <section class="cs-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow">The Problem</span>
-        <h2 class="solution-h2">One coach, three very different homes</h2>
-        <div class="problem-bullets">
-          <div class="problem-bullet">
-            <span class="bullet-dot"></span>
-            <span>Aimee had to live in three contexts — the logged-in <strong>Hub</strong>, embedded on <strong>client benefits sites</strong>, and inside surfaces like <strong>Microsoft Teams</strong> — each with different screen real estate, brand, and entry point.</span>
-          </div>
-          <div class="problem-bullet">
-            <span class="bullet-dot"></span>
-            <span>The coaching experience itself had to be <strong>identical and recognizable</strong> everywhere. Three separate front ends would fracture the brand and triple maintenance.</span>
-          </div>
-          <div class="problem-bullet">
-            <span class="bullet-dot"></span>
-            <span>A trust problem specific to finance: people need to know they're talking to AI, but <strong>"virtual assistant" reads as fake</strong> — the wrong first impression when someone's asking about their retirement.</span>
-          </div>
-        </div>
-        <div style="margin-top: 48px;">
-          <a class="skip-link" onclick="document.getElementById('aimee-solution').scrollIntoView({behavior:'smooth'})" href="#aimee-solution">
-            Jump to solution →
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ════ THE SOLUTION ════ -->
-    <section id="aimee-solution" class="cs-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow">The Solution</span>
-        <h2 class="solution-h2">One system, not three front ends</h2>
-        <p class="solution-body">
-          Rather than build three front ends, I built one: a documented design system, a locked
-          component library that Aimee "speaks" in, coded prototypes to test with, and a single
-          configurable host. Every response is assembled from typed blocks — never free-form bubbles.
-        </p>
-        <div class="numbered-list">
-          <div class="numbered-item">
-            <span class="numbered-item-n">01</span>
-            <p class="numbered-item-text"><strong>A design-system spec, then tokens as code</strong> — <code>DESIGN-SYSTEM.md</code> defines tokens, typography, accessibility hard-rules, and an anti-patterns list; the tokens ship as the styles layer of the production SDK</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">02</span>
-            <p class="numbered-item-text"><strong>A component library as the contract</strong> — chat primitives, a typed card system, data-viz blocks, and follow-up chips, each built to a documented anatomy and CSS contract</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">03</span>
-            <p class="numbered-item-text"><strong>Coded interactive prototypes</strong> — real HTML/CSS/JS with live streaming and state, so flows could be felt and tested, not just reviewed</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">04</span>
-            <p class="numbered-item-text"><strong>One configurable host</strong> — designed to be provisioned through UberAdmin so the Hub, client sites, and Teams can be served from a single system</p>
-          </div>
-        </div>
-
-        <figure class="shot" style="margin-top:clamp(40px,5vw,56px);">
-          <img class="cs-image" src="/images/aimee-landing.png" alt="Aimee's returning-user welcome in the Hub: greeting, composer, a Picked-for-you list of starters, and a line showing a named certified coach is online" loading="lazy" width="3356" height="2020">
-          <figcaption>The returning-user welcome. Notice the last line: a named human coach, with a credential, shown as available before the first message is typed. Escalation is a visible promise, not a buried fallback.</figcaption>
-        </figure>
-        <div class="fade-up phone-row" style="margin-top:clamp(20px,3vw,36px);">
-          <img class="cs-image" src="/images/aimee-milestones.png" alt="Aimee on mobile — the wellness-milestones card" loading="lazy" width="840" height="1824">
-          <img class="cs-image" src="/images/aimee-charts.png" alt="Aimee on mobile — a financial snapshot response with charts" loading="lazy" width="842" height="1826">
-          <img class="cs-image" src="/images/aimee-coachhandoff.png" alt="Aimee on mobile — bringing in a live coach" loading="lazy" width="844" height="1828">
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ EXPERIENCE · 01 — HONEST AI ════ -->
-    <section class="cs-section">
-      <div class="wrap">
-        <div class="exp-header fade-up">
-          <span class="eyebrow">Experience · 01</span>
-          <h2 class="exp-h2">Honest AI, premium humans</h2>
-          <p class="exp-body">
-            Aimee is labeled an "AI coach," never a "virtual assistant." The reasoning: in financial
-            guidance, hiding what the user is talking to breaks trust the moment they find out, and
-            "virtual" reads as fake. Certified human coaches are framed as a one-click step up, with a
-            gold-railed escalation card, so the AI feels capable and the humans feel credentialed. This
-            is a design decision with a rationale, not a measured trust outcome; no study of it is
-            published here.
-          </p>
-        </div>
-        <div class="fade-up" style="transition-delay:90ms;">
-          <figure class="shot">
-            <img class="cs-image" src="/images/aimee-coachhandoff-dt.png" alt="Aimee bringing in a live certified coach: a green LIVE banner as Cyrus Purnell, CFP, joins the conversation to continue the plan" loading="lazy" width="2400" height="1445">
-            <figcaption>The step up. The coach joins the same thread rather than opening a separate channel, the banner names the person and the credential, and the plan carries over, so escalation never means starting again.</figcaption>
+        <div class="screens fade-up">
+          <figure class="screen screen--narrow">
+            <div class="frame"><img src="/images/aimee-components.png" alt="The typed card system: an analysis card with a navy rail, a recommendation card with a teal rail, and a coach card with a gold rail" loading="lazy" width="1584" height="1846"></div>
+            <figcaption><b>Navy analyzes, teal recommends, gold brings in a person</b>Coral is saved for the single most urgent item, so urgency means something when it shows up.</figcaption>
           </figure>
         </div>
-      </div>
-    </section>
+        <p class="note fade-up"><a href="/aimee-ai/components/">See the components live ↗</a></p>
+      </section>
 
-    <!-- ════ TRUST AND FAILURE STATES ════ -->
-    <section id="trust" class="cs-section opportunity-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow">Trust and failure states</span>
-        <h2 class="solution-h2">What the interface says when the model might be wrong</h2>
-        <p class="solution-body">
-          These are the states that exist in the component library and the shipped widget, each with the reason it
-          is there. Where a state lives in the SDK engineering built and is not documented on this site, I say so
-          rather than describe it.
-        </p>
-        <div class="numbered-list">
-          <div class="numbered-item">
-            <span class="numbered-item-n">01</span>
-            <p class="numbered-item-text"><strong>A standing disclaimer under the composer.</strong> "Aimee can get things wrong. Double check answers." It sits on every screen, not in onboarding, because the moment a user needs it is the moment they are reading an answer.</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">02</span>
-            <p class="numbered-item-text"><strong>A correction channel on every reply.</strong> Thumbs up, thumbs down, and copy under each answer give the user a way to flag a wrong answer where it happened, and the product a signal tied to a specific response.</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">03</span>
-            <p class="numbered-item-text"><strong>Prose first, then structure.</strong> Cards, charts, and chips stay hidden until the streamed answer finishes. A half-rendered chart beside half a sentence reads as a broken dashboard; a finished sentence followed by its evidence reads as a composed answer.</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">04</span>
-            <p class="numbered-item-text"><strong>A human within reach, always.</strong> The coach-availability line on the welcome screen, the gold escalation card inside a thread, and "Ask for help" on any action item are the same decision three times: when the AI is not enough, the exit is one tap and leads to a named person.</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">05</span>
-            <p class="numbered-item-text"><strong>Restraint as a rule.</strong> Three content blocks per turn at most, one primary call to action per card, and coral reserved for the single most urgent item, so urgency means something when it appears.</p>
-          </div>
-          <div class="numbered-item">
-            <span class="numbered-item-n">06</span>
-            <p class="numbered-item-text"><strong>Not documented here.</strong> Interruption and retry of a stream, the insufficient-context case, and how Aimee corrects a user's mistaken assumption live in the SDK and the coaching back end that engineering owns. I did not design those states and will not describe them as if I had.</p>
-          </div>
+      <section class="section" id="trust">
+        <div class="section-head fade-up">
+          <div><span class="section-n">03 · Trust</span><h2>Honest about the AI, with a human one tap away</h2></div>
+          <p class="section-lead">She's an "AI coach," never a "virtual assistant." When the AI isn't enough, a named, certified coach joins the same thread.</p>
         </div>
-      </div>
-    </section>
+        <div class="screens fade-up">
+          <figure class="screen">
+            <div class="frame"><img src="/images/aimee-coachhandoff-dt.png" alt="Aimee on desktop bringing in a live certified coach: a banner names Cyrus Purnell, CFP, as he joins the conversation" loading="lazy" width="2400" height="1445"></div>
+            <figcaption><b>The step up</b>The coach joins the same conversation, named with a credential, and the plan carries over. Escalation never means starting again.</figcaption>
+          </figure>
+        </div>
+        <div class="rows fade-up">
+          <div class="row"><h3>A standing disclaimer</h3><p>"Aimee can get things wrong" sits under every composer, where people read answers.</p></div>
+          <div class="row"><h3>A correction on every reply</h3><p>Thumbs up, thumbs down, and copy under each answer.</p></div>
+          <div class="row"><h3>Words first, then cards</h3><p>Cards and charts wait until the sentence finishes, so an answer never looks half-broken.</p></div>
+          <div class="row"><h3>Restraint as a rule</h3><p>Three blocks per turn at most, one primary action per card.</p></div>
+        </div>
+        <p class="note fade-up">A design rationale, not a measured trust outcome. Stream retry, missing context, and correcting a user's wrong assumption live in the SDK and back end engineering owns; I didn't design those states.</p>
+      </section>
 
-    <!-- ════ EXPERIENCE · 02 — COMPONENT VOCABULARY ════ -->
-    <section class="cs-section">
-      <div class="wrap">
-        <div class="two-col">
-          <div class="fade-up">
-            <span class="eyebrow">Experience · 02</span>
-            <h2 class="exp-h2">A vocabulary, not free-form bubbles</h2>
-            <p class="exp-body">
-              Every response is assembled from typed blocks — the "vocabulary" Aimee speaks in.
-              A base card with a colored left rail signals its type at a glance.
-            </p>
-            <div class="bullet-list">
-              <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Navy rail</strong> — analysis</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Teal rail</strong> — recommendation</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Gold rail</strong> — human-coach escalation</span></div>
-              <div class="bullet-item"><span class="bullet-dot"></span><span>Coral reserved for the single most-urgent item — restraint as a rule</span></div>
-            </div>
-            <a href="/aimee-ai/components/" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="margin-top:28px;">See the components live ↗</a>
-          </div>
-          <div class="fade-up" style="transition-delay:90ms;">
-            <img class="cs-image" src="/images/aimee-components.png" alt="The typed card system — an analysis card (navy rail), a recommendation card (teal rail), and a coach card (gold rail), each signaling its type at a glance" loading="lazy" width="1584" height="1846">
-          </div>
+      <section class="section" id="surfaces">
+        <div class="section-head fade-up">
+          <div><span class="section-n">04 · Three homes</span><h2>The same coach, wherever she lives</h2></div>
+          <p class="section-lead">The vocabulary never changes. The host decides the front door, the frame, and how much room the coach gets.</p>
         </div>
-      </div>
-    </section>
+        <div class="screens screens--two fade-up">
+          <figure class="screen">
+            <div class="frame"><img src="/images/aimee-landing.png" alt="Aimee full screen inside the Hub: a greeting, the composer, and starter questions" loading="lazy" width="3356" height="2020"></div>
+            <figcaption><b>In the Hub</b>The widest layout, with cards that link straight into plan actions.</figcaption>
+          </figure>
+          <figure class="screen">
+            <div class="frame"><video autoplay muted loop playsinline preload="metadata" poster="/images/aimee-meridian-poster.jpg" aria-label="Aimee as a floating widget over a client benefits site, Meridian Benefits"><source src="/images/aimee-meridian.mp4" type="video/mp4" /></video></div>
+            <figcaption><b>On a client's site</b>A floating button opens a compact panel, then full screen, and history survives every switch. In Teams, Teams owns the frame, so the coach keeps only the thread and composer.</figcaption>
+          </figure>
+        </div>
+      </section>
 
-    <!-- ════ EXPERIENCE · 03 — WHAT COLLABORATION CHANGED ════ -->
-    <section id="collab" class="cs-section">
-      <div class="wrap">
-        <div class="exp-header fade-up">
-          <span class="eyebrow">Experience · 03 · What collaboration changed</span>
-          <h2 class="exp-h2">The user's words never shrink</h2>
-          <p class="exp-body">
-            One concrete case where the engineering build and the design review made each other better.
-            In an implemented screen, the user's message bubble had drifted to 14.5px while Aimee's reply
-            stayed at 16. Nobody had decided that; it was the kind of thing a component library cannot
-            prevent on its own. Reviewing the build against the prototype caught it, and the fix was not
-            a one-off patch: the rule became explicit in the design system (user message and reply always
-            render at the same size, 16px on mobile and 17px on desktop) and then in the token layer I
-            merged into the SDK, so it cannot drift again. The accessibility hard-rules (never yellow text
-            on white, one hover treatment at a time) were codified the same way, for the same reason.
-          </p>
+      <section class="section" id="collab">
+        <div class="section-head fade-up">
+          <div><span class="section-n">05 · What review caught</span><h2>The user's words never shrink</h2></div>
+          <p class="section-lead">In one build, the user's message drifted to 14.5px while Aimee's reply stayed at 16. Review against the prototype caught it, and I made the rule part of the token layer so it can't drift again.</p>
         </div>
-        <div class="fade-up" style="transition-delay:90ms;">
-          <img class="cs-image" src="/images/aimee-charts-dt.png" alt="A coaching response where the user's question and Aimee's reply render at the same text size — a snapshot with cards and an assets-vs-debt chart below" loading="lazy" width="2400" height="1447">
+        <div class="screens fade-up">
+          <figure class="screen">
+            <div class="frame"><img src="/images/aimee-charts-dt.png" alt="A coaching answer where the user's question and Aimee's reply render at the same size, with cards and an assets-versus-debt chart below" loading="lazy" width="2400" height="1447"></div>
+            <figcaption><b>Same size, both voices</b>16px on mobile, 17px on desktop, for the question and the answer.</figcaption>
+          </figure>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ════ EXPERIENCE · 06 — THREE SURFACES ════ -->
-    <section class="cs-section">
-      <div class="wrap">
-        <div class="exp-header fade-up">
-          <span class="eyebrow">Experience · 04</span>
-          <h2 class="exp-h2">The same coach, every surface</h2>
-          <p class="exp-body">
-            Not every interaction should be identical across three hosts. What stays constant is the
-            coaching vocabulary: the typed cards, the tokens, the escalation to a human, the disclaimer.
-            What adapts is everything the host dictates: entry point, container, and how far the coach can
-            spread out.
-          </p>
-          <div class="bullet-list">
-            <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Hub</strong> — a full-screen coach inside Hub V3, with the sidebar, the wellness pill, and the user's plan and benefits in reach. Adapted: the widest layout, and cards that link straight into plan actions.</span></div>
-            <div class="bullet-item"><span class="bullet-dot"></span><span><strong>SDK widget</strong> — a floating button that opens a chat panel over a client's own site (prototyped over a mock provider, "Meridian Benefits"). Adapted: a FAB → compact panel → full-screen state machine with history surviving every switch, and an article reader that insets inside the same window so the widget never leaves someone else's page.</span></div>
-            <div class="bullet-item"><span class="bullet-dot"></span><span><strong>Microsoft Teams</strong> — the same coach inside Teams' chrome. Adapted: Teams owns the frame and the navigation, so the coach gives up its own topbar and keeps only the thread and the composer.</span></div>
-          </div>
+      <section class="section" id="process">
+        <div class="section-head fade-up">
+          <div><span class="section-n">06 · How I worked</span><h2>Designed in code, finished in production code</h2></div>
         </div>
-        <div class="fade-up" style="transition-delay:90ms;">
-          <div class="cs-video-slot cs-video-slot--frame">
-            <video class="cs-video" autoplay muted loop playsinline preload="metadata"
-                   poster="../images/aimee-meridian-poster.jpg"
-              onloadstart="this.closest('.cs-video-slot').classList.add('loaded')">
-              <source src="/images/aimee-meridian.mp4" type="video/mp4" />
-            </video>
-            <div class="cs-video-ph" style="aspect-ratio:1582/1080;">Aimee as an SDK widget floating over a client site (Meridian)</div>
-          </div>
+        <div class="rows fade-up">
+          <div class="row"><h3>Prototypes, not mockups</h3><p>Real HTML, CSS, and JavaScript with live streaming and state, so flows could be felt before production code.</p></div>
+          <div class="row"><h3>A spec people use</h3><p>DESIGN-SYSTEM.md set the tokens, the type, every component, and the accessibility hard rules.</p></div>
+          <div class="row"><h3>A contract to build from</h3><p>Engineering built the SDK from the component library, and we reviewed it against the prototype.</p></div>
+          <div class="row"><h3>Then I shipped it</h3><p>I merged the token layer and the empty state, conversations, icon, and card-shell components into the SDK: 32 commits, July 21 to August 17, 2026.</p></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ════ PROCESS ════ -->
-    <section id="process" class="cs-section opportunity-section">
-      <div class="wrap">
-        <span class="eyebrow fade-up">Process</span>
-        <h2 class="solution-h2 fade-up" style="transition-delay:60ms;">Designed and coded, end to end</h2>
-        <p class="process-body fade-up" style="transition-delay:100ms;">
-          I coded the prototypes instead of drawing them. Real HTML/CSS/JS with live streaming and
-          state became the reference, the spec became the build contract, and the component library gave
-          engineering something to build from in React with an A2UI model that maps Aimee's structured
-          JSON responses to the components. Then I merged the token layer and four components into that
-          SDK myself, which is also how the drift above got fixed at the source.
-        </p>
-        <div class="transform-table fade-up" style="transition-delay:130ms;">
-          <div class="transform-row">
-            <span class="transform-from">Static mockups</span>
-            <span class="transform-arrow">→</span>
-            <span class="transform-to">Coded, interactive prototypes</span>
-          </div>
-          <div class="transform-row">
-            <span class="transform-from">A design doc no one reads</span>
-            <span class="transform-arrow">→</span>
-            <span class="transform-to">DESIGN-SYSTEM.md as the build spec</span>
-          </div>
-          <div class="transform-row">
-            <span class="transform-from">Design specs engineering interprets</span>
-            <span class="transform-arrow">→</span>
-            <span class="transform-to">A component contract engineering builds from, reviewed against the prototype</span>
-          </div>
-          <div class="transform-row">
-            <span class="transform-from">Redesign at production time</span>
-            <span class="transform-arrow">→</span>
-            <span class="transform-to">Prototypes that became the build reference</span>
-          </div>
+      <section class="section" id="impact">
+        <div class="section-head fade-up">
+          <div><span class="section-n">07 · Scope</span><h2>What shipped, and what isn't measured here</h2></div>
         </div>
-        <p class="process-pullquote fade-up" style="transition-delay:170ms;">
-          "Open the prototype to see the streaming effect — it's the kind of detail that doesn't translate in a screenshot."
-        </p>
-      </div>
-    </section>
-
-    <!-- ════ IMPACT ════ -->
-    <section id="impact" class="cs-section impact-section">
-      <div class="wrap">
-        <p class="eyebrow fade-up" style="text-align:center;">Scope and status</p>
-        <h2 class="impact-h2 fade-up" style="transition-delay:60ms;">What was delivered, and what is not measured here</h2>
-        <div class="impact-grid fade-up" style="transition-delay:90ms;">
-          <div class="impact-cell">
-            <div class="impact-val">3 surfaces</div>
-            <p class="impact-label">Designed for the Hub, an embeddable client widget, and Teams, from one component library (scope, not usage)</p>
-          </div>
-          <div class="impact-cell">
-            <div class="impact-val">1 library</div>
-            <p class="impact-label">A documented design system and an approved component library, public on this site</p>
-          </div>
-          <div class="impact-cell">
-            <div class="impact-val">32 commits</div>
-            <p class="impact-label">Token layer, empty state, conversations pane, icons, and card shell merged into the production SDK, Jul 21–Aug 17, 2026</p>
-          </div>
+        <div class="stats stats--three fade-up">
+          <div><div class="stat-val">3</div><p class="stat-label">Surfaces designed from one component library (scope, not usage)</p></div>
+          <div><div class="stat-val">1</div><p class="stat-label">Documented design system and component library, public on this site</p></div>
+          <div><div class="stat-val">32</div><p class="stat-label">Commits merged into the production SDK, Jul 21 – Aug 17, 2026</p></div>
         </div>
-        <p class="impact-footnote fade-up" style="transition-delay:110ms;">
-          No active-user or trust-outcome figure for Aimee is published here. The platform's customers employ 1M+
-          people who are eligible for it; that is reach, not usage. What was validated: the prototypes with
-          stakeholders before production code, and the build against the component contract in review.
-        </p>
-        <p class="client-note fade-up" style="transition-delay:115ms;">Financial Finesse customers whose employees the platform serves</p>
-        <div class="client-pills fade-up" style="transition-delay:120ms;">
-          <span class="client-pill">Meta</span>
-          <span class="client-pill">NFL</span>
-          <span class="client-pill">JPMorgan Chase</span>
-          <span class="client-pill">CVS Health</span>
-          <span class="client-pill">Federal Reserve</span>
-          <span class="client-pill">Patagonia</span>
-          <span class="client-pill">McKinsey</span>
-          <span class="client-pill">Nestlé</span>
-          <span class="client-pill">Comcast</span>
-          <span class="client-pill">General Mills</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ FINAL TAKEAWAY ════ -->
-    <section class="takeaway-section">
-      <div class="wrap fade-up">
-        <span class="eyebrow" style="margin-bottom:36px; display:block;">Final Takeaway</span>
-        <p class="takeaway-text">
-          One coaching vocabulary, designed for three hosts, with the AI named honestly and a
-          human one tap away.
-          <strong>Designed by one person, built with engineering, and finished in the production code by the same designer.</strong>
-        </p>
-      </div>
-    </section>
-
-    <!-- ════ BOTTOM NAV ════ -->
-    <div class="bottom-cta">
-      <div class="wrap fade-up">
-        <nav class="cta-links" aria-label="Case study navigation">
-          <a href="../work/" class="btn-secondary">← Back to Work</a>
-          <a href="../work/hub/" class="btn-secondary">Next: Financial Finesse Hub →</a>
-          <a href="../contact/" class="btn-secondary">Contact ↗</a>
-        </nav>
-      </div>
+        <p class="note fade-up">No active-user or trust-outcome figure for Aimee is published here. The platform's customers employ 1M+ people who are eligible for it: that's reach, not usage.</p>
+      </section>
     </div>
 
+    <section class="takeaway">
+      <div class="wrap fade-up">
+        <p>One coaching vocabulary for three hosts, with the AI named honestly and a human one tap away. <strong>Designed by one person, built with engineering, and finished in production code by the same designer.</strong></p>
+      </div>
+    </section>
+
+    <div class="bottom-nav">
+      <nav class="wrap" aria-label="Case study navigation">
+        <a href="/work/" class="btn-secondary">← Back to Work</a>
+        <a href="/work/hub/" class="btn-secondary">Next: Financial Finesse Hub →</a>
+        <a href="/contact/" class="btn-ghost">Contact ↗</a>
+      </nav>
+    </div>
   </main>
 
   <footer>
@@ -785,13 +196,16 @@
   </footer>
 
   <script src="/scripts/main.js"></script>
-  <script>
-    const nav = document.getElementById('site-nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 8);
-    }, { passive: true });
-  </script>
-
   <script src="/scripts/nav.js"></script>
+  <script>
+    (function () {
+      var nav = document.getElementById('site-nav');
+      window.addEventListener('scroll', function () { nav.classList.toggle('scrolled', window.scrollY > 8); }, { passive: true });
+      // Reduced motion: looping clips stop and expose controls
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('video[autoplay]').forEach(function (v) { v.removeAttribute('autoplay'); v.setAttribute('controls', ''); v.pause(); });
+      }
+    })();
+  </script>
 </body>
 </html>
