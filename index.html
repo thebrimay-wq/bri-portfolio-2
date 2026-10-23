@@ -427,6 +427,7 @@ function retrieve(query) {
       color: var(--ink-3); background: var(--surface); border: 1px solid var(--border);
       border-radius: 5px; padding: 2px 7px;
     }
+    .cs-card-label { font-size: 12px; font-weight: 500; color: var(--ink-3); line-height: 1.3; }
     .cs-card-title { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); line-height: 1.25; }
     .cs-card-impact { font-size: 13px; color: var(--ink-2); line-height: 1.5; }
     .cs-card-arrow { flex-shrink: 0; color: var(--ink-3); transition: transform 0.25s ease, color 0.25s ease; }
@@ -694,6 +695,7 @@ function retrieve(query) {
     .home-tile-img { aspect-ratio: 3 / 2; border-radius: 11px; overflow: hidden; background: var(--surface); box-shadow: 0 0 0 1px var(--frame-ring); }
     .home-tile-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .home-tile-text { display: flex; flex-direction: column; gap: 3px; padding: 0 6px; }
+    .home-tile-label { font-size: 12px; font-weight: 500; color: var(--ink-3); }
     .home-tile-title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
     .home-tile-sub { font-size: 13px; color: var(--ink-2); line-height: 1.45; }
     .home-tile-more { font-size: 13px; color: var(--ink-3); margin-top: 4px; transition: color 0.15s ease; }
@@ -1318,11 +1320,11 @@ function retrieve(query) {
       ];
 
       const CASE_STUDIES = [
-        { featured: true, title: 'Global Content Studio', href: '/work/global-content-studio/', swatch: '#EDE6DC', thumb: '/images/gcs-card.png', tags: ['AI Product', 'Solo Build'], impact: 'The AI content and localization studio she designed and shipped solo: 8,118 localized variants across 28 locales in the live index.' },
-        { title: 'Finesse App', href: '/work/finesse-app/', swatch: '#E3D8CA', thumb: '/images/finesse-card.webp', tags: ['AI Experience', 'Mobile UX'], impact: 'A muse for your money: an AI coach that knows you, prepares the next move, and waits for your yes. Designed and built solo.' },
-        { title: 'Aimee AI Coach', href: '/aimee-ai/', swatch: '#E2E7F0', thumb: '/images/aimee-card.png', tags: ['AI Experience', 'Design System'], impact: 'One AI coach designed for three surfaces, with production components she merged herself.' },
-        { title: 'Financial Wellness Hub', href: '/work/hub/', swatch: '#EBE8F4', thumb: '/images/hub-card.png', tags: ['Platform Design', 'UX Strategy'], impact: 'The 2024 platform redesign she led: a static library became a guided plan.' },
-        { title: 'Brix — This Site', href: '/work/brix/', swatch: '#E8E4DE', thumb: '/images/brix-card.webp', tags: ['Design Engineering', 'Solo Build'], impact: "This portfolio itself — an on-device answer engine with no backend, no API key. You're using it right now." }
+        { featured: true, title: 'Global Content Studio', hook: 'One designer, 70 markets', href: '/work/global-content-studio/', swatch: '#EDE6DC', thumb: '/images/gcs-card.png', tags: ['AI Product', 'Solo Build'], impact: 'The AI content and localization studio she designed and shipped solo: 8,118 localized variants across 28 locales in the live index.' },
+        { title: 'Finesse App', hook: 'A muse for your money', href: '/work/finesse-app/', swatch: '#E3D8CA', thumb: '/images/finesse-card.webp', tags: ['AI Experience', 'Mobile UX'], impact: 'An AI coach that knows you, prepares the next move, and waits for your yes. Designed and built solo.' },
+        { title: 'Aimee AI Coach', hook: 'One AI coach, three places to meet her', href: '/aimee-ai/', swatch: '#E2E7F0', thumb: '/images/aimee-card.png', tags: ['AI Experience', 'Design System'], impact: 'One AI coach designed for three surfaces, with production components she merged herself.' },
+        { title: 'Financial Wellness Hub', hook: 'From content library to guided plan', href: '/work/hub/', swatch: '#EBE8F4', thumb: '/images/hub-card.png', tags: ['Platform Design', 'UX Strategy'], impact: 'The 2024 platform redesign she led: a static library became a guided plan.' },
+        { title: 'Brix — This Site', hook: 'A portfolio you can ask questions', href: '/work/brix/', swatch: '#E8E4DE', thumb: '/images/brix-card.webp', tags: ['Design Engineering', 'Solo Build'], impact: "This portfolio itself — an on-device answer engine with no backend, no API key. You're using it right now." }
       ];
 
       const CHIP_LABELS = { casestudies: 'Case studies', about: 'About Bri', resume: 'Résumé', contact: 'Contact' };
@@ -1338,7 +1340,8 @@ function retrieve(query) {
             <span class="cs-card-swatch" style="background:${cs.swatch}">${cs.thumb ? `<img src="${cs.thumb}" alt="" loading="lazy" width="64" height="64" />` : ''}</span>
             <span class="cs-card-body">
               <span class="cs-card-tags">${cs.tags.map(t => `<span class="mini-tag">${t}</span>`).join('')}</span>
-              <span class="cs-card-title">${cs.title}</span>
+              <span class="cs-card-label">${cs.title}</span>
+              <span class="cs-card-title">${cs.hook}</span>
               <span class="cs-card-impact">${cs.impact}</span>
             </span>
             ${arrowSvg}
@@ -1469,9 +1472,9 @@ function retrieve(query) {
       // First-time explore list — a scannable menu of where to start.
       // Three doors, nothing else on the first screen.
       const HOME_TILES = [
-        { href: '/work/global-content-studio/', title: 'Global Content Studio', sub: 'AI localization for 28 locales, built solo.', thumb: '/images/gcs-card.png' },
-        { href: '/aimee-ai/', title: 'Aimee AI Coach', sub: 'One coach, three surfaces, one component system.', thumb: '/images/aimee-card.png' },
-        { href: '/work/hub/', title: 'Financial Wellness Hub', sub: 'The 2024 redesign: a library became a guided plan.', thumb: '/images/hub-card.png' },
+        { href: '/work/global-content-studio/', title: 'Global Content Studio', hook: 'One designer, 70 markets', sub: 'AI content and localization, built solo.', thumb: '/images/gcs-card.png' },
+        { href: '/aimee-ai/', title: 'Aimee AI Coach', hook: 'One AI coach, three places to meet her', sub: 'One coach, three surfaces, one component system.', thumb: '/images/aimee-card.png' },
+        { href: '/work/hub/', title: 'Financial Wellness Hub', hook: 'From content library to guided plan', sub: 'The 2024 redesign: a library became a guided plan.', thumb: '/images/hub-card.png' },
       ];
 
       function buildStarter() {
@@ -1484,7 +1487,7 @@ function retrieve(query) {
           el.setAttribute('data-navigate', '');
           el.innerHTML =
             `<span class="home-tile-img"><img src="${t.thumb}" alt="" width="750" height="501" /></span>` +
-            `<span class="home-tile-text"><span class="home-tile-title">${esc(t.title)}</span><span class="home-tile-sub">${esc(t.sub)}</span><span class="home-tile-more">Read the case study ›</span></span>`;
+            `<span class="home-tile-text"><span class="home-tile-label">${esc(t.title)}</span><span class="home-tile-title">${esc(t.hook)}</span><span class="home-tile-sub">${esc(t.sub)}</span><span class="home-tile-more">Read the case study ›</span></span>`;
           wrap.appendChild(el);
         });
         const holder = document.createElement('div');
