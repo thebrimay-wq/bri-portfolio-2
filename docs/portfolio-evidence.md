@@ -121,7 +121,7 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 |---|---|---|
 | FF 2016–present; Sr. Graphic 2016–17; Lead PD · Product Creative Director 2017–2025; AI-Native Senior PD 2025– | CONFIRMED (Bri's résumé) | keep; historical titles unchanged |
 | CKC Communications 2012–2015, 50+ companies | CONFIRMED (Bri's résumé) | keep |
-| Education: Chico B.S. Business/Marketing, D1 soccer; ASU 2 years D1 | CONFIRMED | keep |
+| Education: Chico B.S. Business/Marketing on a full-ride soccer scholarship; ASU 2 years, D1 soccer on a full-ride scholarship | CONFIRMED (Bri, 2026-10-23) | Chico is never called D1 (NCAA Division II); "D1" belongs to ASU only |
 | 80 commits into `blue`, 27 into `ff.workers`, 32 into `benehub` | CONFIRMED | keep as commit counts, never as deployment proof |
 | "Introduced user research and usability testing" | UNCONFIRMED example | keep as role statement; no specific finding is published |
 | Mentors colleagues on building with AI / AI Champion | UNCONFIRMED numbers | role line only |
@@ -129,10 +129,10 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 
 ## Questions for Bri (batched, priority order)
 
-- (2026-10-23 review) Open: "designing since 2011" (KB) vs CKC starting in 2012 (the earliest dated role). Which is right?
-- (2026-10-23 review) Open: the résumé says D1 soccer at Chico; Chico State plays NCAA Division II. Confirm the wording.
+- (2026-10-23) Answered: designing since 2011 (Bri). Keep "since 2011"; CKC is her first dated role (2012).
+- (2026-10-23) Answered: Chico was a full-ride soccer scholarship; ASU was a full-ride D1 soccer scholarship. Résumé, one-page résumé, and KB updated.
 - (2026-10-23 review) Open: the résumé's "unregulated AI tools" origin line has no source row. Keep as your statement?
-- (2026-10-23 review) Open: `resume/one-page.html` and its PDF still deploy with the headline "AI-Native Senior Design Engineer". Retire them, or retitle?
+- (2026-10-23) Answered: retitle. `resume/one-page.html` and its PDF now say "AI-Native Senior Product Designer", with the same ledger fixes as the main résumé.
 
 - (2026-10-23) Answered: 70 = countries planned by the end of 2026 (a CEO goal). Cards now match the headline.
 - (2026-10-23) Answered: 25 countries are live today, and the plan is 70 by 2027.
