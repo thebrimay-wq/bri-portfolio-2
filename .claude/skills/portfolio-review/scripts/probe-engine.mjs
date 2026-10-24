@@ -136,6 +136,10 @@ const REGRESSIONS = [
   { q: 'What do you think?', expect: r => r.detail !== 'greet', label: '"you" does not trigger greet' },
   { q: 'Show me her strongest case study', expect: r => !/education/.test(r.detail), label: '"study" does not hit education' },
   { q: 'What size teams has she worked on?', expect: r => !/aimee/.test(r.detail), label: '"teams" does not hit MS Teams' },
+  // 2026-10-23 review: the homepage starters must land on the answer they promise
+  { q: 'Show me the code', expect: r => r.detail === 'show me the code', label: 'the "Show me the code" starter gets the code + repo answer, not the stack list' },
+  { q: 'What broke, and how did she fix it?', expect: r => r.detail === 'what broke', label: 'the "what broke" starter opens with what broke' },
+  { q: 'Tell me about the B2C app', expect: r => r.detail === 'b2c', label: 'the B2C App has its own answer' },
 ];
 
 // 2026-10-13 live review: these six streamed a confident answer to the wrong question.

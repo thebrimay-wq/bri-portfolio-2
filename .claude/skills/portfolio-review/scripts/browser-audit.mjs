@@ -18,7 +18,7 @@ import { chromium, devices } from 'playwright';
 const BASE = process.argv[2] || 'http://127.0.0.1:8899';
 const EXE = process.argv[3] || process.env.CHROMIUM_PATH || undefined;
 const PAGES = ['/', '/work/', '/about/', '/resume/', '/contact/', '/code/',
-  '/work/global-content-studio/', '/work/hub/', '/work/brix/', '/aimee-ai/'];
+  '/work/global-content-studio/', '/work/finesse-app/', '/work/hub/', '/work/brix/', '/aimee-ai/'];
 
 const b = await chromium.launch(EXE ? { executablePath: EXE } : {});
 let pass = 0, fail = 0;
@@ -154,7 +154,7 @@ console.log('\n══ 6. A11Y: skip link, announcer, streaming volume');
   await p2.close();
 }
 
-console.log('\n══ 7. BRIX FEATURES: chat, lens, code exhibit, deep links');
+console.log('\n══ 7. HOMEPAGE CHAT: tiles, starters, code exhibit, deep links');
 {
   const p = await mk();
   await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
@@ -168,6 +168,8 @@ console.log('\n══ 7. BRIX FEATURES: chat, lens, code exhibit, deep links');
   await p.waitForTimeout(8000);
   log('?q= deep link auto-asks', await p.locator('.bubble--user').count() === 1);
   log('code exhibit renders', await p.locator('.code-chat').count() === 1);
+  // 2026-10-23: a code answer once rendered the excerpt and dropped every link after it.
+  log('code answer keeps its links', await p.locator('.msg--agent .code-chat ~ .link-row a').count() >= 1);
   log('copy-link action present', await p.locator('.act-btn[aria-label="Copy link to this answer"]').count() === 1);
   await p.goto(BASE + '/?q=show me her case studies', { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(8000);
@@ -175,7 +177,7 @@ console.log('\n══ 7. BRIX FEATURES: chat, lens, code exhibit, deep links');
   await p.close();
 }
 
-console.log('\n══ 8. CORE FLOWS: panel, dark mode, drawer, résumé download');
+console.log('\n══ 8. CORE FLOWS: panel, dark mode, phone top bar, résumé download');
 {
   const p = await mk();
   await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
@@ -203,6 +205,10 @@ console.log('\n══ 8. CORE FLOWS: panel, dark mode, drawer, résumé download
   // Phones: the icon rail runs across the top, and the tiles swipe one at a time with dots.
   log('mobile rail is a visible top bar', await m.evaluate(() => { const r = document.querySelector('#rail').getBoundingClientRect(); return r.top >= -1 && r.width > 300 && r.height < 90; }));
   log('mobile tiles swipe, with one dot per tile', await m.evaluate(() => { const t = document.querySelector('.home-tiles'); return t.scrollWidth > t.clientWidth + 50 && document.querySelectorAll('.tile-dots button').length === 3; }));
+  // 2026-10-23: the top bar once covered the full-screen panel's header, so Close couldn't be tapped.
+  await m.evaluate(() => { const a = document.createElement('a'); a.href = '/about/'; document.body.appendChild(a); a.click(); a.remove(); });
+  await m.waitForTimeout(900);
+  log('mobile panel Close is tappable', await m.evaluate(() => { const c = document.querySelector('#panel-close'); const r = c.getBoundingClientRect(); const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!hit && c.contains(hit); }));
   await m.close();
   const d = await b.newPage({ acceptDownloads: true });
   await d.route('**fonts.g**', r => r.abort());
