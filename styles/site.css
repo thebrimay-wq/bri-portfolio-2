@@ -109,6 +109,9 @@
   :root:root { --glass-edge: rgba(0, 0, 0, 0.5); }
   :root:root[data-theme="dark"] { --glass-edge: rgba(255, 255, 255, 0.5); }
 }
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root:root:not([data-theme="light"]) { --glass-edge: rgba(255, 255, 255, 0.5); }
+}
 
 
 /* ── Reset ────────────────────────────────────────────────── */
@@ -121,6 +124,7 @@
 html {
   scroll-behavior: smooth;
 }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 
 /* ── Base ─────────────────────────────────────────────────── */
@@ -753,7 +757,7 @@ html.embedded [id="owned"], html.embedded [id="process"], html.embedded [id="imp
 
 /* Hero */
 .gallery .hero { padding: clamp(72px, 10vw, 136px) 0 0; }
-.gallery .hero-meta { display: flex; flex-wrap: wrap; gap: 0 14px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: clamp(28px, 4vw, 44px); }
+.gallery .hero-meta { display: flex; flex-wrap: wrap; gap: 0 14px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); margin-bottom: clamp(28px, 4vw, 44px); }
 .gallery .hero-meta span + span::before { content: "·"; margin-right: 14px; color: var(--border); }
 .gallery .hero h1 { font-size: clamp(44px, 7vw, 104px); font-weight: 350; letter-spacing: -0.04em; line-height: 0.96; color: var(--ink); text-wrap: balance; }
 .gallery .hero-lead { font-size: clamp(18px, 1.5vw, 22px); line-height: 1.6; color: var(--ink-2); max-width: 620px; margin-top: clamp(28px, 4vw, 40px); }
@@ -814,7 +818,7 @@ html.embedded [id="owned"], html.embedded [id="process"], html.embedded [id="imp
 .gallery .anchor-alias { display: block; height: 0; scroll-margin-top: 92px; }
 html.embedded .gallery .section, html.embedded .gallery .anchor-alias { scroll-margin-top: 16px; }
 .gallery .section-head { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px clamp(32px, 6vw, 96px); align-items: end; }
-.gallery .section-n { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 18px; font-variant-numeric: tabular-nums; }
+.gallery .section-n { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 18px; font-variant-numeric: tabular-nums; }
 .gallery .section h2 { font-size: clamp(30px, 3.6vw, 52px); font-weight: 400; letter-spacing: -0.035em; line-height: 1.06; color: var(--ink); text-wrap: balance; }
 .gallery .section-lead { font-size: clamp(17px, 1.3vw, 19px); line-height: 1.65; color: var(--ink-2); max-width: 520px; }
 @media (max-width: 860px) { .gallery .section-head { grid-template-columns: 1fr; } }
@@ -864,6 +868,8 @@ html.embedded .gallery .section, html.embedded .gallery .anchor-alias { scroll-m
 .gallery > .wrap:has(+ .bottom-nav) { padding-bottom: clamp(88px, 11vw, 160px); }
 .gallery .bottom-nav .wrap { display: flex; flex-wrap: wrap; gap: 12px; }
 .gallery code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86em; background: var(--surface); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--ink); }
+/* Code inside a block listing is plain text, not an inline chip. */
+.gallery pre code { font-size: inherit; background: none; border: 0; border-radius: 0; padding: 0; color: inherit; }
 
 /* ============================================================
    Gallery, site pages (2026-10-23): Work, About, Contact, Code
@@ -879,7 +885,7 @@ html.embedded .gallery .section, html.embedded .gallery .anchor-alias { scroll-m
 .gallery .project-img::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--frame-ring); pointer-events: none; }
 .gallery .project-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.9s cubic-bezier(.2,.7,.2,1); }
 .gallery .project:hover .project-img img { transform: scale(1.02); }
-.gallery .project-label { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-top: 24px; }
+.gallery .project-label { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); margin-top: 24px; }
 .gallery .project h2 { font-size: clamp(24px, 2.4vw, 34px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.12; color: var(--ink); margin-top: 10px; text-wrap: balance; }
 .gallery .project h2 a { color: inherit; text-decoration: none; }
 .gallery .project h2 a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }

@@ -28,6 +28,18 @@
   var links = nav.querySelector('.nav-links');
   if (!inner || !links) return;
 
+  // ── Mark the section you're in: Work stays lit on every case study ──
+  var here = location.pathname.replace(/index\.html$/, '');
+  var navLinks = links.querySelectorAll('a');
+  for (var j = 0; j < navLinks.length; j++) {
+    var p = new URL(navLinks[j].href, location.href).pathname;
+    var inSection = here === p || here.indexOf(p) === 0 || (p === '/work/' && here.indexOf('/aimee-ai/') === 0);
+    if (inSection) {
+      navLinks[j].classList.add('active');
+      if (here === p) navLinks[j].setAttribute('aria-current', 'page');
+    }
+  }
+
   // ── Group the links + theme toggle + hamburger into a right cluster ──
   var right = document.createElement('div');
   right.className = 'nav-right';

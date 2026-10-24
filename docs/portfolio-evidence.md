@@ -83,6 +83,18 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 | Trust / failure states: "AI coach" not "virtual"; coach escalation card; "Aimee can make mistakes" disclaimer; thinking state; prose-first gating; coral for a single urgent item | CONFIRMED in the component library | `/aimee-ai/components/` | document as design decisions with reasoning; no measured trust outcome exists |
 | Validated user outcomes | NONE AVAILABLE | — | state the limitation; scope (3 surfaces, 1 library) is labeled as scope |
 
+Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and human financial coaches, anywhere, anytime." It describes the design intent; shipping by surface stays UNCONFIRMED above, so the KB and case study keep "designed for three surfaces".
+
+## Financial Finesse B2C App
+
+| Claim | Status | Source | Public wording |
+|---|---|---|---|
+| 155 commits, all Bri's, 2026-10-19 → 10-22 (v7 build) | CONFIRMED | `facts.md` §11, prototype repo git | "155 commits over four days (October 2026)"; the four days describe this build only |
+| 376 tests across 53 files (Vitest + jsdom) | CONFIRMED, SNAPSHOT 2026-10-23 | `facts.md` §11 | "376 tests (October 2026)" |
+| Built the entire prototype and design alone; personas from years of FF coach–member conversations | STATED BY BRI 2026-10-23 | `facts.md` §11 | keep as her statement; persona data on screen is demo content |
+| Cleared to show publicly though unreleased | CONFIRMED (Bri, 2026-10-23) | `facts.md` §11 | keep |
+| Homepage tile line "A vision of your future, guided by your agentic coach, Aimee." | Bri's wording, 2026-10-23 | — | homepage tile only |
+
 ## Financial Finesse Hub
 
 | Claim | Status | Source | Public wording |
@@ -99,7 +111,7 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 | Claim | Status | Source | Public wording |
 |---|---|---|---|
 | Engine probe: 62 questions + 20 regressions, 61/62 (2026-09-10) | SNAPSHOT | `probe-engine.mjs` | current cards show the latest dated run; older 20/38, 37/38, 49/50 may stay as history if dated |
-| Browser audit 42/42 (2026-08-20), 44/44 (2026-09-08), 49/49 (2026-10-13), 50/50 (2026-10-23, after the homepage redesign replaced the hero and drawer checks) | SNAPSHOT | `browser-audit.mjs` | same rule |
+| Browser audit 42/42 (2026-08-20), 44/44 (2026-09-08), 49/49 (2026-10-13), 50/50 (2026-10-23, after the homepage redesign replaced the hero and drawer checks), 53/53 (2026-10-23 review pass: adds the B2C App page, code-answer links, and the phone panel close) | SNAPSHOT | `browser-audit.mjs` | same rule |
 | Deploy 130 MB → 51 MB | CONFIRMED 2026-08-20 | asset audit | keep, dated |
 | 1 live-region mutation per answer (was 87) | CONFIRMED (measured by audit) | audit | keep |
 
@@ -117,6 +129,11 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 
 ## Questions for Bri (batched, priority order)
 
+- (2026-10-23 review) Open: "designing since 2011" (KB) vs CKC starting in 2012 (the earliest dated role). Which is right?
+- (2026-10-23 review) Open: the résumé says D1 soccer at Chico; Chico State plays NCAA Division II. Confirm the wording.
+- (2026-10-23 review) Open: the résumé's "unregulated AI tools" origin line has no source row. Keep as your statement?
+- (2026-10-23 review) Open: `resume/one-page.html` and its PDF still deploy with the headline "AI-Native Senior Design Engineer". Retire them, or retitle?
+
 - (2026-10-23) Answered: 70 = countries planned by the end of 2026 (a CEO goal). Cards now match the headline.
 - (2026-10-23) Answered: 25 countries are live today, and the plan is 70 by 2027.
 - (2026-10-23) Open: which quarter does "in a quarter" (homepage preview G) refer to?
@@ -130,6 +147,8 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 7. **Names.** May the contributing engineer (20 commits) and the localizers be named publicly? Currently "one engineer" and "localizers".
 
 ## Validation log
+
+- 2026-10-23 review pass: GCS hero "8,118 live today" → "in the index, Sep 8, 2026"; "27 locales by August" → replaced by "5 careful passes per article" (facts.md §3.7); the Federal Reserve note removed from the GCS page (row 49 retired it); commit counts aligned to the v2/v3 survey (113 pipeline platform, 81 admin platform, Oct 2026); private repo names removed from /code/; "per-locale wiki" → per-market fact libraries; audit now 53 checks incl. the B2C App page, code-answer links, and the phone panel close.
 
 | Date | Check | Result |
 |---|---|---|

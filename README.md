@@ -39,7 +39,7 @@ Three scripts under `.claude/skills/portfolio-review/scripts/` encode every defe
 #    (the answer must say the supported thing or say plainly that the portfolio does not document it). Seconds, no browser.
 node .claude/skills/portfolio-review/scripts/probe-engine.mjs
 
-# 2. Browser audit: 49 checks (404s and broken images after a full scroll, sideways scroll at
+# 2. Browser audit: 53 checks (404s and broken images after a full scroll, sideways scroll at
 #    320/375/768px, contrast in both themes, head hygiene, no-JS render, skip links, the live-region
 #    count, Brix features, core flows). Audits the built site, the way the deploy merges public/images/.
 npm install --no-save playwright && npx playwright install chromium
