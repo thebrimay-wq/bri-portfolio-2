@@ -50,8 +50,8 @@ node .claude/skills/portfolio-review/scripts/browser-audit.mjs http://127.0.0.1:
 # 3. Asset audit: unreferenced files, dead weight, rasters over 600 KB, total deployed image weight.
 python3 .claude/skills/portfolio-review/scripts/asset-audit.py
 
-# Résumé PDF, printed from the résumé page's @media print stylesheet (real text, single column).
-node .claude/skills/portfolio-review/scripts/print-resume.mjs http://127.0.0.1:8899 resume/BriMay_Resume.pdf
+# Résumé PDF, printed from the one-page résumé (resume/one-page.html); also writes the _2026 and _OnePage aliases.
+node .claude/skills/portfolio-review/scripts/print-resume.mjs http://127.0.0.1:8899
 ```
 
 The full pass, including the judgment checklist the scripts cannot cover, is in [`.claude/skills/portfolio-review/SKILL.md`](.claude/skills/portfolio-review/SKILL.md).
