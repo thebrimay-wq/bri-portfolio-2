@@ -452,6 +452,8 @@ function retrieve(query) {
       .rail-foot { margin: 0 0 0 auto; flex-direction: row; }
       .rail-me { display: none; }
       .chat-inner { padding-top: 40px; }
+      /* One sentence per line: the longer one renders about 19.6em wide at phone sizes, so the text scales to fit the screen. */
+      .hero-intro .hero-line { white-space: nowrap; font-size: min(19px, calc((100vw - 2 * var(--px)) / 20)); }
       .home-tiles { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 100%; gap: 10px; margin: -4px -4px 0; padding: 4px;
         overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
       .home-tiles::-webkit-scrollbar { display: none; }
@@ -462,7 +464,10 @@ function retrieve(query) {
       .tile-dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
       .tile-dots button::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); opacity: .2; transition: opacity .2s, transform .2s; }
       .tile-dots button[aria-current="true"]::after { opacity: .85; transform: scale(1.15); }
-      .composer-input { min-height: 26px; }
+      /* A little more room for the placeholder so it never wraps (16px keeps iOS from zooming on focus). */
+      .composer-field { gap: 8px; padding: 12px 8px 10px 14px; }
+      .composer-input { min-height: 26px; font-size: 16px; }
+      .send-btn { width: 40px; height: 40px; }
       .tray-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, #000 85%, transparent); mask-image: linear-gradient(to right, #000 85%, transparent); }
       .tray-chips::-webkit-scrollbar { display: none; }
       .tray-chips .chip { flex: none; }
@@ -473,6 +478,7 @@ function retrieve(query) {
       .rail { gap: 4px; padding: 8px 10px; }
       .rail-nav { gap: 4px; }
       .rail-brand, .r-btn { width: 36px; height: 36px; }
+      .home-tile-sub { min-height: 4.2em; -webkit-line-clamp: 3; line-clamp: 3; }
     }
 
     /* The answer avatar: the same AI mark as the ask box, in the accent. */
