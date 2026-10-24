@@ -23,6 +23,7 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 
 | Claim | Status | Source / definition | Public wording |
 |---|---|---|---|
+| Origin: writers were drafting company content on unregulated AI tools (personal tools, outside company control or review), which led Bri to build the Studio | STATED BY BRI 2026-10-24 | Bri | "saw writers drafting company content on unregulated AI tools" / "Spotted unregulated AI use in content" |
 | 8,729 entries · 592 en-US source pieces · 8,118 localized variants · 28 locales | CONFIRMED, SNAPSHOT 2026-09-08 | live Azure index, read-only (`facts.md`) | "… as of September 8, 2026" wherever the figure appears |
 | 25 locales with published or approved content | CONFIRMED, SNAPSHOT 2026-09-08 | same | "25 locales with published or approved content" (never merged with 28) |
 | 70 countries by the end of 2026 | UNCONFIRMED, stated by Bri 2026-10-23 | Bri: the CEO wanted to go global, and the plan is 70 countries by year end. A target, not today's count; today is 25 markets with published or approved content (Sep 8, 2026). | GCS hero: "Built before anyone asked. Now going global in 70 countries." and a "70 · Countries planned by the end of 2026" fact beside "25 · Markets live today". Never present 70 as already live. The Work card, homepage door, and Brix chat card use the same line. |
@@ -131,7 +132,7 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 
 - (2026-10-23) Answered: designing since 2011 (Bri). Keep "since 2011"; CKC is her first dated role (2012).
 - (2026-10-23) Answered: Chico was a full-ride soccer scholarship; ASU was a full-ride D1 soccer scholarship. Résumé, one-page résumé, and KB updated.
-- (2026-10-23 review) Open: the résumé's "unregulated AI tools" origin line has no source row. Keep as your statement?
+- (2026-10-24) Answered: keep the "unregulated AI" origin line as Bri's statement (writers used personal AI tools for company content outside company control or review). Wording: "saw writers drafting company content on unregulated AI tools" (résumé page), "Spotted unregulated AI use in content" (one-page résumé and PDF).
 - (2026-10-23) Answered: retitle. `resume/one-page.html` and its PDF now say "AI-Native Senior Product Designer", with the same ledger fixes as the main résumé.
 
 - (2026-10-23) Answered: 70 = countries planned by the end of 2026 (a CEO goal). Cards now match the headline.
