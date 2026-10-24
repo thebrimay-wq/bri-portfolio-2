@@ -119,15 +119,34 @@ function retrieve(query) {
     .rail-brand { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 18px; flex: none;
       background: var(--ink); color: var(--bg); font-size: 15px; font-weight: 600; letter-spacing: -.02em; text-decoration: none; }
     .rail-nav { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    .r-btn { position: relative; width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center; flex: none; color: var(--ink-2); text-decoration: none;
-      background: var(--bg); box-shadow: 0 0 0 1px var(--border), 0 2px 6px -2px rgba(0,0,0,.08); transition: color .15s, box-shadow .15s; }
+    /* Each item is an icon in a 44px pill; the pill widens to show its label when the rail opens. */
+    .r-btn { position: relative; width: 44px; height: 44px; border-radius: 22px; border: 0; cursor: pointer; display: flex; align-items: center; gap: 12px; padding: 0 12.5px; box-sizing: border-box;
+      flex: none; overflow: hidden; white-space: nowrap; color: var(--ink-2); text-decoration: none; font: inherit;
+      background: var(--bg); box-shadow: 0 0 0 1px var(--border), 0 2px 6px -2px rgba(0,0,0,.08); transition: color .15s, box-shadow .15s, width .22s var(--ease); }
+    .r-label { font-size: 14px; font-weight: 500; letter-spacing: -.01em; color: var(--ink); opacity: 0; transition: opacity .15s; }
     .r-btn:hover, .r-btn.is-current { color: var(--ink); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, var(--border)), 0 2px 6px -2px rgba(0,0,0,.08); }
     .r-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .r-btn svg { width: 19px; height: 19px; }
-    /* Tooltip names each icon on hover and keyboard focus. */
-    .r-btn[data-tip]::after { content: attr(data-tip); position: absolute; left: calc(100% + 10px); top: 50%; transform: translate(-4px, -50%); padding: 6px 10px; border-radius: 8px; white-space: nowrap;
-      background: var(--ink); color: var(--bg); font-size: 12px; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; z-index: 10; }
-    .r-btn[data-tip]:hover::after, .r-btn[data-tip]:focus-visible::after { opacity: 1; transform: translate(0, -50%); }
+    .r-btn svg, #rail-theme-icon { width: 19px; height: 19px; flex: none; }
+    #rail-theme-icon { display: grid; }
+
+    /* Desktop: hovering the rail (or tabbing into it) opens it to show each item's name.
+       It keeps its 76px slot (the negative margin), so the page under it never moves.
+       A short delay before opening stops a passing cursor from triggering it. */
+    @media (min-width: 900px) {
+      .rail { align-items: flex-start; padding: 14px 16px; transition: width .22s var(--ease), margin-right .22s var(--ease); }
+      .rail-nav, .rail-foot { align-items: flex-start; width: 100%; }
+      .rail-brand { margin-left: -2px; }
+      .rail-me { margin-left: -1px; }
+      .rail:focus-within { width: 208px; margin-right: -132px; }
+      .rail:focus-within .r-btn { width: 100%; }
+      .rail:focus-within .r-label { opacity: 1; transition-delay: .08s; }
+    }
+    @media (min-width: 900px) and (hover: hover) {
+      .rail:hover { width: 208px; margin-right: -132px; transition-delay: .12s; }
+      .rail:hover .r-btn { width: 100%; transition-delay: 0s, 0s, .12s; }
+      .rail:hover .r-label { opacity: 1; transition-delay: .2s; }
+    }
+    @media (prefers-reduced-motion: reduce) { .rail, .r-btn, .r-label { transition: none !important; } }
     /* The engine still keeps the visitor's recent questions; the icon rail does not show them. */
     .rail-recent { display: none !important; }
     .rail-foot { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -447,8 +466,8 @@ function retrieve(query) {
       .rail { width: auto; flex-direction: row; gap: 6px; padding: 10px 12px; border-radius: 0 0 22px 22px; }
       .rail-nav { flex-direction: row; gap: 6px; }
       .rail-brand { width: 40px; height: 40px; margin: 0 4px 0 0; font-size: 13px; }
-      .r-btn { width: 40px; height: 40px; }
-      .r-btn[data-tip]::after { display: none; }
+      .r-btn { width: 40px; height: 40px; padding: 0; justify-content: center; }
+      .r-label { display: none; }
       .rail-foot { margin: 0 0 0 auto; flex-direction: row; }
       .rail-me { display: none; }
       .chat-inner { padding-top: 40px; }
@@ -503,7 +522,7 @@ function retrieve(query) {
     @media (prefers-reduced-motion: reduce) {
       .chat-pane.is-empty .hero-name, .chat-pane.is-empty .hero-line, .chat-pane.is-empty .home-tile, .chat-pane.is-empty .tile-dots,
       .chat-pane.is-empty .composer-form, .chat-pane.is-empty .tray-chips .chip, .chat-pane.is-empty .composer-hint { animation: none; }
-      .home-tile, .home-tile-img img, .r-btn[data-tip]::after { transition: none; }
+      .home-tile, .home-tile-img img { transition: none; }
       .home-tile:hover { transform: none; }
     }
 
@@ -560,14 +579,15 @@ function retrieve(query) {
     <!-- LEFT RAIL: icons in white glass; each is named by a tooltip and an aria-label -->
     <aside class="rail" id="rail" aria-label="Menu">
       <a href="/" class="rail-brand" aria-label="Bri May, home">BM</a>
-      <button class="r-btn" id="rail-newchat" type="button" data-tip="New chat" aria-label="New chat">
+      <button class="r-btn" id="rail-newchat" type="button" aria-label="New chat">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        <span class="r-label">New chat</span>
       </button>
       <nav class="rail-nav" aria-label="Pages">
-        <a class="r-btn rail-item" href="/work/" data-panel-title="Work" data-tip="Work" aria-label="Work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="4.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="14.5" width="7" height="5" rx="1.5"/><rect x="13.5" y="14.5" width="7" height="5" rx="1.5"/></svg></a>
-        <a class="r-btn rail-item" href="/about/" data-panel-title="About" data-tip="About" aria-label="About"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></svg></a>
-        <a class="r-btn rail-item" href="/resume/" data-panel-title="Résumé" data-tip="Résumé" aria-label="Résumé"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20z"/><path d="M14 3.5V8h4M10 12h5M10 15.5h5"/></svg></a>
-        <a class="r-btn rail-item" href="/contact/" data-panel-title="Contact" data-tip="Contact" aria-label="Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg></a>
+        <a class="r-btn rail-item" href="/work/" data-panel-title="Work" aria-label="Work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="4.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="14.5" width="7" height="5" rx="1.5"/><rect x="13.5" y="14.5" width="7" height="5" rx="1.5"/></svg><span class="r-label">Work</span></a>
+        <a class="r-btn rail-item" href="/about/" data-panel-title="About" aria-label="About"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></svg><span class="r-label">About</span></a>
+        <a class="r-btn rail-item" href="/resume/" data-panel-title="Résumé" aria-label="Résumé"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20z"/><path d="M14 3.5V8h4M10 12h5M10 15.5h5"/></svg><span class="r-label">Résumé</span></a>
+        <a class="r-btn rail-item" href="/contact/" data-panel-title="Contact" aria-label="Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg><span class="r-label">Contact</span></a>
       </nav>
 
       <div class="rail-recent" id="rail-recent" hidden>
@@ -575,9 +595,9 @@ function retrieve(query) {
       </div>
 
       <div class="rail-foot">
-        <button class="r-btn rail-theme" id="rail-theme" type="button" data-tip="Theme" aria-label="Toggle theme">
+        <button class="r-btn rail-theme" id="rail-theme" type="button" aria-label="Toggle theme">
           <span id="rail-theme-icon"></span>
-          <span id="rail-theme-label" class="sr-only">Dark mode</span>
+          <span id="rail-theme-label" class="r-label">Dark mode</span>
         </button>
         <a class="rail-me" href="/about/" data-panel-title="About" aria-label="About Bri"><img src="/images/bri-hero.jpg" alt="" width="92" height="92" /></a>
       </div>
