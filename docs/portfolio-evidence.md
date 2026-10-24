@@ -8,6 +8,8 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 **UNCONFIRMED** (only Bri can confirm; public wording narrowed until then) ·
 **RETIRED** (removed from the public site).
 
+**Commit counts (Bri, 2026-10-24):** show one only when it proves authorship. Public use is the Global Content Studio ratio "493 of its 524 commits" (case study, Code page, Brix answers about who built it). Every other count below stays here as evidence and is described on the site by what the code does.
+
 ## Positioning (fixed by Bri, 2026-10-13)
 
 | Item | Wording | Where |
@@ -56,7 +58,7 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 | Claim | Status | Source | Public wording |
 |---|---|---|---|
 | v2 = the localizer review console and review API on the company's Python pipeline platform; engineering rebuilt the pipeline and ported v1's quality gates file by file | CONFIRMED | pipeline-platform repo: gate docstrings, `design/REVIEW_CONSOLE.md` ("The previous version (ff-content-writer) failed on these four") | "the pipeline platform"; never the repo or product name |
-| Bri: 113 of 717 commits on main (Aug 13–14: 20 commits incl. spec, prototype, review API, React console; Oct 9–13: batch generation, 42 commits on Oct 13) | CONFIRMED | `git shortlog`, `git log --author` | keep as commit counts |
+| Bri: 113 of 717 commits on main (Aug 13–14: 20 commits incl. spec, prototype, review API, React console; Oct 9–13: batch generation, 42 commits on Oct 13) | CONFIRMED | `git shortlog`, `git log --author` | evidence only; not shown publicly (2026-10-24) |
 | Engineers on v2: two (not Parth); console roles → platform tokens 2026-09-02 by engineering | CONFIRMED | git log | "two engineers", unnamed |
 | Four v1 failures → v2 fixes (reviewer copy separate field, etag/409, 50-entry revision log, resolution block shared with heal stage, plain-label flag rail with Apply/Fix myself/Dismiss+reason, stored flag counts, 50-row queries) | CONFIRMED | `core/review.py`, `FlagCard.tsx`, `docs/review_console.md` | keep |
 | 43 locale grounding files; 22 batch-generation markets; ~2,190 pytest + 90 vitest repo-wide | CONFIRMED, SNAPSHOT 2026-10-15 | `resources/locales/`, `core/batchgen/markets.py` | tests are repo-wide, not Bri's alone |
@@ -67,7 +69,7 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 | Engineers on v3: one wired the always-gated review model + publish flow (f21f96d); one built scopes/regional grants | CONFIRMED | git | "two engineers", unnamed |
 | Article generation / gap planner: MAX_BATCH_ARTICLES = 200, 3 in flight per locale, guardrails panel; runs on demo data; `/generate/plan` and `/generate/batch` are a proposed contract; single-article generate exists on the pipeline platform | CONFIRMED (design), UNSHIPPED (batch backend) | local `article-generation` branch, `docs/article-generation-api.md` | always labeled "designed, demo data, backend proposed" |
 | Image engine: v1 branch `feature/locale-image-engine` (2026-06-25 → 07-07): Claude cultural analysis + brief + Vision PASS/REVIEW/FAIL; Flux Pro then Gemini. v2: Getty-first, Gemini generate, Gemini judge suitable true/false, human verdict outranks machine | CONFIRMED | `src/lib/imageEngine.ts` (v1 branch), `jobs/content/images.py` | keep; the PASS/REVIEW/FAIL rubric is v1, not v3 |
-| 680+ commits of Bri's across three repos (≈493 + 113 + 81) | DERIVED 2026-10-15 | sums above | "680+ commits across three repos" |
+| 680+ commits of Bri's across three repos (≈493 + 113 + 81) | DERIVED 2026-10-15 | sums above | RETIRED from public use 2026-10-24 |
 | "Helped win the Federal Reserve and opened new prospects" | STATED BY BRI 2026-10-15; no evidence in any repo; business attribution needs company clearance | this session | if used: "Per the company, …" and flagged for clearance before deploy |
 | Prototype screenshots (v2 review console, v3 workspace, admin matrix, gap planner) | Bri's own HTML prototypes / demo-data previews, rendered 2026-10-15; demo content, no real data | `design/*.html`, `Prototypes/prototype.html`, `Claude outputs/*.png` | captions must say "prototype, demo content" |
 
@@ -90,7 +92,7 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 
 | Claim | Status | Source | Public wording |
 |---|---|---|---|
-| 155 commits, all Bri's, 2026-10-19 → 10-22 (v7 build) | CONFIRMED | `facts.md` §11, prototype repo git | "155 commits over four days (October 2026)"; the four days describe this build only |
+| 155 commits, all Bri's, 2026-10-19 → 10-22 (v7 build) | CONFIRMED | `facts.md` §11, prototype repo git | "built in four days (October 2026)"; the commit count is evidence only (2026-10-24); the four days describe this build only |
 | 376 tests across 53 files (Vitest + jsdom) | CONFIRMED, SNAPSHOT 2026-10-23 | `facts.md` §11 | "376 tests (October 2026)" |
 | Built the entire prototype and design alone; personas from years of FF coach–member conversations | STATED BY BRI 2026-10-23 | `facts.md` §11 | keep as her statement; persona data on screen is demo content |
 | Cleared to show publicly though unreleased | CONFIRMED (Bri, 2026-10-23) | `facts.md` §11 | keep |
@@ -123,7 +125,7 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 | FF 2016–present; Sr. Graphic 2016–17; Lead PD · Product Creative Director 2017–2025; AI-Native Senior PD 2025– | CONFIRMED (Bri's résumé) | keep; historical titles unchanged |
 | CKC Communications 2012–2015, 50+ companies | CONFIRMED (Bri's résumé) | keep |
 | Education: Chico B.S. Business/Marketing on a full-ride soccer scholarship; ASU 2 years, D1 soccer on a full-ride scholarship | CONFIRMED (Bri, 2026-10-23) | Chico is never called D1 (NCAA Division II); "D1" belongs to ASU only |
-| 80 commits into `blue`, 27 into `ff.workers`, 32 into `benehub` | CONFIRMED | keep as commit counts, never as deployment proof |
+| 80 commits into `blue`, 27 into `ff.workers`, 32 into `benehub` | CONFIRMED | evidence only, never shown publicly (2026-10-24) |
 | "Introduced user research and usability testing" | UNCONFIRMED example | keep as role statement; no specific finding is published |
 | Mentors colleagues on building with AI / AI Champion | UNCONFIRMED numbers | role line only |
 | PDF reading order | DEFECT (pypdf plain mode: bullets after Education) | fixed 2026-10-13, see below |
