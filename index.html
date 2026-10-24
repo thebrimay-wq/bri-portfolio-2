@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Bri May: AI-Native Senior Product Designer who ships in code. I design the product, then I ship the code. Ask Brix, the on-device assistant, to show you case studies, Bri's background, résumé, or contact info." />
+  <meta name="description" content="Bri May: AI-Native Senior Product Designer who ships in code. I design the product, then I ship the code. Ask about her work, or open a case study: Global Content Studio, the Financial Finesse B2C App, and Aimee." />
   <title>Bri May: AI-Native Senior Product Designer who ships in code.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -66,8 +66,8 @@ function retrieve(query) {
   <link rel="canonical" href="https://imbrimay.com/" />
   <meta property="og:title" content="Bri May: AI-Native Senior Product Designer who ships in code." />
   <meta name="twitter:title" content="Bri May: AI-Native Senior Product Designer who ships in code." />
-  <meta property="og:description" content="Ask Brix, Bri's on-device portfolio agent, about her work — Bri May, AI-Native Senior Product Designer. I design the product, then I ship the code." />
-  <meta name="twitter:description" content="Ask Brix, Bri's on-device portfolio agent, about her work — Bri May, AI-Native Senior Product Designer. I design the product, then I ship the code." />
+  <meta property="og:description" content="Bri May, AI-Native Senior Product Designer. I design the product, then I ship the code. Ask about her work, or open a case study." />
+  <meta name="twitter:description" content="Bri May, AI-Native Senior Product Designer. I design the product, then I ship the code. Ask about her work, or open a case study." />
 
   <style>
 
@@ -95,131 +95,46 @@ function retrieve(query) {
     .noscript-page a { color: var(--accent); }
 
     /* ============================================================
-       AGENT HOMEPAGE — chat rail + artifact-style side panel
-       A scripted portfolio concierge. Internal links open in a
-       right-side panel (iframe) instead of navigating away.
+       HOMEPAGE — a slim icon rail in white glass, the greeting top
+       left, and the case studies and ask box anchored at the bottom,
+       all on the site wash and the listening dot field. Links inside
+       answers open in a right-side panel (iframe).
     ============================================================ */
+    :root { --ease: cubic-bezier(.22, 1, .36, 1); --dot: 10,10,10; --dot-hot: 155,107,87; }
+    :root[data-theme="dark"] { --dot: 244,245,247; --dot-hot: 214,160,138; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --dot: 244,245,247; --dot-hot: 214,160,138; } }
 
     html, body { height: 100%; }
+    body { overflow: hidden; }
+    /* The listening field: a dot grid behind everything that leans away from the pointer. */
+    #field { position: fixed; inset: 0; z-index: 0; pointer-events: none; width: 100%; height: 100%; }
 
     /* ── App shell: rail | (chat pane | side panel) ── */
-    .app { position: relative; display: flex; height: 100dvh; overflow: hidden; background: var(--bg); }
-    .rail, .agent-wrap { position: relative; z-index: 1; }
+    .app { position: relative; z-index: 1; display: flex; gap: 14px; height: 100dvh; padding: 14px; box-sizing: border-box; }
 
-    /* ── Left rail (sidebar) — floating rounded panel (Claude-desktop style) ── */
-    .rail {
-      flex: 0 0 264px; width: 264px;
-      display: flex; flex-direction: column;
-      padding: 14px 12px;
-      margin: 12px; border-radius: 18px;
-      background: var(--glass-fill);
-      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
-      backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
-      box-shadow: inset 0 1px 0 var(--glass-shine), 0 0 0 1px var(--glass-edge), var(--glass-shadow);
-    }
-    .rail-head { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 10px; }
-    .rail-brand { display: inline-flex; align-items: center; font-size: 19px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
-    .rail .rail-x { display: none; }
-    /* desktop collapse toggle in the rail header; floating re-open button
-       (compound selectors so they beat the base .icon-btn display rule) */
-    .icon-btn.rail-collapse { display: none; }
-    .icon-btn.rail-show {
-      display: none; position: absolute; top: 16px; left: 16px; z-index: 60;
-      border-radius: 999px;
-      background: var(--glass-fill);
-      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
-      backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
-      box-shadow: inset 0 1px 0 var(--glass-shine), 0 0 0 1px var(--glass-edge), var(--glass-shadow);
-    }
-    @media (min-width: 900px) {
-      .icon-btn.rail-collapse { display: flex; }
-      .app.rail-collapsed .rail { display: none; }
-      .app.rail-collapsed .icon-btn.rail-show { display: flex; }
-    }
-    /* New chat — plain text + icon row (no button box) */
-    .rail-newchat {
-      display: flex; align-items: center; gap: 10px; width: 100%;
-      font-family: inherit; font-size: 14px; font-weight: 550; color: var(--ink);
-      background: none; border: none; border-radius: 8px;
-      padding: 9px 8px; cursor: pointer; margin-bottom: 12px;
-      transition: background 0.15s ease, color 0.15s ease;
-    }
-    .rail-newchat:hover { background: var(--hover-soft); }
-    .rail-newchat svg { color: var(--accent); }
-    .rail-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); padding: 0 8px; margin-bottom: 6px; }
-    .rail-nav { display: flex; flex-direction: column; gap: 2px; }
-    .rail-item {
-      display: flex; align-items: center; gap: 11px;
-      font-size: 14px; font-weight: 500; color: var(--ink-2); text-decoration: none;
-      padding: 9px 10px; border-radius: 8px; cursor: pointer;
-      transition: background 0.14s ease, color 0.14s ease;
-    }
-    .rail-item:hover { background: var(--hover-soft); color: var(--ink); }
-    .rail-item.is-current { background: var(--hover-soft); color: var(--ink); font-weight: 600; }
-    .rail-item.is-current .rail-ic { color: var(--ink); }
-    .rail-ic { width: 18px; height: 18px; flex-shrink: 0; color: var(--ink-3); }
-    .rail-item:hover .rail-ic { color: var(--accent); }
-    .rail-recent { margin-top: 20px; min-height: 0; overflow-y: auto; }
-    .rail-recent[hidden] { display: none; }
-    #rail-recent-list { display: flex; flex-direction: column; gap: 1px; }
-    .rail-recent-item {
-      display: block; width: 100%; text-align: left;
-      font-family: inherit; font-size: 13.5px; font-weight: 450; color: var(--ink-2);
-      background: none; border: none; cursor: pointer;
-      padding: 8px 10px; border-radius: 8px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      transition: background 0.14s ease, color 0.14s ease;
-    }
-    .rail-recent-item:hover { background: var(--hover-soft); color: var(--ink); }
-    .rail-foot { margin-top: auto; padding: 14px 8px 4px; display: flex; flex-direction: column; gap: 7px; border-top: 1px solid var(--border); }
-    .rail-foot-link { font-size: 12.5px; color: var(--ink-3); text-decoration: none; transition: color 0.14s ease; }
-    .rail-foot-link:hover { color: var(--ink); }
-    .rail-theme { display: flex; align-items: center; gap: 9px; background: none; border: none; padding: 7px 0; margin-bottom: 4px; font: inherit; font-size: 12.5px; color: var(--ink-3); cursor: pointer; transition: color 0.14s ease; }
-    .rail-theme:hover { color: var(--ink); }
-    .rail-theme svg { width: 15px; height: 15px; flex: 0 0 auto; }
+    /* ── Icon rail, in the nav's glass recipe ── */
+    .rail { position: relative; z-index: 3; flex: none; width: 76px; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 0; border-radius: 28px; box-sizing: border-box;
+      background: var(--glass-fill); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4); backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+      box-shadow: inset 0 1px 0 var(--glass-shine), 0 0 0 1px var(--glass-edge), var(--glass-shadow); }
+    .rail-brand { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 18px; flex: none;
+      background: var(--ink); color: var(--bg); font-size: 15px; font-weight: 600; letter-spacing: -.02em; text-decoration: none; }
+    .rail-nav { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .r-btn { position: relative; width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center; flex: none; color: var(--ink-2); text-decoration: none;
+      background: var(--bg); box-shadow: 0 0 0 1px var(--border), 0 2px 6px -2px rgba(0,0,0,.08); transition: color .15s, box-shadow .15s; }
+    .r-btn:hover, .r-btn.is-current { color: var(--ink); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, var(--border)), 0 2px 6px -2px rgba(0,0,0,.08); }
+    .r-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .r-btn svg { width: 19px; height: 19px; }
+    /* Tooltip names each icon on hover and keyboard focus. */
+    .r-btn[data-tip]::after { content: attr(data-tip); position: absolute; left: calc(100% + 10px); top: 50%; transform: translate(-4px, -50%); padding: 6px 10px; border-radius: 8px; white-space: nowrap;
+      background: var(--ink); color: var(--bg); font-size: 12px; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; z-index: 10; }
+    .r-btn[data-tip]:hover::after, .r-btn[data-tip]:focus-visible::after { opacity: 1; transform: translate(0, -50%); }
+    /* The engine still keeps the visitor's recent questions; the icon rail does not show them. */
+    .rail-recent { display: none !important; }
+    .rail-foot { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .rail-me { width: 46px; height: 46px; border-radius: 50%; overflow: hidden; margin-top: 6px; box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--border); }
+    .rail-me img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
 
-    .rail-scrim { display: none; }
-
-    /* generic icon button (topbar / rail close) */
-    .icon-btn {
-      width: 38px; height: 38px; border-radius: 9px; border: none; background: none;
-      color: var(--ink-2); cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.14s ease, color 0.14s ease;
-    }
-    .icon-btn:hover { background: var(--hover-soft); color: var(--ink); }
-
-    /* mobile top bar (hidden on desktop) */
-    .chat-topbar { display: none; }
-
-    .agent-wrap {
-      flex: 1; min-width: 0;
-      display: flex;
-      height: 100%;
-      overflow: hidden;
-      background: transparent;
-    }
-
-    /* ── Mobile: rail becomes a slide-out drawer ── */
-    @media (max-width: 900px) {
-      .rail {
-        position: fixed; top: 0; left: 0; bottom: 0; z-index: 210;
-        margin: 0; border-radius: 0;
-        transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
-        box-shadow: 0 0 0 1px var(--glass-edge), 0 0 60px rgba(0,0,0,0.18);
-      }
-      .app.rail-open .rail { transform: none; }
-      .rail .rail-x { display: flex; }
-      .app.rail-open .rail-scrim { display: block; position: fixed; inset: 0; z-index: 205; background: rgba(0,0,0,0.34); }
-      .chat-topbar {
-        display: flex; align-items: center; justify-content: space-between; gap: 8px;
-        flex-shrink: 0; padding: 8px 10px;
-        background: var(--glass-fill);
-        -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
-        backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
-        box-shadow: inset 0 -1px 0 var(--glass-edge);
-      }
-      .chat-topbar-title { font-size: 14px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
-    }
+    .agent-wrap { position: relative; z-index: 1; flex: 1; min-width: 0; display: flex; height: 100%; overflow: hidden; background: transparent; }
     @media (min-width: 900px) {
       .chat-pane { min-width: 400px; }
       .panel {
@@ -229,68 +144,24 @@ function retrieve(query) {
       }
       .agent-wrap.panel-open .panel {
         flex-basis: 54%;
-        margin: 12px 12px 12px 0;
+        margin: 0 0 0 14px;
         border-color: transparent;
         box-shadow: 0 0 0 1px var(--glass-edge), var(--glass-shadow);
       }
     }
 
-    /* ── Chat pane ── */
-    .chat-pane {
-      position: relative;
-      flex: 1 1 0%;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      min-height: 0;
-      overflow: hidden;
-    }
-    /* The thread sits directly on the wallpaper, like the first screen.
-       The fields are low-contrast by design; the user bubble and the
-       composer are the only surfaces. */
-    /* Empty state: greeting + composer centered together; composer un-docks */
-    .chat-pane.is-empty { justify-content: center; }
-    .chat-pane.is-empty .chat-scroll { flex: 0 1 auto; overflow: hidden; }
-    .chat-pane.is-empty .composer-bar { position: static; }
+    /* ── Chat pane: the greeting scrolls, the ask box stays at the bottom ── */
+    .chat-pane { position: relative; flex: 1 1 0%; display: flex; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; }
+    .chat-scroll { flex: 1; min-height: 0; overflow-y: auto; }
+    /* Same container as every other page: --max wide including the --px gutters. */
+    .chat-inner { max-width: var(--max); margin: 0 auto; padding: clamp(48px, 13vh, 140px) var(--px) 56px; box-sizing: border-box; }
     .chat-pane:not(.is-empty) .empty-state { display: none; }
-    .empty-state { max-width: 760px; margin: 0 auto; text-align: center; }
-    .empty-state .agent-intro h1 { margin-inline: auto; }
-    .empty-state .cs-cards { margin: clamp(24px, 4vw, 36px) auto 0; text-align: left; }
-    .chat-scroll { flex: 1; overflow-y: auto; }
-    .chat-inner {
-      max-width: calc(720px + 2 * var(--px));
-      margin: 0 auto;
-      padding: clamp(36px, 6vw, 80px) var(--px) 28px;
-      container-type: inline-size;
-    }
+    .chat-pane:not(.is-empty) .chat-inner { padding-top: 40px; }
+    .thread { max-width: 860px; }
 
-    /* ── intro headline ── */
-    .agent-intro { margin-bottom: clamp(28px, 4vw, 44px); }
-    .hero-intro .hero-name { font-size: clamp(34px, 8cqw, 52px); font-weight: 650; letter-spacing: -0.035em; line-height: 1; color: var(--ink); margin: 0; }
-    .hero-intro .hero-title { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 14px; }
-    .hero-intro .hero-line { font-size: clamp(18px, 3.6cqw, 22px); color: var(--ink-2); margin: 14px 0 0; }
-    .hero-intro .hero-sub { font-size: clamp(14px, 2.6cqw, 16px); line-height: 1.55; color: var(--ink-3); max-width: 560px; margin: 12px auto 0; text-wrap: pretty; }
-    .hero-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; margin-top: 18px; font-size: 13px; }
-    .hero-links a { color: var(--ink-3); padding: 8px 2px; border-radius: 6px; }
-    .hero-links a:hover { color: var(--ink); }
-    .hero-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; color: var(--ink); }
-    .agent-kicker {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--ink-3); margin-bottom: 20px;
-    }
-    .agent-kicker .status-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: #34C759; box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.15);
-    }
-    .agent-intro h1 {
-      font-size: clamp(21px, 7cqw, 38px); font-weight: 700;
-      letter-spacing: -0.03em; line-height: 1.14; color: var(--ink);
-    }
-    /* Font sizes to the column (cqw) so each line fits on one line in normal
-       views; if the column is extremely narrow, wrap balanced — never orphan/clip */
-    .agent-intro h1 .hl-line { display: block; text-wrap: balance; }
-    .agent-intro h1 .muted { color: var(--ink-3); }
+    /* ── Greeting: the site's light display type ── */
+    .hero-intro .hero-name { margin: 0; font-weight: 350; font-size: clamp(44px, 5.2vw, 76px); line-height: 1.02; letter-spacing: -.04em; color: var(--ink); }
+    .hero-intro .hero-line { margin: 16px 0 0; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.5; color: var(--ink); }
 
     /* ── thread ── */
     .thread { display: flex; flex-direction: column; gap: clamp(26px, 3.4vw, 34px); }
@@ -341,24 +212,6 @@ function retrieve(query) {
     .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .chip .plus { color: var(--ink-3); font-size: 15px; line-height: 1; }
 
-    /* ── Mobile: full-page empty state + compact list cards ──
-       (placed after the base card/composer CSS so these win on source order) */
-    @media (max-width: 900px) {
-      /* greeting + cards fill the screen; composer docks at the bottom */
-      .chat-pane.is-empty { justify-content: stretch; }
-      .chat-pane.is-empty .chat-scroll { flex: 1 1 auto; overflow-y: auto; }
-      .chat-pane.is-empty .chat-inner {
-        min-height: 100%; display: flex; flex-direction: column; justify-content: center;
-        padding-top: 16px; padding-bottom: 16px;
-      }
-      .chat-pane.is-empty .composer-bar { position: sticky; bottom: 0; }
-      .chat-pane.is-empty .composer-bar::before {
-        content: ''; position: absolute; left: 0; right: 0; top: -40px; bottom: 0;
-        background: linear-gradient(to top, var(--bg) 40%, transparent); pointer-events: none;
-        -webkit-mask: linear-gradient(to top, black 30%, transparent);
-                mask: linear-gradient(to top, black 30%, transparent);
-      }
-    }
 
     /* ── streaming cursor ── */
     .stream-cursor {
@@ -451,55 +304,45 @@ function retrieve(query) {
     .link-btn--secondary { background: transparent; color: var(--ink); border: 1px solid var(--border); }
     .link-btn--secondary:hover { border-color: var(--ink); transform: translateY(-1px); }
 
-    /* ── composer (pinned to bottom of chat pane) ── */
-    .composer-bar {
-      background: transparent;
-      position: sticky; bottom: 0;
-    }
-    .composer-inner { max-width: calc(720px + 2 * var(--px)); margin: 0 auto; padding: 14px var(--px) 16px; position: relative; }
-    /* soft scrim so the thread dissolves under the composer (docked state only) */
+    /* ── Bottom: the case studies, then the ask box ── */
+    .composer-bar { position: relative; z-index: 2; flex: none; padding: 0 0 12px; }
+    .composer-inner { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); box-sizing: border-box; }
+    /* While a conversation scrolls, it blurs out under the ask box instead of meeting a hard edge. */
     .chat-pane:not(.is-empty) .composer-bar::before {
-      /* scroll-edge effect: the thread dissolves under the capsule without a solid band */
-      content: ''; position: absolute; left: 0; right: 0; top: -64px; bottom: 0; pointer-events: none;
+      content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: calc(100% + 40px); z-index: -1; pointer-events: none;
       -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-      -webkit-mask: linear-gradient(to top, black 35%, transparent);
-              mask: linear-gradient(to top, black 35%, transparent);
+      -webkit-mask-image: linear-gradient(to top, #000 55%, transparent); mask-image: linear-gradient(to top, #000 55%, transparent);
     }
-    /* The signature: a glass capsule the thread scrolls beneath */
-    .composer-form {
-      position: relative;
-      display: flex; align-items: flex-end; gap: 8px;
-      border-radius: 28px;
-      padding: 8px 8px 8px 20px;
-      background: var(--glass-fill);
-      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
-      backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
-      box-shadow: inset 0 1px 0 var(--glass-shine), 0 0 0 1px var(--glass-edge), var(--glass-shadow);
-      transition: box-shadow 0.25s ease, transform 0.25s ease;
-    }
-    .composer-form:focus-within {
-      box-shadow: inset 0 1px 0 var(--glass-shine), 0 0 0 1.5px var(--ink-3), var(--glass-shadow);
-    }
+    .chat-pane:not(.is-empty) #starter-mount, .chat-pane:not(.is-empty) .tray-chips { display: none; }
+    .chat-pane:not(.is-empty) .composer-form { padding-bottom: 0; }
+
+    /* The ask box: a white field in a tray that holds the three starter questions. */
+    .composer-form { padding: 0 0 8px; border-radius: 22px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--border); }
+    .composer-field { display: flex; align-items: flex-start; gap: 10px; padding: 14px 12px 12px 18px; border-radius: 20px; background: var(--bg);
+      box-shadow: 0 0 0 1px var(--border), 0 6px 18px -10px rgba(0,0,0,.12); transition: box-shadow .2s; }
+    .composer-field:focus-within { box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 55%, var(--border)), 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent); }
+    /* The AI mark, so visitors know at a glance this box is an assistant. */
+    .ask-spark { flex: none; width: 18px; height: 18px; margin-top: 10px; fill: var(--accent); }
     .composer-input {
-      flex: 1; border: none; outline: none; background: transparent;
-      font-family: inherit; font-size: 16px; line-height: 1.5; color: var(--ink);
-      padding: 9px 0; resize: none; max-height: 200px; overflow-y: auto;
+      flex: 1; min-width: 0; border: none; outline: none; background: transparent;
+      font-family: inherit; font-size: 16.5px; line-height: 1.5; color: var(--ink);
+      padding: 7px 0; resize: none; min-height: 56px; max-height: 200px; overflow-y: auto;
     }
-    .composer-input::placeholder { color: var(--ink-3); }
+    .composer-input::placeholder { color: var(--ink-2); }
     .send-btn {
-      flex-shrink: 0; width: 38px; height: 38px; border-radius: 999px; border: none;
+      flex-shrink: 0; align-self: flex-end; width: 44px; height: 44px; border-radius: 999px; border: none;
       background: var(--ink); color: var(--on-ink); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
     }
     .send-btn:not(:disabled):hover { background: var(--btn-hover); transform: translateY(-1px); }
-    .send-btn:disabled {
-      background: var(--hover-soft);
-      color: var(--ink-3);
-      cursor: default;
-    }
+    .send-btn:disabled { background: var(--hover-soft); color: var(--ink-3); cursor: default; }
     .send-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .composer-hint { font-size: 12px; color: var(--ink-3); margin-top: 10px; text-align: center; }
+    .tray-chips { display: flex; gap: 8px; flex-wrap: wrap; padding: 10px 10px 0; }
+    .tray-chips .chip { min-height: 38px; padding: 0 14px; font-size: 14px; }
+    .tray-chips .chip svg { width: 16px; height: 16px; flex: none; color: var(--ink-2); }
+    .composer-hint { font-size: 13px; color: var(--ink-2); margin: 12px 0 0; text-align: center; }
+    .composer-hint a { color: var(--ink); font-weight: 500; }
 
     /* ── message action row (copy / feedback) ── */
     .msg-actions { display: flex; gap: 2px; margin-top: 2px; opacity: 0; transition: opacity 0.18s ease; }
@@ -573,142 +416,90 @@ function retrieve(query) {
       }
     }
 
-    /* ============================================================
-       FIRST SCREEN — content layer (stage) under a glass tray
-       Stage: the visitor's own UI, fanned on a dot-grid canvas and
-       dimmed. Tray: the only glass on screen; it holds an opaque
-       composer and the starter rows. Both exist only while the
-       thread is empty.
-    ============================================================ */
-    /* Wallpaper palette — accent-derived, one composition for both themes.
-       Light: warm paper with terracotta, sand and slate fields.
-       Dark: same fields at lower luminance, a touch more saturated. */
-    :root {
-      --wp-base:  #F4F1ED;
-      --wp-a:     rgba(201, 139, 115, 0.78);   /* terracotta */
-      --wp-b:     rgba(233, 201, 176, 0.85);   /* sand */
-      --wp-c:     rgba(143, 163, 191, 0.62);   /* slate */
-      --wp-d:     rgba(217, 169, 156, 0.55);   /* rose */
-      --wp-bloom: rgba(255, 255, 255, 0.70);
-      --wp-clear: rgba(244, 241, 237, 0.42);   /* soft lift behind the hero */
-      --wp-grain: 0.055;
-    }
-    :root[data-theme="dark"] {
-      --wp-base:  #121417;
-      --wp-a:     rgba(138, 78, 60, 0.70);
-      --wp-b:     rgba(91, 62, 51, 0.65);
-      --wp-c:     rgba(46, 58, 82, 0.75);
-      --wp-d:     rgba(107, 63, 69, 0.50);
-      --wp-bloom: rgba(205, 160, 140, 0.16);
-      --wp-clear: rgba(18, 20, 23, 0.45);
-      --wp-grain: 0.07;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --wp-base:  #121417;
-        --wp-a:     rgba(138, 78, 60, 0.70);
-        --wp-b:     rgba(91, 62, 51, 0.65);
-        --wp-c:     rgba(46, 58, 82, 0.75);
-        --wp-d:     rgba(107, 63, 69, 0.50);
-        --wp-bloom: rgba(205, 160, 140, 0.16);
-        --wp-clear: rgba(18, 20, 23, 0.45);
-        --wp-grain: 0.07;
-      }
-    }
-
-    .app > .stage { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-    .chat-scroll, .composer-bar, .chat-topbar, .icon-btn.rail-show { position: relative; z-index: 1; }
-    .icon-btn.rail-show { position: absolute; }
-
-    /* Wallpaper: four overlapping colour fields, blurred into one another,
-       oversized so the blur never shows an edge. Low-frequency by design —
-       nothing here has an edge that could compete with type. */
-    .stage { background: var(--wp-base); }
-    .wp-field {
-      position: absolute; inset: -12%;
-      background:
-        radial-gradient(48% 42% at 22% 18%, var(--wp-a), transparent 70%),
-        radial-gradient(52% 46% at 78% 26%, var(--wp-b), transparent 70%),
-        radial-gradient(56% 50% at 70% 88%, var(--wp-c), transparent 70%),
-        radial-gradient(40% 40% at 18% 84%, var(--wp-d), transparent 70%);
-      filter: blur(56px) saturate(1.05);
-      transform-origin: 50% 50%;
-      animation: wp-drift 90s ease-in-out infinite alternate;
-    }
-    /* one soft light source, upper left */
-    .wp-bloom {
-      position: absolute; inset: 0;
-      background: radial-gradient(60% 55% at 12% 0%, var(--wp-bloom), transparent 70%);
-    }
-    /* fine grain so the gradients don't band; sized so it never reads as texture */
-    .wp-grain {
-      position: absolute; inset: 0; opacity: var(--wp-grain);
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-      background-size: 240px 240px;
-      mix-blend-mode: overlay;
-    }
-    /* a barely-there lift behind the hero so the type sits on the calmest part */
-    .wp-clear {
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 40% 50% at 58% 42%, var(--wp-clear), transparent 72%);
-    }
-    @keyframes wp-drift {
-      to { transform: rotate(2.5deg) scale(1.06) translate(1.5%, -1%); }
-    }
-    @media (max-width: 900px) {
-      .chat-pane.is-empty .home-card-featured { display: none; }
-    }
-    @media (prefers-reduced-motion: reduce) { .wp-field { animation: none; } }
-    @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-      .wp-field, .wp-bloom, .wp-grain { display: none; }
-      .stage { background: var(--bg); }
-    }
-
-    /* one entrance on the first screen: the name settles, the tray rises. Then nothing moves. */
-    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-    .chat-pane.is-empty .hero-intro { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-    .chat-pane.is-empty .composer-inner { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.12s both; }
-    @media (prefers-reduced-motion: reduce) {
-      .chat-pane.is-empty .hero-intro, .chat-pane.is-empty .composer-inner { animation: none; }
-    }
-    /* hero: the same light display type as every other page (2026-10-23) */
-    .hero-intro .hero-name { font-size: clamp(48px, 11cqw, 88px); font-weight: 350; letter-spacing: -0.04em; line-height: 0.96; }
-
-    /* three tiles, Apple product-grid style: image, name, one line, Learn more */
-    .home-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: clamp(28px, 4vw, 40px) auto 0; text-align: left; }
-    /* the doors are controls, so they take the same glass as the rail and the capsule;
-       the product shot inside stays opaque (content) */
-    .home-tile {
-      display: flex; flex-direction: column; gap: 12px; padding: 10px 10px 14px;
-      border-radius: 18px; color: inherit; text-decoration: none;
-      background: var(--glass-fill);
-      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
-      backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
-      box-shadow: inset 0 1px 0 var(--glass-shine), 0 0 0 1px var(--glass-edge), var(--glass-shadow);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .home-tile:hover {
-      transform: translateY(-2px);
-      box-shadow: inset 0 1px 0 var(--glass-shine), 0 0 0 1px var(--glass-edge), 0 2px 4px rgba(0,0,0,0.04), 0 22px 48px rgba(0,0,0,0.12);
-    }
+    /* ── The three case studies: image first, then the name, then one line ── */
+    .home-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
+    .home-tile { display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; background: var(--bg); color: inherit; text-decoration: none;
+      box-shadow: 0 0 0 1px var(--border), 0 2px 8px -4px rgba(0,0,0,.06); transition: transform .2s var(--ease), box-shadow .2s var(--ease); }
+    .home-tile:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, var(--border)), 0 16px 36px -20px rgba(60,40,30,.3); }
     .home-tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .home-tile-img { aspect-ratio: 3 / 2; border-radius: 11px; overflow: hidden; background: var(--surface); box-shadow: 0 0 0 1px var(--frame-ring); }
-    .home-tile-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .home-tile-text { display: flex; flex-direction: column; gap: 3px; padding: 0 6px; }
-    .home-tile-label { font-size: 12px; font-weight: 500; color: var(--ink-3); }
-    .home-tile-title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; color: var(--ink); text-wrap: balance; }
-    .home-tile-sub { font-size: 13px; color: var(--ink-2); line-height: 1.45; }
-    .home-tile-more { font-size: 13px; color: var(--ink-3); margin-top: 4px; transition: color 0.15s ease; }
-    .home-tile:hover .home-tile-more { color: var(--ink); }
-    /* by column width, not viewport: the chat column narrows when the panel opens */
-    @container (max-width: 600px) {
-      .home-tiles { grid-template-columns: 1fr; gap: 10px; }
-      .home-tile { flex-direction: row; align-items: center; gap: 14px; padding: 10px 14px 10px 10px; }
-      .home-tile-img { width: 84px; flex: 0 0 auto; aspect-ratio: 1; border-radius: 10px; }
-      .home-tile-text { padding: 0; }
-      .home-tile-more { display: none; }
+    .home-tile-img { aspect-ratio: 16 / 10; overflow: hidden; }
+    .home-tile-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s var(--ease); }
+    .home-tile:hover .home-tile-img img { transform: scale(1.03); }
+    .home-tile-text { display: block; padding: 12px 16px 14px; }
+    .home-tile-label { display: block; font-size: 15px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; color: var(--ink); }
+    /* Room for two lines on every tile, so the three stay level. */
+    .home-tile-sub { margin-top: 3px; font-size: 14px; line-height: 1.4; color: var(--ink-2);
+      min-height: 2.8em; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+    .tile-dots { display: none; }
+
+    /* Narrow desktop windows: the tiles are too narrow for two lines, so every tile holds three. */
+    @media (min-width: 900px) and (max-width: 1100px) {
+      .home-tile-sub { min-height: 4.2em; -webkit-line-clamp: 3; line-clamp: 3; }
     }
-    @media (prefers-reduced-motion: reduce) { .home-tile:hover { transform: none; } }
+    @media (min-width: 900px) and (max-height: 760px) {
+      .home-tile-img { aspect-ratio: 2 / 1; }
+      .chat-inner { padding-top: 40px; }
+    }
+
+    /* ── Phones: the rail runs across the top; the case studies swipe one at a time ── */
+    @media (max-width: 899px) {
+      .app { flex-direction: column; gap: 0; padding: 0; }
+      .rail { width: auto; flex-direction: row; gap: 6px; padding: 10px 12px; border-radius: 0 0 22px 22px; }
+      .rail-nav { flex-direction: row; gap: 6px; }
+      .rail-brand { width: 40px; height: 40px; margin: 0 4px 0 0; font-size: 13px; }
+      .r-btn { width: 40px; height: 40px; }
+      .r-btn[data-tip]::after { display: none; }
+      .rail-foot { margin: 0 0 0 auto; flex-direction: row; }
+      .rail-me { display: none; }
+      .chat-inner { padding-top: 40px; }
+      .home-tiles { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 100%; gap: 10px; margin: -4px -4px 0; padding: 4px;
+        overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+      .home-tiles::-webkit-scrollbar { display: none; }
+      .home-tile { scroll-snap-align: start; }
+      .home-tile:hover { transform: none; }
+      .home-tile-img { aspect-ratio: 2 / 1; }
+      .tile-dots { display: flex; justify-content: center; gap: 2px; margin: 2px 0 6px; }
+      .tile-dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+      .tile-dots button::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); opacity: .2; transition: opacity .2s, transform .2s; }
+      .tile-dots button[aria-current="true"]::after { opacity: .85; transform: scale(1.15); }
+      .composer-input { min-height: 26px; }
+      .tray-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, #000 85%, transparent); mask-image: linear-gradient(to right, #000 85%, transparent); }
+      .tray-chips::-webkit-scrollbar { display: none; }
+      .tray-chips .chip { flex: none; }
+      .composer-hint { display: none; }
+    }
+    /* The smallest phones: slightly smaller rail icons so the top bar fits 320px. */
+    @media (max-width: 360px) {
+      .rail { gap: 4px; padding: 8px 10px; }
+      .rail-nav { gap: 4px; }
+      .rail-brand, .r-btn { width: 36px; height: 36px; }
+    }
+
+    /* The answer avatar: the same AI mark as the ask box, in the accent. */
+    .avatar--spark { width: 34px; height: 34px; border-radius: 50%; background: var(--accent)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M11 3c.6 4.4 2.9 6.7 7.3 7.3-4.4.6-6.7 2.9-7.3 7.3-.6-4.4-2.9-6.7-7.3-7.3C8.1 9.7 10.4 7.4 11 3z'/%3E%3Cpath d='M18.5 14.5c.3 1.9 1.3 2.9 3.2 3.2-1.9.3-2.9 1.3-3.2 3.2-.3-1.9-1.3-2.9-3.2-3.2 1.9-.3 2.9-1.3 3.2-3.2z'/%3E%3C/svg%3E") center / 17px no-repeat; }
+
+    /* The first screen arrives like a conversation: the greeting, then the line under it,
+       then each case study, then the ask box and its questions, one message at a time.
+       It replays after New chat. `backwards` (not `both`) so hover lifts still work after. */
+    @keyframes chatIn { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: none; } }
+    .chat-pane.is-empty .hero-name { transform-origin: left bottom; animation: chatIn .5s var(--ease) .05s backwards; }
+    .chat-pane.is-empty .hero-line { transform-origin: left bottom; animation: chatIn .5s var(--ease) .35s backwards; }
+    .chat-pane.is-empty .home-tile { animation: chatIn .5s var(--ease) .65s backwards; }
+    .chat-pane.is-empty .home-tile:nth-child(2) { animation-delay: .8s; }
+    .chat-pane.is-empty .home-tile:nth-child(3) { animation-delay: .95s; }
+    .chat-pane.is-empty .tile-dots { animation: chatIn .4s var(--ease) 1.05s backwards; }
+    .chat-pane.is-empty .composer-form { animation: chatIn .5s var(--ease) 1.15s backwards; }
+    .chat-pane.is-empty .tray-chips .chip { animation: chatIn .4s var(--ease) 1.35s backwards; }
+    .chat-pane.is-empty .tray-chips .chip:nth-child(2) { animation-delay: 1.45s; }
+    .chat-pane.is-empty .tray-chips .chip:nth-child(3) { animation-delay: 1.55s; }
+    .chat-pane.is-empty .composer-hint { animation: chatIn .4s var(--ease) 1.65s backwards; }
+    @media (prefers-reduced-motion: reduce) {
+      .chat-pane.is-empty .hero-name, .chat-pane.is-empty .hero-line, .chat-pane.is-empty .home-tile, .chat-pane.is-empty .tile-dots,
+      .chat-pane.is-empty .composer-form, .chat-pane.is-empty .tray-chips .chip, .chat-pane.is-empty .composer-hint { animation: none; }
+      .home-tile, .home-tile-img img, .r-btn[data-tip]::after { transition: none; }
+      .home-tile:hover { transform: none; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       .msg { animation: none; opacity: 1; transform: none; }
@@ -724,7 +515,7 @@ function retrieve(query) {
   <!-- The homepage UI is JS-driven; this is the whole story for crawlers,
        and for anyone with JS disabled. -->
   <noscript>
-    <style>.app, .rail-scrim, .skip-link { display: none !important; }</style>
+    <style>.app, #field, .skip-link { display: none !important; }</style>
     <div class="noscript-page">
       <h1>Bri May</h1>
       <p>AI-Native Senior Product Designer<br>I design the product, then I ship the code.</p>
@@ -736,6 +527,8 @@ function retrieve(query) {
         <li><a href="/work/global-content-studio/">Global Content Studio</a> — an AI content and
             localization studio built solo in four weeks; 8,118 localized variants across 28
             locales in production, 25 live.</li>
+        <li><a href="/work/finesse-app/">Financial Finesse B2C App</a> — a vision of your future,
+            guided by your agentic coach, Aimee; the whole prototype designed and built by Bri.</li>
         <li><a href="/aimee-ai/">Aimee AI Coach</a> — one AI coach designed for the Hub, an
             embeddable widget, and Microsoft Teams; production components merged by Bri.</li>
         <li><a href="/work/hub/">Financial Finesse Hub</a> — the 2024 platform redesign Bri led:
@@ -754,69 +547,33 @@ function retrieve(query) {
     </div>
   </noscript>
 
+  <div class="ambient" aria-hidden="true"></div>
+  <canvas id="field" aria-hidden="true"></canvas>
+
   <div class="app" id="app">
-    <div class="stage" aria-hidden="true">
-      <div class="wp-field"></div>
-      <div class="wp-bloom"></div>
-      <div class="wp-grain"></div>
-      <div class="wp-clear"></div>
-    </div>
-    <div class="rail-scrim" id="rail-scrim" hidden></div>
-
-    <!-- LEFT RAIL (ChatGPT / Claude-style sidebar) -->
+    <!-- LEFT RAIL: icons in white glass; each is named by a tooltip and an aria-label -->
     <aside class="rail" id="rail" aria-label="Menu">
-      <div class="rail-head">
-        <a href="/" class="rail-brand">Bri May</a>
-        <button class="icon-btn rail-collapse" id="rail-collapse" type="button" aria-label="Collapse sidebar">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M9 5v14" stroke="currentColor" stroke-width="1.7"/></svg>
-        </button>
-        <button class="icon-btn rail-x" id="rail-close" type="button" aria-label="Close menu">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </button>
-      </div>
-
-      <button class="rail-newchat" id="rail-newchat" type="button">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
-        New chat
+      <a href="/" class="rail-brand" aria-label="Bri May, home">BM</a>
+      <button class="r-btn" id="rail-newchat" type="button" data-tip="New chat" aria-label="New chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
       </button>
-
       <nav class="rail-nav" aria-label="Pages">
-        <div class="rail-label">Pages</div>
-        <a class="rail-item" href="/work/" data-panel-title="Work">
-          <svg class="rail-ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7" stroke="currentColor" stroke-width="1.6"/></svg>
-          Work
-        </a>
-        <a class="rail-item" href="/code/" data-panel-title="Code">
-          <svg class="rail-ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Code
-        </a>
-        <a class="rail-item" href="/about/" data-panel-title="About">
-          <svg class="rail-ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 20c0-3.4 3-6 6.5-6s6.5 2.6 6.5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          About
-        </a>
-        <a class="rail-item" href="/resume/" data-panel-title="Résumé">
-          <svg class="rail-ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          Résumé
-        </a>
-        <a class="rail-item" href="/contact/" data-panel-title="Contact">
-          <svg class="rail-ic" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Contact
-        </a>
+        <a class="r-btn rail-item" href="/work/" data-panel-title="Work" data-tip="Work" aria-label="Work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="4.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="14.5" width="7" height="5" rx="1.5"/><rect x="13.5" y="14.5" width="7" height="5" rx="1.5"/></svg></a>
+        <a class="r-btn rail-item" href="/about/" data-panel-title="About" data-tip="About" aria-label="About"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/></svg></a>
+        <a class="r-btn rail-item" href="/resume/" data-panel-title="Résumé" data-tip="Résumé" aria-label="Résumé"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20z"/><path d="M14 3.5V8h4M10 12h5M10 15.5h5"/></svg></a>
+        <a class="r-btn rail-item" href="/contact/" data-panel-title="Contact" data-tip="Contact" aria-label="Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg></a>
       </nav>
 
       <div class="rail-recent" id="rail-recent" hidden>
-        <div class="rail-label">Recent</div>
         <div id="rail-recent-list"></div>
       </div>
 
       <div class="rail-foot">
-        <button class="rail-theme" id="rail-theme" type="button" aria-label="Toggle theme">
+        <button class="r-btn rail-theme" id="rail-theme" type="button" data-tip="Theme" aria-label="Toggle theme">
           <span id="rail-theme-icon"></span>
-          <span id="rail-theme-label">Dark mode</span>
+          <span id="rail-theme-label" class="sr-only">Dark mode</span>
         </button>
-        <a class="rail-foot-link" href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a>
-        <a class="rail-foot-link" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-        <a class="rail-foot-link" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a class="rail-me" href="/about/" data-panel-title="About" aria-label="About Bri"><img src="/images/bri-hero.jpg" alt="" width="92" height="92" /></a>
       </div>
     </aside>
 
@@ -824,36 +581,15 @@ function retrieve(query) {
 
     <!-- CHAT PANE -->
     <section class="chat-pane is-empty" id="chat-pane">
-      <button class="icon-btn rail-show" id="rail-show" type="button" aria-label="Show sidebar">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M9 5v14" stroke="currentColor" stroke-width="1.7"/></svg>
-      </button>
-      <div class="chat-topbar">
-        <button class="icon-btn" id="rail-open" type="button" aria-label="Open menu" aria-expanded="false">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </button>
-        <span class="chat-topbar-title">Brix</span>
-        <button class="icon-btn" id="topbar-newchat" type="button" aria-label="New chat">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </button>
-      </div>
       <div class="chat-scroll" id="chat-scroll">
         <div class="chat-inner">
           <div class="empty-state" id="empty-state">
-            <div class="agent-intro hero-intro">
-              <p class="hero-title">AI-Native Senior Product Designer</p>
-              <h1 class="hero-name">Bri May</h1>
-              <p class="hero-line">I design the product, then I ship the code.</p>
-              <p class="hero-sub">I use AI to move from product discovery to working prototypes and production code, with hands-on ownership of the experience and its quality.</p>
+            <div class="hero-intro">
+              <h1 class="hero-name">Hi, I’m Bri May.</h1>
+              <p class="hero-line">AI-Native Senior Product Designer.<br> I design the product, then I ship the code.</p>
             </div>
-            <div id="starter-mount"></div>
-            <nav class="hero-links" aria-label="Shortcuts">
-              <a href="/work/" data-navigate>All work</a>
-              <a href="/code/" data-navigate>Code</a>
-              <a href="/resume/BriMay_Resume.pdf" download>Résumé (PDF)</a>
-              <a href="/contact/" data-navigate>Contact</a>
-            </nav>
           </div>
-          <div class="thread" id="thread" role="log" aria-live="off" aria-label="Conversation with Brix"></div>
+          <div class="thread" id="thread" role="log" aria-live="off" aria-label="Conversation"></div>
           <!-- Streaming mutates the thread ~90x per answer; announcing each one floods a
                screen reader. The thread is silenced and the finished reply is announced
                once here instead. -->
@@ -863,19 +599,21 @@ function retrieve(query) {
 
       <div class="composer-bar">
         <div class="composer-inner">
+          <div id="starter-mount"></div>
           <form class="composer-form" id="composer-form" autocomplete="off">
-            <label for="composer-input" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Ask about Bri</label>
-            <textarea
-              id="composer-input" class="composer-input" rows="1"
-              placeholder="Ask Brix about the work…"
-              aria-label="Ask about Bri"></textarea>
-            <button type="submit" class="send-btn" id="send-btn" aria-label="Send">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
+            <div class="composer-field">
+              <svg class="ask-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3c.6 4.4 2.9 6.7 7.3 7.3-4.4.6-6.7 2.9-7.3 7.3-.6-4.4-2.9-6.7-7.3-7.3C8.1 9.7 10.4 7.4 11 3z"/><path d="M18.5 14.5c.3 1.9 1.3 2.9 3.2 3.2-1.9.3-2.9 1.3-3.2 3.2-.3-1.9-1.3-2.9-3.2-3.2 1.9-.3 2.9-1.3 3.2-3.2z"/></svg>
+              <label for="composer-input" class="sr-only">Ask about Bri's work</label>
+              <textarea id="composer-input" class="composer-input" rows="1" placeholder="Ask about Bri's work"></textarea>
+              <button type="submit" class="send-btn" id="send-btn" aria-label="Send">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            <div class="tray-chips" id="tray-chips"></div>
           </form>
-          <p class="composer-hint">Brix searches a curated knowledge base about Bri, on your device. Answers link to the evidence.</p>
+          <p class="composer-hint">Answers come from a curated knowledge base about Bri, searched on your device. <a href="/work/" data-panel-title="Work">See the evidence.</a></p>
         </div>
       </div>
     </section>
@@ -908,7 +646,6 @@ function retrieve(query) {
   </div>
 
   <script>
-    // ── Left rail (drawer on mobile) ──────────────────────────
     // Skip link → put focus in the composer, not just scroll to it.
     (function skipToChat() {
       var link = document.querySelector('.skip-link');
@@ -917,28 +654,66 @@ function retrieve(query) {
       link.addEventListener('click', function (e) { e.preventDefault(); box.focus(); });
     })();
 
-    (function railToggle() {
-      const app = document.getElementById('app');
-      const scrim = document.getElementById('rail-scrim');
-      const openBtn = document.getElementById('rail-open');
-      const closeBtn = document.getElementById('rail-close');
-      const rail = document.getElementById('rail');
-      const open = () => { app.classList.add('rail-open'); scrim.hidden = false; openBtn.setAttribute('aria-expanded', 'true'); };
-      const close = () => { app.classList.remove('rail-open'); scrim.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); };
-      openBtn.addEventListener('click', open);
-      closeBtn.addEventListener('click', close);
-      scrim.addEventListener('click', close);
-      // Desktop: collapse / re-open the floating rail
-      const collapseBtn = document.getElementById('rail-collapse');
-      const showBtn = document.getElementById('rail-show');
-      if (collapseBtn) collapseBtn.addEventListener('click', () => app.classList.add('rail-collapsed'));
-      if (showBtn) showBtn.addEventListener('click', () => app.classList.remove('rail-collapsed'));
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && app.classList.contains('rail-open')) close(); });
-      // Close the drawer after choosing anything in the rail (mobile).
-      rail.addEventListener('click', (e) => {
-        if (e.target.closest('.rail-item, .rail-recent-item, .rail-brand') && window.matchMedia('(max-width: 900px)').matches) close();
-      });
-      window.__railClose = close;
+    // ── The listening field ──────────────────────────────────
+    // The page's one signature: a dot grid that leans away from the pointer
+    // and ripples when a question is asked. Everything else holds still.
+    window.__field = (function () {
+      const cv = document.getElementById('field');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!cv) return { ripple() {} };
+      const cx = cv.getContext('2d');
+      const GAP = 26;
+      let w = 0, h = 0, dpr = 1, dots = [], waves = [];
+      let px = -9999, py = -9999, tx = -9999, ty = -9999;
+      let rgb = '', hot = '';
+      const readColors = () => {
+        const cs = getComputedStyle(document.documentElement);
+        rgb = cs.getPropertyValue('--dot').trim(); hot = cs.getPropertyValue('--dot-hot').trim();
+      };
+      const draw = (t) => {
+        cx.clearRect(0, 0, w, h);
+        px += (tx - px) * .18; py += (ty - py) * .18;
+        waves = waves.filter(wv => (t - wv.t0) < wv.life);
+        const [r, g, b] = rgb.split(',');
+        for (let i = 0; i < dots.length; i += 2) {
+          const x = dots[i], y = dots[i + 1];
+          const dx = x - px, dy = y - py, d = Math.hypot(dx, dy);
+          let heat = 0, ox = 0, oy = 0;
+          if (d < 160) { const f = 1 - d / 160; heat = f * f; ox = dx / (d || 1) * f * 10; oy = dy / (d || 1) * f * 10; }
+          for (const wv of waves) {
+            const rad = (t - wv.t0) / 1000 * wv.speed;
+            const dd = Math.hypot(x - wv.x, y - wv.y), band = Math.abs(dd - rad);
+            if (band < 40) {
+              const k = (1 - band / 40) * (1 - (t - wv.t0) / wv.life) * wv.power;
+              heat = Math.max(heat, k);
+              ox += (x - wv.x) / (dd || 1) * k * 6; oy += (y - wv.y) / (dd || 1) * k * 6;
+            }
+          }
+          const a = .09 + heat * .6, s = 1 + heat * 1.4;
+          cx.fillStyle = heat > .05 ? `rgba(${hot},${a})` : `rgba(${r},${g},${b},${a})`;
+          cx.beginPath(); cx.arc(x + ox, y + oy, s, 0, 6.283); cx.fill();
+        }
+      };
+      const resize = () => {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth; h = window.innerHeight;
+        cv.width = w * dpr; cv.height = h * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        dots = [];
+        for (let y = GAP / 2; y < h; y += GAP) for (let x = GAP / 2; x < w; x += GAP) dots.push(x, y);
+        if (reduce) draw(0);
+      };
+      let running = false;
+      const loop = (t) => { draw(t); if (running) requestAnimationFrame(loop); };
+      window.addEventListener('resize', resize);
+      window.addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; if (px < -999) { px = tx; py = ty; } });
+      document.documentElement.addEventListener('pointerleave', () => { tx = ty = -9999; });
+      document.addEventListener('visibilitychange', () => { running = !document.hidden && !reduce; if (running) requestAnimationFrame(loop); });
+      // The theme toggle flips data-theme; repaint in the new colours.
+      new MutationObserver(() => { readColors(); if (reduce) draw(0); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readColors(); if (reduce) draw(0); });
+      readColors(); resize();
+      if (!reduce) { running = true; requestAnimationFrame(loop); }
+      return { ripple(x, y, power = 1, speed = 520, life = 1600) { if (!reduce) waves.push({ x, y, t0: performance.now(), power, speed, life }); } };
     })();
 
     // ── Theme toggle (light ⇆ dark, persisted) ───────────────
@@ -1103,9 +878,9 @@ function retrieve(query) {
 
       // Funny redirects — used when a question isn't about Bri, or isn't in the wiki.
       const FUNNY = [
-        "I only know Bri's work, so I'll pass on that one.",
+        "I only know about Bri's work, so I'll pass on that one.",
         "That's outside what I know. I only cover Bri's work.",
-        "Not something I can answer. I only know Bri's portfolio.",
+        "I can't answer that one. I only know Bri's portfolio.",
       ];
       const funny = () => FUNNY[Math.floor(Math.random() * FUNNY.length)];
 
@@ -1118,204 +893,204 @@ function retrieve(query) {
         // ── Recruiter-screen questions. These sit first so a specific match
         //    outranks the broader "experience"/"skills" entries below. ──
         { keys: ['salary', 'compensation', 'comp', 'how much', 'total comp', 'tc', 'ote', 'equity', 'pay', 'rate', 'how much does she cost', 'how much does she', 'expectations', 'comp range', 'budget'],
-          text: "Not something I'd speak for. Bri's compensation expectations depend on the role, scope and location — worth asking her directly at thebrimay@gmail.com or 209-601-0181. What I *can* tell you is what she'd be bringing: an AI product designed and shipped solo, production code merged into three company repos, and the 2024 Hub redesign she led.",
+          text: "That's a conversation to have with Bri. Her expectations depend on the role, the scope, and where it's based, so email thebrimay@gmail.com or call 209-601-0181. What she brings: an AI product she designed and shipped on her own, production code in three company repos, and the 2024 Hub redesign she led.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
         { keys: ['design process', 'her process', 'how does she work', 'how she works', 'approach', 'methodology', 'workflow', 'how does she design'],
-          text: "Bri's process is build-to-think: start from the problem and the constraint, get to something real fast, usually a coded prototype, test it with users, and iterate in the code that ships. On Global Content Studio that took the app from first commit to launch QA in under four weeks, then a four-day run that brought ten locales live." },
+          text: "She builds to think. She starts with the problem and the constraint, gets to something real fast (usually a coded prototype), tests it with users, and keeps iterating in the code that ships. On Global Content Studio, that meant launch QA less than four weeks after her first commit. A four-day run later brought ten locales live." },
         { keys: ['user research', 'research', 'usability', 'usability testing', 'user testing', 'interviews', 'talk to users', 'validate', 'research changed', 'finding', 'findings', 'insight', 'insights', 'what did users'],
-          text: "Bri introduced user research and usability testing at Financial Finesse, and the 2024 Hub redesign was research-led. The portfolio does not yet document a specific user-research finding that changed a design, so I won't invent one. What is documented is a data finding that changed Global Content Studio: of 75 UK articles the fit check dropped, 13 had a genuine UK analogue and were rewritten as UK-native pieces, and 62 could not honestly exist there (26 were about the US healthcare system). That result is why the gate has keep, rewrite, and drop instead of keep and drop.",
+          text: "Bri brought user research and usability testing to Financial Finesse, and research shaped the 2024 Hub redesign. The portfolio does not yet document a specific research finding that changed a design, so I won't make one up.\n\nA data finding did change Global Content Studio. The fit check dropped 75 UK articles. On a second look, 13 had a real UK equivalent and got rewritten as UK-native pieces. The other 62 couldn't honestly exist there (26 were about the US healthcare system). That's why the gate has three outcomes: keep, rewrite, or drop.",
           href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read the fit-check finding →' },
         { keys: ['manage', 'managed', 'mentor', 'mentored', 'lead a team', 'led a team', 'leadership', 'reports', 'direct reports', 'size team', 'team size', 'how big', 'ai team', 'ai champion', 'champion', 'teach', 'train others', 'evangelist'],
           // TODO(bri): lead with the AI Champion numbers (facts.md §10) once they exist.
-          text: "Bri leads through craft and standards rather than headcount: as Lead Product Designer and Product Creative Director she set the design standards and the quality bar and guided designers as the practice scaled. She is on the company's AI team and mentors colleagues on building with AI. She has not been a people manager by title." },
+          text: "Bri leads through craft and standards. As Lead Product Designer and Product Creative Director, she set the design standards and the quality bar, and guided designers as the team grew. She's on the company's AI team and mentors colleagues on building with AI. She hasn't been a people manager by title." },
         { keys: ['accessibility', 'a11y', 'wcag', 'screen reader', 'accessible', 'aria', 'contrast'],
-          text: "Accessibility is part of how Bri builds, not a pass at the end. She ships **accessible, tokenized React components** — semantic markup, keyboard-complete flows, visible focus, WCAG AA contrast baked into the design tokens, and reduced-motion respected. This site is built to the same bar: AA tokens in both light and dark, a skip link, and screen-reader-safe streaming in the chat." },
+          text: "She builds it in from the start. Her React components are accessible and tokenized: semantic markup, full keyboard support, visible focus, WCAG AA contrast set in the design tokens, and reduced motion respected. This site meets the same bar, with AA colors in light and dark mode, a skip link, and chat answers that a screen reader announces once." },
         { keys: ['disagreement', 'disagree', 'disagreed', 'disagreement with', 'conflict', 'pushback', 'push back', 'pushed back', 'push back on', 'argued', 'argument', 'convince', 'convinced', 'difficult conversation', 'hard conversation', 'said no'],
-          text: "The portfolio doesn't document a specific disagreement with a product manager or an engineer, so I won't make one up. The closest written evidence: on Global Content Studio, after a batch run overwrote articles a localizer had already approved, she settled the contested policy in code (approved variants are skipped unless a run explicitly asks) instead of relitigating it case by case. For the real stories, ask her; she has them.",
+          text: "The portfolio doesn't document a specific disagreement with a PM or an engineer, so I won't invent one. The closest thing written down: on Global Content Studio, a batch run overwrote articles a localizer had already approved. Bri settled the policy in code, so approved articles get skipped unless a run asks otherwise, and nobody has to argue it case by case. For the real stories, ask her.",
           href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read the overwrite incident →' },
         { keys: ['collaborate', 'collaboration', 'work with engineers', 'engineers', 'engineering team', 'work with engineering', 'work with pms', 'work with product', 'work with data', 'cross functional', 'cross-functional', 'pm', 'pms', 'product manager', 'product managers', 'data scientist', 'data scientists', 'data science', 'ml engineer', 'researchers'],
-          text: "Bri works inside engineering: she writes the components and merges them herself, 32 commits into the Aimee SDK, 80 into the Hub's Content Studio, 27 into the Python review API. Where engineering owns the build, they build from her coded prototypes and spec, and she reviews the result against them. She has led cross-functional work with engineering and stakeholders from concept to launch." },
+          text: "Bri works inside engineering. She writes components and merges them herself: 32 commits into the Aimee SDK, 80 into the Hub's Content Studio, and 27 into the Python review API. When engineering owns the build, they work from her coded prototypes and spec, and she reviews the result against them. She's led cross-functional work with engineers and stakeholders from concept to launch." },
         { keys: ['0 to 1', '0-1', 'zero to one', 'greenfield', 'from scratch', 'new product', 'ambiguity', 'ambiguous', 'undefined'],
-          text: "Global Content Studio did not exist as a request. Bri saw the team writing company content on unregulated AI subscriptions, defined the product, and shipped it solo in four weeks. She owns product direction and system standards from Figma tokens to shipped, accessible UI." },
+          text: "Nobody asked for Global Content Studio. Bri saw the team writing company content on unregulated AI subscriptions, defined the product, and built it alone, reaching launch QA four weeks after her first commit. She owns the product direction and the system standards, from Figma tokens to shipped, accessible UI." },
         { keys: ['typescript', 'javascript', 'js', 'ts', 'css', 'html', 'react', 'next', 'lit', 'tailwind', 'vite', 'framer', 'framer motion', 'node', 'code stack', 'build with', 'built with', 'cloudflare', 'vercel', 'azure', 'deploy', 'deployment', 'work with api', 'with apis', 'apis', 'api integration', 'what does she code', 'languages', 'performance', 'core web vitals', 'page speed', 'optimi'],
-          text: "Bri builds in TypeScript and JavaScript: React and Lit front-ends with Tailwind, Vite, Framer Motion and design tokens. She works in Git and CI, deploys on Vercel and Cloudflare Workers, integrates REST and the Anthropic API, and writes Python when the service needs it (the localization review API). Tests are Vitest and Playwright." },
+          text: "She writes TypeScript and JavaScript: React and Lit front ends with Tailwind, Vite, Framer Motion, and design tokens. She works in Git with CI, deploys on Vercel and Cloudflare Workers, connects REST APIs and the Anthropic API, and writes Python when a service needs it (the localization review API). She tests with Vitest and Playwright." },
         { keys: ['weakness', 'weaknesses', 'not good at', 'bad at', 'worst', 'gaps', 'gap', 'downside', 'limitations', 'hardest', 'struggle'],
-          text: "Honest version: Bri's depth is one domain — a decade of financial wellness at Financial Finesse — so she's not arriving with a broad multi-industry résumé. She's also not a people manager by title; her leadership has been through craft, standards and mentorship. What she trades for that is unusual depth and the ability to design *and* ship a product on her own." },
+          text: "Honestly, her depth is in one domain: ten years of financial wellness at Financial Finesse. She won't arrive with a résumé spanning many industries. She also hasn't managed people by title; she's led through craft, standards, and mentoring. In exchange you get deep domain knowledge and someone who can design and ship a product on her own." },
         { keys: ['why leaving', 'why is she leaving', 'leave', 'why now', 'why us', 'looking for', 'next role', 'next job', 'dream job', 'ideal role', 'ideal company', 'what does she want', 'what she wants', 'motivation', 'seeking'],
-          text: "After ten years at Financial Finesse, from graphic design through Lead Product Designer to AI-Native Senior Product Designer on the AI team, Bri is looking for a team building AI products seriously, where designing the product and shipping the code is one job." },
+          text: "She's been at Financial Finesse for ten years, growing from graphic design to Lead Product Designer to AI-Native Senior Product Designer on the AI team. Now she wants a team that takes AI products seriously, where designing the product and shipping the code are one job." },
         { keys: ['level', 'senior or staff', 'staff', 'principal', 'seniority', 'title', 'what level'],
-          text: "AI-Native Senior Product Designer, on Financial Finesse's AI team. She targets that title at the senior-to-staff level, and Design Engineer roles where designing the product and shipping the code is the job." },
+          text: "AI-Native Senior Product Designer, on Financial Finesse's AI team. She's looking at roles with that title at the senior-to-staff level, and at Design Engineer roles where designing the product and shipping the code are the job." },
         { keys: ['relocat', 'remote', 'fully remote', 'remote work', 'work remotely', 'remote only', 'remote role', 'onsite', 'on-site', 'in office', 'in-office', 'in person', 'hybrid', 'where would she work', 'commute', 'willing to move', 'return to office', 'rto'],
-          text: "Bri is in **Pleasanton, CA** (Pacific time) and works remotely today. She's looking for a remote role. For anything that would require relocation or regular days in an office, ask her directly." },
+          text: "Bri lives in **Pleasanton, CA** (Pacific time) and works remotely today. She's looking for a remote role. If a job needs relocation or regular days in an office, ask her directly." },
         { keys: ['start date', 'when can she start', 'can she start', 'quickly can she', 'soon can she', 'notice period', 'how soon', 'timeline to start', 'availab', 'availability'],
           not: ['startup', 'start up'],
-          text: "Bri is open to new opportunities now. For a specific start date, the fastest answer is straight from her — thebrimay@gmail.com or 209-601-0181.",
+          text: "She's open to new roles now. For a specific start date, ask her: thebrimay@gmail.com or 209-601-0181.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
         { keys: ['work authorization', 'authorized', 'visa', 'sponsorship', 'citizen', 'eligible to work'],
-          text: "Bri is based in Pleasanton, California and works in the US. For anything specific about work authorization, ask her directly — thebrimay@gmail.com.",
+          text: "She lives in Pleasanton, California, and works in the US. For specifics on work authorization, ask her at thebrimay@gmail.com.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
         { keys: ['mobile', 'mobile design', 'ios', 'android', 'responsive', 'app design', 'native app', 'swift'],
-          text: "Bri designs responsive, cross-surface products rather than native iOS/Android. Aimee ships to three surfaces from one system — the Hub, an embeddable widget on client sites, and Microsoft Teams — and everything she builds is responsive down to phone widths. She doesn't write Swift or Kotlin." },
+          text: "She designs responsive products that work across surfaces, and she doesn't build native iOS or Android apps. Aimee runs on three surfaces from one system: the Hub, a widget embedded on client sites, and Microsoft Teams. Everything she builds works down to phone widths. She doesn't write Swift or Kotlin." },
         { keys: ['measure success', 'metrics', 'kpi', 'kpis', 'analytics', 'data driven', 'data-driven', 'a/b', 'ab test', 'experiment', 'experiments', 'how do you know', 'success', 'outcome', 'track'],
-          text: "Bri measures in behavior and business outcomes, not screens shipped. The numbers she can show with a source: 8,118 localized variants across 28 locales read from Global Content Studio's live index, 3,512 of them from one four-day run, and 221 tests. The Hub redesign she led was credited internally with a 200% rise in engagement; the metric definition isn't published on the site. She introduced research and usability testing so results could be measured rather than guessed at." },
+          text: "She measures behavior and business results. The numbers with a source behind them: Global Content Studio's live index holds 8,118 localized variants across 28 locales, 3,512 of them from one four-day run, and the code has 221 tests. Internal reporting credited the Hub redesign she led with a 200% rise in engagement; the site doesn't publish how that was defined. She also brought in research and usability testing, so the team could measure results instead of guessing." },
         { keys: ['big tech', 'faang', 'google', 'apple', 'amazon', 'netflix', 'microsoft', 'startup', 'startups', 'company size', 'enterprise', 'agency', 'worked where'],
-          text: "Bri's product career is at **Financial Finesse** — a B2B2C financial-wellness company serving Fortune 500 clients like the Federal Reserve, Meta, the NFL and JPMorgan Chase — where she's shipped enterprise-scale products to 1M+ employees. Before that she was at CKC Communications, doing branding and sites for 50+ companies. Not big tech yet; that's the move she's making." },
+          text: "Her product career is at **Financial Finesse**, a B2B2C financial wellness company. Its customers include Fortune 500 names like the Federal Reserve, Meta, the NFL, and JPMorgan Chase, and the platform she designs for is available to 1M+ of their employees. Before that, she did branding and websites for 50+ companies at CKC Communications. She hasn't worked in big tech yet. That's the move she's making now." },
         { keys: ['tests', 'testing', 'unit test', 'qa', 'code quality', 'ci', 'write tests'],
-          text: "Yes. Global Content Studio has 221 Vitest tests across 12 files (the gate, policy, rewrite, index, single-flight, wiki, and feedback logic). This site ships a 62-question engine probe that checks the answer text, plus a 49-check Playwright audit, in its public repo, run on every change (October 2026). Her Content Studio work in the Hub and the Python review API both landed with tests. She ships front-end and pipeline code rather than full-stack services." },
+          text: "Yes. Global Content Studio has 221 Vitest tests across 12 files, covering the gate, policy, rewrite, index, single-flight, wiki, and feedback logic. This site has a 62-question engine probe that checks the answer text and a 50-check Playwright audit, both in the public repo and run on every change (October 2026). Her Content Studio work in the Hub and the Python review API both shipped with tests. She writes front-end and pipeline code, not full-stack services." },
         { keys: ['how does this work', 'how do you work', 'how were you built', 'are you an llm', 'real llm', 'what model', 'chatgpt', 'claude', 'api', 'built this chat', 'this site built', 'this website built', 'brix', 'this portfolio', 'this site', 'who are you', 'what are you', 'are you a bot', 'are you human', 'are you real', 'is this real', 'are you ai', 'are you an ai', 'who made you', 'who built you', 'who wrote you'],
           not: ['work with api', 'with apis', 'anthropic api', 'api integration'],
           code: true,
-          text: "Fair question — and the honest answer is a design decision. I'm **not** an LLM. I'm a small retrieval engine that runs entirely in your browser: no backend, no API key, no per-message cost, and nothing leaves your device. Your question gets normalized, stopworded, synonym-expanded and fuzzy-matched against a hand-written knowledge base about Bri, scored for confidence, then streamed back. Bri designed and built the whole thing — and wrote it up as a case study.",
+          text: "I'm not an LLM. I'm a small search engine that runs in your browser, with no backend, no API key, and no cost per message, so nothing you type leaves your device. I clean up your question, match it against a knowledge base Bri wrote about her work, score how sure the match is, and stream the answer back. Bri designed and built all of it, and wrote it up as a case study.",
           href: '/work/brix/', title: 'Brix — This Site', label: 'Read how this site was built →' },
         { keys: ['github', 'git hub', 'repo', 'repository', 'source code', 'open source', 'code sample', 'code samples', 'see her code', 'her code', 'some code', 'show me code', 'show code', 'look at her code', 'read her code'],
           not: ['case study', 'case studies'],
           code: true,
-          text: "Yes. This site's source is public — the engine you're talking to is in index.html, and the screening-question probe and browser audit are in the repo under .claude/skills/portfolio-review/. Global Content Studio and Aimee are Financial Finesse's private codebases, so their code isn't public; those case studies show the architecture and the pipeline instead.",
+          text: "Yes. This site's code is public. The engine answering you lives in index.html, and the screening-question probe and browser audit live in the repo under .claude/skills/portfolio-review/. Global Content Studio and Aimee are Financial Finesse's private code, so their case studies show the architecture and the pipeline instead.",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Open the repo on GitHub ↗</a><a class="link-btn link-btn--secondary" href="/work/brix/" data-panel-title="Brix — This Site">How this site works →</a></div>' },
         { keys: ['what broke', 'broke', 'broken', 'went wrong', 'failure', 'failures', 'failed', 'mistake', 'mistakes', 'incident', 'bug', 'bugs', 'outage', 'what failed'],
-          text: "Plenty, and it is written up. On Global Content Studio: 5,455 published variants carried English titles and slugs on localized bodies; US-only links were invisible to every automated check until an independent verifier stage was added; the 5-worker pool derived five different locale briefs in parallel until a single-flight lock fixed it; a swallowed JSON parse error left jobs stuck at running; and a batch overwrote localizer-approved articles, which is why approved variants are skipped by default now. On this site: the first engine pass answered 20 of 38 screening questions and routed \"strongest case study\" to her college degree.",
+          text: "Five things on Global Content Studio, and she wrote up each one.\n\n5,455 published variants went out with English titles and URL slugs on translated articles. US-only links slipped past every automated check until she added a separate verifier step. Five parallel workers each wrote their own version of a locale's style brief until a single-flight lock made them share one. A JSON error the code swallowed left jobs stuck on \"running.\" And a batch run overwrote articles a localizer had approved, which is why approved articles are skipped by default now.\n\nOn this site, the first version of the engine answered 20 of 38 screening questions and sent \"strongest case study\" to her college degree.",
           href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read what broke and what changed →' },
         { keys: ['how did she fix', 'fixed it', 'the fix', 'debug', 'debugging', 'root cause', 'how was it fixed'],
-          text: "Each fix is in the case study: an independent verify pass with a redo loop for US-only content; a keyed single-flight lock, with tests, for the brief race; unparseable model output now fails the job with a retry instead of hanging; approved articles are skipped unless a run says otherwise; and, on this engine, word-boundary matching and negative keys so \"study\" stops matching \"education\".",
+          text: "Each fix is in the case study. For US-only content, a separate verify pass with a redo loop. For the race between workers, a keyed single-flight lock, with tests. When the model returns output the code can't parse, the job now fails and retries instead of hanging. Approved articles get skipped unless a run says otherwise. And on this engine, whole-word matching plus veto keys, so \"study\" no longer matches \"education\".",
           href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read the fixes →' },
         { keys: ['tradeoff', 'trade-off', 'tradeoffs', 'trade offs', 'trade-offs', 'decision', 'decisions', 'why did she choose', 'option not taken'],
-          text: "Three she would defend: a Cloudflare Worker holding the Anthropic key and the Azure connection string instead of calling either from the browser (one more deploy; no secrets client-side and one place to gate writes); a per-locale wiki the model is grounded on instead of open-web search (slower to build; the facts are ours); and five model calls per article instead of one, at five times the cost, because the one-pass output kept US framing. On this site: a keyword engine instead of an LLM, so there is no key, no bill, and nothing to break in an interview.",
+          text: "Three she'd defend.\n\nA Cloudflare Worker holds the Anthropic key and the Azure connection string, so the browser never calls either one. It's one more deploy, but no secrets reach the browser and every write goes through one place.\n\nThe model works from a per-locale wiki instead of searching the open web. That took longer to build, and the facts are ours.\n\nEach article gets five model calls instead of one, at five times the cost, because the one-pass version kept US framing.\n\nOn this site she picked a keyword engine over an LLM: no key, no bill, and nothing to break during an interview.",
           href: '/work/global-content-studio/#decisions', title: 'Global Content Studio', label: 'Read the decisions →' },
         { keys: ['architecture', 'architected', 'system design', 'how is it built', 'how was it built', 'how does the studio work', 'data flow', 'backend', 'back end', 'back-end', 'infra', 'infrastructure'],
-          text: "Global Content Studio: a TypeScript and Lit app on Vercel; a Cloudflare Worker that proxies the Anthropic API and exposes REST routes over Azure Blob Storage (entries, wiki, flags, versions) through a hand-written SharedKey client, because the Azure SDK cannot run in Workers; Dexie for local job state; a 5-worker localization pool with a serialized save queue; and a CLI workflow that fans out Sonnet subagents per article (gate, research, draft, verify, save) before a deterministic packager and link check. Nothing auto-publishes. The diagram is in the case study.",
+          text: "Global Content Studio is a TypeScript and Lit app on Vercel, with a Cloudflare Worker behind it. The Worker proxies the Anthropic API and serves REST routes over Azure Blob Storage (entries, wiki, flags, versions). She wrote its SharedKey client by hand because the Azure SDK can't run in Workers.\n\nDexie keeps job state in the browser. Five workers localize in parallel, and a queue saves their results one at a time. A CLI workflow sends each article through Sonnet subagents (gate, research, draft, verify, save), then a packager and a link check. Nothing publishes automatically. The diagram is in the case study.",
           href: '/work/global-content-studio/#architecture', title: 'Global Content Studio', label: 'See the architecture →' },
         { keys: ['why no framework', 'no framework', 'vanilla', 'why not react', 'why vanilla', 'why not use react', 'why plain'],
-          text: "For this site, a framework would add a build step, a bundle, and a dependency tree to a page whose whole point is being inspectable in DevTools. Plain HTML, CSS, and JavaScript keep every claim one tab from proof, work with JavaScript off, and load with no server. Her production work is React and Lit; the choice is per product, not a preference.",
+          text: "This site is meant to be read in DevTools, and a framework would add a build step, a bundle, and a pile of dependencies. Plain HTML, CSS, and JavaScript keep every claim one tab away from proof, work with JavaScript off, and run without a server. Her production work is in React and Lit. She picks per product.",
           href: '/work/brix/', title: 'Brix — This Site', label: 'How this site is built →' },
         { keys: ['do differently', 'differently', 'learn', 'learned', 'lesson', 'lessons', 'change about', 'would she change', 'regret', 'in hindsight', 'started over', 'lessons', 'learned', 'lesson'],
-          text: "Three things, from her own logs: start with the verify pass instead of adding it after US-only links slipped through; version the locale briefs from day one, since a cached brief with the wrong register shipped before that existed; and measure cost per article before scaling from one pass to five. On this site: build the screening-question harness before the engine, not after it answered 20 of 38.",
+          text: "Three things, from her own logs. Start with the verify step instead of adding it after US-only links got through. Version the locale style briefs from day one, since a cached brief in the wrong tone shipped before versioning existed. And measure the cost per article before going from one pass to five.\n\nOn this site: write the screening-question tests before the engine, not after it answered 20 of 38.",
           href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read what changed →' },
         { keys: ['strongest', 'strongest case study', 'best case study', 'strongest project', 'best project', 'strongest work', 'best work', 'where should i start', 'start with', 'which case study', 'which project', 'most impressive', 'flagship', 'top project', 'one project', 'time for one', 'first case study'],
           not: ['start date', 'when can she start'],
-          text: "Start with **Global Content Studio**. It's the project where she owned the problem, the product decisions, the code, and the production consequences: an AI content and localization studio she designed and built solo, with 8,118 localized variants across 28 locales in the live index (September 2026), five production failures written up with their fixes, and the architecture drawn. Then Aimee for systems craft and collaboration, and the Hub for broader product judgment.",
+          text: "Start with **Global Content Studio**. She owned all of it: the problem, the product decisions, the code, and what happened in production. It's an AI content and localization studio she designed and built on her own. The live index holds 8,118 localized variants across 28 locales (September 2026), the case study writes up five production failures and their fixes, and the architecture is drawn out.\n\nAfter that, read Aimee for design systems and teamwork, and the Hub for product judgment at a bigger scale.",
           href: '/work/global-content-studio/', title: 'Global Content Studio', label: 'Open Global Content Studio →' },
         { keys: ['who is', "who's bri", 'about bri', 'what does she do', 'what does bri do', 'what do you do', 'overview', 'summary', 'elevator', 'introduce'],
           not: ['for fun', 'outside work', 'hobb'],
-          text: "Bri May is an AI-Native Senior Product Designer at Financial Finesse, on the company's AI team. She designs the product, then she ships the code: this year she built Global Content Studio solo (TypeScript, Lit, a Cloudflare Worker, the Anthropic API), merged production code into the Aimee SDK and the Hub's Content Studio, and earlier led the 2024 Hub redesign. About ten years in product." },
+          text: "Bri May is an AI-Native Senior Product Designer on the AI team at Financial Finesse. She designs the product, then ships the code. This year she built Global Content Studio on her own (TypeScript, Lit, a Cloudflare Worker, the Anthropic API) and merged production code into the Aimee SDK and the Hub's Content Studio. Before that, she led the 2024 Hub redesign. She has about ten years in product." },
         { keys: ['design engineer', 'do you code', 'does she code', 'can she code', 'she code', 'actually code', 'really code', 'write code', 'writes code', 'ship code', 'ships code', 'can code', 'coding', 'build it', 'build this', 'built this', 'builds', 'chatbot', 'engineering', 'react', 'front-end', 'front end', 'frontend', 'developer', 'technical', 'hands on', 'hands-on'],
           code: true,
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Open the source on GitHub ↗</a><a class="link-btn link-btn--secondary" href="/code/" data-panel-title="Code">What is public →</a></div>',
-          text: "Yes. Her title is AI-Native Senior Product Designer, and the second half of the job is shipping the code: Global Content Studio built solo (TypeScript, Lit, a Cloudflare Worker, the Anthropic API, 221 tests), 32 commits into the production Aimee SDK, 80 into the Hub's Content Studio, 27 into the Python review API. The excerpt below is the engine answering you right now; the full source is on GitHub." },
+          text: "Yes. Her title is AI-Native Senior Product Designer, and shipping the code is half the job. She built Global Content Studio on her own (TypeScript, Lit, a Cloudflare Worker, the Anthropic API, 221 tests). She also has 32 commits in the production Aimee SDK, 80 in the Hub's Content Studio, and 27 in the Python review API. Below is a piece of the engine answering you right now. The full source is on GitHub." },
         { keys: ['global content studio', 'content studio', 'gcs', 'the studio', 'studio', 'margin', 'federal reserve', 'content team', 'localization', 'localiz', 'translation', 'translations', 'translate', 'i18n', 'l10n'],
           not: ['broke', 'broken', 'went wrong', 'failed', 'failure', 'fix', 'tradeoff', 'trade-off', 'architecture', 'differently', 'lesson'],
-          text: "Global Content Studio is the AI content and localization studio Bri built solo in four weeks: TypeScript and Lit, a Cloudflare Worker fronting the Anthropic API and Azure Blob Storage, and Atlas, an 8-step pipeline with a suitability gate, an independent verify pass, and human review before anything publishes. In production as of September 2026: 8,118 localized variants across 28 locales, 25 with published or approved content; one four-day run localized 3,512 pieces and brought ten locales live. By hand, that run would have meant one in-country localizer per market.",
+          text: "Global Content Studio is the AI content and localization studio Bri built on her own, from first commit to launch QA in four weeks. It's TypeScript and Lit, with a Cloudflare Worker in front of the Anthropic API and Azure Blob Storage. Inside runs Atlas, an 8-step pipeline with a suitability gate, a separate verify pass, and human review before anything publishes.\n\nAs of September 2026 it holds 8,118 localized variants across 28 locales, 25 of them with published or approved content. One four-day run localized 3,512 pieces and brought ten locales live. By hand, that run would have needed an in-country localizer for every market.",
           href: '/work/global-content-studio/', title: 'Global Content Studio', label: 'Open the case study →' },
         { keys: ['use aimee', 'uses aimee', 'aimee users', 'people use', 'how many users', 'how many people', 'actually use', 'active users', 'usage', 'adoption', 'daily active', 'monthly active', 'is aimee live', 'aimee live', 'in production', 'deployed', 'rolled out'],
           not: ['size team', 'size teams', 'how big', 'team size', 'studio', 'locale', 'variants'],
-          text: "The portfolio doesn't have active-user numbers for Aimee, and I won't substitute reach for usage: Financial Finesse's customers employ 1M+ people who are eligible for the platform, which is not the same as people using Aimee. What is documented: engineering built the Aimee SDK in React and A2UI from Bri's coded prototypes and spec, and she merged the design-token layer and four components into that production repo herself (32 commits, July–August 2026). Which surfaces are live to users today is a question for her.",
+          text: "The portfolio doesn't have active-user numbers for Aimee, and reach isn't the same as usage. Financial Finesse's customers employ 1M+ people who are eligible for the platform. That doesn't tell you how many use Aimee.\n\nWhat's documented: engineering built the Aimee SDK in React and A2UI from Bri's coded prototypes and spec, and she merged the design-token layer and four components into that production repo herself (32 commits, July to August 2026). Ask her which surfaces are live to users today.",
           href: '/aimee-ai/', title: 'Aimee AI Coach', label: 'Open the case study →' },
         { keys: ['aimee', 'coach', 'conversational', 'design system', 'component library', 'three surfaces', '3 surfaces', 'microsoft teams', 'widget', 'sdk'],
           not: ['size team', 'size teams', 'how big', 'team size'],
-          text: "Aimee is Financial Finesse's AI financial coach, designed for three surfaces: the Hub, an embeddable client widget, and Microsoft Teams. Bri designed its front end end to end and coded the prototypes and the component library. Engineering built the Aimee SDK in React and A2UI from those. She then merged the design-system layer and the empty-state, conversations, icon, and card-shell components into the production SDK herself (32 commits, July–August 2026).",
+          text: "Aimee is Financial Finesse's AI financial coach, designed for three places: the Hub, a widget embedded on client sites, and Microsoft Teams. Bri designed the whole front end and coded the prototypes and the component library. Engineering built the Aimee SDK in React and A2UI from those. Then she merged the design-system layer and four components (empty state, conversations, icon, and card shell) into the production SDK herself, in 32 commits from July to August 2026.",
           href: '/aimee-ai/', title: 'Aimee AI Coach', label: 'Open the case study →' },
         { keys: ['measured', 'measurement', '200 engagement', '200 percent', 'engagement increase', 'engagement number', 'engagement metric', 'engagement figure', 'engagement defined', 'define engagement', 'what counts as engagement', '12m', '12 million', 'revenue figure', 'revenue number', 'attributed', 'attribution', 'baseline', 'methodology', 'how do they know'],
-          text: "Honest answer: the public portfolio does not document how the Hub's engagement figure was measured, or what the $12M covers and over what period. Both come from Financial Finesse's internal reporting after the 2024 redesign Bri led, and the definitions aren't published here, so I won't guess at them. Ask Bri and she'll walk you through the source. The project whose numbers are fully documented, read from a live index, is Global Content Studio.",
+          text: "The portfolio does not document how the Hub's engagement figure was measured, or what the $12M covers and over what period. Both numbers come from Financial Finesse's internal reporting after the 2024 redesign Bri led. The definitions aren't published here, so I won't guess. Ask Bri and she'll walk you through the source. Global Content Studio is the project with fully documented numbers, read from a live index.",
           href: '/work/hub/', title: 'Financial Finesse Hub', label: 'Open the Hub case study →' },
         { keys: ['hub', 'financial finesse hub', 'wellness platform', 'redesign', 'onboarding'],
-          text: "The Financial Finesse Hub is the 2024 redesign Bri led as lead product designer: a static content library became a personalized, guided system with a short assessment, an action plan, and recommended content. Internal reporting credited the redesign with a 200% rise in platform engagement; the metric definition isn't published on the site, so ask her for it. The case study covers the problem, the decisions, and the shipped flows.",
+          text: "The Financial Finesse Hub is the 2024 redesign Bri led as lead product designer. She turned a static content library into a personalized, guided experience: a short assessment, an action plan, and recommended content. Internal reporting credited the redesign with a 200% rise in platform engagement. The site doesn't publish how that was measured, so ask her. The case study covers the problem, the decisions, and the shipped flows.",
           href: '/work/hub/', title: 'Financial Finesse Hub', label: 'Open the case study →' },
         { keys: ['smart benefits', 'open enrollment', 'enrollment', 'recordkeeper', 'embed mode'],
           not: ['relocat', 'start date', 'when can she', 'notice period'],
-          text: "Smart Benefits is an AI-powered open-enrollment experience Bri designed with three white-label embed modes, adopted by one of the largest U.S. retirement recordkeepers. It's part of her work history — there's no dedicated case study for it on the site." },
+          text: "Smart Benefits is an AI-powered open-enrollment experience Bri designed, with three white-label embed modes. One of the largest US retirement recordkeepers adopted it. It's part of her work history, but the site has no case study for it." },
         { keys: ['impact', 'results', 'metrics', 'numbers', 'revenue', 'engagement', 'outcomes', 'roi', 'users', 'user base', 'scale', 'at scale', 'reach'],
-          text: "With a source: Global Content Studio, built solo, holds 8,118 localized variants across 28 locales in its live index (September 2026), 3,512 of them from one four-day run, and ships with 221 tests. Her production code is merged into three company repos. The Hub redesign she led was credited internally with a 200% rise in engagement; that definition isn't published here. Financial Finesse's customers employ 1M+ people; that is platform reach, not a usage figure for any one feature." },
+          text: "The numbers with a source: Global Content Studio, which she built on her own, holds 8,118 localized variants across 28 locales in its live index (September 2026). 3,512 of them came from one four-day run, and the code has 221 tests. Her production code is merged into three company repos.\n\nInternal reporting credited the Hub redesign she led with a 200% rise in engagement; that definition isn't published here. Financial Finesse's customers employ 1M+ people. That's how many people can reach the platform, not how many use any one feature." },
         { keys: ['clients', 'companies', 'worked with', 'brands', 'customers', 'fortune 500', 'fortune500', 'meta', 'facebook', 'nfl', 'jpmorgan', 'jp morgan', 'chase', 'cvs', 'patagonia', 'mckinsey', 'nestle', 'nestlé', 'comcast', 'general mills'],
-          text: "Bri's work reaches Fortune 500 clients including the Federal Reserve, Meta, the NFL, JPMorgan Chase, CVS Health, Patagonia, McKinsey, Nestlé, Comcast, and General Mills." },
+          text: "Financial Finesse customers she designs for include the Federal Reserve, Meta, the NFL, JPMorgan Chase, CVS Health, Patagonia, McKinsey, Nestlé, Comcast, and General Mills." },
         { keys: ['skills', 'tech', 'stack', 'tools', 'figma', 'sketch', 'adobe', 'photoshop', 'design tokens', 'tokens', 'web', 'websites', 'capabilities', 'expertise', 'proficient', 'craft', 'visual ability'],
-          text: "Engineering: TypeScript, JavaScript, React, Lit, HTML/CSS, Tailwind, Vite, design tokens, accessible UI, Cloudflare Workers, Azure Blob Storage, Python, Vitest and Playwright, Git, CI. AI: the Anthropic API, RAG and grounding on per-locale wikis, evals and human-in-the-loop QA, multi-pass LLM pipelines, conversational UX. Design: product design from zero, design systems, prototyping in code, user research, interaction and motion, Figma." },
+          text: "Engineering: TypeScript, JavaScript, React, Lit, HTML and CSS, Tailwind, Vite, design tokens, accessible UI, Cloudflare Workers, Azure Blob Storage, Python, Vitest and Playwright, Git, and CI.\n\nAI: the Anthropic API, grounding the model on per-locale wikis (RAG), evals with human review, multi-pass LLM pipelines, and conversational UX.\n\nDesign: products from scratch, design systems, prototyping in code, user research, interaction and motion, and Figma." },
         { keys: ['use ai to', 'ai to build', 'build with ai', 'builds with ai', 'ai in her', 'ai workflow', 'ai tools', 'which ai', 'claude code', 'cursor', 'copilot', 'ai assisted', 'ai-assisted', 'vibe', 'pair with ai', 'how does she use ai', 'how she uses ai', 'ai got wrong', 'ai get wrong', 'what did the ai', 'ai mistakes', 'ai hallucinat', 'rejected', 'corrected', 'ai wrote', 'ai generated'],
-          text: "She builds with Claude Code and the Anthropic API, and the output is checked the way any production code is. Global Content Studio was designed and coded by her with Claude Code as the pair: 493 of the repo's 524 commits are hers, it carries 221 Vitest tests, and the bulk localizer is itself a Claude Code workflow script that fans out Sonnet subagents per article. What the AI got wrong is written down: a one-pass pipeline kept US framing and US-only links, so she added a separate verify pass; a parallel run produced five different locale briefs, so she added a single-flight cache with tests; a batch overwrote localizer-approved articles, so approved work is skipped by default now. The case study walks through one of those end to end.",
+          text: "She builds with Claude Code and the Anthropic API, and checks the output the way she'd check any production code. She designed and coded Global Content Studio with Claude Code as her pair. 493 of the repo's 524 commits are hers, it has 221 Vitest tests, and the bulk localizer is itself a Claude Code workflow that sends each article to its own Sonnet subagent.\n\nShe wrote down what the AI got wrong. A one-pass pipeline kept US framing and US-only links, so she added a separate verify pass. A parallel run produced five different locale briefs, so she added a single-flight cache with tests. A batch overwrote articles a localizer had approved, so approved work is skipped by default now. The case study walks through one of these end to end.",
           href: '/work/global-content-studio/#ai-assisted', title: 'Global Content Studio', label: 'See how she builds with AI →' },
         { keys: ['ai ', 'ai-native', 'ai native', 'artificial intelligence', 'llm', 'llms', 'large language', 'anthropic', 'anthropic api', 'claude api', 'openai', 'gpt', 'prompt', 'prompts', 'prompt engineering', 'machine learning', 'generative', 'ai products'],
-          text: "AI is the through-line of Bri's recent work, in both directions: she designs AI products (Global Content Studio on the Anthropic API, with an 8-step localization pipeline grounded on per-locale wikis; the Aimee AI coach across three surfaces) and she uses AI to build them (Claude Code, with tests and human review deciding what ships)." },
+          text: "AI runs through all of her recent work, in two ways. She designs AI products: Global Content Studio on the Anthropic API, with an 8-step localization pipeline grounded on per-locale wikis, and Aimee, the AI coach, across three surfaces. And she uses AI to build them, with Claude Code, while tests and human review decide what ships." },
         { keys: ['experience', 'years', 'yrs', 'exp', 'yoe', 'years of experience', 'how long', 'tenure', 'senior', 'start designing', 'started designing', 'since when', 'designing since', 'how long designing', 'get started', 'get into design'],
           // "experience with X" is a question about X, not about tenure
           not: ['experience with', 'experience in', 'experience building', 'experience designing', 'typescript', 'javascript', 'react', 'accessibility', 'mobile', 'startup', 'enterprise', 'b2b', 'design system', 'research', 'ai experience'],
-          text: "About ten years in product design (designing since 2011), most of it at Financial Finesse, where she has grown from graphic design to product design to shipping the code herself." },
+          text: "About ten years in product design. She's been designing since 2011, mostly at Financial Finesse, where she grew from graphic design to product design to shipping the code herself." },
         { keys: ['work history', 'financial finesse', 'ff', 'current role', 'current job', 'where does she work', 'employer', 'career', 'ckc', 'history', 'before ff', 'before financial', 'previous job', 'previous role', 'prior role', 'earlier'],
-          text: "Bri has been at Financial Finesse since 2016 — now AI-Native Senior Product Designer (since 2025), previously Lead Product Designer · Product Creative Director and Sr. Graphic Designer. Before that she was a graphic designer at CKC Communications (2012–2015), doing branding and websites for 50+ companies." },
+          text: "Bri has been at Financial Finesse since 2016. She's been AI-Native Senior Product Designer since 2025. Before that she was Lead Product Designer and Product Creative Director, and before that Sr. Graphic Designer. Earlier, she was a graphic designer at CKC Communications (2012 to 2015), doing branding and websites for 50+ companies." },
         { keys: ['education', 'study', 'studied', 'major', 'bachelor', 'school', 'college', 'university', 'degree', 'studied', 'asu', 'chico', 'arizona state', 'graduate'],
           not: ['case study', 'case studies', 'study of', 'strongest', 'best work'],
-          text: "Bri earned a B.S. in Business (Marketing) from Cal State Chico on a full-ride soccer scholarship, after two years playing Division I soccer at Arizona State — also on a full-ride athletic scholarship." },
+          text: "Bri has a B.S. in Business (Marketing) from Cal State Chico, where she played soccer on a full-ride scholarship. Before Chico, she played two years of Division I soccer at Arizona State, also on a full athletic scholarship." },
         { keys: ['soccer', 'sports', 'athlete', 'athletic', 'division 1', 'division i', 'd1', 'ncaa', 'scholarship'],
-          text: "Bri grew up on the soccer field — she played D1 on a full-ride scholarship and still laces up on weekends. That competitive streak carries into how she works." },
+          text: "She grew up on the soccer field. She played D1 on a full-ride scholarship and still plays on weekends, and you'll see the same competitive streak in her work." },
         { keys: ['hobbies', 'hobby', 'personal', 'for fun', 'kids', 'son', 'family', 'photography', 'photographer', 'photos', 'take photos', 'takes photos', 'camera', 'food', 'cooking', 'baking', 'outside', 'free time', 'interests', 'family', 'photograph', 'scuba', 'dirtbike', 'wakeboard', 'sourdough', 'travel'],
-          text: "Outside work, Bri is family-first (she has a son), plays soccer, and shoots photography — mostly families and newborns. She's also into travel and food, warm-water scuba, dirtbikes, wakeboarding, and three-day sourdough." },
+          text: "Outside work, Bri puts family first (she has a son), plays soccer, and photographs families and newborns. She also loves travel and food, warm-water scuba, dirt bikes, wakeboarding, and three-day sourdough." },
         { keys: ['location', 'where does she live', 'where is she', 'where in', 'city', 'based', 'remote', 'pleasanton', 'bay area', 'sf', 'san francisco', 'oakland', 'east bay', 'california', 'ca'],
-          text: "Bri is based in Pleasanton, CA — in the Bay Area." },
+          text: "Bri lives in Pleasanton, CA, in the Bay Area." },
         { keys: ['phone', 'number', 'call', 'text', 'cell', 'reach her', 'get in touch', 'how to contact'],
-          text: "The fastest way to reach Bri is email — thebrimay@gmail.com — or call/text her at 209-601-0181. She's also on LinkedIn.",
+          text: "Email is fastest: thebrimay@gmail.com. You can also call or text her at 209-601-0181, or find her on LinkedIn.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
         { keys: ['why hire', 'should we hire', 'should i hire', 'hire her', 'hire bri', 'what makes', 'different', 'stand out', 'unique', 'strength', 'strengths', 'best at', 'superpower', 'biggest achievement', 'achievement', 'proud of', 'most proud', 'pitch', 'special', 'value'],
-          text: "She designs the product, then she ships the code, so nothing is lost between the two. Proof: Global Content Studio, built solo, with 8,118 localized variants in production across 28 locales; 32 commits into the production Aimee SDK; 80 commits into the Hub's Content Studio, with tests; and this site. The product judgment is the 2024 Hub redesign she led from a static library to a guided plan." },
+          text: "She designs the product and ships the code, so nothing gets lost between the two. The proof: Global Content Studio, which she built on her own, has 8,118 localized variants in production across 28 locales. She has 32 commits in the production Aimee SDK and 80 in the Hub's Content Studio (with tests), and she built this site. For product judgment, look at the 2024 Hub redesign she led, which turned a static library into a guided plan." },
         // ── contact details, each in its own words ──
         { keys: ['email', 'e-mail', 'email address', 'her email', 'gmail', 'mail'],
-          text: "**thebrimay@gmail.com**. She also answers texts at 209-601-0181, and she's on LinkedIn at linkedin.com/in/brimay.",
+          text: "**thebrimay@gmail.com**. She also answers texts at 209-601-0181, and you can find her on LinkedIn at linkedin.com/in/brimay.",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="mailto:thebrimay@gmail.com">Email Bri</a><a class="link-btn link-btn--secondary" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>' },
         { keys: ['linkedin', 'linked in', 'socials', 'social media', 'twitter', 'instagram', 'x.com', 'profile'],
-          text: "LinkedIn: linkedin.com/in/brimay. GitHub: github.com/thebrimay-wq. Email: thebrimay@gmail.com. No other socials are listed on the site.",
+          text: "LinkedIn: linkedin.com/in/brimay. GitHub: github.com/thebrimay-wq. Email: thebrimay@gmail.com. The site doesn't list any other socials.",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="link-btn link-btn--secondary" href="https://github.com/thebrimay-wq" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>' },
         { keys: ['time zone', 'timezone', 'pacific', 'pst', 'pdt', 'working hours', 'what time'],
-          text: "Pacific time. Bri is in Pleasanton, CA, in the Bay Area, and works remotely today." },
+          text: "Pacific time. She lives in Pleasanton, CA, in the Bay Area, and works remotely today." },
         { keys: ['contract', 'contractor', 'contracting', 'freelance', 'freelancing', 'consulting', 'consultant', 'fractional', 'part time', 'part-time', 'gig'],
-          text: "She's targeting full-time, remote AI-Native Senior Product Designer roles. For contract or fractional work, ask her directly: thebrimay@gmail.com. Her earlier agency years were at CKC Communications, not freelance." },
+          text: "She's looking for full-time, remote AI-Native Senior Product Designer roles. For contract or fractional work, ask her at thebrimay@gmail.com. Her earlier agency years were on staff at CKC Communications, not freelance." },
         { keys: ['references', 'reference', 'former manager', 'previous manager', 'recommendation', 'recommendations', 'vouch', 'referral'],
-          text: "Available on request. Ask her directly at thebrimay@gmail.com and she'll connect you." },
+          text: "She'll share them on request. Email thebrimay@gmail.com and she'll connect you." },
 
         // ── the work, at the level of detail an engineer asks ──
         { keys: ['python', 'backend language', 'server side', 'server-side'],
-          text: "Working-level. Her primary languages are TypeScript and JavaScript; she writes Python when the service needs it, and shipped 27 commits into Financial Finesse's Python review API. The Cloudflare Worker behind Global Content Studio is TypeScript." },
+          text: "She's comfortable with it. Her main languages are TypeScript and JavaScript, and she writes Python when a service needs it. She has 27 commits in Financial Finesse's Python review API. The Cloudflare Worker behind Global Content Studio is TypeScript." },
         { keys: ['prototype', 'prototypes', 'prototyping', 'proto', 'high fidelity', 'hi-fi', 'wireframe', 'wireframes', 'mockup', 'mockups'],
-          text: "Coded prototypes are her default: real components, real data, in the stack that ships, so the prototype becomes the product instead of a handoff. Figma for exploration and alignment. On Global Content Studio the prototype and the product were the same repo." },
+          text: "She prototypes in code by default: real components and real data in the stack that ships, so the prototype grows into the product with no handoff. She uses Figma to explore ideas and get people aligned. On Global Content Studio, the prototype and the product were the same repo." },
         { keys: ['confidence score', 'confidence', 'score', 'scored', 'threshold', 'how accurate', 'accuracy', 'accurate', 'quality gate', 'verify pass', 'human review', 'hallucinat'],
-          text: "The honest version, in her words: the pipeline's confidence score is the model grading its own output, and it's treated as a routing signal, not a gate. What gates publishing is an independent native-reader verify pass (a separate model call with typed failure reasons and a redo loop), deterministic checks for US-only terms, figures and links, and then a human localizer. Nothing publishes without the human.",
+          text: "In her words: the pipeline's confidence score is the model grading its own work, so she uses it to route articles, not to approve them.\n\nThree things decide what publishes. A separate verify pass reads the article like a native speaker would (its own model call, with typed failure reasons and a redo loop). Code checks catch US-only terms, figures, and links. Then a human localizer reviews it. Nothing publishes without the human.",
           href: '/work/global-content-studio/#decisions', title: 'Global Content Studio', label: 'Read the decisions →' },
         { keys: ['atlas', 'localization pipeline', 'the pipeline', 'pipeline', 'eight step', '8-step', '8 step', 'how does localization', 'how does gcs work', 'how does the studio'],
-          text: "Atlas is the localization pipeline inside Global Content Studio: an eight-step run per article, grounded on a per-locale wiki instead of the open web. Gate (keep, rewrite, or drop), research, draft, an independent verify pass with a redo loop, then deterministic post-passes (US-term sweep, figure checks, link check) and a packager. A 5-worker pool per locale, a serialized save queue so writers can't race, and every variant lands in review for a human.",
+          text: "Atlas is the localization pipeline inside Global Content Studio. Each article goes through eight steps, using a per-locale wiki instead of the open web. A gate decides keep, rewrite, or drop. Then come research, a draft, a separate verify pass with a redo loop, code checks (a US-term sweep, figure checks, a link check), and a packager. Five workers run per locale, a save queue keeps them from overwriting each other, and every result lands in review for a human.",
           href: '/work/global-content-studio/#atlas', title: 'Global Content Studio', label: 'See the pipeline →' },
         { keys: ['how long did', 'how long to build', 'four weeks', '4 weeks', 'how fast', 'build time', 'time to build', 'how quickly', 'who else', 'who worked on', 'team on', 'by herself', 'alone', 'solo', 'commits', 'how many commits', 'contributors', 'contributor'],
-          text: "Global Content Studio was solo: first commit to launch QA in under four weeks. Of the repo's 524 commits, 493 are hers; one engineer contributed 20. Aimee and the Hub were team products where she owned the design and merged her own front-end code.",
+          text: "She built Global Content Studio alone, from first commit to launch QA in under four weeks. She wrote 493 of the repo's 524 commits, and one engineer contributed 20. Aimee and the Hub were team products, where she owned the design and merged her own front-end code.",
           href: '/work/global-content-studio/#process', title: 'Global Content Studio', label: 'Read the process →' },
         { keys: ['locales', 'how many locales', 'how many languages', 'markets', 'countries', 'which locales', 'which languages', 'which markets'],
-          text: "28 locales in production, 25 of them with published or approved content: 8,118 localized variants in total, 3,512 of those from one four-day run. The set covers the company's international employer clients, and the count is read from the live index, not estimated.",
+          text: "28 locales in production, and 25 of them have published or approved content. That's 8,118 localized variants in total, 3,512 of them from one four-day run. The locales cover the company's international employer clients, and the count comes from the live index.",
           href: '/work/global-content-studio/#impact', title: 'Global Content Studio', label: 'See the numbers →' },
 
         // ── how she works, grounded in what's written down ──
         { keys: ['feedback', 'critique', 'prioritize', 'prioritization', 'priorities', 'deadline', 'deadlines', 'under pressure', 'stakeholders', 'stakeholder'],
-          text: "Those are interview questions, so here's the written evidence rather than a story I'd be making up. On Global Content Studio she made the contested policy explicit in code (nothing auto-publishes; every variant lands in review for a human) instead of relitigating it per case. When the pipeline's confidence score turned out to be the model grading itself, she said so in the case study instead of defending it. And she wrote up five production failures with the fix for each. Ask her for the stories; she'll have them.",
+          text: "Those are interview questions, so I'll point to what's written down instead of making up a story. On Global Content Studio, she put the contested policy into code: nothing publishes automatically, and every variant goes to a person for review, so nobody has to argue it case by case. When she found the confidence score was the model grading itself, she said so in the case study. And she wrote up five production failures with the fix for each. Ask her for the stories.",
           href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read what broke →' },
         { keys: ['ux copy', 'ux writing', 'copywriting', 'copy', 'write', 'writes', 'writing', 'writer', 'content design', 'microcopy', 'blog', 'articles', 'newsletter', 'publish'],
-          text: "Yes. The case studies on this site are hers, and Global Content Studio exists because she encoded the company's voice pillars and compliance rules into the tool that writes and localizes its content. No blog or newsletter is listed on the site." },
+          text: "Yes. She wrote the case studies on this site. Global Content Studio exists because she wrote the company's voice pillars and compliance rules into the tool that writes and localizes its content. The site doesn't list a blog or newsletter." },
         { keys: ['branding', 'brand', 'logo', 'logos', 'illustration', 'illustrate', 'illustrator', 'graphic design', 'graphic designer', 'visual design', 'visual', 'typography', 'art direction', 'good at'],
-          text: "Yes, and she started there: Sr. Graphic Designer at Financial Finesse before moving into product, and before that branding and websites for 50+ companies at CKC Communications. Illustration isn't a focus; product, systems, and the code that ships them are." },
+          text: "Yes, it's where she started. She was a Sr. Graphic Designer at Financial Finesse before moving into product, and before that did branding and websites for 50+ companies at CKC Communications. Illustration isn't her focus. Products, systems, and the code that ships them are." },
         { keys: ['industry', 'industries', 'fintech', 'financial services', 'finance', 'healthcare', 'health', 'b2b', 'b2c', 'b2b2c', 'consumer', 'consumers', 'vertical', 'domain'],
-          text: "Fintech, specifically financial wellness, and B2B2C: Financial Finesse sells to employers (Meta, the NFL, JPMorgan Chase, the Federal Reserve) and the product is used by 1M+ of their employees, so she designs consumer experiences inside enterprise contracts. Not healthcare. Earlier, agency work across 50+ companies at CKC Communications." },
+          text: "Fintech, specifically financial wellness, sold B2B2C. Financial Finesse sells to employers like Meta, the NFL, JPMorgan Chase, and the Federal Reserve, and the product is available to 1M+ of their employees. So she designs consumer experiences inside enterprise contracts. No healthcare. Earlier, she did agency work for 50+ companies at CKC Communications." },
         { keys: ['award', 'awards', 'recognition', 'conference', 'conferences', 'speak at', 'speaking', 'talks', 'podcast', 'press', 'featured in'],
-          text: "Nothing is listed on the site, so I won't invent one. Ask her: thebrimay@gmail.com." },
+          text: "The site doesn't list any, so I won't make one up. Ask her at thebrimay@gmail.com." },
         { keys: ['open source', 'open-source', 'side project', 'side projects', 'personal project', 'personal projects', 'passion project'],
-          text: "This site is the public one: github.com/thebrimay-wq/bri-portfolio-2, the engine you're talking to, with its screening-question probe and browser audit in the repo. Her product code is Financial Finesse's and private.",
+          text: "This site is her public project: github.com/thebrimay-wq/bri-portfolio-2. It has the engine you're talking to, plus its screening-question probe and browser audit. Her product code belongs to Financial Finesse and stays private.",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="https://github.com/thebrimay-wq/bri-portfolio-2" target="_blank" rel="noopener noreferrer">Open the repo ↗</a></div>' },
 
         // ── personal: answer what's on the site, deflect what isn't ──
         { keys: ['married', 'husband', 'wife', 'partner', 'spouse', 'relationship', 'dating', 'single'],
-          text: "That's hers to share. What's on the site: she's family-first and has a son." },
+          text: "That's hers to share. The site says she puts family first and has a son." },
         { keys: ['pronouns', 'pronoun', 'she/her', 'gender'],
           text: "She/her." },
         { keys: ['how old', 'age', 'born', 'birthday', 'birth year'],
-          text: "Not something the site lists. What it does: designing since 2011, about ten years in product." },
+          text: "The site doesn't say. It does say she's been designing since 2011, with about ten years in product." },
         { keys: ['speak', 'speaks', 'spoken', 'fluent', 'bilingual', 'spanish', 'french', 'german', 'native language'],
-          text: "Spoken languages aren't listed on the site, so ask her. If you meant the product: Global Content Studio ships in 28 locales." },
+          text: "The site doesn't list the languages she speaks, so ask her. If you mean the product, Global Content Studio ships in 28 locales." },
         { keys: ['motion', 'motion design', 'animation', 'animations', 'micro-interactions', 'microinteractions', 'interaction design', 'transitions'],
-          text: "Yes, with restraint. Interaction and motion are part of her product work (Framer Motion in React, hand-built reveal and streaming motion in vanilla JS on this site), and every animation here has a reduced-motion fallback. She treats motion as feedback, not decoration." },
+          text: "Yes, with restraint. Interaction and motion are part of her product work: Framer Motion in React, and hand-built reveal and streaming animations in plain JavaScript on this site. Every animation here has a reduced-motion fallback. She uses motion to give feedback, not to decorate." },
         { keys: ['rust', 'golang', 'java', 'c++', 'c#', 'kotlin', 'docker', 'kubernetes', 'k8s', 'aws', 'gcp', 'sql', 'postgres', 'graphql', 'terraform'],
-          text: "Not in her stack, and she wouldn't claim it. What is: TypeScript and JavaScript, React and Lit, Tailwind, Vite, Cloudflare Workers, Azure Blob Storage, Python when a service needs it, Vitest and Playwright. She learns what the product needs; the Worker's hand-written Azure client exists because the SDK couldn't run there." },
+          text: "Those aren't in her stack, and she wouldn't claim them. Her stack: TypeScript and JavaScript, React and Lit, Tailwind, Vite, Cloudflare Workers, Azure Blob Storage, Python when a service needs it, and Vitest and Playwright. She learns what the product needs. She wrote her own Azure client for the Worker because the official SDK couldn't run there." },
         { keys: ['rag', 'retrieval', 'grounding', 'grounded', 'evals', 'eval', 'evaluation', 'evaluations', 'agent', 'agents', 'agentic', 'subagents', 'mcp', 'fine tuning', 'fine-tuning', 'finetune', 'finetuning', 'embeddings', 'vector', 'vectors'],
-          text: "What she has shipped: grounding the model on a per-locale wiki instead of open-web search (retrieval in practice), multi-pass pipelines with an independent verify pass and a redo loop, evals plus human-in-the-loop QA deciding what publishes, and a Claude Code workflow that fans out Sonnet subagents per article. Fine-tuning isn't part of it; everything runs on the Anthropic API against production models, which was a deliberate tradeoff.",
+          text: "She's shipped four pieces of it. She grounds the model on a per-locale wiki instead of open-web search, which is retrieval in practice. She builds multi-pass pipelines with a separate verify pass and a redo loop. She uses evals plus human review to decide what publishes. And she runs a Claude Code workflow that sends each article to its own Sonnet subagent.\n\nShe hasn't fine-tuned models. Everything runs on the Anthropic API against production models, and that was a deliberate choice.",
           href: '/work/global-content-studio/#architecture', title: 'Global Content Studio', label: 'See the architecture →' },
       ];
 
@@ -1350,29 +1125,29 @@ function retrieve(query) {
 
       const RESPONSES = {
         casestudies: () => ({
-          text: "Here's Bri's selected work. Start with the featured one, Global Content Studio, the AI content studio she designed and built solo. Tap a card for a preview here, or use **Read full case study** in the preview to open the whole page. The fourth is this site itself; ask me how I work.",
+          text: "These are Bri's case studies. Start with Global Content Studio, the AI content studio she designed and built on her own. Tap a card to preview it here, or use **Read full case study** in the preview to open the whole page. The last one is this site. Ask me how I work.",
           block: caseCardsHtml(),
           chips: ['about', 'resume', 'contact']
         }),
         about: () => ({
-          text: "Bri May, AI-Native Senior Product Designer at Financial Finesse. I design the product, then I ship the code: a decade in product, designing since 2011, shipped for clients like Meta, the NFL, and JPMorgan Chase, and this year building AI products end to end in TypeScript, React, Lit, Cloudflare Workers, and the Anthropic API.",
+          text: "Bri May is an AI-Native Senior Product Designer at Financial Finesse. She designs the product, then ships the code. She's been in product for ten years and designing since 2011, for Financial Finesse customers like Meta, the NFL, and JPMorgan Chase. This year she's been building AI products end to end in TypeScript, React, Lit, Cloudflare Workers, and the Anthropic API.",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="/about/" data-panel-title="About Bri">Read the full story →</a></div>',
           chips: ['casestudies', 'resume', 'contact']
         }),
         resume: () => ({
-          text: "The short version: AI-Native Senior Product Designer, ten years in product, who designs the product and ships the code: TypeScript, React, Lit, Cloudflare Workers, the Anthropic API, with tests. Want the full detail?",
+          text: "The short version: she's an AI-Native Senior Product Designer with ten years in product. She designs the product and ships the code in TypeScript, React, Lit, Cloudflare Workers, and the Anthropic API, with tests. Want the full version?",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="/resume/" data-panel-title="Résumé">View résumé →</a><a class="link-btn link-btn--secondary" href="/resume/BriMay_Resume.pdf" download>Download PDF ↓</a></div>',
           chips: ['casestudies', 'about', 'contact']
         }),
         contact: () => ({
-          text: "Bri is open to remote AI-Native Senior Product Designer roles. The fastest way to reach her is email, **thebrimay@gmail.com**, or a text to 209-601-0181:",
+          text: "Bri is open to remote AI-Native Senior Product Designer roles. Email is fastest: **thebrimay@gmail.com**. You can also text her at 209-601-0181.",
           block: '<div class="link-row"><a class="link-btn link-btn--primary" href="mailto:thebrimay@gmail.com">Email Bri</a><a class="link-btn link-btn--secondary" href="tel:+12096010181">Call / text ↗</a><a class="link-btn link-btn--secondary" href="https://www.linkedin.com/in/brimay" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="link-btn link-btn--secondary" href="/contact/" data-panel-title="Contact">Contact page →</a></div>',
           chips: ['casestudies', 'about', 'resume']
         }),
-        greet: () => ({ text: "Hey! Here's what I can help you explore:", block: null, chips: ['casestudies', 'about', 'resume', 'contact'] }),
-        thanks: () => ({ text: "Anytime. If you're running a hiring loop, the résumé is one click, and Bri answers email the same day.", block: null, chips: ['resume', 'contact'] }),
-        bye: () => ({ text: "Thanks for stopping by. If anything comes up later: thebrimay@gmail.com.", block: null, chips: ['resume', 'contact'] }),
-        help: () => ({ text: "Ask me anything about Bri: her work (Global Content Studio, Aimee, the Hub, this site), how she works with engineers, what she builds with, what broke in production and what she fixed, her level, availability, and how to reach her. If I don't know something, I'll say so and point you to her.", block: null, chips: ['casestudies', 'about', 'resume', 'contact'] }),
+        greet: () => ({ text: "Hi! What would you like to know about Bri's work?", block: null, chips: ['casestudies', 'about', 'resume', 'contact'] }),
+        thanks: () => ({ text: "Anytime. If you're hiring, her résumé is one click away, and she answers email the same day.", block: null, chips: ['resume', 'contact'] }),
+        bye: () => ({ text: "Thanks for stopping by. If anything comes up later, email thebrimay@gmail.com.", block: null, chips: ['resume', 'contact'] }),
+        help: () => ({ text: "Ask me about Bri's work: Global Content Studio, Aimee, the Hub, or this site. I can also tell you how she works with engineers, what she builds with, what broke in production and how she fixed it, her level, her availability, and how to reach her. If I don't know something, I'll say so and point you to her.", block: null, chips: ['casestudies', 'about', 'resume', 'contact'] }),
         fallback: () => ({ text: funny(), block: null, chips: ['casestudies', 'about', 'resume', 'contact'] })
       };
 
@@ -1423,7 +1198,7 @@ function retrieve(query) {
         return wrap;
       }
 
-      const AVATAR = '<div class="avatar"><img class="avatar-mark" src="/images/b-icon%202.svg" alt="Brix" width="34" height="34" /></div>';
+      const AVATAR = '<div class="avatar avatar--spark" aria-hidden="true"></div>';
 
       function buildAgentShell() {
         const msg = elFromHtml(`<div class="msg msg--agent">${AVATAR}<div class="msg-content"><div class="msg-name">Brix</div></div></div>`);
@@ -1469,12 +1244,12 @@ function retrieve(query) {
         return { finish() { stopped = true; clearTimeout(timer); finishNow(); } };
       }
 
-      // First-time explore list — a scannable menu of where to start.
-      // Three doors, nothing else on the first screen.
+      // The three case studies above the ask box: image, name, one line.
+      // Each is a full-page link (data-navigate), not a panel preview.
       const HOME_TILES = [
-        { href: '/work/global-content-studio/', title: 'Global Content Studio', hook: 'Built before anyone asked. Now going global in 70 countries.', sub: 'AI content and localization, built solo.', thumb: '/images/gcs-card.png' },
-        { href: '/aimee-ai/', title: 'Aimee AI Coach', hook: 'One AI coach, three places to meet her', sub: 'One coach, three surfaces, one component system.', thumb: '/images/aimee-card.png' },
-        { href: '/work/hub/', title: 'Financial Wellness Hub', hook: 'From content library to guided plan', sub: 'The 2024 redesign: a library became a guided plan.', thumb: '/images/hub-card.png' },
+        { href: '/work/global-content-studio/', title: 'Global Content Studio', sub: 'A pipeline and UI to localize our content in just one click, built and shipped by me.', thumb: '/images/gcs-card.png' },
+        { href: '/work/finesse-app/', title: 'Financial Finesse B2C App', sub: 'A vision of your future, guided by your agentic coach, Aimee.', thumb: '/images/finesse-card.webp' },
+        { href: '/aimee-ai/', title: 'Aimee Anywhere', sub: 'Chat with Aimee, and human financial coaches, anywhere, anytime.', thumb: '/images/aimee-card.png' },
       ];
 
       function buildStarter() {
@@ -1486,19 +1261,37 @@ function retrieve(query) {
           el.href = t.href;
           el.setAttribute('data-navigate', '');
           el.innerHTML =
-            `<span class="home-tile-img"><img src="${t.thumb}" alt="" width="750" height="501" /></span>` +
-            `<span class="home-tile-text"><span class="home-tile-label">${esc(t.title)}</span><span class="home-tile-title">${esc(t.hook)}</span><span class="home-tile-sub">${esc(t.sub)}</span><span class="home-tile-more">Read the case study ›</span></span>`;
+            `<span class="home-tile-img"><img src="${t.thumb}" alt="" width="640" height="400" /></span>` +
+            `<span class="home-tile-text"><span class="home-tile-label">${esc(t.title)}</span><span class="home-tile-sub">${esc(t.sub)}</span></span>`;
           wrap.appendChild(el);
         });
+        // Phones swipe the tiles one at a time; the dots follow the swipe and jump on tap.
+        const dots = document.createElement('div');
+        dots.className = 'tile-dots';
+        dots.innerHTML = HOME_TILES.map((t, i) => `<button type="button" aria-label="Show ${esc(t.title)}" aria-current="${i === 0}"></button>`).join('');
+        const tiles = [...wrap.children], dotBtns = [...dots.children];
+        wrap.addEventListener('scroll', () => {
+          const i = Math.round(wrap.scrollLeft / (tiles[1].offsetLeft - tiles[0].offsetLeft || 1));
+          dotBtns.forEach((b, j) => b.setAttribute('aria-current', String(j === i)));
+        }, { passive: true });
+        dotBtns.forEach((b, i) => b.addEventListener('click', () =>
+          wrap.scrollTo({ left: tiles[i].offsetLeft - tiles[0].offsetLeft, behavior: reduceMotion ? 'auto' : 'smooth' })));
         const holder = document.createElement('div');
-        holder.appendChild(wrap);
+        holder.append(wrap, dots);
         return holder;
       }
+
+      // The three starters in the ask box's tray: the questions whose answers show her best.
+      const TRAY = [
+        ["What's her best work?", '<path d="m12 4 2.3 4.9 5.2.6-3.9 3.6 1 5.2L12 15.8 7.4 18.3l1-5.2-3.9-3.6 5.2-.6z"/>'],
+        ['What broke, and how did she fix it?', '<path d="M14.5 6.5a4 4 0 0 0-5.3 5.3L4.5 16.5a1.8 1.8 0 0 0 2.5 2.5l4.7-4.7a4 4 0 0 0 5.3-5.3l-2.6 2.6-2.4-.5-.5-2.4z"/>'],
+        ['Show me the code', '<path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/>'],
+      ];
 
       function showTyping() {
         const msg = elFromHtml(`
           <div class="msg msg--agent" data-typing="1">
-            <div class="avatar"><img class="avatar-mark" src="/images/b-icon%202.svg" alt="Brix" width="34" height="34" /></div>
+            ${AVATAR}
             <div class="msg-content"><div class="thinking" aria-label="Thinking">Thinking</div></div>
           </div>`);
         thread.appendChild(msg);
@@ -1751,7 +1544,7 @@ function retrieve(query) {
         if (entry.block) parts.push(entry.block);
         const res = { text: entry.text, block: parts.length ? parts.join('') : null, followups: followupsFor(entry) };
         if (alt) {
-          res.text = 'Closest I have — tell me if I misread you: ' + entry.text;
+          res.text = "This is the closest I have, so tell me if I misread you. " + entry.text;
           const label = (alt.keys.find(k => k.length >= 4) || alt.keys[0] || '').replace(/^\w/, c => c.toUpperCase());
           res.followups = [{ label: 'I meant: ' + label, q: alt.keys[0] }].concat(res.followups).slice(0, 4);
         }
@@ -1806,8 +1599,8 @@ function retrieve(query) {
              { label: 'Why hire her', q: 'why hire bri' },
              { label: 'Get in touch', intent: 'contact' }];
         const text = near.length
-          ? "I only know Bri's work. Closest things I do know:"
-          : funny() + " Closest things I do know:";
+          ? "I only know about Bri's work. These are the closest topics I have:"
+          : funny() + " These are the closest topics I have:";
         deliver({ text, followups: chips });
       }
 
@@ -1816,6 +1609,8 @@ function retrieve(query) {
         q = (q || '').trim();
         if (!q) return;
         currentQ = display || q;
+        const box = form.getBoundingClientRect();
+        window.__field.ripple(box.left + box.width / 2, box.top + box.height / 2, 1, 700, 1800);
         startChat();
         pushRecent({ label: display || q, q });
         addUserMessage(display || q);
@@ -1871,14 +1666,20 @@ function retrieve(query) {
         chatPane.classList.add('is-empty');
         input.value = ''; autogrow();
         scroller.scrollTop = 0;
-        if (window.__railClose) window.__railClose();
         input.focus({ preventScroll: true });
       }
       document.getElementById('rail-newchat').addEventListener('click', resetChat);
-      document.getElementById('topbar-newchat').addEventListener('click', resetChat);
 
-      // Mount the 4 starter cards into the empty state.
+      // Mount the three case-study tiles above the ask box, and the starters in its tray.
       document.getElementById('starter-mount').appendChild(buildStarter());
+      const tray = document.getElementById('tray-chips');
+      TRAY.forEach(([q, path]) => {
+        const btn = document.createElement('button');
+        btn.className = 'chip'; btn.type = 'button';
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>${esc(q)}`;
+        btn.addEventListener('click', () => { if (!busy) submitQuery(q); });
+        tray.appendChild(btn);
+      });
 
       // ── Deep link: /?q=… auto-asks the question, so an answer is shareable ──
       (function deepLink() {
