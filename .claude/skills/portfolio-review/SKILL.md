@@ -67,9 +67,9 @@ lazy loads), sideways scroll at 320/375/768px, token contrast in **both**
 themes measured against both `--bg` and `--surface`, canonical + title + img
 dimensions + video posters, no-JS rendering, the skip links, the
 screen-reader announcer (≤3 mutations per streamed answer), Brix features
-(starter cards, lens chips, `?q=` deep links, code exhibit, case-study list),
-and core flows (side panel, dark mode persistence, mobile drawer, résumé
-download filename).
+(the three image-first tiles, the tray starters, `?q=` deep links, code exhibit,
+case-study list), and core flows (side panel, dark mode persistence, the phone
+top bar and tile swipe, résumé download filename).
 
 ### 3. Asset audit — seconds
 

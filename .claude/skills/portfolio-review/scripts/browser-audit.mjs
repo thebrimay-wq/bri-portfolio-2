@@ -159,8 +159,8 @@ console.log('\n══ 7. BRIX FEATURES: chat, lens, code exhibit, deep links');
   const p = await mk();
   await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(600);  log('3 case-study doors, each a full-page link', await p.locator('.home-tile[data-navigate]').count() === 3);
-  log('hero supporting line present', (await p.locator('.hero-intro .hero-sub').count()) === 1);
-  log('shortcut row: work, code, résumé PDF, contact', await p.locator('.hero-links a').count() === 4 && (await p.locator('.hero-links a[download]').count()) === 1);
+  log('each tile: image, project name, one line', await p.evaluate(() => [...document.querySelectorAll('.home-tile')].every(t => t.querySelector('.home-tile-img img') && t.querySelector('.home-tile-label')?.textContent.trim() && t.querySelector('.home-tile-sub')?.textContent.trim())));
+  log('three starter questions in the ask box tray', await p.locator('#tray-chips .chip').count() === 3);
   log('no fake thinking indicator', await p.evaluate(() => { document.querySelector('#composer-input').value = 'what is atlas'; document.querySelector('#composer-form').requestSubmit(); return document.querySelectorAll('[data-typing]').length === 0 && document.querySelectorAll('.msg--agent .bubble').length === 1; }));
   log('no lens chips (one audience)', await p.locator('.lens-chip').count() === 0);
   log('hero: name, title, second line', (await p.locator('.hero-intro .hero-name').count()) === 1 && (await p.locator('.hero-intro .hero-line').textContent()).includes('then I ship the code'));
@@ -200,9 +200,9 @@ console.log('\n══ 8. CORE FLOWS: panel, dark mode, drawer, résumé download
   await m.route('**/*.mp4', r => r.abort());
   await m.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   await m.waitForTimeout(600);
-  await m.locator('#rail-open').click();
-  await m.waitForTimeout(600);
-  log('mobile drawer opens', await m.evaluate(() => document.querySelector('#rail').getBoundingClientRect().left > -20));
+  // Phones: the icon rail runs across the top, and the tiles swipe one at a time with dots.
+  log('mobile rail is a visible top bar', await m.evaluate(() => { const r = document.querySelector('#rail').getBoundingClientRect(); return r.top >= -1 && r.width > 300 && r.height < 90; }));
+  log('mobile tiles swipe, with one dot per tile', await m.evaluate(() => { const t = document.querySelector('.home-tiles'); return t.scrollWidth > t.clientWidth + 50 && document.querySelectorAll('.tile-dots button').length === 3; }));
   await m.close();
   const d = await b.newPage({ acceptDownloads: true });
   await d.route('**fonts.g**', r => r.abort());

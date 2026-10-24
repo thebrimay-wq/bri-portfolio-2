@@ -26,6 +26,9 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 | 8,729 entries · 592 en-US source pieces · 8,118 localized variants · 28 locales | CONFIRMED, SNAPSHOT 2026-09-08 | live Azure index, read-only (`facts.md`) | "… as of September 8, 2026" wherever the figure appears |
 | 25 locales with published or approved content | CONFIRMED, SNAPSHOT 2026-09-08 | same | "25 locales with published or approved content" (never merged with 28) |
 | 70 countries by the end of 2026 | UNCONFIRMED, stated by Bri 2026-10-23 | Bri: the CEO wanted to go global, and the plan is 70 countries by year end. A target, not today's count; today is 25 markets with published or approved content (Sep 8, 2026). | GCS hero: "Built before anyone asked. Now going global in 70 countries." and a "70 · Countries planned by the end of 2026" fact beside "25 · Markets live today". Never present 70 as already live. The Work card, homepage door, and Brix chat card use the same line. |
+| Live in 25 countries today; 70 by 2027 | UNCONFIRMED, stated by Bri 2026-10-23 | Bri: "We are global in 25 countries already and will be at 70 by 2027." Consistent with the index (25 locales with published or approved content, Sep 8, 2026) and with the 70-countries target above. Use "25 countries" (not "over 25"); 70 stays a target. | "25 countries" may stand as live today; "70" only with "by 2027" or "planned". |
+| Global in over 25 countries in a quarter | UNCONFIRMED, stated by Bri 2026-10-23 | Bri's wording. Bri has since given the count as 25 countries (row above), so "over 25" overstates it. "In a quarter" is still unsourced: 25 locales were reached about 15 weeks after launch QA (05-22). | Homepage preview study G (`labs/brix-next/g/`), Studio tile only, now as "Built before anyone asked. 25 countries in a quarter, 70 by 2027." (replaced "over 25"). Not on the case study, Brix KB, or résumé until the quarter is confirmed. |
+| One-click localization: "A pipeline and UI to localize our content in just one click, built and shipped by me." | UNCONFIRMED wording, stated by Bri 2026-10-23 | Bri's line for the live homepage tile (shipped 2026-10-23). "Built and shipped by me" matches the v1 record (493 of 524 commits, four weeks to launch QA). "One click" describes the Localize action in the Studio UI; the case study does not show it as a single click. | Live homepage Studio tile only. The "25 countries in a quarter, 70 by 2027" line stayed in the preview and did not ship. |
 | 4,154 published · 975 approved · 2,772 in review · 229 draft | SNAPSHOT 2026-09-08. Sums to 8,130, not 8,118; `facts.md` does not explain the 12. | same | Publish only published / approved / in review as "of the 8,118". Do not print the four-way breakdown as a sum. |
 | 3,512 variants in one run, 2026-06-01→06-04, ten locales brought live, peak day 1,575 | CONFIRMED | index `createdAt` + workflow logs | keep, dated |
 | 3,726 Studio-era variants since 2026-04-28 across 26 locales | CONFIRMED | same | optional; "Studio-era" must be labeled, legacy-locale caveat applies |
@@ -96,7 +99,7 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 | Claim | Status | Source | Public wording |
 |---|---|---|---|
 | Engine probe: 62 questions + 20 regressions, 61/62 (2026-09-10) | SNAPSHOT | `probe-engine.mjs` | current cards show the latest dated run; older 20/38, 37/38, 49/50 may stay as history if dated |
-| Browser audit 42/42 (2026-08-20), 44/44 (2026-09-08) | SNAPSHOT | `browser-audit.mjs` | same rule |
+| Browser audit 42/42 (2026-08-20), 44/44 (2026-09-08), 49/49 (2026-10-13), 50/50 (2026-10-23, after the homepage redesign replaced the hero and drawer checks) | SNAPSHOT | `browser-audit.mjs` | same rule |
 | Deploy 130 MB → 51 MB | CONFIRMED 2026-08-20 | asset audit | keep, dated |
 | 1 live-region mutation per answer (was 87) | CONFIRMED (measured by audit) | audit | keep |
 
@@ -115,6 +118,8 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 ## Questions for Bri (batched, priority order)
 
 - (2026-10-23) Answered: 70 = countries planned by the end of 2026 (a CEO goal). Cards now match the headline.
+- (2026-10-23) Answered: 25 countries are live today, and the plan is 70 by 2027.
+- (2026-10-23) Open: which quarter does "in a quarter" (homepage preview G) refer to?
 
 1. **One AI-assisted shipping example.** Pick the Studio feature that best shows your process (candidates from the logs: the skip-approved fix, the independent verify stage, the single-flight brief cache). For it: which tools (Claude Code is confirmed; anything else?), what the AI produced first, what you rejected or redirected, what shipped, and which artifacts can be shown publicly (a sanitized diff, a test, a screenshot of the review console).
 2. **Hub outcomes.** What exactly is "engagement" (event, population, baseline, window)? What does $12M measure (bookings, ARR, contract value), over what period, and what source states it? Until answered the site says "internal reporting" and drops $12M from headline stats.
