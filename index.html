@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles/site.css?v=gallery-5" />
+  <link rel="stylesheet" href="/styles/site.css?v=gallery-6" />
   <!-- A real excerpt of the retrieval engine on this page — rendered into the
        chat when someone asks whether Bri codes. Kept as text/plain so it never executes. -->
   <script type="text/plain" id="engine-excerpt">// index.html — the engine answering you right now (verbatim)
@@ -189,6 +189,7 @@ function retrieve(query) {
     /* ── Greeting: the site's light display type ── */
     .hero-intro .hero-name { margin: 0; font-weight: 350; font-size: clamp(44px, 5.2vw, 76px); line-height: 1.02; letter-spacing: -.04em; color: var(--ink); }
     .hero-intro .hero-line { margin: 16px 0 0; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.5; color: var(--ink); }
+    .hero-intro .hero-note { margin: 10px 0 0; max-width: 34em; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
 
     /* ── thread ── */
     .thread { display: flex; flex-direction: column; gap: clamp(26px, 3.4vw, 34px); }
@@ -522,6 +523,7 @@ function retrieve(query) {
     @keyframes chatIn { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: none; } }
     .chat-pane.is-empty .hero-name { transform-origin: left bottom; animation: chatIn .5s var(--ease) .05s backwards; }
     .chat-pane.is-empty .hero-line { transform-origin: left bottom; animation: chatIn .5s var(--ease) .35s backwards; }
+    .chat-pane.is-empty .hero-note { transform-origin: left bottom; animation: chatIn .5s var(--ease) .5s backwards; }
     .chat-pane.is-empty .home-tile { animation: chatIn .5s var(--ease) .65s backwards; }
     .chat-pane.is-empty .home-tile:nth-child(2) { animation-delay: .8s; }
     .chat-pane.is-empty .home-tile:nth-child(3) { animation-delay: .95s; }
@@ -530,9 +532,10 @@ function retrieve(query) {
     .first-run .chat-pane.is-empty .tray-chips .chip { animation: chatIn .4s var(--ease) 1.35s backwards; }
     .first-run .chat-pane.is-empty .tray-chips .chip:nth-child(2) { animation-delay: 1.45s; }
     .first-run .chat-pane.is-empty .tray-chips .chip:nth-child(3) { animation-delay: 1.55s; }
+    .first-run .chat-pane.is-empty .tray-chips .chip:nth-child(4) { animation-delay: 1.65s; }
     .first-run .chat-pane.is-empty .composer-hint { animation: chatIn .4s var(--ease) 1.65s backwards; }
     @media (prefers-reduced-motion: reduce) {
-      .chat-pane.is-empty .hero-name, .chat-pane.is-empty .hero-line, .chat-pane.is-empty .home-tile, .chat-pane.is-empty .tile-dots,
+      .chat-pane.is-empty .hero-name, .chat-pane.is-empty .hero-line, .chat-pane.is-empty .hero-note, .chat-pane.is-empty .home-tile, .chat-pane.is-empty .tile-dots,
       .chat-pane.is-empty .composer-form, .chat-pane.is-empty .tray-chips .chip, .chat-pane.is-empty .composer-hint { animation: none; }
       .home-tile, .home-tile-img img { transition: none; }
       .home-tile:hover { transform: none; }
@@ -556,6 +559,7 @@ function retrieve(query) {
     <div class="noscript-page">
       <h1>Bri May</h1>
       <p>AI-Native Senior Product Designer<br>I design the product, then I ship the code.</p>
+      <p>I’ve worked directly with our CEO for ten years. I turn her ideas into working prototypes in a day or two.</p>
       <p><a href="https://github.com/thebrimay-wq/bri-portfolio-2">View the code</a> ·
          <a href="/work/global-content-studio/">Global Content Studio</a> ·
          <a href="/resume/BriMay_Resume.pdf">Résumé (PDF)</a></p>
@@ -623,6 +627,7 @@ function retrieve(query) {
             <div class="hero-intro">
               <h1 class="hero-name">Hi, I’m Bri May.</h1>
               <p class="hero-line">AI-Native Senior Product Designer.<br> I design the product, then I ship the code.</p>
+              <p class="hero-note">I’ve worked directly with our CEO for ten years. I turn her ideas into working prototypes in a day or two.</p>
             </div>
             <div id="starter-mount"></div>
           </div>
@@ -936,8 +941,16 @@ function retrieve(query) {
         { keys: ['salary', 'compensation', 'comp', 'how much', 'total comp', 'tc', 'ote', 'equity', 'pay', 'rate', 'how much does she cost', 'how much does she', 'expectations', 'comp range', 'budget'],
           text: "That's a conversation to have with Bri. Her expectations depend on the role, the scope, and where it's based, so email thebrimay@gmail.com or call 209-601-0181. What she brings: an AI product she designed and shipped on her own, production code in three company repos, and the 2024 Hub redesign she led.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
-        { keys: ['design process', 'her process', 'how does she work', 'how she works', 'approach', 'methodology', 'workflow', 'how does she design'],
-          text: "She builds to think. She starts with the problem and the constraint, gets to something real fast (usually a coded prototype), and keeps iterating in the code that ships. On Global Content Studio, that meant launch QA less than four weeks after her first commit. A four-day run later brought ten locales live." },
+        { keys: ['how fast does she work', 'how fast', 'work fast', 'works fast', 'fast', 'speed', 'velocity', 'turnaround', 'move fast', 'moves fast', 'pace', 'in a day', 'prototype in', 'how long does she take'],
+          not: ['start'],
+          text: "Fast. She turns an idea into a working prototype in a day or two. She prototyped the first version of the Financial Finesse Hub in 24 hours, had the B2C App working two days after the CEO described it, and has built whole websites in a day. Speed doesn't cost her quality: Global Content Studio went from first commit to launch QA in under four weeks, with 221 tests (September 2026) and a person approving every article.",
+          href: '/work/finesse-app/', title: 'Financial Finesse B2C App', label: 'See the two-day prototype →' },
+        { keys: ['ceo', 'with a ceo', 'with the ceo', 'with executives', 'with leadership', 'founder', 'executive', 'executives', 'c-suite', 'work with leadership', 'leadership team', 'vision', 'business goals', 'business sense', 'the business', 'startup experience', 'startup environment', 'fast-paced', 'fast paced'],
+          text: "Bri has worked directly with Financial Finesse's CEO since she joined in 2016. Her knack is hearing what the CEO has in mind and turning it into a product that works for the business, often within a day or two. For the B2C App, she had a working prototype two days after the CEO shared her vision. The CEO wrote back: “WOW, just wow. I love how well we work together— you took the spirit and made it better than I could have envisioned!” Global Content Studio started the same way: the CEO wanted to go global, and Bri built the tool before anyone asked for one.",
+          href: '/work/finesse-app/', title: 'Financial Finesse B2C App', label: 'Open the B2C App →' },
+        { not: ['ceo', 'executive', 'executives', 'founder'],
+          keys: ['design process', 'her process', 'how does she work', 'how she works', 'approach', 'methodology', 'workflow', 'how does she design'],
+          text: "She builds to think. She starts with the problem and the constraint, gets to something real fast (usually a coded prototype within a day or two), and keeps iterating in the code that ships. On Global Content Studio, that meant launch QA less than four weeks after her first commit. A four-day run later brought ten locales live." },
         { keys: ['user research', 'research', 'usability', 'usability testing', 'user testing', 'interviews', 'talk to users', 'validate', 'research changed', 'finding', 'findings', 'insight', 'insights', 'what did users'],
           text: "Bri brought user research and usability testing to Financial Finesse, and research shaped the 2024 Hub redesign. The portfolio does not yet document a specific research finding that changed a design, so I won't make one up.\n\nA data finding did change Global Content Studio. The fit check dropped 75 UK articles. On a second look, 13 had a real UK equivalent and got rewritten as UK-native pieces. The other 62 couldn't honestly exist there (26 were about the US healthcare system). That's why the gate has three outcomes: keep, rewrite, or drop.",
           href: '/work/global-content-studio/#what-broke', title: 'Global Content Studio', label: 'Read the fit-check finding →' },
@@ -1030,7 +1043,7 @@ function retrieve(query) {
           text: "Aimee is Financial Finesse's AI financial coach, designed for three places: the Hub, a widget embedded on client sites, and Microsoft Teams. Bri designed the whole front end and coded the prototypes and the component library. Engineering built the Aimee SDK in React and A2UI from those. Then she merged the design-system layer and four components (empty state, conversations, icon, and card shell) into the production SDK herself, from July to August 2026.",
           href: '/aimee-ai/', title: 'Aimee AI Coach', label: 'Open the case study →' },
         { keys: ['b2c', 'b2c app', 'financial finesse b2c', 'finesse app', 'consumer app', 'money app', 'muse for your money', 'money types', 'money type'],
-          text: "The Financial Finesse B2C App is a consumer money app prototype. Aimee, the AI coach, learns how you think about money, prepares the next move, and waits for your yes: nothing moves without your OK. Bri designed and built the whole prototype herself in four days in October 2026, with 376 tests, in React and TypeScript, plus a Cloudflare Worker that connects Aimee to the Claude API. The personas come from years of real conversations between Financial Finesse coaches and members.",
+          text: "The Financial Finesse B2C App is a consumer money app prototype. Aimee, the AI coach, learns how you think about money, prepares the next move, and waits for your yes: nothing moves without your OK. Bri designed and built the whole prototype herself. She had it working two days after the CEO shared her vision, and built the version shown in four days in October 2026, with 376 tests, in React and TypeScript, plus a Cloudflare Worker that connects Aimee to the Claude API. The personas come from years of real conversations between Financial Finesse coaches and members.",
           href: '/work/finesse-app/', title: 'Financial Finesse B2C App', label: 'Open the case study →' },
         { keys: ['measured', 'measurement', '200 engagement', '200 percent', 'engagement increase', 'engagement number', 'engagement metric', 'engagement figure', 'engagement defined', 'define engagement', 'what counts as engagement', '12m', '12 million', 'revenue figure', 'revenue number', 'attributed', 'attribution', 'baseline', 'methodology', 'how do they know'],
           text: "The portfolio does not document how the Hub's engagement figure was measured, or what the $12M covers and over what period. Both numbers come from Financial Finesse's internal reporting after the 2024 redesign Bri led. The definitions aren't published here, so I won't guess. Ask Bri and she'll walk you through the source. Global Content Studio is the project with fully documented numbers, read from a live index.",
@@ -1043,7 +1056,8 @@ function retrieve(query) {
           text: "Smart Benefits is an AI-powered open-enrollment experience Bri designed, with three white-label embed modes. It's part of her work history, but the site has no case study for it." },
         { keys: ['impact', 'results', 'metrics', 'numbers', 'revenue', 'engagement', 'outcomes', 'roi', 'users', 'user base', 'scale', 'at scale', 'reach'],
           text: "The numbers with a source: Global Content Studio, whose first version she built herself, held 8,118 localized variants across 28 locales in its index (September 2026). 3,512 of them came from one four-day run, and the code had 221 tests. Her production code is merged into three company repos.\n\nInternal reporting credited the Hub redesign she led with a 200% rise in engagement; that definition isn't published here. Financial Finesse's customers employ 1M+ people. That's how many people can reach the platform, not how many use any one feature." },
-        { keys: ['clients', 'companies', 'worked with', 'brands', 'customers', 'fortune 500', 'fortune500', 'meta', 'facebook', 'nfl', 'jpmorgan', 'jp morgan', 'chase', 'cvs', 'patagonia', 'mckinsey', 'nestle', 'nestlé', 'comcast', 'general mills'],
+        { not: ['ceo', 'executive', 'executives', 'founder', 'leadership'],
+          keys: ['clients', 'companies', 'worked with', 'brands', 'customers', 'fortune 500', 'fortune500', 'meta', 'facebook', 'nfl', 'jpmorgan', 'jp morgan', 'chase', 'cvs', 'patagonia', 'mckinsey', 'nestle', 'nestlé', 'comcast', 'general mills'],
           text: "Financial Finesse customers she designs for include the Federal Reserve, Meta, the NFL, JPMorgan Chase, CVS Health, Patagonia, McKinsey, Nestlé, Comcast, and General Mills." },
         { keys: ['skills', 'tech', 'stack', 'tools', 'figma', 'sketch', 'adobe', 'photoshop', 'design tokens', 'tokens', 'web', 'websites', 'capabilities', 'expertise', 'proficient', 'craft', 'visual ability'],
           text: "Engineering: TypeScript, JavaScript, React, Lit, HTML and CSS, Tailwind, Vite, design tokens, accessible UI, Cloudflare Workers, Azure Blob Storage, Python, Vitest and Playwright, Git, and CI.\n\nAI: the Anthropic API, grounding the model on per-market fact libraries (RAG), evals with human review, multi-pass LLM pipelines, and conversational UX.\n\nDesign: products from scratch, design systems, prototyping in code, user research, interaction and motion, and Figma." },
@@ -1097,7 +1111,7 @@ function retrieve(query) {
         { keys: ['atlas', 'localization pipeline', 'the pipeline', 'pipeline', 'eight step', '8-step', '8 step', 'how does localization', 'how does gcs work', 'how does the studio'],
           text: "Atlas is the localization pipeline inside Global Content Studio. Each article goes through eight steps, starting from its market's fact library. A gate decides keep, rewrite, or drop. Then come research, a draft, a separate verify pass with a redo loop, code checks (a US-term sweep, figure checks, a link check), and a packager. Five workers run per locale, a save queue keeps them from overwriting each other, and every result lands in review for a human.",
           href: '/work/global-content-studio/#atlas', title: 'Global Content Studio', label: 'See the pipeline →' },
-        { keys: ['how long did', 'how long to build', 'four weeks', '4 weeks', 'how fast', 'build time', 'time to build', 'how quickly', 'who else', 'who worked on', 'team on', 'by herself', 'alone', 'solo', 'commits', 'how many commits', 'contributors', 'contributor'],
+        { keys: ['how long did', 'how long to build', 'four weeks', '4 weeks', 'build time', 'time to build', 'how quickly', 'who else', 'who worked on', 'team on', 'by herself', 'alone', 'solo', 'commits', 'how many commits', 'contributors', 'contributor'],
           text: "She built the first version of Global Content Studio herself, from first commit to launch QA in under four weeks. She wrote 493 of the repo's 524 commits, and one engineer contributed 20. Aimee and the Hub were team products, where she owned the design and merged her own front-end code.",
           href: '/work/global-content-studio/#process', title: 'Global Content Studio', label: 'Read the process →' },
         { keys: ['locales', 'how many locales', 'how many languages', 'markets', 'countries', 'which locales', 'which languages', 'which markets'],
@@ -1329,6 +1343,7 @@ function retrieve(query) {
         ["What's her best work?", '<path d="m12 4 2.3 4.9 5.2.6-3.9 3.6 1 5.2L12 15.8 7.4 18.3l1-5.2-3.9-3.6 5.2-.6z"/>'],
         ['What broke, and how did she fix it?', '<path d="M14.5 6.5a4 4 0 0 0-5.3 5.3L4.5 16.5a1.8 1.8 0 0 0 2.5 2.5l4.7-4.7a4 4 0 0 0 5.3-5.3l-2.6 2.6-2.4-.5-.5-2.4z"/>'],
         ['Show me the code', '<path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/>'],
+        ['How fast does she work?', '<path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/>'],
       ];
 
       // Copy / feedback row under an answer — a familiar frontier-LLM affordance.

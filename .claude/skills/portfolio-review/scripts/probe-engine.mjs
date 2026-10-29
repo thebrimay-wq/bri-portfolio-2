@@ -140,6 +140,10 @@ const REGRESSIONS = [
   { q: 'Show me the code', expect: r => r.detail === 'show me the code', label: 'the "Show me the code" starter gets the code + repo answer, not the stack list' },
   { q: 'What broke, and how did she fix it?', expect: r => r.detail === 'what broke', label: 'the "what broke" starter opens with what broke' },
   { q: 'Tell me about the B2C app', expect: r => r.detail === 'b2c', label: 'the B2C App has its own answer' },
+  // 2026-10-29: speed and the CEO partnership have their own answers
+  { q: 'How fast does she work?', expect: r => r.detail === 'how fast does she work', label: 'the "How fast" starter gets the speed answer, not build time' },
+  { q: 'Has she worked with a CEO?', expect: r => r.detail === 'ceo', label: 'CEO question gets the CEO answer' },
+  { q: 'Can she work in a fast-paced startup environment?', expect: r => r.detail === 'ceo' || r.detail === 'how fast does she work', label: 'fast-paced startup question lands on speed or the CEO answer' },
 ];
 
 // 2026-10-13 live review: these six streamed a confident answer to the wrong question.
@@ -166,6 +170,8 @@ const ANSWERS = [
   { q: 'How much revenue did Brix make?', expect: r => !/\$12m/i.test(r.text), label: 'ambiguous revenue question never asserts $12M without its caveat' },
   { q: 'Does she have experience with accessibility?', expect: r => r.detail === 'accessibility', label: 'accessibility question gets the accessibility entry, not years-of-experience' },
   { q: 'How quickly can she start?', expect: r => r.detail === 'start date', label: 'start-date question gets availability, not build time' },
+  { q: 'How fast can she prototype?', expect: says('24 hours', 'two days'), label: 'speed: cites the dated prototypes' },
+  { q: 'How does she work with executives?', expect: says('since she joined in 2016', 'just wow'), label: 'CEO: tenure and the quote' },
   { q: "What's her TypeScript experience?", expect: r => r.detail === 'typescript', label: 'TypeScript question gets the stack entry' },
 ];
 
