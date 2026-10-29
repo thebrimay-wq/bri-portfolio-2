@@ -774,6 +774,20 @@ html.embedded [id="owned"], html.embedded [id="process"], html.embedded [id="imp
   .gallery .hero-fact:nth-child(4) { border-top: 1px solid var(--border); }
 }
 
+/* Three-fact hero row: one column of ruled rows on phones */
+.gallery .hero-facts--three { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 760px) {
+  .gallery .hero-facts--three { grid-template-columns: 1fr; }
+  .gallery .hero-facts--three .hero-fact { padding: 18px 0; border-right: 0; border-top: 0; }
+  .gallery .hero-facts--three .hero-fact + .hero-fact { border-top: 1px solid var(--border); }
+}
+.gallery .hero-role { font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 720px; margin-top: 20px; }
+.gallery .hero-role b { color: var(--ink); font-weight: 600; }
+
+/* Draft marker for a fact or image only Bri can supply. Remove before publishing. */
+.bri-todo { margin-top: 24px; padding: 12px 16px; border: 1px dashed var(--accent); border-radius: 10px; background: var(--accent-tint); color: var(--accent); font-size: 14px; line-height: 1.55; max-width: 720px; }
+.bri-todo--shot { display: grid; place-items: center; max-width: none; min-height: 280px; margin-top: 0; text-align: center; }
+
 /* The painted sky behind the hero media */
 .gallery .sky { margin-top: clamp(48px, 6vw, 80px); border-radius: 28px; padding: clamp(40px, 6vw, 88px) clamp(20px, 5vw, 80px) 0; background: var(--sky); overflow: hidden; }
 .gallery .sky .phones { padding: 0; margin-top: 0; background: none; align-items: end; }
