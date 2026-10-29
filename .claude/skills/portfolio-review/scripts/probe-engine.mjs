@@ -140,6 +140,17 @@ const REGRESSIONS = [
   { q: 'Show me the code', expect: r => r.detail === 'show me the code', label: 'the "Show me the code" starter gets the code + repo answer, not the stack list' },
   { q: 'What broke, and how did she fix it?', expect: r => r.detail === 'what broke', label: 'the "what broke" starter opens with what broke' },
   { q: 'Tell me about the B2C app', expect: r => r.detail === 'b2c', label: 'the B2C App has its own answer' },
+  // 2026-10-29 Stripe brief: internal tools, design systems, research, career story, remote
+  { q: 'Has she built internal tools?', expect: r => r.detail === 'internal tool', label: 'the "internal tools" starter gets the review console answer' },
+  { q: 'Has she designed internal tools or admin dashboards for operations teams?', expect: r => r.detail === 'internal tool', label: 'internal tools / admin dashboards question is not the skills list' },
+  { q: 'Any experience with ops tools or back-office software?', expect: r => r.detail === 'internal tool', label: 'ops tools paraphrase' },
+  { q: 'Has she worked on complex, data-heavy workflows?', expect: r => r.detail === 'internal tool', label: 'data-heavy workflows paraphrase' },
+  { q: 'Has she built a design system?', expect: r => r.detail === 'design system', label: 'design systems question gets the design-system answer' },
+  { q: 'Does she use Figma?', expect: r => r.detail === 'design system', label: 'Figma question gets the design-system answer' },
+  { q: 'Has she done user testing?', expect: r => r.detail === 'user research', label: 'user testing question gets the research answer' },
+  { q: 'Why has she been at one company for 10 years?', expect: r => r.detail === 'career story', label: 'one-company question gets the career story' },
+  { q: "What's her career story?", expect: r => r.detail === 'career story', label: 'career story paraphrase' },
+  { q: 'Is she open to remote roles?', expect: r => r.detail === 'relocat', label: 'remote question gets the remote answer' },
   // 2026-10-29: speed and the CEO partnership have their own answers
   { q: 'How fast does she work?', expect: r => r.detail === 'how fast does she work', label: 'the "How fast" starter gets the speed answer, not build time' },
   { q: 'Has she worked with a CEO?', expect: r => r.detail === 'ceo', label: 'CEO question gets the CEO answer' },
@@ -151,8 +162,8 @@ const REGRESSIONS = [
 // thing, or say plainly that the portfolio does not document it, and link where useful.
 const says = (...needles) => r => needles.every(n => (r.text || '').toLowerCase().includes(n.toLowerCase()));
 const ANSWERS = [
-  { q: 'What research changed the design?', expect: r => says('not yet document', '75')(r) && r.href, label: 'research: names the documented fit-check finding and admits no user-research example is published' },
-  { q: 'Which research finding changed a design decision?', expect: says('not yet document', '13'), label: 'research paraphrase' },
+  { q: 'What research changed the design?', expect: r => says('two rounds', '75')(r) && r.href, label: 'research: names the Hub testing and the documented fit-check finding' },
+  { q: 'Which research finding changed a design decision?', expect: says('two rounds', '13'), label: 'research paraphrase' },
   { q: 'Tell me about a disagreement with a product manager.', expect: says("doesn't document a specific disagreement", 'approved'), label: 'disagreement: states the limitation, offers the written incident' },
   { q: 'Has she ever pushed back on a PM?', expect: says("doesn't document a specific disagreement"), label: 'disagreement paraphrase (pushback)' },
   { q: 'How was the 200% engagement increase measured?', expect: says('does not document how', 'internal reporting'), label: 'engagement: says the definition is not published' },

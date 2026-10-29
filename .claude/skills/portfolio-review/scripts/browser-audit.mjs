@@ -18,7 +18,7 @@ import { chromium, devices } from 'playwright';
 const BASE = process.argv[2] || 'http://127.0.0.1:8899';
 const EXE = process.argv[3] || process.env.CHROMIUM_PATH || undefined;
 const PAGES = ['/', '/work/', '/about/', '/resume/', '/contact/', '/code/',
-  '/work/global-content-studio/', '/work/finesse-app/', '/work/hub/', '/work/brix/', '/aimee-ai/'];
+  '/work/global-content-studio/', '/work/finesse-app/', '/work/hub/', '/work/brix/', '/work/aimee/'];
 
 const b = await chromium.launch(EXE ? { executablePath: EXE } : {});
 let pass = 0, fail = 0;
@@ -98,7 +98,7 @@ console.log('\n══ 4. HEAD HYGIENE: title, canonical, img dims, posters');
   log('canonical on every page', noCanon.length === 0, noCanon.join(',') || 'ok');
   await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   log('homepage title carries the positioning', (await p.title()).includes('AI-Native'), await p.title());
-  for (const path of ['/work/hub/', '/work/global-content-studio/', '/aimee-ai/']) {
+  for (const path of ['/work/hub/', '/work/global-content-studio/', '/work/aimee/']) {
     await p.goto(BASE + path, { waitUntil: 'domcontentloaded' });
     const posters = await p.evaluate(() => [...document.querySelectorAll('video')].map(v => !!v.poster));
     log(`videos on ${path} have posters`, posters.length === 0 || posters.every(Boolean), posters.length + ' video(s)');
