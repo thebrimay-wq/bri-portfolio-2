@@ -130,6 +130,16 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 | Mentors colleagues on building with AI / AI Champion | UNCONFIRMED numbers | role line only |
 | PDF reading order | DEFECT (pypdf plain mode: bullets after Education) | fixed 2026-10-13, see below |
 
+## Speed and working with the CEO (stated by Bri, 2026-10-29)
+
+| Claim | Status | Source | Public wording |
+|---|---|---|---|
+| Has worked directly with the Financial Finesse CEO since starting at FF (2016) | STATED BY BRI 2026-10-29 | Bri | "I've worked directly with our CEO for ten years" / "since 2016". Never name the CEO. |
+| Prototyped the B2C App in two days from the CEO's vision | STATED BY BRI 2026-10-29 | Bri; the git record (B2C row above) covers the four-day v7 build, 10-19 → 10-22 | "2 days from the CEO's vision to a working prototype". The four days stay as the build of the version shown. |
+| CEO reaction to the B2C prototype: "WOW, just wow. I love how well we work together— you took the spirit and made it better than I could have envisioned!" | STATED BY BRI 2026-10-29 (private message, Bri's to share) | Bri | Quote verbatim, attributed to "CEO, Financial Finesse", unnamed. B2C App case study and Brix only. It praises the prototype; never attach a business result to it (see the retired Federal Reserve quote). |
+| Prototyped the first version of the Financial Finesse Hub in 24 hours | STATED BY BRI 2026-10-29 | Bri | "I prototyped the first version of the Hub in 24 hours". Which release that prototype preceded is not stated; do not tie it to the 2024 redesign's dates. |
+| Has built multiple websites in a day | STATED BY BRI 2026-10-29 | Bri; no dated example on the site | About and Brix only, as her statement: "I've built whole websites in a day." No count. |
+
 ## Questions for Bri (batched, priority order)
 
 - (2026-10-23) Answered: designing since 2011 (Bri). Keep "since 2011"; CKC is her first dated role (2012).
@@ -139,6 +149,7 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 
 - (2026-10-23) Answered: 70 = countries planned by the end of 2026 (a CEO goal). Cards now match the headline.
 - (2026-10-23) Answered: 25 countries are live today, and the plan is 70 by 2027.
+- (2026-10-29) Answered: Bri has worked directly with the CEO since she started at FF; prototypes in a day or two (Hub first version in 24 hours, B2C App in two days, websites in a day). Logged under "Speed and working with the CEO".
 - (2026-10-23) Open: which quarter does "in a quarter" (homepage preview G) refer to?
 
 1. **One AI-assisted shipping example.** Pick the Studio feature that best shows your process (candidates from the logs: the skip-approved fix, the independent verify stage, the single-flight brief cache). For it: which tools (Claude Code is confirmed; anything else?), what the AI produced first, what you rejected or redirected, what shipped, and which artifacts can be shown publicly (a sanitized diff, a test, a screenshot of the review console).
