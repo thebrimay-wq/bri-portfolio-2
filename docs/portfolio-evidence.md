@@ -142,7 +142,10 @@ Homepage tile (2026-10-29, Stripe brief): "Aimee AI Coach: One AI coach across t
 | Prototyped the first version of the Financial Finesse Hub in 24 hours | STATED BY BRI 2026-10-29 | Bri | "I prototyped the first version of the Hub in 24 hours". Which release that prototype preceded is not stated; do not tie it to the 2024 redesign's dates. |
 | Has built multiple websites in a day | STATED BY BRI 2026-10-29 | Bri; no dated example on the site | About and Brix only, as her statement: "I've built whole websites in a day." No count. |
 | Joined FF when it had a logo, a brand guide, coaching research and coaches, but no products or app; designed every product FF ships today | STATED BY BRI 2026-10-29 (Stripe brief) | Bri | Homepage: "When I joined Financial Finesse, it had a logo, a brand guide and great coaches. Every product it ships today, I designed." Résumé: "I joined when the company had a brand and no product." |
-| Lead Product Designer and Product Creative Director were separate titles with their own years (2017–2025 combined until now) | OPEN 2026-10-29 | Bri | Résumé shows both with "[BRI: years]" until she supplies them; PDFs not regenerated until then. |
+| Lead Product Designer 2017–2025; Product Creative Director 2022–2026 (concurrent); moved to the AI team early 2025 | STATED BY BRI 2026-10-29 | Bri | Résumé lists Product Creative Director (2022 – 2026) above Lead Product Designer (2017 – 2025). |
+| GCS review console users: 35 localizers in 26 countries; Bri is their main contact and meets them weekly; their feedback tunes the pipeline; non-English articles carry an English version that updates as the localizer edits, so only one version is reviewed | STATED BY BRI 2026-10-29 | Bri | GCS §02, Brix internal-tools answer |
+| Hub redesign testing: 5 rounds of UserTesting, 48 users total, at different stages | STATED BY BRI 2026-10-29 | Bri | Hub §03, résumé, Brix research answer |
+| B2C App: leadership loved it; the company is building the product in this exact design; Bri keeps adding features in her repo while an AI engineer builds it into a new repo connected to FF's systems and Aimee | STATED BY BRI 2026-10-29 | Bri | B2C takeaway and status, Brix B2C answer |
 
 ## Questions for Bri (batched, priority order)
 
