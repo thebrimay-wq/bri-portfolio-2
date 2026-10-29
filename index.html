@@ -466,8 +466,12 @@ function retrieve(query) {
     @media (min-width: 900px) and (max-width: 1219px) {
       .home-tile-sub { min-height: 4.2em; -webkit-line-clamp: 3; line-clamp: 3; }
     }
+    /* Laptop heights: flatter tile images keep the tiles clear of the ask box. */
+    @media (min-width: 900px) and (max-height: 900px) {
+      .home-tile-img { aspect-ratio: auto; height: clamp(100px, 16vh, 150px); }
+      .chat-inner { padding-top: 48px; }
+    }
     @media (min-width: 900px) and (max-height: 760px) {
-      .home-tile-img { aspect-ratio: 2 / 1; }
       .chat-inner { padding-top: 40px; }
     }
 
@@ -567,8 +571,8 @@ function retrieve(query) {
       <ul>
         <li><a href="/work/global-content-studio/">Global Content Studio</a>: the review tool behind
             our content in 25 markets. Bri designed it and built the first version.</li>
-        <li><a href="/work/hub/">Financial Finesse Hub</a>: a content library turned into a guided
-            plan, from research to launch.</li>
+        <li><a href="/work/hub/">Financial Finesse Hub</a>: our member platform, rebuilt around an AI
+            that adapts to each person.</li>
         <li><a href="/work/aimee/">Aimee AI Coach</a>: one AI coach across three products, with a
             human coach a tap away.</li>
         <li><a href="/work/finesse-app/">Financial Finesse B2C App</a>: an AI money coach that gets the
@@ -950,7 +954,7 @@ function retrieve(query) {
           keys: ['design process', 'her process', 'how does she work', 'how she works', 'approach', 'methodology', 'workflow', 'how does she design'],
           text: "She builds to think. She starts with the problem and the constraint, gets to something real fast (usually a coded prototype within a day or two), and keeps iterating in the code that ships. On Global Content Studio, that meant launch QA less than four weeks after her first commit. A four-day run later brought ten locales live." },
         { keys: ['user research', 'research', 'usability', 'usability testing', 'user testing', 'interviews', 'talk to users', 'validate', 'research changed', 'finding', 'findings', 'insight', 'insights', 'what did users', 'testing with users', 'tested with users'],
-          text: "The Hub redesign went through two rounds of user testing with members, built on years of research by our coaches. The B2C App's personas came from years of coach and member conversations.\n\nA data finding changed Global Content Studio too. The fit check dropped 75 UK articles. On a second look, 13 had a real UK equivalent and got rewritten as UK-native pieces. The other 62 couldn't honestly exist there (26 were about the US healthcare system). That's why the gate has three outcomes: keep, rewrite, or drop.",
+          text: "On the 2024 Hub redesign, she ran user testing herself on UserTesting while the team built, and changed the design in the same sprints. The B2C App's personas came from years of coach and member conversations.\n\nA data finding changed Global Content Studio too. The fit check dropped 75 UK articles. On a second look, 13 had a real UK equivalent and got rewritten as UK-native pieces. The other 62 couldn't honestly exist there (26 were about the US healthcare system). That's why the gate has three outcomes: keep, rewrite, or drop.",
           href: '/work/hub/#research', title: 'Financial Finesse Hub', label: 'Read the Hub research →' },
         { keys: ['internal tool', 'internal tools', 'internal tooling', 'admin', 'admin panel', 'admin panels', 'admin dashboard', 'admin tools', 'dashboard', 'dashboards', 'ops tool', 'ops tools', 'operations', 'operations team', 'operations teams', 'ops team', 'back office', 'back-office', 'enterprise tools', 'data-heavy', 'data heavy', 'complex workflow', 'complex workflows', 'workflow tool', 'workflow tools', 'review console', 'console', 'cms', 'tooling'],
           text: "Yes. Global Content Studio's review console is an internal tool. Reviewers in each market work through AI drafts, act on flags inside the text, and approve, while only a publisher can release. She designed it, built the first version, and designed and built the review screens inside the company's CMS.",
@@ -1056,7 +1060,7 @@ function retrieve(query) {
           text: "The portfolio does not document how the Hub's engagement figure was measured, or what the $12M covers and over what period. Both numbers come from Financial Finesse's internal reporting after the 2024 redesign Bri led. Ask Bri and she'll walk you through the source and the definitions. Global Content Studio is the project with fully documented numbers, read from a live index.",
           href: '/work/hub/', title: 'Financial Finesse Hub', label: 'Open the Hub case study →' },
         { keys: ['hub', 'financial finesse hub', 'wellness platform', 'redesign', 'onboarding'],
-          text: "The Financial Finesse Hub is the 2024 redesign Bri led as lead product designer. She turned a static content library into a personalized, guided experience: a short assessment, an action plan, and recommended content. Internal reporting credited the redesign with a 200% rise in platform engagement. The site doesn't publish how that was measured, so ask her. The case study covers the problem, the decisions, and the shipped flows.",
+          text: "The Financial Finesse Hub is Financial Finesse's member platform, and Bri led its 2024 redesign. The old design was dated and had no AI. She took another designer's one-page concept, kept its three columns, and built it out for the Hub's features and members' goals in two and a half weeks. She worked with dev to get a build ready for testing in a month and a half, ran user testing herself on UserTesting, and changed the design in the same sprints. They launched by the January 1 deadline, and internal reporting credited the redesign with a 200% rise in engagement. Global Content Studio is now taking its content to other countries.",
           href: '/work/hub/', title: 'Financial Finesse Hub', label: 'Open the case study →' },
         { keys: ['smart benefits', 'open enrollment', 'enrollment', 'recordkeeper', 'embed mode'],
           not: ['relocat', 'start date', 'when can she', 'notice period'],
@@ -1092,7 +1096,7 @@ function retrieve(query) {
           text: "Email is fastest: thebrimay@gmail.com. You can also call or text her at 209-601-0181, or find her on LinkedIn.",
           href: '/contact/', title: 'Contact', label: 'Open the contact page →' },
         { keys: ['why hire', 'should we hire', 'should i hire', 'hire her', 'hire bri', 'what makes', 'different', 'stand out', 'unique', 'strength', 'strengths', 'best at', 'superpower', 'biggest achievement', 'achievement', 'proud of', 'most proud', 'pitch', 'special', 'value'],
-          text: "She designs the product and ships the code, so nothing gets lost between the two. The proof: Global Content Studio, whose first version she built herself, held 8,118 localized variants across 28 locales on Sep 8, 2026. She merged components into the production Aimee SDK, built review screens in the company's admin platform, and built this site. For product judgment, look at the 2024 Hub redesign she led, which turned a static library into a guided plan." },
+          text: "She designs the product and ships the code, so nothing gets lost between the two. The proof: Global Content Studio, whose first version she built herself, held 8,118 localized variants across 28 locales on Sep 8, 2026. She merged components into the production Aimee SDK, built review screens in the company's admin platform, and built this site. For product judgment, look at the 2024 Hub redesign she led: a one-page concept to a launched, personal platform in sprints, with user testing she ran herself." },
         // ── contact details, each in its own words ──
         { keys: ['email', 'e-mail', 'email address', 'her email', 'gmail', 'mail'],
           text: "**thebrimay@gmail.com**. She also answers texts at 209-601-0181, and you can find her on LinkedIn at linkedin.com/in/brimay.",
@@ -1163,7 +1167,7 @@ function retrieve(query) {
         { featured: true, title: 'Global Content Studio', hook: 'An internal tool nobody asked for. Now it runs our content in 25 markets.', href: '/work/global-content-studio/', swatch: '#EDE6DC', thumb: '/images/gcs-card.png', tags: ['AI Product', 'Design + Code'], impact: 'The AI content and localization studio whose first version she designed and built herself: 8,118 localized variants across 28 locales in its index (Sep 8, 2026).' },
         { title: 'Financial Finesse B2C App', hook: 'A muse for your money', href: '/work/finesse-app/', swatch: '#E3D8CA', thumb: '/images/finesse-card.webp', tags: ['AI Experience', 'Mobile UX'], impact: 'An AI coach that knows you, prepares the next move, and waits for your yes. Designed and built solo.' },
         { title: 'Aimee AI Coach', hook: 'One AI coach, three places to meet her', href: '/work/aimee/', swatch: '#E2E7F0', thumb: '/images/aimee-card.png', tags: ['AI Experience', 'Design System'], impact: 'One AI coach designed for three surfaces, with production components she merged herself.' },
-        { title: 'Financial Finesse Hub', hook: 'From content library to guided plan', href: '/work/hub/', swatch: '#EBE8F4', thumb: '/images/hub-card.png', tags: ['Platform Design', 'UX Strategy'], impact: 'The 2024 platform redesign she led: a static library became a guided plan.' },
+        { title: 'Financial Finesse Hub', hook: 'The Hub, rebuilt around each member', href: '/work/hub/', swatch: '#EBE8F4', thumb: '/images/hub-card.png', tags: ['Platform Design', 'UX Strategy'], impact: 'The 2024 redesign she led, from a one-page concept to launch, with an AI that adapts to each member.' },
         { title: 'Brix — This Site', hook: 'A portfolio you can ask questions', href: '/work/brix/', swatch: '#E8E4DE', thumb: '/images/brix-card.webp', tags: ['Design Engineering', 'Solo Build'], impact: "This portfolio itself — an on-device answer engine with no backend, no API key. You're using it right now." }
       ];
 
@@ -1311,8 +1315,8 @@ function retrieve(query) {
       // The three case studies above the ask box: image, name, one line.
       // Each is a full-page link (data-navigate), not a panel preview.
       const HOME_TILES = [
-        { href: '/work/global-content-studio/', title: 'Global Content Studio', sub: 'The review tool behind our content in 25 markets. I designed it and built the first version.', thumb: '/images/gcs-card.png' },
-        { href: '/work/hub/', title: 'Financial Finesse Hub', sub: 'A content library turned into a guided plan, from research to launch.', thumb: '/images/hub-card.png' },
+        { href: '/work/global-content-studio/', title: 'Global Content Studio', sub: 'The review tool behind our content in 25 markets. I designed and built v1.', thumb: '/images/gcs-card.png' },
+        { href: '/work/hub/', title: 'Financial Finesse Hub', sub: 'Our member platform, rebuilt around an AI that adapts to each person.', thumb: '/images/hub-card.png' },
         { href: '/work/aimee/', title: 'Aimee AI Coach', sub: 'One AI coach across three products, with a human coach a tap away.', thumb: '/images/aimee-card.png' },
       ];
 

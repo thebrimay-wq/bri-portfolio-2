@@ -162,8 +162,8 @@ const REGRESSIONS = [
 // thing, or say plainly that the portfolio does not document it, and link where useful.
 const says = (...needles) => r => needles.every(n => (r.text || '').toLowerCase().includes(n.toLowerCase()));
 const ANSWERS = [
-  { q: 'What research changed the design?', expect: r => says('two rounds', '75')(r) && r.href, label: 'research: names the Hub testing and the documented fit-check finding' },
-  { q: 'Which research finding changed a design decision?', expect: says('two rounds', '13'), label: 'research paraphrase' },
+  { q: 'What research changed the design?', expect: r => says('UserTesting', '75')(r) && r.href, label: 'research: names the Hub testing Bri ran and the documented fit-check finding' },
+  { q: 'Which research finding changed a design decision?', expect: says('UserTesting', '13'), label: 'research paraphrase' },
   { q: 'Tell me about a disagreement with a product manager.', expect: says("doesn't document a specific disagreement", 'approved'), label: 'disagreement: states the limitation, offers the written incident' },
   { q: 'Has she ever pushed back on a PM?', expect: says("doesn't document a specific disagreement"), label: 'disagreement paraphrase (pushback)' },
   { q: 'How was the 200% engagement increase measured?', expect: says('does not document how', 'internal reporting'), label: 'engagement: says the definition is not published' },

@@ -160,7 +160,7 @@ console.log('\n══ 7. HOMEPAGE CHAT: tiles, starters, code exhibit, deep link
   await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(600);  log('3 case-study doors, each a full-page link', await p.locator('.home-tile[data-navigate]').count() === 3);
   log('each tile: image, project name, one line', await p.evaluate(() => [...document.querySelectorAll('.home-tile')].every(t => t.querySelector('.home-tile-img img') && t.querySelector('.home-tile-label')?.textContent.trim() && t.querySelector('.home-tile-sub')?.textContent.trim())));
-  log('three starter questions in the ask box tray', await p.locator('#tray-chips .chip').count() === 3);
+  log('four starter questions in the ask box tray', await p.locator('#tray-chips .chip').count() === 4);
   log('no fake thinking indicator', await p.evaluate(() => { document.querySelector('#composer-input').value = 'what is atlas'; document.querySelector('#composer-form').requestSubmit(); return document.querySelectorAll('[data-typing]').length === 0 && document.querySelectorAll('.msg--agent .bubble').length === 1; }));
   log('no lens chips (one audience)', await p.locator('.lens-chip').count() === 0);
   log('hero: name, title, second line', (await p.locator('.hero-intro .hero-name').count()) === 1 && (await p.locator('.hero-intro .hero-line').textContent()).includes('then I ship the code'));

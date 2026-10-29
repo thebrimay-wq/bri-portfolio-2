@@ -109,6 +109,8 @@ Homepage tile (2026-10-29, Stripe brief): "Aimee AI Coach: One AI coach across t
 | 2024 redesign vs Aimee-era screenshots | Experience 03 image is the AI actions screen | images folder | caption dates the screenshot; Aimee work credited to 2026 |
 | Role: Lead Product Designer, cross-functional team | CONFIRMED by résumé timeline | — | "led the design" not "led the design team" (team size unknown) |
 
+**Hub redesign, in Bri's words (2026-10-29):** the Hub was always the Hub; its design was dated and it had no AI. The redesign is personalized, with an AI that adapts to the member. Bri took another designer's single-page concept, kept only its three columns, and built it out for the Hub's offering, features and goals in 2.5 weeks; worked with dev to a build ready for testing in 1.5 months after that; ran UserTesting sessions herself and changed the design in the same sprints; launched by the Jan 1 due date. Status: STATED BY BRI. Retired: "from content library to guided plan" and "a static library became a guided plan" (the Hub was never only a library). Open: the year of the Jan 1 launch, the testing session count, and how the 24-hour first-Hub prototype relates to this redesign.
+
 ## Brix (this site)
 
 | Claim | Status | Source | Public wording |
