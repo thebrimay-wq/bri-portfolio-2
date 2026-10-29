@@ -139,6 +139,8 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 | CEO reaction to the B2C prototype: "WOW, just wow. I love how well we work together— you took the spirit and made it better than I could have envisioned!" | STATED BY BRI 2026-10-29 (private message, Bri's to share) | Bri | Quote verbatim, attributed to "CEO, Financial Finesse", unnamed. B2C App case study and Brix only. It praises the prototype; never attach a business result to it (see the retired Federal Reserve quote). |
 | Prototyped the first version of the Financial Finesse Hub in 24 hours | STATED BY BRI 2026-10-29 | Bri | "I prototyped the first version of the Hub in 24 hours". Which release that prototype preceded is not stated; do not tie it to the 2024 redesign's dates. |
 | Has built multiple websites in a day | STATED BY BRI 2026-10-29 | Bri; no dated example on the site | About and Brix only, as her statement: "I've built whole websites in a day." No count. |
+| Joined FF when it had a logo, a brand guide, coaching research and coaches, but no products or app; designed every product FF ships today | STATED BY BRI 2026-10-29 (Stripe brief) | Bri | Homepage: "When I joined Financial Finesse, it had a logo, a brand guide and great coaches. Every product it ships today, I designed." Résumé: "I joined when the company had a brand and no product." |
+| Lead Product Designer and Product Creative Director were separate titles with their own years (2017–2025 combined until now) | OPEN 2026-10-29 | Bri | Résumé shows both with "[BRI: years]" until she supplies them; PDFs not regenerated until then. |
 
 ## Questions for Bri (batched, priority order)
 
