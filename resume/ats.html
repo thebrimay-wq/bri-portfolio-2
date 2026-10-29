@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bri May – Résumé</title>
+  <meta name="robots" content="noindex">
+  <style>
+    /* Upload version of one-page.html: one column, live text, standard headings, no images.
+       Same content as one-page.html; keep the two in sync. No positioned elements, no grids
+       that put two blocks side by side, no letter-spaced headings: each breaks PDF text order.
+       Fonts are static Inter cuts (assets/fonts): Chrome prints a variable font as Type 3
+       glyphs, which some ATS parsers misread. No font-feature-settings or tabular-nums either:
+       alternate glyphs have no Unicode mapping and extract as garbage ("Educ\ue02ction"). */
+    @font-face { font-family: 'Inter Static'; font-weight: 400; src: url(assets/fonts/inter-400.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter Static'; font-weight: 550; src: url(assets/fonts/inter-550.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter Static'; font-weight: 600; src: url(assets/fonts/inter-600.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter Static'; font-weight: 650; src: url(assets/fonts/inter-650.woff2) format('woff2'); }
+    :root {
+      --ink:    #0A0A0A;
+      --ink-2:  #515661;
+      --ink-3:  #697282;
+      --border: #E5E7EB;
+      --accent: #9B6B57;
+    }
+
+    @page { size: Letter; margin: 0.45in 0.6in 0.4in; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { background: #fff; }
+    body {
+      font-family: 'Inter Static', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      font-size: 9.3pt;
+      line-height: 1.35;
+      color: var(--ink-2);
+      -webkit-font-smoothing: antialiased;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    a { color: inherit; text-decoration: none; }
+    strong { color: var(--ink); font-weight: 600; }
+
+    @media screen {
+      body { background: #f0f2f5; padding: 32px 0; }
+      .sheet { width: 8.5in; min-height: 11in; margin: 0 auto; background: #fff;
+               padding: 0.45in 0.6in 0.4in; box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+    }
+
+    /* ── Header ─────────────────────────────── */
+    .name {
+      font-size: 24pt;
+      font-weight: 650;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .title {
+      margin-top: 6pt;
+      font-size: 11.5pt;
+      font-weight: 550;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .tagline { font-size: 10pt; color: var(--ink-2); }
+    .contact { margin-top: 6pt; font-size: 9pt; color: var(--ink-2); }
+    .sep { color: var(--ink-3); padding: 0 1.5pt; }
+
+    /* ── Sections ───────────────────────────── */
+    section { margin-top: 8pt; padding-top: 6pt; border-top: 1px solid var(--border); }
+    header + section { border-top-color: var(--ink); }
+    h2 {
+      font-size: 10.5pt;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      color: var(--accent);
+      margin-bottom: 3pt;
+    }
+
+    .line { display: flex; align-items: baseline; justify-content: space-between; gap: 14pt; }
+    .dates { font-size: 9pt; color: var(--ink-3); white-space: nowrap; }
+
+    h3 { font-size: 10.6pt; font-weight: 650; letter-spacing: -0.015em; color: var(--ink); }
+    h4 { font-size: 9.8pt; font-weight: 600; color: var(--ink); }
+    .org + .role { margin-top: 3pt; }
+    .role + .role { margin-top: 6pt; }
+    .org-block + .org-block { margin-top: 8pt; }
+    .note { font-size: 9pt; color: var(--ink-3); }
+
+    ul { list-style: none; margin-top: 2pt; }
+    li { padding-left: 11pt; text-indent: -11pt; margin-top: 2pt; }
+    li::before { content: "•"; display: inline-block; width: 11pt; text-indent: 0; color: var(--accent); }
+
+    .projects li { margin-top: 2pt; }
+    .url { color: var(--ink-3); white-space: nowrap; }
+
+    .skills p + p, .edu + .edu { margin-top: 2.5pt; }
+    p, li { text-wrap: pretty; }
+  </style>
+</head>
+<body>
+<main class="sheet">
+
+  <header>
+    <h1 class="name">Bri May</h1>
+    <p class="title">AI-Native Senior Product Designer</p>
+    <p class="tagline">I design the product, then I ship the code.</p>
+    <p class="contact">Pleasanton, CA (Remote) <span class="sep">·</span> <a href="mailto:thebrimay@gmail.com">thebrimay@gmail.com</a> <span class="sep">·</span> <a href="https://imbrimay.com">imbrimay.com</a> <span class="sep">·</span> <a href="https://linkedin.com/in/brimay">linkedin.com/in/brimay</a> <span class="sep">·</span> <a href="https://github.com/thebrimay-wq">github.com/thebrimay-wq</a></p>
+  </header>
+
+  <section>
+    <h2>Experience</h2>
+
+    <div class="org-block">
+      <div class="line org"><h3>Financial Finesse</h3><span class="dates">2016 – Present</span></div>
+
+      <div class="role">
+        <div class="line"><h4>AI-Native Senior Product Designer, AI Team</h4><span class="dates">2025 – Present</span></div>
+        <ul>
+          <li><strong>I joined when the company had a brand and no product.</strong> I designed every product it ships today, working directly with the CEO and the dev team.</li>
+          <li><strong>I built Global Content Studio.</strong> I saw writers putting company content into unregulated AI tools, so I designed a safe way to do it and built the first version with Claude Code. It was in launch testing four weeks after my first commit, localized 3,512 pieces in one four-day run, and is now live in 25 markets.</li>
+          <li><strong>I designed how review works.</strong> The AI flags problems, and a person approves every article before it goes live. On 75 real UK articles, the checks rewrote 13 for UK readers and dropped 62.</li>
+          <li><strong>I designed Aimee, our AI financial coach,</strong> for the Hub, a client widget, and Microsoft Teams. I prototyped her in code, then merged her design tokens and four components into the production SDK myself.</li>
+          <li><strong>I ship production code.</strong> I built the review screens that decide what gets published, and I keep our design system in code, accessible and in light and dark mode.</li>
+        </ul>
+      </div>
+
+      <div class="role">
+        <div class="line"><h4>Product Creative Director</h4><span class="dates">2022 – 2026</span></div>
+        <p class="note">Customers include the Federal Reserve, Meta, NFL, JPMorgan Chase, Nestlé, Patagonia, Comcast, McKinsey</p>
+        <ul>
+          <li><strong>I moved our design from marketing-led to product-led,</strong> brought in user research, and set the quality bar as the team grew.</li>
+        </ul>
+      </div>
+
+      <div class="role">
+        <div class="line"><h4>Lead Product Designer</h4><span class="dates">2017 – 2025</span></div>
+        <ul>
+          <li><strong>I prototyped the first Hub in 24 hours.</strong> For its 2024 redesign, I turned a one-page concept into the full design in 2.5 weeks, ran 5 rounds of user testing with 48 people, and launched with dev by the January 1 deadline. Internal reporting showed +200% engagement.</li>
+        </ul>
+      </div>
+
+      <div class="role">
+        <div class="line"><h4>Senior Graphic Designer</h4><span class="dates">2016 – 2017</span></div>
+        <ul>
+          <li>I built the brand and our first design system. Within a year the job turned into product design.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="org-block">
+      <div class="line org"><h3>CKC Communications</h3><span class="dates">2012 – 2015</span></div>
+      <div class="role">
+        <h4>Graphic Designer</h4>
+        <ul>
+          <li>Branding, websites, and campaigns for 50+ companies.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects">
+    <h2>Projects</h2>
+    <ul>
+      <li><strong>Global Content Studio:</strong> live in 25 markets. <span class="url">imbrimay.com/work/global-content-studio</span></li>
+      <li><strong>Aimee AI Coach:</strong> designed for 3 surfaces. <span class="url">imbrimay.com/work/aimee</span></li>
+      <li><strong>Hub redesign:</strong> +200% engagement (internal). <span class="url">imbrimay.com/work/hub</span></li>
+      <li><strong>Financial Finesse B2C App:</strong> 2 days from the CEO's idea to a prototype. <span class="url">imbrimay.com/work/finesse-app</span></li>
+    </ul>
+  </section>
+
+  <section class="skills">
+    <h2>Skills</h2>
+    <p><strong>Engineering:</strong> TypeScript, React, Lit, HTML &amp; CSS, Tailwind, Cloudflare Workers, Python, Playwright, Git</p>
+    <p><strong>AI systems:</strong> Claude Code, Anthropic API, RAG and grounding, evals and human review, LLM pipelines, conversational UX</p>
+    <p><strong>Design:</strong> 0-to-1 product design, design systems, prototyping in code, user research, Figma</p>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="line edu"><span><strong>California State University, Chico</strong>, B.S. Business, Marketing. Full-ride soccer scholarship.</span><span class="dates">2012 – 2015</span></div>
+    <div class="line edu"><span><strong>Arizona State University</strong>, D1 soccer, full-ride scholarship</span><span class="dates">2 years</span></div>
+  </section>
+
+</main>
+</body>
+</html>
