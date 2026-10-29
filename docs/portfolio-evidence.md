@@ -156,6 +156,7 @@ Homepage tile (2026-10-29, Stripe brief): "Aimee AI Coach: One AI coach across t
 
 - (2026-10-23) Answered: 70 = countries planned by the end of 2026 (a CEO goal). Cards now match the headline.
 - (2026-10-23) Answered: 25 countries are live today, and the plan is 70 by 2027.
+- (2026-10-29) Bri: say "25 countries", not "25 markets", everywhere the live count appears (GCS hero, tiles, Work card, résumé, Brix).
 - (2026-10-29) Answered: Bri has worked directly with the CEO since she started at FF; prototypes in a day or two (Hub first version in 24 hours, B2C App in two days, websites in a day). Logged under "Speed and working with the CEO".
 - (2026-10-23) Open: which quarter does "in a quarter" (homepage preview G) refer to?
 
