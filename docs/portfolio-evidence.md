@@ -14,7 +14,7 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 
 | Item | Wording | Where |
 |---|---|---|
-| Title | AI-Native Senior Product Designer | every page, Brix, résumé, metadata |
+| Title | Senior AI-Native Product Designer | every page, Brix, résumé, metadata |
 | Tagline | I design the product, then I ship the code. | same |
 | Supporting line | I use AI to move from product discovery to working prototypes and production code, with hands-on ownership of the experience and its quality. | homepage hero, About |
 | Work order | Studio · Aimee · Hub · Brix | homepage doors, Work page, Brix `CASE_STUDIES`, bottom-cta loop |
@@ -124,7 +124,7 @@ Homepage tile (2026-10-29, Stripe brief): "Aimee AI Coach: One AI coach across t
 
 | Claim | Status | Public wording |
 |---|---|---|
-| FF 2016–present; Sr. Graphic 2016–17; Lead PD · Product Creative Director 2017–2025; AI-Native Senior PD 2025– | CONFIRMED (Bri's résumé) | keep; historical titles unchanged |
+| FF 2016–present; Sr. Graphic 2016–17; Lead PD · Product Creative Director 2017–2025; Senior AI-Native PD 2025– | CONFIRMED (Bri's résumé) | keep; historical titles unchanged |
 | CKC Communications 2012–2015, 50+ companies | CONFIRMED (Bri's résumé) | keep |
 | Education: Chico B.S. Business/Marketing on a full-ride soccer scholarship; ASU 2 years, D1 soccer on a full-ride scholarship | CONFIRMED (Bri, 2026-10-23) | Chico is never called D1 (NCAA Division II); "D1" belongs to ASU only |
 | 80 commits into `blue`, 27 into `ff.workers`, 32 into `benehub` | CONFIRMED | evidence only, never shown publicly (2026-10-24) |
@@ -153,7 +153,7 @@ Homepage tile (2026-10-29, Stripe brief): "Aimee AI Coach: One AI coach across t
 - (2026-10-23) Answered: designing since 2011 (Bri). Keep "since 2011"; CKC is her first dated role (2012).
 - (2026-10-23) Answered: Chico was a full-ride soccer scholarship; ASU was a full-ride D1 soccer scholarship. Résumé, one-page résumé, and KB updated.
 - (2026-10-24) Answered: keep the "unregulated AI" origin line as Bri's statement (writers used personal AI tools for company content outside company control or review). Wording: "saw writers drafting company content on unregulated AI tools" (résumé page), "Spotted unregulated AI use in content" (one-page résumé and PDF).
-- (2026-10-23) Answered: retitle. `resume/one-page.html` and its PDF now say "AI-Native Senior Product Designer", with the same ledger fixes as the main résumé.
+- (2026-10-23) Answered: retitle. `resume/one-page.html` and its PDF now say "Senior AI-Native Product Designer", with the same ledger fixes as the main résumé.
 
 - (2026-10-23) Answered: 70 = countries planned by the end of 2026 (a CEO goal). Cards now match the headline.
 - (2026-10-23) Answered: 25 countries are live today, and the plan is 70 by 2027.

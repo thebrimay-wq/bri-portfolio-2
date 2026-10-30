@@ -9,7 +9,7 @@ import FadeUp from '../components/FadeUp.jsx';
 
 const META = {
   name:        'Bri May',
-  title:       'AI-Native Product Designer & Design Engineer',
+  title:       'Senior AI-Native Product Designer',
   intro:       'I design product experiences that simplify complexity, strengthen trust, and drive measurable business impact. My work sits at the intersection of product design, UX strategy, visual systems, and creative direction.',
   location:    'Bay Area, CA',
   availability:'Open to remote',
@@ -58,7 +58,7 @@ const IMPACT = [
 const EXPERIENCE = [
   {
     company: 'Financial Finesse',
-    role:    'AI-Native Product Designer & Design Engineer',
+    role:    'Senior AI-Native Product Designer',
     period:  '2016 – Present',
     summary: 'Led design across product, brand, and marketing for a financial wellness platform serving Fortune 500 companies. Owned end-to-end experience design across major platform redesigns, AI integration, UX strategy, design systems, and executive-facing storytelling.',
     bullets: [

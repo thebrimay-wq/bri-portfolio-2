@@ -80,7 +80,7 @@ function Hero() {
         <div className="hero__copy">
           <FadeUp>
             <p className="eyebrow" style={{ marginBottom: 28 }}>
-              AI-Native Product Designer &amp; Design Engineer
+              Senior AI-Native Product Designer
             </p>
           </FadeUp>
 

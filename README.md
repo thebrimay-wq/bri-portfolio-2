@@ -2,7 +2,7 @@
 
 [![Deploy to GitHub Pages](https://github.com/thebrimay-wq/bri-portfolio-2/actions/workflows/deploy.yml/badge.svg)](https://github.com/thebrimay-wq/bri-portfolio-2/actions/workflows/deploy.yml)
 
-Portfolio of **Bri May**, AI-Native Senior Product Designer. I design the product, then I ship the code.
+Portfolio of **Bri May**, Senior AI-Native Product Designer. I design the product, then I ship the code.
 Every number on the site traces to a dated source in `facts.md` and `docs/portfolio-evidence.md`; what cannot be
 sourced is said to be unsourced, on the page and in Brix's answers.
 
