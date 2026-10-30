@@ -31,7 +31,7 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 | 70 countries by the end of 2026 | UNCONFIRMED, stated by Bri 2026-10-23 | Bri: the CEO wanted to go global, and the plan is 70 countries by year end. A target, not today's count; today is 25 markets with published or approved content (Sep 8, 2026). | GCS hero: "Built before anyone asked. Now going global in 70 countries." and a "70 · Countries planned by the end of 2026" fact beside "25 · Markets live today". Never present 70 as already live. The Work card, homepage door, and Brix chat card use the same line. |
 | Live in 25 countries today; 70 by 2027 | UNCONFIRMED, stated by Bri 2026-10-23 | Bri: "We are global in 25 countries already and will be at 70 by 2027." Consistent with the index (25 locales with published or approved content, Sep 8, 2026) and with the 70-countries target above. Use "25 countries" (not "over 25"); 70 stays a target. | "25 countries" may stand as live today; "70" only with "by 2027" or "planned". |
 | Global in over 25 countries in a quarter | UNCONFIRMED, stated by Bri 2026-10-23 | Bri's wording. Bri has since given the count as 25 countries (row above), so "over 25" overstates it. "In a quarter" is still unsourced: 25 locales were reached about 15 weeks after launch QA (05-22). | Homepage preview study G (`labs/brix-next/g/`), Studio tile only, now as "Built before anyone asked. 25 countries in a quarter, 70 by 2027." (replaced "over 25"). Not on the case study, Brix KB, or résumé until the quarter is confirmed. |
-| One-click localization: "A pipeline and UI to localize our content in just one click, built and shipped by me." | UNCONFIRMED wording, stated by Bri 2026-10-23 | Bri's line for the live homepage tile (shipped 2026-10-23). "Built and shipped by me" matches the v1 record (493 of 524 commits, four weeks to launch QA). "One click" describes the Localize action in the Studio UI; the case study does not show it as a single click. | Live homepage Studio tile only. The "25 countries in a quarter, 70 by 2027" line stayed in the preview and did not ship. |
+| One-click localization: "A pipeline and UI to localize our content in just one click, built and shipped by me." | RETIRED 2026-10-29 (contradicts the human-review story); tile now reads "The review tool behind our content in 25 markets. I designed it and built the first version." | Bri's line for the live homepage tile (shipped 2026-10-23). "Built and shipped by me" matches the v1 record (493 of 524 commits, four weeks to launch QA). "One click" describes the Localize action in the Studio UI; the case study does not show it as a single click. | Live homepage Studio tile only. The "25 countries in a quarter, 70 by 2027" line stayed in the preview and did not ship. |
 | 4,154 published · 975 approved · 2,772 in review · 229 draft | SNAPSHOT 2026-09-08. Sums to 8,130, not 8,118; `facts.md` does not explain the 12. | same | Publish only published / approved / in review as "of the 8,118". Do not print the four-way breakdown as a sum. |
 | 3,512 variants in one run, 2026-06-01→06-04, ten locales brought live, peak day 1,575 | CONFIRMED | index `createdAt` + workflow logs | keep, dated |
 | 3,726 Studio-era variants since 2026-04-28 across 26 locales | CONFIRMED | same | optional; "Studio-era" must be labeled, legacy-locale caveat applies |
@@ -86,7 +86,7 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 | Trust / failure states: "AI coach" not "virtual"; coach escalation card; "Aimee can make mistakes" disclaimer; thinking state; prose-first gating; coral for a single urgent item | CONFIRMED in the component library | `/aimee-ai/components/` | document as design decisions with reasoning; no measured trust outcome exists |
 | Validated user outcomes | NONE AVAILABLE | — | state the limitation; scope (3 surfaces, 1 library) is labeled as scope |
 
-Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and human financial coaches, anywhere, anytime." It describes the design intent; shipping by surface stays UNCONFIRMED above, so the KB and case study keep "designed for three surfaces".
+Homepage tile (2026-10-29, Stripe brief): "Aimee AI Coach: One AI coach across three products, with a human coach a tap away." "Aimee Anywhere" is retired; the case study moved to `/work/aimee/` (stub at `/aimee-ai/`). Earlier wording (2026-10-23): "Aimee Anywhere: Chat with Aimee, and human financial coaches, anywhere, anytime." It describes the design intent; shipping by surface stays UNCONFIRMED above, so the KB and case study keep "designed for three surfaces".
 
 ## Financial Finesse B2C App
 
@@ -109,6 +109,8 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 | 2024 redesign vs Aimee-era screenshots | Experience 03 image is the AI actions screen | images folder | caption dates the screenshot; Aimee work credited to 2026 |
 | Role: Lead Product Designer, cross-functional team | CONFIRMED by résumé timeline | — | "led the design" not "led the design team" (team size unknown) |
 
+**Hub redesign, in Bri's words (2026-10-29):** the Hub was always the Hub; its design was dated and it had no AI. The redesign is personalized, with an AI that adapts to the member. Bri took another designer's single-page concept, kept only its three columns, and built it out for the Hub's offering, features and goals in 2.5 weeks; worked with dev to a build ready for testing in 1.5 months after that; ran UserTesting sessions herself and changed the design in the same sprints; launched by the Jan 1 due date. Status: STATED BY BRI. Retired: "from content library to guided plan" and "a static library became a guided plan" (the Hub was never only a library). Open: the year of the Jan 1 launch, the testing session count, and how the 24-hour first-Hub prototype relates to this redesign.
+
 ## Brix (this site)
 
 | Claim | Status | Source | Public wording |
@@ -130,6 +132,22 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 | Mentors colleagues on building with AI / AI Champion | UNCONFIRMED numbers | role line only |
 | PDF reading order | DEFECT (pypdf plain mode: bullets after Education) | fixed 2026-10-13, see below |
 
+## Speed and working with the CEO (stated by Bri, 2026-10-29)
+
+| Claim | Status | Source | Public wording |
+|---|---|---|---|
+| Has worked directly with the Financial Finesse CEO since starting at FF (2016) | STATED BY BRI 2026-10-29 | Bri | "I've worked directly with our CEO for ten years" / "since 2016". Never name the CEO. |
+| Prototyped the B2C App in two days from the CEO's vision | STATED BY BRI 2026-10-29 | Bri; the git record (B2C row above) covers the four-day v7 build, 10-19 → 10-22 | "2 days from the CEO's vision to a working prototype". The four days stay as the build of the version shown. |
+| CEO reaction to the B2C prototype: "WOW, just wow. I love how well we work together— you took the spirit and made it better than I could have envisioned!" | STATED BY BRI 2026-10-29 (private message, Bri's to share) | Bri | Quote verbatim, attributed to "CEO, Financial Finesse", unnamed. B2C App case study and Brix only. It praises the prototype; never attach a business result to it (see the retired Federal Reserve quote). |
+| Prototyped the first version of the Financial Finesse Hub in 24 hours | STATED BY BRI 2026-10-29 | Bri | "I prototyped the first version of the Hub in 24 hours". Which release that prototype preceded is not stated; do not tie it to the 2024 redesign's dates. |
+| Has built multiple websites in a day | STATED BY BRI 2026-10-29 | Bri; no dated example on the site | About and Brix only, as her statement: "I've built whole websites in a day." No count. |
+| Joined FF when it had a logo, a brand guide, coaching research and coaches, but no products or app; designed every product FF ships today | STATED BY BRI 2026-10-29 (Stripe brief) | Bri | Homepage: "When I joined Financial Finesse, it had a logo, a brand guide and great coaches. Every product it ships today, I designed." Résumé: "I joined when the company had a brand and no product." |
+| Lead Product Designer 2017–2025; Product Creative Director 2022–2026 (concurrent); moved to the AI team early 2025 | STATED BY BRI 2026-10-29 | Bri | Résumé lists Product Creative Director (2022 – 2026) above Lead Product Designer (2017 – 2025). |
+| GCS review console users: 35 localizers in 26 countries; Bri is their main contact and meets them weekly; their feedback tunes the pipeline; non-English articles carry an English version that updates as the localizer edits, so only one version is reviewed | STATED BY BRI 2026-10-29 | Bri | GCS §02, Brix internal-tools answer |
+| Bri is helping build a wiki for each country with the facts the team needs, to minimize web search; this is what the GCS "own fact library" decision addresses | STATED BY BRI 2026-10-29 | Bri | GCS Decisions row, Brix decisions answer. In progress; never say it is finished or give a count. |
+| Hub redesign testing: 5 rounds of UserTesting, 48 users total, at different stages | STATED BY BRI 2026-10-29 | Bri | Hub §03, résumé, Brix research answer |
+| B2C App: leadership loved it; the company is building the product in this exact design; Bri keeps adding features in her repo while an AI engineer builds it into a new repo connected to FF's systems and Aimee | STATED BY BRI 2026-10-29 | Bri | B2C takeaway and status, Brix B2C answer |
+
 ## Questions for Bri (batched, priority order)
 
 - (2026-10-23) Answered: designing since 2011 (Bri). Keep "since 2011"; CKC is her first dated role (2012).
@@ -139,6 +157,8 @@ Homepage tile (Bri's wording, 2026-10-23): "Aimee Anywhere: Chat with Aimee, and
 
 - (2026-10-23) Answered: 70 = countries planned by the end of 2026 (a CEO goal). Cards now match the headline.
 - (2026-10-23) Answered: 25 countries are live today, and the plan is 70 by 2027.
+- (2026-10-29) Bri: say "25 countries", not "25 markets", everywhere the live count appears (GCS hero, tiles, Work card, résumé, Brix).
+- (2026-10-29) Answered: Bri has worked directly with the CEO since she started at FF; prototypes in a day or two (Hub first version in 24 hours, B2C App in two days, websites in a day). Logged under "Speed and working with the CEO".
 - (2026-10-23) Open: which quarter does "in a quarter" (homepage preview G) refer to?
 
 1. **One AI-assisted shipping example.** Pick the Studio feature that best shows your process (candidates from the logs: the skip-approved fix, the independent verify stage, the single-flight brief cache). For it: which tools (Claude Code is confirmed; anything else?), what the AI produced first, what you rejected or redirected, what shipped, and which artifacts can be shown publicly (a sanitized diff, a test, a screenshot of the review console).

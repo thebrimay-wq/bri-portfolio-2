@@ -33,7 +33,7 @@
   var navLinks = links.querySelectorAll('a');
   for (var j = 0; j < navLinks.length; j++) {
     var p = new URL(navLinks[j].href, location.href).pathname;
-    var inSection = here === p || here.indexOf(p) === 0 || (p === '/work/' && here.indexOf('/aimee-ai/') === 0);
+    var inSection = here === p || here.indexOf(p) === 0;
     if (inSection) {
       navLinks[j].classList.add('active');
       if (here === p) navLinks[j].setAttribute('aria-current', 'page');

@@ -9,6 +9,9 @@ const b = await chromium.launch(); const p = await b.newPage();
 await p.goto(base + '/resume/one-page.html', { waitUntil: 'networkidle' });
 await p.emulateMedia({ media: 'print' });
 await p.pdf({ path: out, format: 'Letter', printBackground: true, preferCSSPageSize: true });
+// Upload version for applicant tracking systems: one column, no images (resume/ats.html).
+await p.goto(base + '/resume/ats.html', { waitUntil: 'networkidle' });
+await p.pdf({ path: 'resume/BriMay_Resume_ATS.pdf', format: 'Letter', printBackground: true, preferCSSPageSize: true });
 await b.close();
 for (const alias of ['resume/BriMay_Resume_2026.pdf', 'resume/BriMay_Resume_OnePage.pdf']) copyFileSync(out, alias);
 console.log('wrote', out, '+ aliases');

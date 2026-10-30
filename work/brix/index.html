@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles/site.css?v=gallery-5" />
-  <meta name="description" content="Case study: this portfolio itself — an AI-style concierge with an on-device retrieval engine, built with no framework, no backend, and no API key, audited to 53 browser checks and a 62-question engine probe with answer-content checks (October 2026)." />
+  <link rel="stylesheet" href="/styles/site.css?v=gallery-7" />
+  <meta name="description" content="Case study: A portfolio you can ask questions: a chat whose answer engine runs in your browser, with no backend and no API key, designed, built, and tested by Bri May." />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta property="og:type" content="article" />
@@ -20,8 +20,8 @@
   <link rel="canonical" href="https://imbrimay.com/work/brix/" />
   <meta property="og:title" content="Brix — This Site as a Case Study | Bri May" />
   <meta name="twitter:title" content="Brix — This Site as a Case Study | Bri May" />
-  <meta property="og:description" content="The portfolio as the proof: a conversational site with an on-device answer engine — no framework, no backend, no API key — designed, built, and audited by one person." />
-  <meta name="twitter:description" content="The portfolio as the proof: a conversational site with an on-device answer engine — no framework, no backend, no API key." />
+  <meta property="og:description" content="A portfolio you can ask questions: a chat whose answer engine runs in your browser, with no backend and no API key, designed, built, and tested by Bri May." />
+  <meta name="twitter:description" content="A portfolio you can ask questions: a chat whose answer engine runs in your browser, with no backend and no API key, designed, built, and tested by Bri May." />
   <script src="/scripts/embed.js"></script>
 </head>
 <body>
@@ -43,18 +43,11 @@
       <div class="wrap">
         <p class="hero-meta fade-up"><span>Case study</span><span>Personal project</span><span>2026</span><span>Design and code, solo</span></p>
         <h1 class="fade-up" style="transition-delay:50ms">A portfolio you can ask questions.</h1>
-        <p class="hero-lead fade-up" style="transition-delay:90ms">Brix is this site: a chat concierge whose answer engine runs in your browser, with no framework, no backend, and no API key. I designed it, wrote the engine, and audited it like a product.</p>
-
-        <div class="hero-facts fade-up" style="transition-delay:130ms">
-          <div class="hero-fact"><div class="hero-fact-val">$0</div><div class="hero-fact-label">Backend and per-answer cost</div></div>
-          <div class="hero-fact"><div class="hero-fact-val">61/62</div><div class="hero-fact-label">Screening questions answered, Oct 13, 2026</div></div>
-          <div class="hero-fact"><div class="hero-fact-val">53/53</div><div class="hero-fact-label">Browser checks passing, Oct 23, 2026</div></div>
-          <div class="hero-fact"><div class="hero-fact-val">AA</div><div class="hero-fact-label">Contrast in both themes</div></div>
-        </div>
+        <p class="hero-lead fade-up" style="transition-delay:90ms">Brix is this site: a chat whose answer engine runs in your browser, with no backend and no API key. I designed it, wrote the engine, and tested it like a product.</p>
 
         <div class="sky sky--pad fade-up" style="transition-delay:170ms">
           <figure class="screen">
-            <div class="frame"><img src="/images/brix-case-study/home.webp" alt="The homepage: an icon rail with Bri's signature, the greeting Hi, I'm Bri May, three case-study tiles, and the ask box with three starter questions" width="2400" height="1500"></div>
+            <div class="frame"><img src="/images/brix-case-study/home.webp" alt="The homepage: an icon rail with Bri's signature, the greeting Hi, I'm Bri May, three case-study tiles, and the ask box with starter questions" width="2400" height="1500"></div>
             <figcaption><b>The first screen</b>Three case studies to open and one box to ask anything.</figcaption>
           </figure>
         </div>
@@ -62,83 +55,32 @@
     </section>
 
     <div class="wrap">
-      <section class="section" id="owned">
-        <div class="section-head fade-up">
-          <div><span class="section-n">01 · At a glance</span><h2>A recruiter gives a portfolio 90 seconds. A claim isn't proof.</h2></div>
-          <p class="section-lead">So the site proves its own claims. The engineering is the site, open to anyone with DevTools.</p>
-        </div>
-        <div class="glance fade-up">
-          <div><h3>The problem</h3><p>Every senior portfolio says "ships quality." None of it is checkable in the time a screener spends, and a bolted-on chatbot means a key, a server, and a bill.</p></div>
-          <div><h3>The bet</h3><p>A chat that answers screening questions itself, honest about what it is, with the evidence one click away.</p></div>
-          <div><h3>My role</h3><p>Everything: product framing, the interface, the engine, accessibility, and the audit.</p></div>
-        </div>
-        <div class="rows fade-up">
-          <div class="row"><h3>Built with</h3><p>Vanilla HTML, CSS, and JavaScript · no build step · GitHub Pages</p></div>
-          <div class="row"><h3>Timeline</h3><p>2026, evenings and weekends</p></div>
-        </div>
-      </section>
-
       <section class="section" id="brix-solution">
+        <span id="owned" class="anchor-alias" aria-hidden="true"></span>
         <div class="section-head fade-up">
-          <div><span class="section-n">02 · The engine</span><h2>An AI product with no AI bill</h2></div>
-          <p class="section-lead">Questions are normalized, synonym-expanded, and fuzzy-matched against a hand-written knowledge base, then scored for confidence. Ask if it's a real AI and it shows you its code.</p>
+          <div><span class="section-n">01 · The engine</span><h2>Ask if it's a real AI and it shows you its code</h2></div>
+          <p class="section-lead">It matches your question against a knowledge base I wrote about my work, and it says so when it doesn't know.</p>
         </div>
         <div class="screens fade-up">
           <figure class="screen">
             <div class="frame"><img src="/images/brix-case-study/hero-answer.webp" alt="The homepage answering How does this work, are you a real AI, honestly, with the retrieval engine's source code rendered inside the answer" loading="lazy" width="2400" height="1500"></div>
-            <figcaption><b>The source, in the answer</b>Nothing leaves the visitor's browser, and every answer has a shareable link.</figcaption>
+            <figcaption><b>The source, in the answer</b>Nothing leaves your browser, and every answer has a link you can share.</figcaption>
           </figure>
-        </div>
-      </section>
-
-      <section class="section" id="panel">
-        <div class="section-head fade-up">
-          <div><span class="section-n">03 · Evidence</span><h2>Proof one click away, without losing your place</h2></div>
-          <p class="section-lead">Links open the case study in a side panel beside the chat. Focus moves in and back out, and Esc closes it.</p>
-        </div>
-        <div class="screens fade-up">
-          <figure class="screen">
-            <div class="frame"><img src="/images/brix-case-study/side-panel.webp" alt="The chat listing case studies on the left while the Global Content Studio case study opens in a floating side panel on the right" loading="lazy" width="2400" height="1500"></div>
-            <figcaption><b>Chat on the left, the work on the right</b>The embedded page hides its own navigation and reads as a clean preview.</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section class="section" id="everywhere">
-        <div class="section-head fade-up">
-          <div><span class="section-n">04 · Everywhere</span><h2>On a phone, in the dark, or with JavaScript off</h2></div>
-          <p class="section-lead">One token system drives both themes at AA contrast. Streaming answers reach a screen reader once, not dozens of times.</p>
-        </div>
-        <div class="phones fade-up">
-          <figure class="phone"><img src="/images/brix-case-study/m-home.webp" alt="The homepage on a phone: the greeting, one case-study tile with dots to swipe to the next, and the ask box" loading="lazy" width="780" height="1688"><figcaption><b>One case study at a time</b>The same first screen at 390px, swiped sideways.</figcaption></figure>
-          <figure class="phone"><img src="/images/brix-case-study/m-answer.webp" alt="Brix on a phone answering What broke on Global Content Studio with a long, specific answer" loading="lazy" width="780" height="1688"><figcaption><b>Honest answers</b>It names what broke, not just what worked.</figcaption></figure>
-          <figure class="phone"><img src="/images/brix-case-study/m-dark.webp" alt="Brix on a phone in dark mode answering a question about remote work" loading="lazy" width="780" height="1688"><figcaption><b>Dark mode</b>Same layout, same contrast, no flash on load.</figcaption></figure>
-        </div>
-        <div class="rows fade-up">
-          <div class="row"><h3>One announcement per answer</h3><p>The thread streams silently and a separate live region reads the finished answer once. Measured: 1, down from 87.</p></div>
-          <div class="row"><h3>Works without JavaScript</h3><p>The homepage ships a full no-JS version, and reveals only hide content when scripts run.</p></div>
-          <div class="row"><h3>Light to load</h3><p>Images declare their size and the heavy art is WebP. The deploy went from 130 MB to 51 MB.</p></div>
         </div>
       </section>
 
       <section class="section" id="process">
         <span id="impact" class="anchor-alias" aria-hidden="true"></span>
         <div class="section-head fade-up">
-          <div><span class="section-n">05 · The audit</span><h2>I tested it like a real product</h2></div>
-          <p class="section-lead">I pulled the engine into a test harness and ran real screening questions. The first pass sent "show me her strongest case study" to my college degree.</p>
+          <div><span class="section-n">02 · The audit</span><h2>I tested it like a real product</h2></div>
+          <p class="section-lead">I ran real screening questions through the engine. The first pass sent "show me her strongest case study" to my college degree, so I fixed how it weighs words and kept that question in the test set.</p>
         </div>
-        <div class="stats stats--three fade-up">
-          <div><div class="stat-val">61/62</div><p class="stat-label">Screening questions answered with the answer text checked, up from 20 of 38 on the first pass</p></div>
-          <div><div class="stat-val">53/53</div><p class="stat-label">Browser checks: network, layout at four widths, contrast, keyboard, live regions, downloads</p></div>
-          <div><div class="stat-val">0</div><p class="stat-label">Servers, API keys, and dollars per answer</p></div>
-        </div>
-        <p class="note fade-up">When a live review found confident answers to the wrong question, the fix wasn't more keywords. It was entries that say plainly what the portfolio doesn't document.</p>
       </section>
     </div>
 
     <section class="takeaway">
       <div class="wrap fade-up">
-        <p>This site is the working sample: product framing, interface craft, a hand-built engine, measured accessibility, and a ship-then-audit loop. <strong>The same loop I'd bring to your team.</strong></p>
+        <p>This site is a working sample of how I build: frame the product, design it, write the code, then test it like someone else's. <strong>The same loop I'd bring to your team.</strong></p>
       </div>
     </section>
 

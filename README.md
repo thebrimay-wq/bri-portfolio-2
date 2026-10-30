@@ -67,7 +67,7 @@ scripts/nav.js        Inner-page nav: mobile menu, theme toggle, skip link, foot
 scripts/main.js       Scroll reveal for inner pages.
 scripts/embed.js      Pages opened inside the homepage's side panel hide their own chrome; the saved
                       theme is applied before first paint.
-work/ aimee-ai/       Case studies: Global Content Studio, Brix, Aimee, the Financial Finesse Hub.
+work/                  Case studies: Global Content Studio, Brix, Aimee, the Financial Finesse Hub.
 code/                 What is public and where the rest lives, with the engine excerpt.
 about/ resume/        Static pages. Page <style> blocks hold only page-specific CSS.
 contact/

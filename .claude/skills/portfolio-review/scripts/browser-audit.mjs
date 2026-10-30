@@ -18,7 +18,7 @@ import { chromium, devices } from 'playwright';
 const BASE = process.argv[2] || 'http://127.0.0.1:8899';
 const EXE = process.argv[3] || process.env.CHROMIUM_PATH || undefined;
 const PAGES = ['/', '/work/', '/about/', '/resume/', '/contact/', '/code/',
-  '/work/global-content-studio/', '/work/finesse-app/', '/work/hub/', '/work/brix/', '/aimee-ai/'];
+  '/work/global-content-studio/', '/work/finesse-app/', '/work/hub/', '/work/brix/', '/work/aimee/'];
 
 const b = await chromium.launch(EXE ? { executablePath: EXE } : {});
 let pass = 0, fail = 0;
@@ -98,7 +98,7 @@ console.log('\n══ 4. HEAD HYGIENE: title, canonical, img dims, posters');
   log('canonical on every page', noCanon.length === 0, noCanon.join(',') || 'ok');
   await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   log('homepage title carries the positioning', (await p.title()).includes('AI-Native'), await p.title());
-  for (const path of ['/work/hub/', '/work/global-content-studio/', '/aimee-ai/']) {
+  for (const path of ['/work/hub/', '/work/global-content-studio/', '/work/aimee/']) {
     await p.goto(BASE + path, { waitUntil: 'domcontentloaded' });
     const posters = await p.evaluate(() => [...document.querySelectorAll('video')].map(v => !!v.poster));
     log(`videos on ${path} have posters`, posters.length === 0 || posters.every(Boolean), posters.length + ' video(s)');
@@ -160,7 +160,7 @@ console.log('\n══ 7. HOMEPAGE CHAT: tiles, starters, code exhibit, deep link
   await p.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   await p.waitForTimeout(600);  log('3 case-study doors, each a full-page link', await p.locator('.home-tile[data-navigate]').count() === 3);
   log('each tile: image, project name, one line', await p.evaluate(() => [...document.querySelectorAll('.home-tile')].every(t => t.querySelector('.home-tile-img img') && t.querySelector('.home-tile-label')?.textContent.trim() && t.querySelector('.home-tile-sub')?.textContent.trim())));
-  log('three starter questions in the ask box tray', await p.locator('#tray-chips .chip').count() === 3);
+  log('four starter questions in the ask box tray', await p.locator('#tray-chips .chip').count() === 4);
   log('no fake thinking indicator', await p.evaluate(() => { document.querySelector('#composer-input').value = 'what is atlas'; document.querySelector('#composer-form').requestSubmit(); return document.querySelectorAll('[data-typing]').length === 0 && document.querySelectorAll('.msg--agent .bubble').length === 1; }));
   log('no lens chips (one audience)', await p.locator('.lens-chip').count() === 0);
   log('hero: name, title, second line', (await p.locator('.hero-intro .hero-name').count()) === 1 && (await p.locator('.hero-intro .hero-line').textContent()).includes('then I ship the code'));
