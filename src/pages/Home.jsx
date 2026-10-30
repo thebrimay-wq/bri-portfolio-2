@@ -101,7 +101,7 @@ function Hero() {
 
           <FadeUp delay={0.12}>
             <p className="text-muted" style={{ maxWidth: 480, marginBottom: 14 }}>
-              I'm Bri May, a Senior Product Designer focused on turning
+              I'm Bri May, a Senior AI-Native Product Designer focused on turning
               complex systems into simple, high-impact experiences.
             </p>
             <p className="text-muted" style={{ maxWidth: 460 }}>
@@ -122,7 +122,7 @@ function Hero() {
         <div className="hero__media">
           <motion.img
             src="/images/bri-half-circle.webp"
-            alt="Bri May — Senior Product Designer"
+            alt="Bri May, Senior AI-Native Product Designer"
             className="hero__portrait"
             style={{ y: imageY }}
             initial={{ opacity: 0 }}
@@ -423,7 +423,7 @@ function AboutPreview() {
               lineHeight: 1.7,
               marginBottom: 16,
             }}>
-              I'm a Senior Product Designer with a background in both product and brand,
+              I'm a Senior AI-Native Product Designer with a background in both product and brand,
               focused on designing experiences that simplify complexity and drive real user behavior.
             </p>
             <p style={{
