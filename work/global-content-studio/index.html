@@ -41,18 +41,6 @@
       .terms td[data-l]::before { content: attr(data-l) ": "; color: var(--ink-3); font-size: 13px; }
     }
   
-    /* Cost model: two ruled columns, by hand vs with the Studio */
-    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 64px); margin-top: clamp(40px, 5vw, 64px); }
-    .compare > div { padding-top: 22px; border-top: 1px solid var(--border); }
-    .compare > .compare-studio { border-top-color: var(--ink); }
-    .compare h3 { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
-    .compare dl { margin: 0; }
-    .compare dl div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 15px; line-height: 1.5; }
-    .compare dt { color: var(--ink-2); }
-    .compare dd { margin: 0; color: var(--ink); font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
-    .compare-total { margin-top: 22px; font-size: clamp(40px, 4.6vw, 64px); font-weight: 300; letter-spacing: -0.04em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
-    .compare-total small { display: block; margin-top: 10px; font-size: 13px; font-weight: 400; letter-spacing: 0; color: var(--ink-2); }
-    @media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -267,35 +255,32 @@
       <section class="section" id="impact">
         <span id="proof" class="anchor-alias" aria-hidden="true"></span>
         <div class="section-head fade-up">
-          <div><span class="section-n">09 · Impact</span><h2>Now it localizes the whole Hub</h2></div>
-          <p class="section-lead">Engineering picked up the pipeline fast. It now localizes every part of the Hub, from Aimee, our own AI coach, to the logic and scoring behind our financial wellness assessment. A full Hub for a new country takes a week or less.</p>
-        </div>
-        <div class="compare fade-up" aria-label="Cost to localize 25 countries, by hand and with the Studio">
-          <div>
-            <h3>By hand · 25 countries</h3>
-            <dl>
-              <div><dt>Articles per country</dt><dd>~400</dd></div>
-              <div><dt>Time per article</dt><dd>~50 min</dd></div>
-              <div><dt>Total time</dt><dd>8,333 hours</dd></div>
-            </dl>
-            <p class="compare-total">$500,000<small>At $60 an hour</small></p>
-          </div>
-          <div class="compare-studio">
-            <h3>With the Studio · 25 countries</h3>
-            <dl>
-              <div><dt>Articles per country</dt><dd>~400</dd></div>
-              <div><dt>Per article, review included</dt><dd>~7 min</dd></div>
-              <div><dt>Total time</dt><dd>1,166 hours</dd></div>
-            </dl>
-            <p class="compare-total">$70,000<small>At $60 an hour</small></p>
-          </div>
+          <div><span class="section-n">09 · Impact</span><h2>What the Studio saves</h2></div>
+          <p class="section-lead">I built this cost model for my offsite talk: about 400 articles per country, $60 an hour, across all 95 countries.</p>
         </div>
         <div class="stats stats--three fade-up">
-          <div><div class="stat-val">$1.63M</div><p class="stat-label">Cost avoided across 95 countries</p></div>
-          <div><div class="stat-val">27,200</div><p class="stat-label">Hours of writing and localizing returned across 95 countries</p></div>
-          <div><div class="stat-val">50&times;</div><p class="stat-label">Faster to draft: about 50 minutes down to about 1</p></div>
+          <div><div class="stat-val">$1.63M</div><p class="stat-label">Cost avoided</p></div>
+          <div><div class="stat-val">27,200</div><p class="stat-label">Hours of writing and localizing returned</p></div>
+          <div><div class="stat-val">50&times;</div><p class="stat-label">Faster to draft an article, about 50 minutes down to 1</p></div>
         </div>
-        <p class="note fade-up">The cost model I presented at our company offsite, scaled from 25 countries to all 95. Without AI, I estimate building this project alone would have taken nine months or more.</p>
+        <table class="terms fade-up" aria-label="Cost to localize 95 countries, by hand and with the Studio">
+          <thead><tr><th>95 countries</th><th>By hand</th><th>With the Studio</th></tr></thead>
+          <tbody>
+            <tr><td>Articles</td><td data-l="By hand">38,000</td><td data-l="With the Studio"><strong>38,000</strong></td></tr>
+            <tr><td>Time per article</td><td data-l="By hand">~50 min</td><td data-l="With the Studio"><strong>~7 min</strong>, review included</td></tr>
+            <tr><td>Total time</td><td data-l="By hand">31,667 hours</td><td data-l="With the Studio"><strong>4,433 hours</strong></td></tr>
+            <tr><td>Cost at $60 an hour</td><td data-l="By hand">$1.9M</td><td data-l="With the Studio"><strong>$266,000</strong></td></tr>
+          </tbody>
+        </table>
+        <p class="note fade-up">Without AI, I estimate building the Studio alone would have taken nine months or more.</p>
+      </section>
+
+      <!-- 10 · WHAT CHANGED -->
+      <section class="section" id="changed">
+        <div class="section-head fade-up">
+          <div><span class="section-n">10 · What changed</span><h2>Now it localizes the whole Hub</h2></div>
+          <p class="section-lead">Engineering picked up the pipeline fast. It now localizes every part of the Hub, from Aimee, our own AI coach, to the logic and scoring behind our financial wellness assessment. A full Hub for a new country takes a week or less.</p>
+        </div>
         <div class="screens fade-up">
           <figure class="screen screen--narrow">
             <div class="frame"><img src="/images/Global Content Studio Case Study/gcs-impact.webp" alt="A localized article, The £100 Rule and Your Child's Tax-Free Allowance, published and live in the Financial Finesse member product for the UK market" loading="lazy" width="2400" height="1386"></div>
