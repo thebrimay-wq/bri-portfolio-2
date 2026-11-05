@@ -73,6 +73,31 @@ Status key: **CONFIRMED** (derived from code, git, or the live index, source nam
 | "Helped win the Federal Reserve and opened new prospects" | STATED BY BRI 2026-10-15; no evidence in any repo; business attribution needs company clearance | this session | if used: "Per the company, …" and flagged for clearance before deploy |
 | Prototype screenshots (v2 review console, v3 workspace, admin matrix, gap planner) | Bri's own HTML prototypes / demo-data previews, rendered 2026-10-15; demo content, no real data | `design/*.html`, `Prototypes/prototype.html`, `Claude outputs/*.png` | captions must say "prototype, demo content" |
 
+## Global Content Studio, Bri's story (2026-11-05, `docs/CS - GCS.docx` + the CFL 2026 offsite deck)
+
+All STATED BY BRI unless noted. The case study was rewritten around this story on `feat/gcs-story`.
+
+| Claim | Status | Public wording |
+|---|---|---|
+| Origin: people used personal AI accounts for FF content, no single voice; Bri built the Studio in her free time and learned Claude Code on it | STATED BY BRI | "I built it on my own time." Do not say "the month Claude Code came out" (Claude Code predates the April 2026 first commit). |
+| v1: voice defined from FF's library; content types and audiences; approved sources only (.gov, .edu, reputable); dropdowns + free text; UI adapts per content type; edit by hand or ask the AI to refine a passage; confidence flags highlight passages; drafts carry CMS metadata and slugs; GitHub, Vercel, password protected | STATED BY BRI; flags and stack CONFIRMED above | "taught"/"trained" never used: the model was not trained (grounding only) |
+| 8-stage pipeline: learn the market → judge → localize ∥ fill gaps ∥ images → translate → quality check → human review; Aimee Q&A and life events have side tracks | STATED BY BRI (doc's stage table) | supersedes "five careful passes" and the older 9/18-step counts on the page |
+| 300 core articles defined for the global offering; gap analysis writes what each market lacks without duplicating | STATED BY BRI | "300 core articles" |
+| CEO was ecstatic; going global became the company focus immediately | STATED BY BRI | no business result attached |
+| Content for 25 countries localized in 1 week; localizers reviewed in 2 weeks; all 25 Hubs localized in 3 months | STATED BY BRI 2026-11-05 (answers the open "in a quarter" question) | hero "1 week · To localize content for all 25"; section 05 stats |
+| Rebuilt the Studio inside the company CMS in a week after joining its repo and Cloudflare account | STATED BY BRI | "our CMS" only; never the CMS's internal name |
+| Principal engineer + Bri built a console to automate pipeline runs and updates | STATED BY BRI | engineer unnamed |
+| Engineering adopted the pipeline; it localizes the whole Hub incl. Aimee and the financial wellness assessment's logic and scoring; a full Hub for a new country in a week or less | STATED BY BRI; deck: "Full Hub localization in a week or less" | section 09 lead |
+| 70 more countries in progress, live by Jan 1, 2027 → **95 total** | STATED BY BRI 2026-11-05 (supersedes "70 by the end of 2026") | "25 countries live, 95 by January 1, 2027" / "70 more" |
+| Bri became AI champion, moved to the AI team, spoke at the company offsite (CFL 2026, "Embracing Innovation"); part of her role is building internal tools | STATED BY BRI | the ledger's "moved to the AI team early 2025" conflicts with this sequence; the page gives no date |
+| Wiki of all FF content + a baseline per country, now the pipeline's first research step before web search; localizers will review it, edits re-ingest, changing facts get tagged and a crawler updates them | STATED BY BRI; IN PROGRESS | "In progress." No counts (deck's "tens of thousands of sources" not used) |
+| Project would have taken 9+ months without AI | ESTIMATE (Bri) | "I estimate … nine months or more" |
+| Cost model (deck): 25 countries × ~400 articles; by hand ~50 min each = 8,333 h = $500,000; with the Studio 70,000 min = 1,166 h = $70,000 at $60/h; ×3 for 75 countries: $1.5M vs $210k → **$1.29M avoided** | ESTIMATE (Bri's model) | The deck's rows say "~1 min draft + ~7 min review" but its totals use 7 min per article; Bri chose to keep the totals, so the page says "~7 min, review included". |
+| Hours returned | DERIVED from the model: 7,167 h at 25 countries, ~21,500 h at 75 | page uses "21,500 … across 75 countries". The deck's "275 days / 6,600 hours" is RETIRED (does not match the model). |
+| 50× faster to draft (50 min → ~1 min) | ESTIMATE (deck) | "Faster to draft" only; never "50× faster to publish" |
+| "Fortune 500 clients are ecstatic" | UNCONFIRMED business attribution | not used; page says customers can offer the program in each country |
+| Open: the model stops at 75 countries while the target is 95 (at 95 the same model gives ≈$1.63M avoided). Ask Bri whether to rescale. | OPEN | — |
+
 ## Aimee
 
 | Claim | Status | Source | Public wording |
