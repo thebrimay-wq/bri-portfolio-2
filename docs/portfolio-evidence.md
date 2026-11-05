@@ -96,7 +96,7 @@ All STATED BY BRI unless noted. The case study was rewritten around this story o
 | Hours returned | DERIVED from the model: 7,167 h at 25 countries, ~21,500 h at 75 | page uses "21,500 … across 75 countries". The deck's "275 days / 6,600 hours" is RETIRED (does not match the model). |
 | 50× faster to draft (50 min → ~1 min) | ESTIMATE (deck) | "Faster to draft" only; never "50× faster to publish" |
 | "Fortune 500 clients are ecstatic" | UNCONFIRMED business attribution | not used; page says customers can offer the program in each country |
-| Open: the model stops at 75 countries while the target is 95 (at 95 the same model gives ≈$1.63M avoided). Ask Bri whether to rescale. | OPEN | — |
+| Rescaled to 95 countries (Bri, 2026-11-05): per country $20,000 / 333.3 h by hand vs $2,800 / 46.7 h with the Studio → $1,634,000 avoided and 27,233 h returned | ESTIMATE (Bri's model, scaled) | "$1.63M · Cost avoided across 95 countries, modeled" and "27,200 hours … across 95 countries". The 75-country figures ($1.29M, 21,500 h) are superseded on the page. |
 
 ## Aimee
 
