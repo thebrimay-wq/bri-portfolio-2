@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/site.css?v=gallery-7" />
-  <meta name="description" content="Case study: Global Content Studio. Bri May built an AI content studio on her own time, and it took Financial Finesse global: 25 countries live, 95 by January 1, 2027." />
+  <meta name="description" content="Case study: Global Content Studio. Bri May built an AI writing tool on her own initiative, and it became the localization system that took Financial Finesse global: 25 countries live, 95 by January 1, 2027." />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta property="og:type" content="article" />
@@ -20,8 +20,8 @@
   <link rel="canonical" href="https://imbrimay.com/work/global-content-studio/" />
   <meta property="og:title" content="Global Content Studio — Case Study | Bri May" />
   <meta name="twitter:title" content="Global Content Studio — Case Study | Bri May" />
-  <meta property="og:description" content="Built on her own time, it took Financial Finesse global: 25 countries live, 95 by January 1, 2027." />
-  <meta name="twitter:description" content="Built on her own time, it took Financial Finesse global: 25 countries live, 95 by January 1, 2027." />
+  <meta property="og:description" content="I built an AI writing tool. It became the system that helped us go global." />
+  <meta name="twitter:description" content="I built an AI writing tool. It became the system that helped us go global." />
   <script src="/scripts/embed.js"></script>
   <script>
     try { var _t = localStorage.getItem('theme'); if (_t === 'dark' || _t === 'light') document.documentElement.setAttribute('data-theme', _t); } catch (e) {}
@@ -41,6 +41,7 @@
       .terms td[data-l]::before { content: attr(data-l) ": "; color: var(--ink-3); font-size: 13px; }
     }
   
+    .gallery .section .section-head + .section-head, .gallery .section .screens + .section-head { margin-top: clamp(56px, 7vw, 96px); }
   </style>
 </head>
 <body>
@@ -61,17 +62,17 @@
     <!-- ════ HERO ════ -->
     <section class="hero">
       <div class="wrap">
-        <p class="hero-meta fade-up"><span>Case study</span><span>Financial Finesse</span><span>2026</span><span>Side project, then company initiative</span></p>
-        <h1 class="fade-up" style="transition-delay:50ms">I built it on my own time. It took our company global.</h1>
-        <p class="hero-lead fade-up" style="transition-delay:90ms">Our writers were drafting company content on their own AI accounts, each in a different voice. I taught myself Claude Code and built one studio that writes like us, cites its sources, and flags what it isn't sure of. Our CEO saw it, and the company went global: 25 countries live, 70 more by January 1, 2027.</p>
+        <p class="hero-meta fade-up"><span>Case study</span><span>Financial Finesse</span><span>2026</span><span>0→1 AI product design · Strategy · Design engineering</span></p>
+        <h1 class="fade-up" style="transition-delay:50ms">I built an AI writing tool. It became the system that helped us go global.</h1>
+        <p class="hero-lead fade-up" style="transition-delay:90ms">What began as a problem I noticed inside Financial Finesse became a working AI-native product, a localization engine, and a new capability for the whole business. I identified the opportunity, taught myself Claude Code, designed and shipped the first version, and helped evolve it into a system that adapts financial education for markets around the world. It changed what the business could do, and it changed how I design.</p>
 
         <div class="hero-facts fade-up" style="transition-delay:130ms">
-          <div class="hero-fact"><div class="hero-fact-val">25</div><div class="hero-fact-label">Countries live</div></div>
-          <div class="hero-fact"><div class="hero-fact-val">1 week</div><div class="hero-fact-label">To localize content for all 25</div></div>
-          <div class="hero-fact"><div class="hero-fact-val">50&times;</div><div class="hero-fact-label">Faster to draft an article</div></div>
+          <div class="hero-fact"><div class="hero-fact-val">4 weeks</div><div class="hero-fact-label">First commit to launch QA</div></div>
+          <div class="hero-fact"><div class="hero-fact-val">3,512</div><div class="hero-fact-label">Pieces localized in one four-day run</div></div>
+          <div class="hero-fact"><div class="hero-fact-val">25</div><div class="hero-fact-label">Countries live, 95 by January 1, 2027</div></div>
           <div class="hero-fact"><div class="hero-fact-val">$1.63M</div><div class="hero-fact-label">Cost avoided across 95 countries, modeled</div></div>
         </div>
-        <p class="hero-role fade-up" style="transition-delay:150ms"><b>My role:</b> I found the gap, designed the Studio, and coded the first version (493 of its 524 commits). Then I led the localizers and built the review screens while engineering rebuilt the engine with me. <b>Team:</b> our principal engineer, two engineers, and 35 localizers.</p>
+        <p class="hero-role fade-up" style="transition-delay:150ms"><b>My role:</b> product strategy, AI experience design, interaction design, implementation (493 of the first version's 524 commits), and the localization system. <b>Team:</b> I initiated and built the Studio on my own, then worked with our principal engineer, two engineers, and 35 localizers as it grew.</p>
 
         <div class="sky sky--pad fade-up" style="transition-delay:170ms">
           <figure class="screen screen--narrow">
@@ -84,49 +85,64 @@
 
     <div class="wrap">
 
-      <!-- 01 · THE GAP -->
+      <!-- 01 · THE PROBLEM -->
       <section class="section" id="gap">
         <span id="glance" class="anchor-alias" aria-hidden="true"></span>
         <div class="section-head fade-up">
-          <div><span class="section-n">01 · The gap</span><h2>Everyone was writing with their own AI</h2></div>
-          <p class="section-lead">When AI tools arrived, our writers started drafting on personal accounts. Each tool had its own voice, nobody checked its sources, and our library stopped sounding like one company.</p>
+          <div><span class="section-n">01 · The problem</span><h2>Everyone was using AI. Nobody was using it the same way.</h2></div>
+          <p class="section-lead">At Financial Finesse, content is the center of the product: articles, quizzes, checklists, and personalized guidance that help people make financial decisions. As generative AI became accessible, our teams started using it on their own. Different accounts, different prompts, different sources, different results.</p>
         </div>
         <div class="glance fade-up">
-          <div><h3>What I saw</h3><p>A large, growing library with no single Financial Finesse voice, written on tools the company didn't own or review.</p></div>
-          <div><h3>What it needed</h3><p>Reins. One tool, owned by the company, that every writer could use and every reviewer could trust.</p></div>
-          <div><h3>What I did</h3><p>Nobody asked me to. I built it in my free time, and it was how I learned Claude Code.</p></div>
+          <div><h3>What I saw</h3><p>Content came faster, but it didn't always match our brand or editorial standards. In personal finance, information that only sounds credible isn't good enough.</p></div>
+          <div><h3>The opportunity</h3><p>It wasn't on our roadmap. We didn't need another AI writer. We needed a system people could trust.</p></div>
+          <div><h3>The challenge</h3><p>Make AI useful enough to speed up content, structured enough to keep it consistent, and transparent enough that our team stays in control.</p></div>
         </div>
       </section>
 
-      <!-- 02 · v1 -->
+      <!-- 02 · TAKING INITIATIVE -->
       <section class="section" id="v1">
         <span id="architecture" class="anchor-alias" aria-hidden="true"></span>
         <div class="section-head fade-up">
-          <div><span class="section-n">02 · The first version</span><h2>One studio that writes like us</h2></div>
-          <p class="section-lead">I gave the AI what a good writer at Financial Finesse knows: our voice, taken from our own library, every content type and audience we write for, and a short list of sources it may use.</p>
-        </div>
-        <div class="screens fade-up">
-          <figure class="screen">
-            <div class="frame"><img src="/images/Global Content Studio Case Study/gcs-korean.webp" alt="The authoring studio drafting a Korean quiz about saving for a home, with an Accuracy Check panel listing five claims to confirm, each with the figure in question and the official source to check" loading="lazy" width="2400" height="1483"></div>
-            <figcaption><b>It shows you where it's unsure</b>A Korean quiz with five facts the AI couldn't tie to a source, each with the exact figure and the government page to check.</figcaption>
-          </figure>
+          <div><span class="section-n">02 · Taking initiative</span><h2>Nobody assigned me this problem. I decided to build the solution.</h2></div>
+          <p class="section-lead">I'd spent years designing products and working with engineers to bring them to life. I wanted to close the gap between having an idea and putting a working product in someone's hands. Claude Code had just become available, so I started building on my own time.</p>
         </div>
         <div class="rows fade-up">
-          <div class="row"><h3>Sources it may use</h3><p>Government, education, and established financial sites. Opinion pieces are off the list, and every fact traces back to one of them.</p></div>
-          <div class="row"><h3>A screen that fits the format</h3><p>Writers pick from dropdowns and type a topic. The layout changes with the choice, because a quiz reads differently from an article.</p></div>
-          <div class="row"><h3>Edit it, or ask for a change</h3><p>Rewrite any line by hand, or select a passage and tell the AI what you want: shorter, more conversational, bullets, anything.</p></div>
-          <div class="row"><h3>Flags where it's unsure</h3><p>When the AI doubts a fact, it highlights the passage and raises a flag. A reviewer fixes it, approves it, or dismisses it.</p></div>
-          <div class="row"><h3>Ready for the CMS</h3><p>Every draft arrives with its metadata, slug, and the fields our CMS needs, so nobody retypes them.</p></div>
+          <div class="row"><h3>I started with the library, not screens</h3><p>I needed to understand how our company wrote, what made each content type different, which audiences we served, and what rules kept it all consistent.</p></div>
+          <div class="row"><h3>The foundation</h3><p>I defined the content structures, writing standards, and source constraints that became the base of the system: our voice from our own library, every content type and audience, and a short list of government, education, and reputable financial sources the AI may use.</p></div>
+          <div class="row"><h3>Then I built it</h3><p>I designed and developed the first working application, four weeks from first commit to launch QA. What usually needs a handoff from design to engineering became something I could demonstrate. Instead of pitching an idea, I put a working product in front of the people it would help.</p></div>
         </div>
         <p class="note fade-up">Built with Claude Code, versioned on GitHub, hosted on Vercel behind a password. The code is private to Financial Finesse.</p>
       </section>
 
-      <!-- 03 · GOING GLOBAL -->
-      <section class="section" id="turn">
-        <span id="atlas" class="anchor-alias" aria-hidden="true"></span>
+      <!-- 03 · THE PRODUCT -->
+      <section class="section" id="decisions">
         <div class="section-head fade-up">
-          <div><span class="section-n">03 · Going global</span><h2>Then I asked it to write in another language</h2></div>
-          <p class="section-lead">Our CEO had talked about taking the Hub global, and I knew a translation wouldn't hold up. "Contribute to your 401(k)" is still wrong in French when every word is right. Each article has to fit its country: the money, the laws, the culture.</p>
+          <div><span class="section-n">03 · The product</span><h2>Designing AI around how people actually work</h2></div>
+          <p class="section-lead">I didn't want another empty chat box that depends on every employee writing the perfect prompt. I wanted AI to fit the work. That led to three product decisions.</p>
+        </div>
+        <div class="screens fade-up">
+          <figure class="screen">
+            <div class="frame"><img src="/images/Global Content Studio Case Study/gcs-korean.webp" alt="The authoring studio drafting a Korean quiz about saving for a home, with an Accuracy Check panel listing five claims to confirm, each with the figure in question and the official source to check" loading="lazy" width="2400" height="1483"></div>
+            <figcaption><b>Uncertainty you can see</b>A Korean quiz with five facts the AI couldn't tie to a source, each with the exact figure and the government page to check.</figcaption>
+          </figure>
+        </div>
+        <div class="rows fade-up">
+          <div class="row"><h3><small>01</small>Structure where consistency matters</h3><p>Guided inputs for content type, audience, locale, and topic. An article and a quiz have different requirements, so the interface adapts the editing experience to each. High-quality output becomes repeatable instead of depending on individual prompting skill.</p></div>
+          <div class="row"><h3><small>02</small>Direct control where precision matters</h3><p>AI writes the first draft. Writers rewrite a passage, change the tone, or restructure one section without starting over. AI speeds up the work; the writer keeps ownership.</p></div>
+          <div class="row"><h3><small>03</small>Visible uncertainty where trust matters</h3><p>Financial guidance has real consequences. The experience surfaces questionable information as flags in the text, and reviewers investigate and correct it. Confidence scores are signals for what needs attention, never proof of accuracy. Publication stays a human decision.</p></div>
+        </div>
+        <p class="note fade-up"><strong>My design principle:</strong> AI does the repetitive work. People stay in control of consequential decisions.</p>
+      </section>
+
+      <!-- 04 · THE TURNING POINT -->
+      <section class="section" id="turn">
+        <div class="section-head fade-up">
+          <div><span class="section-n">04 · The turning point</span><h2>Then I realized we weren't just solving content creation</h2></div>
+          <p class="section-lead">Once the first version worked, I started generating content in other languages. Around the same time, our CEO had been talking about taking the company global. We already had a deep financial wellness library. What if we could adapt that knowledge for new markets?</p>
+        </div>
+        <div class="rows fade-up">
+          <div class="row"><h3>Translation changes the language</h3><p>Localization changes the meaning to fit the market. Retirement systems, taxes, regulations, currencies, terminology, and cultural expectations vary by country.</p></div>
+          <div class="row"><h3>A 401(k) article can't be translated for Canada</h3><p>First you decide whether the concept applies. Then you learn the local system and adapt the guidance. Sometimes an article needs a rewrite, sometimes a new topic, and sometimes the responsible choice is not to publish it at all.</p></div>
         </div>
         <table class="terms fade-up" aria-label="How the same US term is rewritten per market">
           <thead><tr><th>US source</th><th>Canada</th><th>United Kingdom</th></tr></thead>
@@ -142,13 +158,18 @@
             <figcaption><b>Rewritten for the country</b>The Irish Starting a Family opens on a care scheme that exists only in Ireland. The Chinese version opens on urban employee medical insurance.</figcaption>
           </figure>
         </div>
+        <p class="note fade-up">That insight changed the direction of the product. An AI writing studio was becoming a global localization system.</p>
       </section>
 
-      <!-- 04 · THE PIPELINE -->
+      <!-- 05 · THE SYSTEM -->
       <section class="section" id="pipeline">
+        <span id="atlas" class="anchor-alias" aria-hidden="true"></span>
+        <span id="ai" class="anchor-alias" aria-hidden="true"></span>
+        <span id="process" class="anchor-alias" aria-hidden="true"></span>
+        <span id="ai-assisted" class="anchor-alias" aria-hidden="true"></span>
         <div class="section-head fade-up">
-          <div><span class="section-n">04 · The pipeline</span><h2>Eight stages between a US article and a new country</h2></div>
-          <p class="section-lead">I researched what each market needs and built the pipeline every article runs through. Every stage pulls from reputable sources and cites them.</p>
+          <div><span class="section-n">05 · The system</span><h2>To scale globally, we had to design for local truth</h2></div>
+          <p class="section-lead">One question shaped the workflow: how do we make content accurate and relevant for a specific market, not just readable in another language? The answer was Atlas, an eight-stage localization pipeline. Every stage pulls from reputable sources and cites them.</p>
         </div>
         <table class="terms fade-up" aria-label="The eight stages of the localization pipeline">
           <thead><tr><th>Stage</th><th>What happens</th></tr></thead>
@@ -165,6 +186,9 @@
         </table>
         <p class="note fade-up">Stages 3, 4, and 6 run at the same time. Aimee's Q&amp;A and our life events get their own judge, localize, and review steps. When the pipeline judged the UK, 62 of the 75 articles it held back didn't apply there.</p>
         <div class="rows fade-up">
+          <div class="row"><h3>Relevance before generation</h3><p>The system decides whether the original topic makes sense for the market. It keeps, rewrites, or rejects content instead of localizing everything.</p></div>
+          <div class="row"><h3>Grounding before confidence</h3><p>The model works from our content standards and curated, market-specific reference material. A separate verification pass and automated checks catch problems a confidence score can't.</p></div>
+          <div class="row"><h3>Human approval before publication</h3><p>Local reviewers make the final decision. The system helps them spend their expertise where it matters most.</p></div>
           <div class="row"><h3>300 core articles</h3><p>We picked 300 articles for the global offering. The Studio localized them, then a gap analysis found what each country was missing and wrote it, without duplicating anything we had.</p></div>
         </div>
         <div class="screens fade-up">
@@ -173,13 +197,9 @@
             <figcaption><b>Filling the gaps</b>The AI reads what a market already has, proposes what's missing, and checks for duplicates first. Prototype, demo content.</figcaption>
           </figure>
         </div>
-      </section>
-
-      <!-- 05 · THE YES -->
-      <section class="section" id="launch">
-        <div class="section-head fade-up">
-          <div><span class="section-n">05 · The yes</span><h2>I showed our CEO, and the company went global</h2></div>
-          <p class="section-lead">She was ecstatic. Going global became the company's focus right away, and the Studio became how we'd do it.</p>
+        <span id="launch" class="anchor-alias" aria-hidden="true"></span>
+        <div class="rows fade-up">
+          <div class="row"><h3>I showed our CEO</h3><p>She was ecstatic. Going global became the company's focus right away, and the Studio became how we'd do it. This wasn't a prompt wrapped in an interface. It was a repeatable workflow built around decisions, dependencies, verification, and human control.</p></div>
         </div>
         <div class="stats stats--three fade-up">
           <div><div class="stat-val">1 week</div><p class="stat-label">To localize our content for 25 countries</p></div>
@@ -188,11 +208,11 @@
         </div>
       </section>
 
-      <!-- 06 · PEOPLE IN THE LOOP -->
+      <!-- 06 · LEARNING FROM REAL PEOPLE -->
       <section class="section" id="review-console">
         <div class="section-head fade-up">
-          <div><span class="section-n">06 · People in the loop</span><h2>I didn't want AI to be the last one to read it</h2></div>
-          <p class="section-lead">The team hired localizers in all 25 countries, and I lead them. Each one reviews every article for their country, starting with the ones that carry the most flags.</p>
+          <div><span class="section-n">06 · Learning from real people</span><h2>The system improved when people started using it</h2></div>
+          <p class="section-lead">As the localization effort grew, the company hired local reviewers who understood the financial realities of their markets, 35 localizers in 26 countries. I lead their review workflow.</p>
         </div>
         <div class="screens screens--two fade-up">
           <figure class="screen">
@@ -205,10 +225,11 @@
           </figure>
         </div>
         <div class="rows fade-up">
-          <div class="row"><h3>Fix it in the text</h3><p>Localizers act on each flag with Apply, Fix myself, or Dismiss, then read the whole piece and change anything else it needs.</p></div>
+          <div class="row"><h3>Problems first</h3><p>The queue puts the most-flagged content first. Reviewers inspect the whole article, correct it inline with Apply, Fix myself, or Dismiss, and approve it for publication.</p></div>
           <div class="row"><h3>One review, not two</h3><p>Every non-English article carries an English version that updates as the localizer edits, so nobody reviews the same article twice.</p></div>
-          <div class="row"><h3>Their notes tune the pipeline</h3><p>We meet every week. When a localizer sees the same mistake across many articles, I fix it in the pipeline, and it stops showing up in every market.</p></div>
+          <div class="row"><h3>Review is how the system learns</h3><p>Their feedback showed that human review couldn't be a cleanup step at the end. We meet every week, and when a localizer sees the same mistake across many articles, I fix the cause in the pipeline instead of letting them fix it article after article.</p></div>
         </div>
+        <p class="note fade-up">The best automation wasn't the one that removed people. It was the one that made their expertise count for more.</p>
       </section>
 
       <!-- 07 · WHAT BROKE -->
@@ -216,14 +237,13 @@
         <span id="v2" class="anchor-alias" aria-hidden="true"></span>
         <span id="v3" class="anchor-alias" aria-hidden="true"></span>
         <div class="section-head fade-up">
-          <div><span class="section-n">07 · What broke</span><h2>It worked, until it didn't</h2></div>
-          <p class="section-lead">At 25 countries, a tool one person built hit its limits. I wrote down four problems, joined the company's codebase, and rebuilt the Studio inside our CMS in a week.</p>
+          <div><span class="section-n">07 · What broke</span><h2>Building fast exposed problems a prototype can't predict</h2></div>
+          <p class="section-lead">Getting to working software quickly was valuable. Shipping it into real workflows exposed weaknesses that needed better product and engineering decisions.</p>
         </div>
         <div class="rows fade-up">
-          <div class="row"><h3><small>01 · Lost edits</small>Edits are safe now</h3><p>A re-run replaced work a localizer had corrected. <strong>On three reviewed articles, none of the reviewed sentences survived.</strong> Now a reviewer's text saves on its own, and an out-of-date save can't overwrite it.</p></div>
-          <div class="row"><h3><small>02 · Flags nobody could act on</small>Plain words, clear actions</h3><p>One Bulgarian run raised <strong>630 flags on 445 articles</strong> in a tab with no buttons. Now each flag says what's wrong, like "Check this number", and offers a fix.</p></div>
-          <div class="row"><h3><small>03 · No audit trail</small>One sign-in, real roles</h3><p>A name typed into the browser stood in for sign-in, so <strong>nobody could say who approved what.</strong> Now reviewers use their work sign-in and see only their country.</p></div>
-          <div class="row"><h3><small>04 · Slow at scale</small>Fast with a big library</h3><p>Pages timed out as the library grew. The rebuild stores flag counts and loads 50 rows at a time.</p></div>
+          <div class="row"><h3><small>Problem 1</small>AI was missing context people understood</h3><p>Some localized articles kept links to US-only content. The writing looked local while sending readers somewhere irrelevant. <strong>What changed:</strong> a separate verification pass and deterministic link checks find and fix them. <strong>What I learned:</strong> a convincing output isn't a complete experience. Validation has to cover what happens beyond the generated text.</p></div>
+          <div class="row"><h3><small>Problem 2</small>Automation overwrote human expertise</h3><p>During a batch re-run, reviewed content lost its human corrections. <strong>On three reviewed articles, none of the reviewed sentences survived.</strong> <strong>What changed:</strong> approved content is protected by default, with explicit controls for intentional re-localization. <strong>What I learned:</strong> AI automation needs boundaries that respect the user's ownership of the work.</p></div>
+          <div class="row"><h3><small>Problem 3</small>The prototype lived outside our platform</h3><p>Starting on my own let me learn and demonstrate the idea fast, but it meant integration work once the app became a business capability. A name typed into the browser stood in for sign-in, and pages timed out as the library grew. <strong>What changed:</strong> I joined the company's codebase and rebuilt the Studio inside our CMS in a week, with real sign-in, roles, and an audit trail. <strong>What I learned:</strong> prototype speed matters, and so does choosing foundations that can carry the next stage.</p></div>
         </div>
         <div class="screens fade-up">
           <figure class="screen screen--narrow">
@@ -231,32 +251,44 @@
             <figcaption><b>Inside our CMS</b>Reviewers sign in once, with the same roles as everything else. Prototype, demo content.</figcaption>
           </figure>
         </div>
-        <p class="note fade-up">Our principal engineer and I also built a console for the pipeline, so we can automate runs and push updates.</p>
       </section>
 
-      <!-- 08 · DECISIONS -->
-      <section class="section" id="decisions">
-        <span id="ai" class="anchor-alias" aria-hidden="true"></span>
-        <span id="process" class="anchor-alias" aria-hidden="true"></span>
-        <span id="ai-assisted" class="anchor-alias" aria-hidden="true"></span>
+      <!-- 08 · FROM PRODUCT TO PLATFORM -->
+      <section class="section" id="changed">
         <div class="section-head fade-up">
-          <div><span class="section-n">08 · Decisions</span><h2>Four calls I'd make again</h2></div>
-          <p class="section-lead">We never trained a model. The AI writes from our voice guide, sources we approve, and each country's facts, and a person approves what it writes.</p>
+          <div><span class="section-n">08 · From product to platform</span><h2>What started as my prototype became part of the platform</h2></div>
+          <p class="section-lead">As its value became clear, I moved the application into our existing systems and worked with engineering on the larger localization workflow. My role changed with the product.</p>
         </div>
         <div class="rows fade-up">
-          <div class="row"><h3>Cite it or flag it</h3><p>The AI researches from sources we approve and cites them. Anything it can't source becomes a flag for a person.</p></div>
-          <div class="row"><h3>Eight stages, not one fast pass</h3><p>One quick pass kept US habits no check could catch. Eight stages cost more and catch them.</p></div>
-          <div class="row"><h3>The AI's score doesn't decide what ships</h3><p>It decides what a reviewer sees first. There's no auto-publish setting, on purpose.</p></div>
-          <div class="row"><h3>Approved means approved</h3><p>Once a person approves an article, the tool won't touch it again unless someone asks for that article by name.</p></div>
+          <div class="row"><h3>Hands on the code</h3><p>I was no longer designing screens and handing them off. I contribute to the repositories, build production interfaces, write tests, and work on the systems behind the experience. Our principal engineer and I built a console for the pipeline so we can automate runs and push updates.</p></div>
+          <div class="row"><h3>Beyond articles</h3><p>Engineering adopted the pipeline fast. It now localizes every part of the Hub, from Aimee, our AI coach, to the logic and scoring behind our financial wellness assessment. A full Hub for a new country takes a week or less.</p></div>
+          <div class="row"><h3>A new role for me</h3><p>I became the company's AI champion, moved to the AI team, and spoke at our offsite about building with AI. Part of my job now is building internal tools that save our teams time and money.</p></div>
+          <div class="row"><h3>Next: a wiki of everything we know</h3><p>I'm working with our AI team on a wiki of every article we've written, with a baseline for each country. It's already the pipeline's first research step, before any web search. Localizers will review the wiki itself, edited articles flow back into it, and a crawler will update facts that change, like taxes and laws. In progress.</p></div>
         </div>
+        <p class="note fade-up">We weren't just scaling content. We were building a reusable capability for international expansion.</p>
       </section>
 
-      <!-- 09 · IMPACT -->
+      <!-- 09 · THE OUTCOME -->
       <section class="section" id="impact">
         <span id="proof" class="anchor-alias" aria-hidden="true"></span>
         <div class="section-head fade-up">
-          <div><span class="section-n">09 · Impact</span><h2>What the Studio saves</h2></div>
-          <p class="section-lead">I built this cost model for my offsite talk: about 400 articles per country, $60 an hour, across all 95 countries.</p>
+          <div><span class="section-n">09 · The outcome</span><h2>One small experiment changed what the business could pursue</h2></div>
+          <p class="section-lead">International content production became a repeatable workflow instead of a market-by-market effort from scratch. We're localizing for 70 more countries now, on top of the 25 live, and Financial Finesse customers can offer our program to their employees in each one.</p>
+        </div>
+        <div class="stats stats--three fade-up">
+          <div><div class="stat-val">3,512</div><p class="stat-label">Pieces localized in one four-day run, bringing ten locales live</p></div>
+          <div><div class="stat-val">8,118</div><p class="stat-label">Localized variants across 28 locales, as of September 8, 2026</p></div>
+          <div><div class="stat-val">95</div><p class="stat-label">Countries by January 1, 2027</p></div>
+        </div>
+        <div class="screens fade-up">
+          <figure class="screen screen--narrow">
+            <div class="frame"><img src="/images/Global Content Studio Case Study/gcs-impact.webp" alt="A localized article, The £100 Rule and Your Child's Tax-Free Allowance, published and live in the Financial Finesse member product for the UK market" loading="lazy" width="2400" height="1386"></div>
+            <figcaption><b>Live in the UK</b>The £100 rule is HMRC's, not a translated IRS figure.</figcaption>
+          </figure>
+        </div>
+        <div class="section-head fade-up">
+          <div><h2>What the Studio saves</h2></div>
+          <p class="section-lead">The cost model I built for my offsite talk: about 400 articles per country, $60 an hour, across all 95 countries.</p>
         </div>
         <div class="stats stats--three fade-up">
           <div><div class="stat-val">$1.63M</div><p class="stat-label">Cost avoided</p></div>
@@ -272,33 +304,26 @@
             <tr><td>Cost at $60 an hour</td><td data-l="By hand">$1.9M</td><td data-l="With the Studio"><strong>$266,000</strong></td></tr>
           </tbody>
         </table>
-        <p class="note fade-up">Without AI, I estimate building the Studio alone would have taken nine months or more.</p>
+        <p class="note fade-up">Without AI, I estimate building the Studio alone would have taken nine months or more. The most meaningful result wasn't faster content. It was finding that one internal problem could open a new opportunity for the business.</p>
       </section>
 
-      <!-- 10 · WHAT CHANGED -->
-      <section class="section" id="changed">
+      <!-- 10 · WHAT I LEARNED -->
+      <section class="section" id="learned">
         <div class="section-head fade-up">
-          <div><span class="section-n">10 · What changed</span><h2>Now it localizes the whole Hub</h2></div>
-          <p class="section-lead">Engineering picked up the pipeline fast. It now localizes every part of the Hub, from Aimee, our own AI coach, to the logic and scoring behind our financial wellness assessment. A full Hub for a new country takes a week or less.</p>
+          <div><span class="section-n">10 · What I learned</span><h2>The biggest change wasn't the technology. It was how I design.</h2></div>
+          <p class="section-lead">I no longer wait until something is scoped and scheduled to learn whether it has potential. I can recognize a problem, build a useful first version, put it in front of people, and improve it from what happens in practice. Moving fast doesn't remove the need for judgment: I still have to understand the workflow, decide what to automate, design for uncertainty and failure, and know when a person's expertise beats another AI response.</p>
         </div>
-        <div class="screens fade-up">
-          <figure class="screen screen--narrow">
-            <div class="frame"><img src="/images/Global Content Studio Case Study/gcs-impact.webp" alt="A localized article, The £100 Rule and Your Child's Tax-Free Allowance, published and live in the Financial Finesse member product for the UK market" loading="lazy" width="2400" height="1386"></div>
-            <figcaption><b>Live in the UK</b>The £100 rule is HMRC's, not a translated IRS figure.</figcaption>
-          </figure>
-        </div>
-        <div class="rows fade-up">
-          <div class="row"><h3>95 countries by January 1, 2027</h3><p>We're localizing for 70 more countries now, on top of the 25 live. Financial Finesse customers can offer our financial wellness program to their employees in each one.</p></div>
-          <div class="row"><h3>A new role for me</h3><p>I became the company's AI champion, moved to the AI team, and spoke at our offsite about building with AI. Part of my job now is building internal tools that save our teams time and money.</p></div>
-          <div class="row"><h3>Next: a wiki of everything we know</h3><p>I'm working with our AI team on a wiki of every article we've written, with a baseline for each country. It's already the pipeline's first research step, before any web search, which cuts cost and speeds up every run.</p></div>
-          <div class="row"><h3>Content that stays current</h3><p>Localizers will review the wiki itself, and every edited article flows back into it. Facts that change, like taxes and laws, get tagged, and a crawler finds the new figures and updates the content. In progress.</p></div>
+        <div class="rules fade-up">
+          <div class="rule"><p class="rule-text">See the opportunity.</p><p>Find meaningful problems, even when nobody has put them on the roadmap.</p></div>
+          <div class="rule"><p class="rule-text">Build to learn.</p><p>Make ideas tangible early, so real workflows shape the product instead of assumptions.</p></div>
+          <div class="rule"><p class="rule-text">Design for trust.</p><p>Give AI real responsibility while keeping people informed and in control.</p></div>
         </div>
       </section>
     </div>
 
     <section class="takeaway">
       <div class="wrap fade-up">
-        <p>For years I designed products I couldn't code. Now I find the gap, build it rough, and show the one person it would help. <strong>This time that person was our CEO, and the company went global.</strong></p>
+        <p>I don't just design what software could do. I build to find out what it should do. <strong>The most valuable part wasn't learning to code with AI. It was learning how much more I could contribute when strategy, design, user feedback, and implementation became one continuous process.</strong></p>
       </div>
     </section>
 
